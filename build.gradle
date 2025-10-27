@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
     id 'com.gradleup.shadow' version '9.1.0'
     id 'com.datavitec.runtime' version '1.13.1-patch-2'
     id 'io.github.file5.guidesigner' version '1.0.2'
@@ -180,4 +181,19 @@ test {
 
 compileJava {
     options.encoding = 'UTF-8'
+}
+
+checkstyle {
+    toolVersion = '10.21.0'
+    configFile = file("${rootDir}/checkstyle.xml")
+    ignoreFailures = false
+    maxWarnings = 0
+}
+
+checkstyleMain {
+    source = 'src/main/java'
+}
+
+checkstyleTest {
+    source = 'src/test/java'
 }
