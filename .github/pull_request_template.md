@@ -7,10 +7,9 @@
 <!-- Reference the task number (e.g., TG1.1) -->
 
 ## Checklist
-- [ ] Build ist grün (`./gradlew build` passes)
-- [ ] Tests sind grün (`./gradlew test` passes)
-- [ ] Doku aktualisiert (Documentation updated if necessary)
-- [ ] Code follows Google Java Style Guide (`./gradlew check` passes)
+- [ ] Build ist grün
+- [ ] Tests sind grün
+- [ ] Doku aktualisiert
 
 ## Additional Notes
 <!-- Any additional information that reviewers should know -->
