@@ -14,6 +14,7 @@ import pw.wunderlich.lightbeat.audio.device.AudioDevice;
 import pw.wunderlich.lightbeat.config.Config;
 import pw.wunderlich.lightbeat.config.ConfigNode;
 import pw.wunderlich.lightbeat.gui.swing.*;
+import pw.wunderlich.lightbeat.gui.util.BrowserLauncher;
 import pw.wunderlich.lightbeat.hue.bridge.HueManager;
 import pw.wunderlich.lightbeat.hue.bridge.color.ColorSet;
 import pw.wunderlich.lightbeat.hue.bridge.color.CustomColorSet;
@@ -26,7 +27,6 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
@@ -105,7 +105,7 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
 
         // audio source panel
         refreshDeviceSelector();
-        deviceHelpButton.addActionListener(e -> openLinkInBrowser("https://lightbeat.wunderlich.pw/audioguide"));
+        deviceHelpButton.addActionListener(e -> BrowserLauncher.openUrl("https://lightbeat.wunderlich.pw/audioguide"));
 
         // colors panel
         colorsPreviewPanel.addMouseListener(new MouseAdapter() {
@@ -177,7 +177,7 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
         urlLabel.addMouseListener(new MouseInputAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                openLinkInBrowser("https://lightbeat.wunderlich.pw");
+                BrowserLauncher.openUrl("https://lightbeat.wunderlich.pw");
             }
         });
 
@@ -346,7 +346,7 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
                             "Update Found",
                             JOptionPane.YES_NO_OPTION);
                     if (answerCode == 0) {
-                        openLinkInBrowser("https://lightbeat.wunderlich.pw/?downloads");
+                        BrowserLauncher.openUrl("https://lightbeat.wunderlich.pw/?downloads");
                     } else if (answerCode == 1) {
                         config.putLong(ConfigNode.UPDATE_DISABLE_NOTIFICATION, (int) (System.currentTimeMillis() / 1000));
                     }
@@ -625,15 +625,6 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
 
         toReturn.setSelected(true);
         return toReturn;
-    }
-
-    private void openLinkInBrowser(String url) {
-        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            try {
-                desktop.browse(new URI(url));
-            } catch (Exception ignored) {}
-        }
     }
 
     private boolean isSelectionFrameActive() {
