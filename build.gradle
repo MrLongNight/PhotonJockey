@@ -110,14 +110,14 @@ tasks.register('bundleReleaseZip', Zip) {
             }
         }
         from('src/main/resources/launch_lightbeat.bat')
-        from('THIRD_PARTY_LICENSES.md')
+        from('docs/legal/THIRD_PARTY_LICENSES.md')
     }
 }
 
 jpackageImage {
     doLast {
         copy {
-            from('THIRD_PARTY_LICENSES.md')
+            from('docs/legal/THIRD_PARTY_LICENSES.md')
             into(layout.buildDirectory.dir("jpackage/${project.name}"))
         }
     }
@@ -235,5 +235,20 @@ spotbugsTest {
             enabled = true
             destination = file("${buildDir}/reports/spotbugs/test.html")
         }
+    }
+}
+
+tasks.register('generateCodeMetrics', Exec) {
+    group = 'Documentation'
+    description = 'Generate code metrics report for refactoring analysis'
+    workingDir = projectDir
+    commandLine = ['python3', 'tools/generate_metrics.py']
+    
+    doFirst {
+        println 'Generating code metrics...'
+    }
+    
+    doLast {
+        println 'Code metrics generated in reports/metrics.json'
     }
 }

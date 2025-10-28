@@ -12,7 +12,7 @@ Usage:
     python3 tools/run_metrics.py
     
 Output:
-    reports/metrics.json
+    reports/metrics_tg13.json
 """
 
 import json
@@ -516,7 +516,7 @@ def main():
     reports_dir.mkdir(exist_ok=True)
     
     # Write metrics to JSON
-    output_file = reports_dir / "metrics.json"
+    output_file = reports_dir / "metrics_tg13.json"
     print()
     print(f"Writing metrics to {output_file}...")
     
