@@ -203,3 +203,18 @@ checkstyleMain {
 checkstyleTest {
     source = 'src/test/java'
 }
+
+tasks.register('generateCodeMetrics', Exec) {
+    group = 'Documentation'
+    description = 'Generate code metrics report for refactoring analysis'
+    workingDir = projectDir
+    commandLine = ['python3', 'tools/generate_metrics.py']
+    
+    doFirst {
+        println 'Generating code metrics...'
+    }
+    
+    doLast {
+        println 'Code metrics generated in reports/metrics.json'
+    }
+}

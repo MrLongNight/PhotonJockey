@@ -1,0 +1,3478 @@
+{
+  "analysis_date": "2025-10-28T13:23:18Z",
+  "total_classes": 74,
+  "classes": [
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.frame.MainFrame",
+      "file_path": "pw/wunderlich/lightbeat/gui/frame/MainFrame.java",
+      "metrics": {
+        "lines_of_code": 516,
+        "method_count": 28,
+        "field_count": 92,
+        "import_count": 30,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 227,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "mousePressed",
+          "line_number": 113,
+          "lines_of_code": 3
+        },
+        {
+          "name": "mouseReleased",
+          "line_number": 179,
+          "lines_of_code": 3
+        },
+        {
+          "name": "createUIComponents",
+          "line_number": 223,
+          "lines_of_code": 25
+        },
+        {
+          "name": "onWindowClose",
+          "line_number": 250,
+          "lines_of_code": 18
+        },
+        {
+          "name": "beatReceived",
+          "line_number": 270,
+          "lines_of_code": 7
+        },
+        {
+          "name": "noBeatReceived",
+          "line_number": 279,
+          "lines_of_code": 1
+        },
+        {
+          "name": "silenceDetected",
+          "line_number": 282,
+          "lines_of_code": 1
+        },
+        {
+          "name": "audioReaderStopped",
+          "line_number": 285,
+          "lines_of_code": 24
+        },
+        {
+          "name": "refreshColorSets",
+          "line_number": 310,
+          "lines_of_code": 17
+        },
+        {
+          "name": "scheduleUpdateCheck",
+          "line_number": 328,
+          "lines_of_code": 33
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.WASAPIDeviceProvider",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/WASAPIDeviceProvider.java",
+      "metrics": {
+        "lines_of_code": 216,
+        "method_count": 17,
+        "field_count": 24,
+        "import_count": 21,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 96,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "isWindows",
+          "line_number": 35,
+          "lines_of_code": 3
+        },
+        {
+          "name": "WASAPIDeviceProvider",
+          "line_number": 40,
+          "lines_of_code": 6
+        },
+        {
+          "name": "getAudioSystemProtocol",
+          "line_number": 48,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioSystemName",
+          "line_number": 53,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioDevices",
+          "line_number": 58,
+          "lines_of_code": 13
+        },
+        {
+          "name": "createAudioDevice",
+          "line_number": 73,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getDevices",
+          "line_number": 77,
+          "lines_of_code": 12
+        },
+        {
+          "name": "WASAPILoopbackAudioDevice",
+          "line_number": 104,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getName",
+          "line_number": 109,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioFormat",
+          "line_number": 114,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.frame.ConnectFrame",
+      "file_path": "pw/wunderlich/lightbeat/gui/frame/ConnectFrame.java",
+      "metrics": {
+        "lines_of_code": 210,
+        "method_count": 16,
+        "field_count": 24,
+        "import_count": 17,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 93,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "ConnectFrame",
+          "line_number": 47,
+          "lines_of_code": 66
+        },
+        {
+          "name": "keyTyped",
+          "line_number": 65,
+          "lines_of_code": 10
+        },
+        {
+          "name": "focusGained",
+          "line_number": 80,
+          "lines_of_code": 6
+        },
+        {
+          "name": "focusLost",
+          "line_number": 87,
+          "lines_of_code": 6
+        },
+        {
+          "name": "onWindowClose",
+          "line_number": 115,
+          "lines_of_code": 1
+        },
+        {
+          "name": "isScanningForBridges",
+          "line_number": 118,
+          "lines_of_code": 3
+        },
+        {
+          "name": "displayFoundBridges",
+          "line_number": 123,
+          "lines_of_code": 6
+        },
+        {
+          "name": "isAttemptingConnection",
+          "line_number": 131,
+          "lines_of_code": 3
+        },
+        {
+          "name": "requestPushlink",
+          "line_number": 136,
+          "lines_of_code": 18
+        },
+        {
+          "name": "pushlinkHasFailed",
+          "line_number": 156,
+          "lines_of_code": 8
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.frame.ColorSelectionFrame",
+      "file_path": "pw/wunderlich/lightbeat/gui/frame/ColorSelectionFrame.java",
+      "metrics": {
+        "lines_of_code": 187,
+        "method_count": 15,
+        "field_count": 27,
+        "import_count": 19,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 90,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "ColorSelectionFrame",
+          "line_number": 76,
+          "lines_of_code": 140
+        },
+        {
+          "name": "mouseClicked",
+          "line_number": 82,
+          "lines_of_code": 14
+        },
+        {
+          "name": "mouseDragged",
+          "line_number": 98,
+          "lines_of_code": 3
+        },
+        {
+          "name": "updateCurrentColorPanel",
+          "line_number": 102,
+          "lines_of_code": 14
+        },
+        {
+          "name": "mousePressed",
+          "line_number": 123,
+          "lines_of_code": 3
+        },
+        {
+          "name": "mouseEntered",
+          "line_number": 128,
+          "lines_of_code": 3
+        },
+        {
+          "name": "mouseExited",
+          "line_number": 133,
+          "lines_of_code": 3
+        },
+        {
+          "name": "insertString",
+          "line_number": 148,
+          "lines_of_code": 7
+        },
+        {
+          "name": "keyTyped",
+          "line_number": 159,
+          "lines_of_code": 3
+        },
+        {
+          "name": "addColorTile",
+          "line_number": 217,
+          "lines_of_code": 14
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "org.jitsi.impl.neomedia.device.PulseAudioSystem",
+      "file_path": "org/jitsi/impl/neomedia/device/PulseAudioSystem.java",
+      "metrics": {
+        "lines_of_code": 490,
+        "method_count": 0,
+        "field_count": 37,
+        "import_count": 11,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 86,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.LBAudioReader",
+      "file_path": "pw/wunderlich/lightbeat/audio/LBAudioReader.java",
+      "metrics": {
+        "lines_of_code": 200,
+        "method_count": 9,
+        "field_count": 35,
+        "import_count": 16,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 82,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "LBAudioReader",
+          "line_number": 52,
+          "lines_of_code": 16
+        },
+        {
+          "name": "getSupportedDevices",
+          "line_number": 70,
+          "lines_of_code": 10
+        },
+        {
+          "name": "getDeviceByName",
+          "line_number": 82,
+          "lines_of_code": 6
+        },
+        {
+          "name": "start",
+          "line_number": 90,
+          "lines_of_code": 41
+        },
+        {
+          "name": "notifyObservers",
+          "line_number": 199,
+          "lines_of_code": 14
+        },
+        {
+          "name": "lowPassFilter",
+          "line_number": 217,
+          "lines_of_code": 17
+        },
+        {
+          "name": "isOpen",
+          "line_number": 236,
+          "lines_of_code": 3
+        },
+        {
+          "name": "stop",
+          "line_number": 241,
+          "lines_of_code": 24
+        },
+        {
+          "name": "registerBeatObserver",
+          "line_number": 267,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.BrightnessCalibrator",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/BrightnessCalibrator.java",
+      "metrics": {
+        "lines_of_code": 96,
+        "method_count": 10,
+        "field_count": 34,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 73,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "updateConfigValues",
+          "line_number": 49,
+          "lines_of_code": 19
+        },
+        {
+          "name": "getBrightness",
+          "line_number": 75,
+          "lines_of_code": 21
+        },
+        {
+          "name": "getLowestBrightnessData",
+          "line_number": 97,
+          "lines_of_code": 3
+        },
+        {
+          "name": "clearHistory",
+          "line_number": 101,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getBrightnessData",
+          "line_number": 105,
+          "lines_of_code": 17
+        },
+        {
+          "name": "BrightnessData",
+          "line_number": 133,
+          "lines_of_code": 13
+        },
+        {
+          "name": "getBrightnessPercentage",
+          "line_number": 147,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isBrightnessChange",
+          "line_number": 151,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getBrightnessFade",
+          "line_number": 155,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getBrightness",
+          "line_number": 159,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.FrameManager",
+      "file_path": "pw/wunderlich/lightbeat/gui/FrameManager.java",
+      "metrics": {
+        "lines_of_code": 120,
+        "method_count": 11,
+        "field_count": 10,
+        "import_count": 20,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 3,
+        "complexity_score": 70,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "isScanningForBridges",
+          "line_number": 73,
+          "lines_of_code": 3
+        },
+        {
+          "name": "displayFoundBridges",
+          "line_number": 78,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isAttemptingConnection",
+          "line_number": 83,
+          "lines_of_code": 5
+        },
+        {
+          "name": "requestPushlink",
+          "line_number": 90,
+          "lines_of_code": 3
+        },
+        {
+          "name": "pushlinkHasFailed",
+          "line_number": 95,
+          "lines_of_code": 3
+        },
+        {
+          "name": "hasConnected",
+          "line_number": 100,
+          "lines_of_code": 3
+        },
+        {
+          "name": "connectionWasLost",
+          "line_number": 105,
+          "lines_of_code": 3
+        },
+        {
+          "name": "disconnected",
+          "line_number": 110,
+          "lines_of_code": 3
+        },
+        {
+          "name": "showConnectFrame",
+          "line_number": 114,
+          "lines_of_code": 15
+        },
+        {
+          "name": "showMainFrame",
+          "line_number": 130,
+          "lines_of_code": 14
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": true,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.LBHueManager",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/LBHueManager.java",
+      "metrics": {
+        "lines_of_code": 152,
+        "method_count": 12,
+        "field_count": 17,
+        "import_count": 14,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 68,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "LBHueManager",
+          "line_number": 36,
+          "lines_of_code": 4
+        },
+        {
+          "name": "getBridge",
+          "line_number": 42,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getLights",
+          "line_number": 47,
+          "lines_of_code": 10
+        },
+        {
+          "name": "setStateObserver",
+          "line_number": 59,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getPreviousBridges",
+          "line_number": 64,
+          "lines_of_code": 15
+        },
+        {
+          "name": "doBridgesScan",
+          "line_number": 81,
+          "lines_of_code": 31
+        },
+        {
+          "name": "setAttemptConnection",
+          "line_number": 114,
+          "lines_of_code": 52
+        },
+        {
+          "name": "connectionSuccess",
+          "line_number": 120,
+          "lines_of_code": 17
+        },
+        {
+          "name": "connectionError",
+          "line_number": 139,
+          "lines_of_code": 10
+        },
+        {
+          "name": "pushlinkRequired",
+          "line_number": 151,
+          "lines_of_code": 6
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.JavaAudioDeviceProvider",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/JavaAudioDeviceProvider.java",
+      "metrics": {
+        "lines_of_code": 125,
+        "method_count": 10,
+        "field_count": 24,
+        "import_count": 12,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 66,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "JavaAudioDeviceProvider",
+          "line_number": 32,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioDevices",
+          "line_number": 37,
+          "lines_of_code": 9
+        },
+        {
+          "name": "JavaAudioDevice",
+          "line_number": 62,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getName",
+          "line_number": 67,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioFormat",
+          "line_number": 72,
+          "lines_of_code": 3
+        },
+        {
+          "name": "setAudioListener",
+          "line_number": 77,
+          "lines_of_code": 3
+        },
+        {
+          "name": "start",
+          "line_number": 82,
+          "lines_of_code": 22
+        },
+        {
+          "name": "poll",
+          "line_number": 105,
+          "lines_of_code": 25
+        },
+        {
+          "name": "isOpen",
+          "line_number": 132,
+          "lines_of_code": 3
+        },
+        {
+          "name": "stop",
+          "line_number": 137,
+          "lines_of_code": 21
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.config.LBConfig",
+      "file_path": "pw/wunderlich/lightbeat/config/LBConfig.java",
+      "metrics": {
+        "lines_of_code": 129,
+        "method_count": 15,
+        "field_count": 8,
+        "import_count": 5,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 65,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "LBConfig",
+          "line_number": 27,
+          "lines_of_code": 50
+        },
+        {
+          "name": "get",
+          "line_number": 79,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getDefault",
+          "line_number": 83,
+          "lines_of_code": 3
+        },
+        {
+          "name": "put",
+          "line_number": 88,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getInt",
+          "line_number": 93,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getDefaultInt",
+          "line_number": 98,
+          "lines_of_code": 3
+        },
+        {
+          "name": "putInt",
+          "line_number": 103,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getLong",
+          "line_number": 108,
+          "lines_of_code": 3
+        },
+        {
+          "name": "putLong",
+          "line_number": 113,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getBoolean",
+          "line_number": 118,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.LightUpdate",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/LightUpdate.java",
+      "metrics": {
+        "lines_of_code": 70,
+        "method_count": 10,
+        "field_count": 20,
+        "import_count": 6,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 57,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "execute",
+          "line_number": 55,
+          "lines_of_code": 5
+        },
+        {
+          "name": "getLights",
+          "line_number": 61,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getMainLights",
+          "line_number": 68,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getLightsTurnedOn",
+          "line_number": 72,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getColorSet",
+          "line_number": 76,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getBrightness",
+          "line_number": 80,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getBrightnessFade",
+          "line_number": 84,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getBrightnessPercentage",
+          "line_number": 88,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isBrightnessChange",
+          "line_number": 92,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getTimeSinceLastBeat",
+          "line_number": 96,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.util.UpdateChecker",
+      "file_path": "pw/wunderlich/lightbeat/util/UpdateChecker.java",
+      "metrics": {
+        "lines_of_code": 98,
+        "method_count": 4,
+        "field_count": 32,
+        "import_count": 9,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 53,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "UpdateChecker",
+          "line_number": 30,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isUpdateAvailable",
+          "line_number": 40,
+          "lines_of_code": 27
+        },
+        {
+          "name": "getVersionString",
+          "line_number": 75,
+          "lines_of_code": 38
+        },
+        {
+          "name": "isNewerVersion",
+          "line_number": 122,
+          "lines_of_code": 32
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.LBColor",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/LBColor.java",
+      "metrics": {
+        "lines_of_code": 75,
+        "method_count": 8,
+        "field_count": 20,
+        "import_count": 2,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 51,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "getRGB",
+          "line_number": 37,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getHue",
+          "line_number": 42,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getSaturation",
+          "line_number": 47,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getDerivedColor",
+          "line_number": 52,
+          "lines_of_code": 5
+        },
+        {
+          "name": "getRandomizedFloat",
+          "line_number": 58,
+          "lines_of_code": 16
+        },
+        {
+          "name": "isSimilar",
+          "line_number": 76,
+          "lines_of_code": 22
+        },
+        {
+          "name": "equals",
+          "line_number": 100,
+          "lines_of_code": 3
+        },
+        {
+          "name": "hashCode",
+          "line_number": 105,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.HueBeatObserver",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/HueBeatObserver.java",
+      "metrics": {
+        "lines_of_code": 111,
+        "method_count": 7,
+        "field_count": 19,
+        "import_count": 17,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 51,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "HueBeatObserver",
+          "line_number": 47,
+          "lines_of_code": 30
+        },
+        {
+          "name": "beatReceived",
+          "line_number": 79,
+          "lines_of_code": 10
+        },
+        {
+          "name": "noBeatReceived",
+          "line_number": 91,
+          "lines_of_code": 3
+        },
+        {
+          "name": "silenceDetected",
+          "line_number": 96,
+          "lines_of_code": 6
+        },
+        {
+          "name": "audioReaderStopped",
+          "line_number": 104,
+          "lines_of_code": 5
+        },
+        {
+          "name": "passDataToEffectPipe",
+          "line_number": 110,
+          "lines_of_code": 26
+        },
+        {
+          "name": "updateColorSet",
+          "line_number": 137,
+          "lines_of_code": 12
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.LBLight",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/LBLight.java",
+      "metrics": {
+        "lines_of_code": 109,
+        "method_count": 10,
+        "field_count": 10,
+        "import_count": 5,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 50,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "LBLight",
+          "line_number": 30,
+          "lines_of_code": 13
+        },
+        {
+          "name": "getColorController",
+          "line_number": 50,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getBrightnessController",
+          "line_number": 55,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getStrobeController",
+          "line_number": 60,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getStateBuilder",
+          "line_number": 65,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isOn",
+          "line_number": 70,
+          "lines_of_code": 3
+        },
+        {
+          "name": "storeState",
+          "line_number": 124,
+          "lines_of_code": 4
+        },
+        {
+          "name": "restoreState",
+          "line_number": 130,
+          "lines_of_code": 6
+        },
+        {
+          "name": "equals",
+          "line_number": 138,
+          "lines_of_code": 3
+        },
+        {
+          "name": "hashCode",
+          "line_number": 143,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.CustomColorSet",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/CustomColorSet.java",
+      "metrics": {
+        "lines_of_code": 81,
+        "method_count": 6,
+        "field_count": 22,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 48,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "CustomColorSet",
+          "line_number": 23,
+          "lines_of_code": 14
+        },
+        {
+          "name": "getNextColor",
+          "line_number": 53,
+          "lines_of_code": 14
+        },
+        {
+          "name": "getColors",
+          "line_number": 69,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getColorRandomizationRange",
+          "line_number": 73,
+          "lines_of_code": 3
+        },
+        {
+          "name": "equals",
+          "line_number": 78,
+          "lines_of_code": 29
+        },
+        {
+          "name": "hashCode",
+          "line_number": 109,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.BaseJmfAudioDevice",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/BaseJmfAudioDevice.java",
+      "metrics": {
+        "lines_of_code": 99,
+        "method_count": 6,
+        "field_count": 19,
+        "import_count": 7,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 46,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "BaseJmfAudioDevice",
+          "line_number": 28,
+          "lines_of_code": 4
+        },
+        {
+          "name": "getName",
+          "line_number": 34,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioFormat",
+          "line_number": 39,
+          "lines_of_code": 3
+        },
+        {
+          "name": "setAudioListener",
+          "line_number": 44,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isOpen",
+          "line_number": 49,
+          "lines_of_code": 3
+        },
+        {
+          "name": "notifyListener",
+          "line_number": 91,
+          "lines_of_code": 13
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.frame.AbstractFrame",
+      "file_path": "pw/wunderlich/lightbeat/gui/frame/AbstractFrame.java",
+      "metrics": {
+        "lines_of_code": 102,
+        "method_count": 8,
+        "field_count": 12,
+        "import_count": 13,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 46,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "drawFrame",
+          "line_number": 49,
+          "lines_of_code": 63
+        },
+        {
+          "name": "componentResized",
+          "line_number": 74,
+          "lines_of_code": 8
+        },
+        {
+          "name": "windowClosing",
+          "line_number": 86,
+          "lines_of_code": 20
+        },
+        {
+          "name": "doInBackground",
+          "line_number": 94,
+          "lines_of_code": 4
+        },
+        {
+          "name": "done",
+          "line_number": 100,
+          "lines_of_code": 4
+        },
+        {
+          "name": "runOnSwingThread",
+          "line_number": 113,
+          "lines_of_code": 7
+        },
+        {
+          "name": "getJFrame",
+          "line_number": 122,
+          "lines_of_code": 3
+        },
+        {
+          "name": "dispose",
+          "line_number": 127,
+          "lines_of_code": 4
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.swing.JColorPanel",
+      "file_path": "pw/wunderlich/lightbeat/gui/swing/JColorPanel.java",
+      "metrics": {
+        "lines_of_code": 92,
+        "method_count": 8,
+        "field_count": 13,
+        "import_count": 12,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 46,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "JColorPanel",
+          "line_number": 39,
+          "lines_of_code": 27
+        },
+        {
+          "name": "componentResized",
+          "line_number": 47,
+          "lines_of_code": 3
+        },
+        {
+          "name": "mouseEntered",
+          "line_number": 54,
+          "lines_of_code": 4
+        },
+        {
+          "name": "mouseExited",
+          "line_number": 60,
+          "lines_of_code": 4
+        },
+        {
+          "name": "paintComponent",
+          "line_number": 68,
+          "lines_of_code": 5
+        },
+        {
+          "name": "setColorSet",
+          "line_number": 74,
+          "lines_of_code": 6
+        },
+        {
+          "name": "repaintShifted",
+          "line_number": 86,
+          "lines_of_code": 10
+        },
+        {
+          "name": "repaintCanvas",
+          "line_number": 97,
+          "lines_of_code": 33
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.util.DoubleAverageBuffer",
+      "file_path": "pw/wunderlich/lightbeat/util/DoubleAverageBuffer.java",
+      "metrics": {
+        "lines_of_code": 71,
+        "method_count": 9,
+        "field_count": 12,
+        "import_count": 1,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 46,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "DoubleAverageBuffer",
+          "line_number": 22,
+          "lines_of_code": 3
+        },
+        {
+          "name": "DoubleAverageBuffer",
+          "line_number": 26,
+          "lines_of_code": 4
+        },
+        {
+          "name": "add",
+          "line_number": 31,
+          "lines_of_code": 33
+        },
+        {
+          "name": "getBuffer",
+          "line_number": 65,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getCurrentAverage",
+          "line_number": 69,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getMaxValue",
+          "line_number": 73,
+          "lines_of_code": 6
+        },
+        {
+          "name": "size",
+          "line_number": 80,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isFull",
+          "line_number": 84,
+          "lines_of_code": 3
+        },
+        {
+          "name": "clear",
+          "line_number": 88,
+          "lines_of_code": 8
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.LightStateBuilder",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/LightStateBuilder.java",
+      "metrics": {
+        "lines_of_code": 82,
+        "method_count": 10,
+        "field_count": 6,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 44,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "create",
+          "line_number": 14,
+          "lines_of_code": 3
+        },
+        {
+          "name": "LightStateBuilder",
+          "line_number": 25,
+          "lines_of_code": 1
+        },
+        {
+          "name": "copyFromBuilder",
+          "line_number": 27,
+          "lines_of_code": 25
+        },
+        {
+          "name": "setTransitionTime",
+          "line_number": 53,
+          "lines_of_code": 4
+        },
+        {
+          "name": "setOn",
+          "line_number": 58,
+          "lines_of_code": 4
+        },
+        {
+          "name": "setAlertMode",
+          "line_number": 63,
+          "lines_of_code": 4
+        },
+        {
+          "name": "setColor",
+          "line_number": 68,
+          "lines_of_code": 4
+        },
+        {
+          "name": "setBrightness",
+          "line_number": 73,
+          "lines_of_code": 4
+        },
+        {
+          "name": "isDefault",
+          "line_number": 78,
+          "lines_of_code": 6
+        },
+        {
+          "name": "getLightState",
+          "line_number": 85,
+          "lines_of_code": 28
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.UpdateQueue",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/UpdateQueue.java",
+      "metrics": {
+        "lines_of_code": 83,
+        "method_count": 4,
+        "field_count": 13,
+        "import_count": 9,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 2,
+        "complexity_score": 43,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "UpdateQueue",
+          "line_number": 35,
+          "lines_of_code": 5
+        },
+        {
+          "name": "addUpdate",
+          "line_number": 41,
+          "lines_of_code": 16
+        },
+        {
+          "name": "processQueue",
+          "line_number": 58,
+          "lines_of_code": 19
+        },
+        {
+          "name": "getLightInfo",
+          "line_number": 87,
+          "lines_of_code": 22
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": true,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.swing.WrapLayout",
+      "file_path": "pw/wunderlich/lightbeat/gui/swing/WrapLayout.java",
+      "metrics": {
+        "lines_of_code": 66,
+        "method_count": 5,
+        "field_count": 16,
+        "import_count": 2,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 1,
+        "complexity_score": 42,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "WrapLayout",
+          "line_number": 12,
+          "lines_of_code": 3
+        },
+        {
+          "name": "preferredLayoutSize",
+          "line_number": 17,
+          "lines_of_code": 3
+        },
+        {
+          "name": "minimumLayoutSize",
+          "line_number": 22,
+          "lines_of_code": 5
+        },
+        {
+          "name": "layoutSize",
+          "line_number": 28,
+          "lines_of_code": 55
+        },
+        {
+          "name": "addRow",
+          "line_number": 84,
+          "lines_of_code": 9
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": true,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.BridgeConnection",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/BridgeConnection.java",
+      "metrics": {
+        "lines_of_code": 130,
+        "method_count": 6,
+        "field_count": 11,
+        "import_count": 11,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 42,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "BridgeConnection",
+          "line_number": 40,
+          "lines_of_code": 53
+        },
+        {
+          "name": "scheduleHeartbeat",
+          "line_number": 94,
+          "lines_of_code": 35
+        },
+        {
+          "name": "getName",
+          "line_number": 130,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getLights",
+          "line_number": 137,
+          "lines_of_code": 10
+        },
+        {
+          "name": "refresh",
+          "line_number": 151,
+          "lines_of_code": 3
+        },
+        {
+          "name": "disconnect",
+          "line_number": 159,
+          "lines_of_code": 5
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.AppTaskOrchestrator",
+      "file_path": "pw/wunderlich/lightbeat/AppTaskOrchestrator.java",
+      "metrics": {
+        "lines_of_code": 76,
+        "method_count": 5,
+        "field_count": 9,
+        "import_count": 4,
+        "thread_usage": 0,
+        "executor_usage": 2,
+        "synchronized_blocks": 0,
+        "complexity_score": 41,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "execute",
+          "line_number": 61,
+          "lines_of_code": 3
+        },
+        {
+          "name": "shutdown",
+          "line_number": 110,
+          "lines_of_code": 22
+        },
+        {
+          "name": "forceShutdown",
+          "line_number": 133,
+          "lines_of_code": 4
+        },
+        {
+          "name": "isShutdown",
+          "line_number": 138,
+          "lines_of_code": 3
+        },
+        {
+          "name": "close",
+          "line_number": 143,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.BeatInterpreter",
+      "file_path": "pw/wunderlich/lightbeat/audio/BeatInterpreter.java",
+      "metrics": {
+        "lines_of_code": 75,
+        "method_count": 3,
+        "field_count": 22,
+        "import_count": 6,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 38,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "interpretValue",
+          "line_number": 54,
+          "lines_of_code": 47
+        },
+        {
+          "name": "disableSilenceThreshold",
+          "line_number": 102,
+          "lines_of_code": 4
+        },
+        {
+          "name": "fD",
+          "line_number": 107,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.ColorStrobeEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/ColorStrobeEffect.java",
+      "metrics": {
+        "lines_of_code": 88,
+        "method_count": 7,
+        "field_count": 9,
+        "import_count": 8,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 38,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "ColorStrobeEffect",
+          "line_number": 30,
+          "lines_of_code": 4
+        },
+        {
+          "name": "initialize",
+          "line_number": 36,
+          "lines_of_code": 3
+        },
+        {
+          "name": "execute",
+          "line_number": 41,
+          "lines_of_code": 45
+        },
+        {
+          "name": "run",
+          "line_number": 71,
+          "lines_of_code": 13
+        },
+        {
+          "name": "executionDone",
+          "line_number": 88,
+          "lines_of_code": 15
+        },
+        {
+          "name": "setNewColors",
+          "line_number": 104,
+          "lines_of_code": 14
+        },
+        {
+          "name": "resetFadeColor",
+          "line_number": 119,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.controller.StrobeController",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/controller/StrobeController.java",
+      "metrics": {
+        "lines_of_code": 78,
+        "method_count": 8,
+        "field_count": 5,
+        "import_count": 5,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 36,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "StrobeController",
+          "line_number": 23,
+          "lines_of_code": 4
+        },
+        {
+          "name": "unsetControllingEffect",
+          "line_number": 29,
+          "lines_of_code": 14
+        },
+        {
+          "name": "applyUpdates",
+          "line_number": 44,
+          "lines_of_code": 22
+        },
+        {
+          "name": "isStrobing",
+          "line_number": 67,
+          "lines_of_code": 3
+        },
+        {
+          "name": "doStrobe",
+          "line_number": 78,
+          "lines_of_code": 18
+        },
+        {
+          "name": "cancelStrobe",
+          "line_number": 97,
+          "lines_of_code": 5
+        },
+        {
+          "name": "setOn",
+          "line_number": 103,
+          "lines_of_code": 7
+        },
+        {
+          "name": "interruptStrobe",
+          "line_number": 114,
+          "lines_of_code": 8
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.swing.JConfigSlider",
+      "file_path": "pw/wunderlich/lightbeat/gui/swing/JConfigSlider.java",
+      "metrics": {
+        "lines_of_code": 83,
+        "method_count": 5,
+        "field_count": 11,
+        "import_count": 6,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 34,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "JConfigSlider",
+          "line_number": 36,
+          "lines_of_code": 51
+        },
+        {
+          "name": "mouseEntered",
+          "line_number": 50,
+          "lines_of_code": 5
+        },
+        {
+          "name": "setBoundedSlider",
+          "line_number": 88,
+          "lines_of_code": 5
+        },
+        {
+          "name": "restoreDefault",
+          "line_number": 95,
+          "lines_of_code": 3
+        },
+        {
+          "name": "updateTooltip",
+          "line_number": 99,
+          "lines_of_code": 16
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.controller.BrightnessController",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/controller/BrightnessController.java",
+      "metrics": {
+        "lines_of_code": 47,
+        "method_count": 8,
+        "field_count": 1,
+        "import_count": 1,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 29,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "BrightnessController",
+          "line_number": 18,
+          "lines_of_code": 3
+        },
+        {
+          "name": "applyUpdates",
+          "line_number": 22,
+          "lines_of_code": 12
+        },
+        {
+          "name": "applyFadeUpdates",
+          "line_number": 35,
+          "lines_of_code": 3
+        },
+        {
+          "name": "setBrightness",
+          "line_number": 45,
+          "lines_of_code": 5
+        },
+        {
+          "name": "setAlertMode",
+          "line_number": 51,
+          "lines_of_code": 4
+        },
+        {
+          "name": "forceBrightnessUpdate",
+          "line_number": 56,
+          "lines_of_code": 4
+        },
+        {
+          "name": "isBrightnessWasIncreased",
+          "line_number": 61,
+          "lines_of_code": 3
+        },
+        {
+          "name": "updateBrightness",
+          "line_number": 65,
+          "lines_of_code": 7
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.util.TimeThreshold",
+      "file_path": "pw/wunderlich/lightbeat/util/TimeThreshold.java",
+      "metrics": {
+        "lines_of_code": 35,
+        "method_count": 7,
+        "field_count": 5,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 29,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "TimeThreshold",
+          "line_number": 14,
+          "lines_of_code": 4
+        },
+        {
+          "name": "TimeThreshold",
+          "line_number": 23,
+          "lines_of_code": 4
+        },
+        {
+          "name": "setCurrentThreshold",
+          "line_number": 31,
+          "lines_of_code": 10
+        },
+        {
+          "name": "disable",
+          "line_number": 42,
+          "lines_of_code": 5
+        },
+        {
+          "name": "isEnabled",
+          "line_number": 48,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isMet",
+          "line_number": 52,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getCurrentThreshold",
+          "line_number": 56,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.LightBeat",
+      "file_path": "pw/wunderlich/lightbeat/LightBeat.java",
+      "metrics": {
+        "lines_of_code": 48,
+        "method_count": 4,
+        "field_count": 11,
+        "import_count": 10,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 27,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "main",
+          "line_number": 24,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getVersion",
+          "line_number": 28,
+          "lines_of_code": 4
+        },
+        {
+          "name": "LightBeat",
+          "line_number": 34,
+          "lines_of_code": 25
+        },
+        {
+          "name": "getLastConnectedLegacy",
+          "line_number": 60,
+          "lines_of_code": 9
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.LibJitsiDeviceProvider",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/LibJitsiDeviceProvider.java",
+      "metrics": {
+        "lines_of_code": 71,
+        "method_count": 3,
+        "field_count": 6,
+        "import_count": 13,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 1,
+        "complexity_score": 27,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "LibJitsiDeviceProvider",
+          "line_number": 32,
+          "lines_of_code": 16
+        },
+        {
+          "name": "initializeLibJitsi",
+          "line_number": 49,
+          "lines_of_code": 20
+        },
+        {
+          "name": "getAudioDevices",
+          "line_number": 74,
+          "lines_of_code": 13
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": true,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.PullModelAudioDevice",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/PullModelAudioDevice.java",
+      "metrics": {
+        "lines_of_code": 54,
+        "method_count": 6,
+        "field_count": 3,
+        "import_count": 6,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 26,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "PullModelAudioDevice",
+          "line_number": 24,
+          "lines_of_code": 4
+        },
+        {
+          "name": "startReading",
+          "line_number": 30,
+          "lines_of_code": 8
+        },
+        {
+          "name": "stopReading",
+          "line_number": 40,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isOpen",
+          "line_number": 45,
+          "lines_of_code": 3
+        },
+        {
+          "name": "scheduleRead",
+          "line_number": 49,
+          "lines_of_code": 5
+        },
+        {
+          "name": "performRead",
+          "line_number": 55,
+          "lines_of_code": 16
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.controller.ColorController",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/controller/ColorController.java",
+      "metrics": {
+        "lines_of_code": 56,
+        "method_count": 7,
+        "field_count": 0,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 26,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "ColorController",
+          "line_number": 20,
+          "lines_of_code": 3
+        },
+        {
+          "name": "applyUpdates",
+          "line_number": 24,
+          "lines_of_code": 8
+        },
+        {
+          "name": "applyFadeUpdates",
+          "line_number": 33,
+          "lines_of_code": 6
+        },
+        {
+          "name": "setColor",
+          "line_number": 40,
+          "lines_of_code": 6
+        },
+        {
+          "name": "setFadeColor",
+          "line_number": 53,
+          "lines_of_code": 6
+        },
+        {
+          "name": "undoColorChange",
+          "line_number": 60,
+          "lines_of_code": 11
+        },
+        {
+          "name": "updateColor",
+          "line_number": 72,
+          "lines_of_code": 6
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.AbstractThresholdEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/AbstractThresholdEffect.java",
+      "metrics": {
+        "lines_of_code": 56,
+        "method_count": 5,
+        "field_count": 5,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 25,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "beatReceived",
+          "line_number": 33,
+          "lines_of_code": 16
+        },
+        {
+          "name": "noBeatReceived",
+          "line_number": 51,
+          "lines_of_code": 5
+        },
+        {
+          "name": "setBrightnessDeactivationThreshold",
+          "line_number": 57,
+          "lines_of_code": 3
+        },
+        {
+          "name": "executionDone",
+          "line_number": 63,
+          "lines_of_code": 3
+        },
+        {
+          "name": "setActive",
+          "line_number": 67,
+          "lines_of_code": 11
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.ColorFlipEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/ColorFlipEffect.java",
+      "metrics": {
+        "lines_of_code": 62,
+        "method_count": 5,
+        "field_count": 4,
+        "import_count": 6,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 25,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "ColorFlipEffect",
+          "line_number": 27,
+          "lines_of_code": 3
+        },
+        {
+          "name": "initialize",
+          "line_number": 32,
+          "lines_of_code": 9
+        },
+        {
+          "name": "execute",
+          "line_number": 43,
+          "lines_of_code": 33
+        },
+        {
+          "name": "flipLightColor",
+          "line_number": 77,
+          "lines_of_code": 7
+        },
+        {
+          "name": "executionDone",
+          "line_number": 86,
+          "lines_of_code": 6
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.StrobeEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/StrobeEffect.java",
+      "metrics": {
+        "lines_of_code": 71,
+        "method_count": 5,
+        "field_count": 3,
+        "import_count": 4,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 25,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "StrobeEffect",
+          "line_number": 19,
+          "lines_of_code": 4
+        },
+        {
+          "name": "initialize",
+          "line_number": 25,
+          "lines_of_code": 4
+        },
+        {
+          "name": "execute",
+          "line_number": 31,
+          "lines_of_code": 50
+        },
+        {
+          "name": "executionDone",
+          "line_number": 83,
+          "lines_of_code": 3
+        },
+        {
+          "name": "executeEffectOnceRandomly",
+          "line_number": 88,
+          "lines_of_code": 12
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.ColorChainEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/ColorChainEffect.java",
+      "metrics": {
+        "lines_of_code": 55,
+        "method_count": 4,
+        "field_count": 6,
+        "import_count": 6,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 23,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "ColorChainEffect",
+          "line_number": 25,
+          "lines_of_code": 3
+        },
+        {
+          "name": "initialize",
+          "line_number": 30,
+          "lines_of_code": 5
+        },
+        {
+          "name": "execute",
+          "line_number": 37,
+          "lines_of_code": 31
+        },
+        {
+          "name": "executionDone",
+          "line_number": 70,
+          "lines_of_code": 6
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.PulseAudioDeviceProvider",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/PulseAudioDeviceProvider.java",
+      "metrics": {
+        "lines_of_code": 37,
+        "method_count": 5,
+        "field_count": 4,
+        "import_count": 7,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 22,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "isLinux",
+          "line_number": 20,
+          "lines_of_code": 4
+        },
+        {
+          "name": "PulseAudioDeviceProvider",
+          "line_number": 26,
+          "lines_of_code": 6
+        },
+        {
+          "name": "getAudioSystemProtocol",
+          "line_number": 34,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioSystemName",
+          "line_number": 39,
+          "lines_of_code": 3
+        },
+        {
+          "name": "createAudioDevice",
+          "line_number": 44,
+          "lines_of_code": 7
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.BeatEvent",
+      "file_path": "pw/wunderlich/lightbeat/audio/BeatEvent.java",
+      "metrics": {
+        "lines_of_code": 25,
+        "method_count": 5,
+        "field_count": 4,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 21,
+        "long_methods": 1
+      },
+      "methods": [
+        {
+          "name": "BeatEvent",
+          "line_number": 6,
+          "lines_of_code": 53
+        },
+        {
+          "name": "triggeringAmplitude",
+          "line_number": 39,
+          "lines_of_code": 3
+        },
+        {
+          "name": "average",
+          "line_number": 47,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isSilence",
+          "line_number": 51,
+          "lines_of_code": 3
+        },
+        {
+          "name": "isNoBeat",
+          "line_number": 55,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": true,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.RandomColorSet",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/RandomColorSet.java",
+      "metrics": {
+        "lines_of_code": 37,
+        "method_count": 4,
+        "field_count": 6,
+        "import_count": 1,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 21,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "getNextColor",
+          "line_number": 38,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getColors",
+          "line_number": 43,
+          "lines_of_code": 3
+        },
+        {
+          "name": "equals",
+          "line_number": 48,
+          "lines_of_code": 3
+        },
+        {
+          "name": "hashCode",
+          "line_number": 53,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": true
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.PushModelAudioDevice",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/PushModelAudioDevice.java",
+      "metrics": {
+        "lines_of_code": 44,
+        "method_count": 4,
+        "field_count": 4,
+        "import_count": 7,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 20,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "PushModelAudioDevice",
+          "line_number": 24,
+          "lines_of_code": 4
+        },
+        {
+          "name": "startReading",
+          "line_number": 30,
+          "lines_of_code": 17
+        },
+        {
+          "name": "stopReading",
+          "line_number": 49,
+          "lines_of_code": 5
+        },
+        {
+          "name": "isOpen",
+          "line_number": 56,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.swing.JIconLabel",
+      "file_path": "pw/wunderlich/lightbeat/gui/swing/JIconLabel.java",
+      "metrics": {
+        "lines_of_code": 35,
+        "method_count": 3,
+        "field_count": 8,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 20,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "JIconLabel",
+          "line_number": 21,
+          "lines_of_code": 15
+        },
+        {
+          "name": "flipIcon",
+          "line_number": 37,
+          "lines_of_code": 6
+        },
+        {
+          "name": "getImageIcon",
+          "line_number": 44,
+          "lines_of_code": 6
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.DefaultEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/DefaultEffect.java",
+      "metrics": {
+        "lines_of_code": 43,
+        "method_count": 4,
+        "field_count": 4,
+        "import_count": 4,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 20,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "execute",
+          "line_number": 19,
+          "lines_of_code": 14
+        },
+        {
+          "name": "noBeatReceived",
+          "line_number": 35,
+          "lines_of_code": 3
+        },
+        {
+          "name": "updateColor",
+          "line_number": 39,
+          "lines_of_code": 9
+        },
+        {
+          "name": "updateBrightness",
+          "line_number": 49,
+          "lines_of_code": 13
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.AccessPoint",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/AccessPoint.java",
+      "metrics": {
+        "lines_of_code": 18,
+        "method_count": 6,
+        "field_count": 0,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 19,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "AccessPoint",
+          "line_number": 6,
+          "lines_of_code": 22
+        },
+        {
+          "name": "AccessPoint",
+          "line_number": 8,
+          "lines_of_code": 3
+        },
+        {
+          "name": "AccessPoint",
+          "line_number": 12,
+          "lines_of_code": 3
+        },
+        {
+          "name": "AccessPoint",
+          "line_number": 16,
+          "lines_of_code": 3
+        },
+        {
+          "name": "hasKey",
+          "line_number": 20,
+          "lines_of_code": 3
+        },
+        {
+          "name": "hasCertificateHash",
+          "line_number": 24,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.controller.AbstractController",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/controller/AbstractController.java",
+      "metrics": {
+        "lines_of_code": 30,
+        "method_count": 3,
+        "field_count": 7,
+        "import_count": 2,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 19,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "canControl",
+          "line_number": 22,
+          "lines_of_code": 3
+        },
+        {
+          "name": "setControllingEffect",
+          "line_number": 33,
+          "lines_of_code": 13
+        },
+        {
+          "name": "unsetControllingEffect",
+          "line_number": 53,
+          "lines_of_code": 8
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.LBAudioFormat",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/LBAudioFormat.java",
+      "metrics": {
+        "lines_of_code": 34,
+        "method_count": 5,
+        "field_count": 0,
+        "import_count": 2,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 18,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "LBAudioFormat",
+          "line_number": 10,
+          "lines_of_code": 38
+        },
+        {
+          "name": "LBAudioFormat",
+          "line_number": 12,
+          "lines_of_code": 8
+        },
+        {
+          "name": "LBAudioFormat",
+          "line_number": 21,
+          "lines_of_code": 8
+        },
+        {
+          "name": "getBytesPerFrame",
+          "line_number": 33,
+          "lines_of_code": 3
+        },
+        {
+          "name": "toString",
+          "line_number": 39,
+          "lines_of_code": 8
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.AlertEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/AlertEffect.java",
+      "metrics": {
+        "lines_of_code": 33,
+        "method_count": 4,
+        "field_count": 3,
+        "import_count": 4,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 18,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "AlertEffect",
+          "line_number": 23,
+          "lines_of_code": 3
+        },
+        {
+          "name": "initialize",
+          "line_number": 28,
+          "lines_of_code": 3
+        },
+        {
+          "name": "execute",
+          "line_number": 33,
+          "lines_of_code": 7
+        },
+        {
+          "name": "executeEffectOnceRandomly",
+          "line_number": 42,
+          "lines_of_code": 9
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.StrobeChainEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/StrobeChainEffect.java",
+      "metrics": {
+        "lines_of_code": 42,
+        "method_count": 4,
+        "field_count": 2,
+        "import_count": 4,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 18,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "StrobeChainEffect",
+          "line_number": 19,
+          "lines_of_code": 4
+        },
+        {
+          "name": "initialize",
+          "line_number": 25,
+          "lines_of_code": 4
+        },
+        {
+          "name": "execute",
+          "line_number": 31,
+          "lines_of_code": 23
+        },
+        {
+          "name": "executionDone",
+          "line_number": 56,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.CoreAudioDeviceProvider",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/CoreAudioDeviceProvider.java",
+      "metrics": {
+        "lines_of_code": 29,
+        "method_count": 5,
+        "field_count": 0,
+        "import_count": 5,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 17,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "isMac",
+          "line_number": 16,
+          "lines_of_code": 3
+        },
+        {
+          "name": "CoreAudioDeviceProvider",
+          "line_number": 21,
+          "lines_of_code": 6
+        },
+        {
+          "name": "getAudioSystemProtocol",
+          "line_number": 29,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioSystemName",
+          "line_number": 34,
+          "lines_of_code": 3
+        },
+        {
+          "name": "createAudioDevice",
+          "line_number": 39,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.config.ConfigNode",
+      "file_path": "pw/wunderlich/lightbeat/config/ConfigNode.java",
+      "metrics": {
+        "lines_of_code": 46,
+        "method_count": 3,
+        "field_count": 4,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 17,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "getKey",
+          "line_number": 42,
+          "lines_of_code": 3
+        },
+        {
+          "name": "setKey",
+          "line_number": 46,
+          "lines_of_code": 5
+        },
+        {
+          "name": "getCustomNode",
+          "line_number": 52,
+          "lines_of_code": 5
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox",
+      "file_path": "pw/wunderlich/lightbeat/gui/swing/JConfigCheckBox.java",
+      "metrics": {
+        "lines_of_code": 33,
+        "method_count": 3,
+        "field_count": 4,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 16,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "JConfigCheckBox",
+          "line_number": 19,
+          "lines_of_code": 21
+        },
+        {
+          "name": "setToRunOnChange",
+          "line_number": 41,
+          "lines_of_code": 4
+        },
+        {
+          "name": "restoreDefault",
+          "line_number": 47,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.TransitionTimeCalibrator",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/TransitionTimeCalibrator.java",
+      "metrics": {
+        "lines_of_code": 28,
+        "method_count": 2,
+        "field_count": 8,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 16,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "getTransitionTime",
+          "line_number": 39,
+          "lines_of_code": 15
+        },
+        {
+          "name": "clearHistory",
+          "line_number": 55,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.ColorFadeEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/ColorFadeEffect.java",
+      "metrics": {
+        "lines_of_code": 30,
+        "method_count": 4,
+        "field_count": 1,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 16,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "ColorFadeEffect",
+          "line_number": 17,
+          "lines_of_code": 3
+        },
+        {
+          "name": "initialize",
+          "line_number": 22,
+          "lines_of_code": 3
+        },
+        {
+          "name": "execute",
+          "line_number": 27,
+          "lines_of_code": 15
+        },
+        {
+          "name": "executionDone",
+          "line_number": 44,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.PortAudioDeviceProvider",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/PortAudioDeviceProvider.java",
+      "metrics": {
+        "lines_of_code": 23,
+        "method_count": 4,
+        "field_count": 0,
+        "import_count": 5,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 14,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "PortAudioDeviceProvider",
+          "line_number": 11,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioSystemProtocol",
+          "line_number": 16,
+          "lines_of_code": 3
+        },
+        {
+          "name": "getAudioSystemName",
+          "line_number": 21,
+          "lines_of_code": 3
+        },
+        {
+          "name": "createAudioDevice",
+          "line_number": 26,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.swing.JColorTile",
+      "file_path": "pw/wunderlich/lightbeat/gui/swing/JColorTile.java",
+      "metrics": {
+        "lines_of_code": 28,
+        "method_count": 3,
+        "field_count": 2,
+        "import_count": 6,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 13,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "JColorTile",
+          "line_number": 16,
+          "lines_of_code": 25
+        },
+        {
+          "name": "mouseEntered",
+          "line_number": 31,
+          "lines_of_code": 3
+        },
+        {
+          "name": "mouseExited",
+          "line_number": 36,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.AbstractEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/AbstractEffect.java",
+      "metrics": {
+        "lines_of_code": 23,
+        "method_count": 3,
+        "field_count": 1,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 12,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "beatReceived",
+          "line_number": 19,
+          "lines_of_code": 3
+        },
+        {
+          "name": "unsetControllingEffect",
+          "line_number": 25,
+          "lines_of_code": 7
+        },
+        {
+          "name": "toString",
+          "line_number": 34,
+          "lines_of_code": 3
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.AbstractRandomEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/AbstractRandomEffect.java",
+      "metrics": {
+        "lines_of_code": 24,
+        "method_count": 1,
+        "field_count": 3,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 8,
+        "long_methods": 0
+      },
+      "methods": [
+        {
+          "name": "beatReceived",
+          "line_number": 24,
+          "lines_of_code": 10
+        }
+      ],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.AudioReader",
+      "file_path": "pw/wunderlich/lightbeat/audio/AudioReader.java",
+      "metrics": {
+        "lines_of_code": 10,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 2,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 1,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.BeatObserver",
+      "file_path": "pw/wunderlich/lightbeat/audio/BeatObserver.java",
+      "metrics": {
+        "lines_of_code": 11,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 1,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.AudioDevice",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/AudioDevice.java",
+      "metrics": {
+        "lines_of_code": 13,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 1,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.config.Config",
+      "file_path": "pw/wunderlich/lightbeat/config/Config.java",
+      "metrics": {
+        "lines_of_code": 17,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 1,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 1,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.HueManager",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/HueManager.java",
+      "metrics": {
+        "lines_of_code": 12,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 2,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 1,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.HueStateObserver",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/HueStateObserver.java",
+      "metrics": {
+        "lines_of_code": 12,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 1,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 1,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.Light",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/Light.java",
+      "metrics": {
+        "lines_of_code": 16,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 3,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 1,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.BeatEventManager",
+      "file_path": "pw/wunderlich/lightbeat/audio/BeatEventManager.java",
+      "metrics": {
+        "lines_of_code": 4,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 0,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.DeviceProvider",
+      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/DeviceProvider.java",
+      "metrics": {
+        "lines_of_code": 6,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 2,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 0,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.frame.HueFrame",
+      "file_path": "pw/wunderlich/lightbeat/gui/frame/HueFrame.java",
+      "metrics": {
+        "lines_of_code": 6,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 1,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 0,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.gui.swing.ConfigComponent",
+      "file_path": "pw/wunderlich/lightbeat/gui/swing/ConfigComponent.java",
+      "metrics": {
+        "lines_of_code": 4,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 0,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.Color",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/Color.java",
+      "metrics": {
+        "lines_of_code": 8,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 0,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 0,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.ColorSet",
+      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/ColorSet.java",
+      "metrics": {
+        "lines_of_code": 7,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 1,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 0,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    },
+    {
+      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.LightEffect",
+      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/LightEffect.java",
+      "metrics": {
+        "lines_of_code": 6,
+        "method_count": 0,
+        "field_count": 0,
+        "import_count": 1,
+        "thread_usage": 0,
+        "executor_usage": 0,
+        "synchronized_blocks": 0,
+        "complexity_score": 0,
+        "long_methods": 0
+      },
+      "methods": [],
+      "refactor_indicators": {
+        "uses_manual_threads": false,
+        "has_synchronization": false,
+        "has_long_methods": false,
+        "high_complexity": false
+      }
+    }
+  ]
+}
