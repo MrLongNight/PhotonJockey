@@ -1,0 +1,74 @@
+digraph PackageDependencies {
+    rankdir=LR;
+    node [shape=box, style=rounded];
+    
+    // Package nodes
+    "org.jitsi.impl.neomedia.device" [label="neomedia...device"];
+    "pw.wunderlich.lightbeat" [label="pw.wunderlich.lightbeat"];
+    "pw.wunderlich.lightbeat.audio" [label="lightbeat...audio"];
+    "pw.wunderlich.lightbeat.audio.device" [label="audio...device"];
+    "pw.wunderlich.lightbeat.audio.device.provider" [label="device...provider"];
+    "pw.wunderlich.lightbeat.config" [label="lightbeat...config"];
+    "pw.wunderlich.lightbeat.gui" [label="lightbeat...gui"];
+    "pw.wunderlich.lightbeat.gui.frame" [label="gui...frame"];
+    "pw.wunderlich.lightbeat.gui.swing" [label="gui...swing"];
+    "pw.wunderlich.lightbeat.hue.bridge" [label="hue...bridge"];
+    "pw.wunderlich.lightbeat.hue.bridge.color" [label="bridge...color"];
+    "pw.wunderlich.lightbeat.hue.bridge.light" [label="bridge...light"];
+    "pw.wunderlich.lightbeat.hue.bridge.light.controller" [label="light...controller"];
+    "pw.wunderlich.lightbeat.hue.visualizer" [label="hue...visualizer"];
+    "pw.wunderlich.lightbeat.hue.visualizer.effect" [label="visualizer...effect"];
+    "pw.wunderlich.lightbeat.util" [label="lightbeat...util"];
+    
+    // Package dependencies
+    "pw.wunderlich.lightbeat" -> "pw.wunderlich.lightbeat.audio";
+    "pw.wunderlich.lightbeat" -> "pw.wunderlich.lightbeat.config";
+    "pw.wunderlich.lightbeat" -> "pw.wunderlich.lightbeat.gui";
+    "pw.wunderlich.lightbeat" -> "pw.wunderlich.lightbeat.hue.bridge";
+    "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat.audio.device";
+    "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat.config";
+    "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat.util";
+    "pw.wunderlich.lightbeat.audio.device.provider" -> "org.jitsi.impl.neomedia.device";
+    "pw.wunderlich.lightbeat.audio.device.provider" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.audio.device.provider" -> "pw.wunderlich.lightbeat.audio.device";
+    "pw.wunderlich.lightbeat.gui" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.gui" -> "pw.wunderlich.lightbeat.audio";
+    "pw.wunderlich.lightbeat.gui" -> "pw.wunderlich.lightbeat.config";
+    "pw.wunderlich.lightbeat.gui" -> "pw.wunderlich.lightbeat.gui.frame";
+    "pw.wunderlich.lightbeat.gui" -> "pw.wunderlich.lightbeat.hue.bridge";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.audio";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.audio.device";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.config";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.gui.swing";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.hue.bridge";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.hue.bridge.color";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.hue.visualizer";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.util";
+    "pw.wunderlich.lightbeat.gui.swing" -> "pw.wunderlich.lightbeat.config";
+    "pw.wunderlich.lightbeat.gui.swing" -> "pw.wunderlich.lightbeat.hue.bridge.color";
+    "pw.wunderlich.lightbeat.hue.bridge" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.hue.bridge" -> "pw.wunderlich.lightbeat.config";
+    "pw.wunderlich.lightbeat.hue.bridge" -> "pw.wunderlich.lightbeat.hue.bridge.light";
+    "pw.wunderlich.lightbeat.hue.bridge.color" -> "pw.wunderlich.lightbeat.config";
+    "pw.wunderlich.lightbeat.hue.bridge.light" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.hue.bridge.light" -> "pw.wunderlich.lightbeat.hue.bridge.color";
+    "pw.wunderlich.lightbeat.hue.bridge.light" -> "pw.wunderlich.lightbeat.hue.bridge.light.controller";
+    "pw.wunderlich.lightbeat.hue.bridge.light" -> "pw.wunderlich.lightbeat.util";
+    "pw.wunderlich.lightbeat.hue.bridge.light.controller" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.hue.bridge.light.controller" -> "pw.wunderlich.lightbeat.hue.bridge.color";
+    "pw.wunderlich.lightbeat.hue.bridge.light.controller" -> "pw.wunderlich.lightbeat.hue.bridge.light";
+    "pw.wunderlich.lightbeat.hue.bridge.light.controller" -> "pw.wunderlich.lightbeat.hue.visualizer.effect";
+    "pw.wunderlich.lightbeat.hue.visualizer" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.hue.visualizer" -> "pw.wunderlich.lightbeat.audio";
+    "pw.wunderlich.lightbeat.hue.visualizer" -> "pw.wunderlich.lightbeat.config";
+    "pw.wunderlich.lightbeat.hue.visualizer" -> "pw.wunderlich.lightbeat.hue.bridge.color";
+    "pw.wunderlich.lightbeat.hue.visualizer" -> "pw.wunderlich.lightbeat.hue.bridge.light";
+    "pw.wunderlich.lightbeat.hue.visualizer" -> "pw.wunderlich.lightbeat.util";
+    "pw.wunderlich.lightbeat.hue.visualizer.effect" -> "pw.wunderlich.lightbeat";
+    "pw.wunderlich.lightbeat.hue.visualizer.effect" -> "pw.wunderlich.lightbeat.hue.bridge.color";
+    "pw.wunderlich.lightbeat.hue.visualizer.effect" -> "pw.wunderlich.lightbeat.hue.bridge.light";
+    "pw.wunderlich.lightbeat.hue.visualizer.effect" -> "pw.wunderlich.lightbeat.hue.visualizer";
+    "pw.wunderlich.lightbeat.hue.visualizer.effect" -> "pw.wunderlich.lightbeat.util";
+}
