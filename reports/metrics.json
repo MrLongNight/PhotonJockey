@@ -64,7 +64,7 @@
       "complexity": 9
     },
     {
-      "method": "to.copyFromBuilder",
+      "method": "LightStateBuilder.copyFromBuilder",
       "file": "src/main/java/pw/wunderlich/lightbeat/hue/bridge/light/LightStateBuilder.java",
       "complexity": 9
     },
@@ -85,6 +85,11 @@
     },
     {
       "method": "PulseAudioSystem.createContext",
+      "file": "src/main/java/org/jitsi/impl/neomedia/device/PulseAudioSystem.java",
+      "complexity": 9
+    },
+    {
+      "method": "PulseAudioSystem.sourceInfoListCb",
       "file": "src/main/java/org/jitsi/impl/neomedia/device/PulseAudioSystem.java",
       "complexity": 9
     },
@@ -111,11 +116,6 @@
     {
       "method": "ColorChainEffect.execute",
       "file": "src/main/java/pw/wunderlich/lightbeat/hue/visualizer/effect/ColorChainEffect.java",
-      "complexity": 8
-    },
-    {
-      "method": "for.start",
-      "file": "src/main/java/pw/wunderlich/lightbeat/audio/device/BaseJmfAudioDevice.java",
       "complexity": 8
     }
   ],

@@ -20,6 +20,7 @@ import os
 import re
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Tuple, Any
@@ -135,9 +136,13 @@ class JavaMetricsCollector:
             # Get relative path for reporting
             relative_path = file_path.relative_to(self.project_root)
             
-            # Extract class name
-            class_match = re.search(r'class\s+(\w+)', content)
-            class_name = class_match.group(1) if class_match else "Unknown"
+            # Remove comments before extracting class name to avoid false matches
+            content_no_comments = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
+            content_no_comments = re.sub(r'//.*$', '', content_no_comments, flags=re.MULTILINE)
+            
+            # Extract class name - look for public/private class declaration
+            class_match = re.search(r'(public|private|protected)?\s*(abstract|final|static)?\s*class\s+(\w+)', content_no_comments)
+            class_name = class_match.group(3) if class_match else "Unknown"
             
             # Find all methods (simplified pattern)
             # This pattern looks for method declarations
@@ -146,8 +151,17 @@ class JavaMetricsCollector:
             for method_match in re.finditer(method_pattern, content):
                 method_name = method_match.group(2)
                 
-                # Skip constructors and common non-methods
-                if method_name in ['if', 'while', 'for', 'switch', 'catch', 'synchronized']:
+                # Skip Java reserved keywords that shouldn't be method names
+                java_keywords = {
+                    'if', 'while', 'for', 'switch', 'catch', 'synchronized', 'try', 'else',
+                    'return', 'break', 'continue', 'throw', 'throws', 'new', 'class',
+                    'interface', 'enum', 'extends', 'implements', 'package', 'import',
+                    'abstract', 'assert', 'boolean', 'byte', 'case', 'char', 'const',
+                    'default', 'do', 'double', 'final', 'finally', 'float', 'goto',
+                    'instanceof', 'int', 'long', 'native', 'short', 'static', 'strictfp',
+                    'super', 'this', 'transient', 'void', 'volatile'
+                }
+                if method_name in java_keywords:
                     continue
                 
                 # Find the method body
@@ -168,32 +182,78 @@ class JavaMetricsCollector:
         return complexities
     
     def _extract_method_body(self, content: str, start_pos: int) -> str:
-        """Extract method body by matching braces."""
+        """Extract method body by matching braces, handling Java strings and chars."""
         brace_count = 0
-        in_string = False
+        in_double_quote_string = False
+        in_single_quote_char = False
+        in_multiline_comment = False
+        in_single_line_comment = False
         escape_next = False
         
         method_body = []
         
         for i in range(start_pos, len(content)):
             char = content[i]
+            next_char = content[i + 1] if i + 1 < len(content) else ''
             
+            # Handle escape sequences
             if escape_next:
                 escape_next = False
                 method_body.append(char)
                 continue
             
-            if char == '\\':
+            # Handle comments (only when not in strings)
+            if not in_double_quote_string and not in_single_quote_char:
+                # Start of single-line comment
+                if char == '/' and next_char == '/' and not in_multiline_comment:
+                    in_single_line_comment = True
+                    method_body.append(char)
+                    continue
+                
+                # End of single-line comment
+                if in_single_line_comment and char == '\n':
+                    in_single_line_comment = False
+                    method_body.append(char)
+                    continue
+                
+                # Start of multi-line comment
+                if char == '/' and next_char == '*' and not in_single_line_comment:
+                    in_multiline_comment = True
+                    method_body.append(char)
+                    continue
+                
+                # End of multi-line comment
+                if in_multiline_comment and char == '*' and next_char == '/':
+                    method_body.append(char)
+                    method_body.append(next_char)
+                    in_multiline_comment = False
+                    continue
+            
+            # Skip processing if in a comment
+            if in_single_line_comment or in_multiline_comment:
+                method_body.append(char)
+                continue
+            
+            # Handle escape character
+            if char == '\\' and (in_double_quote_string or in_single_quote_char):
                 escape_next = True
                 method_body.append(char)
                 continue
             
-            if char == '"' and not in_string:
-                in_string = True
-            elif char == '"' and in_string:
-                in_string = False
+            # Handle double-quoted strings
+            if char == '"' and not in_single_quote_char:
+                in_double_quote_string = not in_double_quote_string
+                method_body.append(char)
+                continue
             
-            if not in_string:
+            # Handle single-quoted characters
+            if char == "'" and not in_double_quote_string:
+                in_single_quote_char = not in_single_quote_char
+                method_body.append(char)
+                continue
+            
+            # Count braces only when not in strings or comments
+            if not in_double_quote_string and not in_single_quote_char:
                 if char == '{':
                     brace_count += 1
                 elif char == '}':
@@ -412,8 +472,6 @@ class JavaMetricsCollector:
     
     def _parse_spotbugs_xml(self, xml_file: Path) -> Dict[str, Any]:
         """Parse SpotBugs XML report to extract metrics."""
-        import xml.etree.ElementTree as ET
-        
         result = {
             "total_bugs": 0,
             "bugs_by_priority": {},
