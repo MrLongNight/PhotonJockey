@@ -1,0 +1,210 @@
+{
+  "loc_per_package": {
+    "org.jitsi.impl.neomedia.device": 490,
+    "pw.wunderlich.lightbeat": 124,
+    "pw.wunderlich.lightbeat.audio": 325,
+    "pw.wunderlich.lightbeat.audio.device": 244,
+    "pw.wunderlich.lightbeat.audio.device.provider": 507,
+    "pw.wunderlich.lightbeat.config": 192,
+    "pw.wunderlich.lightbeat.gui": 120,
+    "pw.wunderlich.lightbeat.gui.frame": 1021,
+    "pw.wunderlich.lightbeat.gui.swing": 341,
+    "pw.wunderlich.lightbeat.hue.bridge": 324,
+    "pw.wunderlich.lightbeat.hue.bridge.color": 208,
+    "pw.wunderlich.lightbeat.hue.bridge.light": 290,
+    "pw.wunderlich.lightbeat.hue.bridge.light.controller": 211,
+    "pw.wunderlich.lightbeat.hue.visualizer": 305,
+    "pw.wunderlich.lightbeat.hue.visualizer.effect": 533,
+    "pw.wunderlich.lightbeat.util": 204
+  },
+  "cyclomatic_complexity_top_20": [
+    {
+      "method": "WASAPIDeviceProvider.start",
+      "file": "src/main/java/pw/wunderlich/lightbeat/audio/device/provider/WASAPIDeviceProvider.java",
+      "complexity": 15
+    },
+    {
+      "method": "StrobeEffect.execute",
+      "file": "src/main/java/pw/wunderlich/lightbeat/hue/visualizer/effect/StrobeEffect.java",
+      "complexity": 13
+    },
+    {
+      "method": "LBAudioReader.onDataAvailable",
+      "file": "src/main/java/pw/wunderlich/lightbeat/audio/LBAudioReader.java",
+      "complexity": 12
+    },
+    {
+      "method": "ColorSelectionFrame.ColorSelectionFrame",
+      "file": "src/main/java/pw/wunderlich/lightbeat/gui/frame/ColorSelectionFrame.java",
+      "complexity": 12
+    },
+    {
+      "method": "MainFrame.MainFrame",
+      "file": "src/main/java/pw/wunderlich/lightbeat/gui/frame/MainFrame.java",
+      "complexity": 11
+    },
+    {
+      "method": "PulseAudioSystem.doInitialize",
+      "file": "src/main/java/org/jitsi/impl/neomedia/device/PulseAudioSystem.java",
+      "complexity": 11
+    },
+    {
+      "method": "BeatInterpreter.interpretValue",
+      "file": "src/main/java/pw/wunderlich/lightbeat/audio/BeatInterpreter.java",
+      "complexity": 10
+    },
+    {
+      "method": "ConnectFrame.ConnectFrame",
+      "file": "src/main/java/pw/wunderlich/lightbeat/gui/frame/ConnectFrame.java",
+      "complexity": 10
+    },
+    {
+      "method": "BridgeConnection.BridgeConnection",
+      "file": "src/main/java/pw/wunderlich/lightbeat/hue/bridge/BridgeConnection.java",
+      "complexity": 9
+    },
+    {
+      "method": "LightStateBuilder.copyFromBuilder",
+      "file": "src/main/java/pw/wunderlich/lightbeat/hue/bridge/light/LightStateBuilder.java",
+      "complexity": 9
+    },
+    {
+      "method": "ConnectFrame.connectionWasLost",
+      "file": "src/main/java/pw/wunderlich/lightbeat/gui/frame/ConnectFrame.java",
+      "complexity": 9
+    },
+    {
+      "method": "JConfigSlider.JConfigSlider",
+      "file": "src/main/java/pw/wunderlich/lightbeat/gui/swing/JConfigSlider.java",
+      "complexity": 9
+    },
+    {
+      "method": "JColorPanel.repaintCanvas",
+      "file": "src/main/java/pw/wunderlich/lightbeat/gui/swing/JColorPanel.java",
+      "complexity": 9
+    },
+    {
+      "method": "PulseAudioSystem.createContext",
+      "file": "src/main/java/org/jitsi/impl/neomedia/device/PulseAudioSystem.java",
+      "complexity": 9
+    },
+    {
+      "method": "PulseAudioSystem.sourceInfoListCb",
+      "file": "src/main/java/org/jitsi/impl/neomedia/device/PulseAudioSystem.java",
+      "complexity": 9
+    },
+    {
+      "method": "UpdateChecker.isNewerVersion",
+      "file": "src/main/java/pw/wunderlich/lightbeat/util/UpdateChecker.java",
+      "complexity": 8
+    },
+    {
+      "method": "DoubleAverageBuffer.add",
+      "file": "src/main/java/pw/wunderlich/lightbeat/util/DoubleAverageBuffer.java",
+      "complexity": 8
+    },
+    {
+      "method": "CustomColorSet.equals",
+      "file": "src/main/java/pw/wunderlich/lightbeat/hue/bridge/color/CustomColorSet.java",
+      "complexity": 8
+    },
+    {
+      "method": "ColorFlipEffect.execute",
+      "file": "src/main/java/pw/wunderlich/lightbeat/hue/visualizer/effect/ColorFlipEffect.java",
+      "complexity": 8
+    },
+    {
+      "method": "ColorChainEffect.execute",
+      "file": "src/main/java/pw/wunderlich/lightbeat/hue/visualizer/effect/ColorChainEffect.java",
+      "complexity": 8
+    }
+  ],
+  "threads_per_class": {
+    "AppTaskOrchestrator": 3,
+    "WASAPIDeviceProvider": 2,
+    "LBAudioReader": 1,
+    "HueBeatObserver": 1,
+    "BaseJmfAudioDevice": 1,
+    "PushModelAudioDevice": 1,
+    "PullModelAudioDevice": 1,
+    "LibJitsiDeviceProvider": 1,
+    "JavaAudioDeviceProvider": 1,
+    "AbstractFrame": 1
+  },
+  "external_libraries": [
+    {
+      "group": "io.github.zeroone3010",
+      "artifact": "yetanotherhueapi",
+      "version": "2.8.0-lb",
+      "scope": "implementation"
+    },
+    {
+      "group": "org.slf4j",
+      "artifact": "slf4j-api",
+      "version": "2.0.17",
+      "scope": "implementation"
+    },
+    {
+      "group": "org.slf4j",
+      "artifact": "slf4j-simple",
+      "version": "2.0.17",
+      "scope": "implementation"
+    },
+    {
+      "group": "org.slf4j",
+      "artifact": "jul-to-slf4j",
+      "version": "2.0.17",
+      "scope": "implementation"
+    },
+    {
+      "group": "com.github.wendykierp",
+      "artifact": "JTransforms",
+      "version": "3.1",
+      "scope": "implementation"
+    },
+    {
+      "group": "com.github.weisj",
+      "artifact": "darklaf-core",
+      "version": "3.1.1",
+      "scope": "implementation"
+    },
+    {
+      "group": "com.jetbrains.intellij.java",
+      "artifact": "java-gui-forms-rt",
+      "version": "252.26199.158",
+      "scope": "implementation"
+    },
+    {
+      "group": "org.jitsi",
+      "artifact": "libjitsi",
+      "version": "1.1-34-gb93ce2ee",
+      "scope": "implementation"
+    },
+    {
+      "group": "org.junit.jupiter",
+      "artifact": "junit-jupiter",
+      "version": "unknown",
+      "scope": "testImplementation"
+    },
+    {
+      "group": "org.mockito",
+      "artifact": "mockito-core",
+      "version": "5.20.0",
+      "scope": "testImplementation"
+    }
+  ],
+  "spotbugs_analysis": {
+    "status": "compilation_failed",
+    "total_bugs": 0,
+    "bugs_by_priority": {},
+    "bugs_by_category": {},
+    "note": "Compilation failed - possibly due to missing dependencies"
+  },
+  "summary": {
+    "total_packages": 16,
+    "total_loc": 5439,
+    "total_classes_with_threads": 10,
+    "total_external_libraries": 10,
+    "spotbugs_bugs_found": 0
+  }
+}

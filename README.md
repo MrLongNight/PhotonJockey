@@ -96,6 +96,7 @@ Kurze Erläuterungen:
 ## Lizenz
 Prüfe die LICENSE-Datei (falls vorhanden) für rechtliche Hinweise und Nutzungsbedingungen.
 
+See [BUILD_INSTRUCTIONS.md](docs/development/BUILD_INSTRUCTIONS.md) for detailed build instructions and dependency setup.
 ## Kontakt
 Projekt-Maintainer: Mr. LongNight  
 Hilfe & Diskussion: Discord (Link oben)
