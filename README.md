@@ -6,4 +6,4 @@ Visit [lightbeat.wunderlich.pw](https://lightbeat.wunderlich.pw) to download and
 
 ## Building from Source
 
-See [BUILD.md](BUILD.md) for detailed build instructions and dependency setup.
+See [BUILD_INSTRUCTIONS.md](docs/development/BUILD_INSTRUCTIONS.md) for detailed build instructions and dependency setup.
