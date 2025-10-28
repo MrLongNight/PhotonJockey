@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import pw.wunderlich.lightbeat.audio.device.AudioDevice;
 import pw.wunderlich.lightbeat.audio.device.LBAudioFormat;
 import pw.wunderlich.lightbeat.audio.device.PushModelAudioDevice;
+import pw.wunderlich.lightbeat.util.PlatformDetector;
 
 import javax.media.format.AudioFormat;
 import javax.media.protocol.BufferTransferHandler;
@@ -32,14 +33,9 @@ public class WASAPIDeviceProvider extends LibJitsiDeviceProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(WASAPIDeviceProvider.class);
 
-    public static boolean isWindows() {
-        return System.getProperty("os.name").startsWith("Windows");
-    }
-
-
     public WASAPIDeviceProvider(Executor executor) {
         super(executor);
-        if (!isWindows()) {
+        if (!PlatformDetector.isWindows()) {
             throw new IllegalStateException("WASAPI can only be used on Windows");
         }
     }

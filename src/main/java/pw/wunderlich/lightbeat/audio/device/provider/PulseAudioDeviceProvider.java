@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import pw.wunderlich.lightbeat.AppTaskOrchestrator;
 import pw.wunderlich.lightbeat.audio.device.AudioDevice;
 import pw.wunderlich.lightbeat.audio.device.PullModelAudioDevice;
+import pw.wunderlich.lightbeat.util.PlatformDetector;
 
 /**
  * Provides {@link AudioDevice}'s for PulseAudio devices on Linux.
@@ -18,14 +19,13 @@ public class PulseAudioDeviceProvider extends LibJitsiDeviceProvider {
     private static final Logger logger = LoggerFactory.getLogger(PulseAudioDeviceProvider.class);
 
     public static boolean isLinux() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return (os.contains("nix") || os.contains("nux") || os.contains("aix"));
+        return PlatformDetector.isLinux();
     }
 
 
     public PulseAudioDeviceProvider(AppTaskOrchestrator taskOrchestrator) {
         super(taskOrchestrator);
-        if (!isLinux()) {
+        if (!PlatformDetector.isLinux()) {
             throw new IllegalStateException("PulseAudio can only be used on Linux");
         }
     }

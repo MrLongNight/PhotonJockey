@@ -5,6 +5,7 @@ import org.jitsi.impl.neomedia.device.CaptureDeviceInfo2;
 import pw.wunderlich.lightbeat.AppTaskOrchestrator;
 import pw.wunderlich.lightbeat.audio.device.AudioDevice;
 import pw.wunderlich.lightbeat.audio.device.PushModelAudioDevice;
+import pw.wunderlich.lightbeat.util.PlatformDetector;
 
 /**
  * Provides {@link AudioDevice}'s for CoreAudio devices on macOS.
@@ -14,13 +15,13 @@ import pw.wunderlich.lightbeat.audio.device.PushModelAudioDevice;
 public class CoreAudioDeviceProvider extends LibJitsiDeviceProvider {
 
     public static boolean isMac() {
-        return System.getProperty("os.name").toLowerCase().contains("mac");
+        return PlatformDetector.isMacOS();
     }
 
 
     public CoreAudioDeviceProvider(AppTaskOrchestrator taskOrchestrator) {
         super(taskOrchestrator);
-        if (!isMac()) {
+        if (!PlatformDetector.isMacOS()) {
             throw new IllegalStateException("CoreAudio can only be used on macOS");
         }
     }
