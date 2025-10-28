@@ -5,8 +5,6 @@ Eine KI-gestützte Windows App für DJs, VJs und Streamer zur Visualisierung von
 
 ![logo](https://lightbeat.wunderlich.pw/images/banner.png)
 
-[![Discord](https://discordapp.com/api/guilds/355919094026993665/widget.png)](https://discord.gg/mD3Ef6v)
-
 PhotonJockey (LightBeat Fork) — Musik-Visualizer für Philips Hue-kompatible Lichter.  
 Dieses Projekt synchronisiert Beleuchtung mit Musik/Audioquellen und bietet umfangreiche Effekte, Mapping-Optionen und Anpassungsmöglichkeiten für Live- und Offline-Nutzung.
 
