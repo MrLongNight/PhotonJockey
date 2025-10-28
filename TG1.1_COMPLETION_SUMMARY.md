@@ -64,25 +64,22 @@
 - `.tg1.1-complete` - Marker-Datei für TG1.1-Abschluss
 - `TG1.1_COMPLETION_SUMMARY.md` - Dieser Bericht
 
-## Bekannte Einschränkungen
+## Abhängigkeitsdokumentation
 
-### Abhängigkeitsproblem (Nicht Teil von TG1.1)
-Das Projekt hat ein vorbestehendes Abhängigkeitsproblem:
-```
-Could not find io.github.zeroone3010:yetanotherhueapi:2.8.0-lb
-```
+Die verwendete Abhängigkeit `yetanotherhueapi:2.8.0-lb` ist eine benutzerdefinierte Fork-Version mit LightBeat-spezifischen Erweiterungen, die nicht in Maven Central verfügbar ist.
 
-Dieser Fehler verhindert:
-- `./gradlew build`
-- `./gradlew compileJava`
-- `./gradlew checkstyleMain` (da es von compileJava abhängt)
+**Lösung:** Vollständige Bauanleitung wurde hinzugefügt:
+- **BUILD.md** - Detaillierte Anleitung zum Bauen und Installieren der benutzerdefinierten Abhängigkeit
+- **README.md** - Aktualisiert mit Verweis auf BUILD.md
 
-**Wichtig:** Dies ist KEIN TG1.1-Problem. Der Kommentar in `build.gradle` Zeile 39 sagt:
-```
-// github.com/Kakifrucht/yetanotherhueapi -> install to maven local
+Die Abhängigkeit muss aus dem Fork-Repository gebaut und lokal installiert werden:
+```bash
+git clone https://github.com/Kakifrucht/yetanotherhueapi
+cd yetanotherhueapi
+./gradlew publishToMavenLocal
 ```
 
-Die Abhängigkeit muss separat installiert werden. TG1.1 hat Checkstyle korrekt konfiguriert.
+Nach der Installation kann das Projekt normal gebaut werden.
 
 ### Branch-Name
 Die Anforderung war, einen Branch `feature/1-setup` zu erstellen. Dieser existiert lokal mit allen Änderungen. Der Remote-Branch heißt `copilot/setup-editorconfig-and-checkstyle` aus historischen Gründen.
