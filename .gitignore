@@ -48,3 +48,7 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# Generated documentation and diagrams (created by CI)
+docs/diagrams/*.png
+docs/diagrams/*.svg
