@@ -5,90 +5,97 @@ Eine KI-gestützte Windows App für DJs, VJs und Streamer zur Visualisierung von
 
 ![logo](https://lightbeat.wunderlich.pw/images/banner.png)
 
-PhotonJockey (LightBeat Fork) — Musik-Visualizer für Philips Hue-kompatible Lichter.  
-Dieses Projekt synchronisiert Beleuchtung mit Musik/Audioquellen und bietet umfangreiche Effekte, Mapping-Optionen und Anpassungsmöglichkeiten für Live- und Offline-Nutzung.
-
-Kurze Projekt-Website und Downloads: https://lightbeat.wunderlich.pw
+Der Musik-Visualizer unterstützt Philips Hue-kompatible Lichter, Multibridge Support und beherrscht sowohl die klassische Kommunikation mit der Bridge per Web requests, als auch die deutlich performantere DTLS/UDP Kommunikation mit der Entertainment API V2 Schnittstelle 
+Dieses Projekt synchronisiert Beleuchtung mit Musik/Audioquellen und bietet Effekte, Mapping-Optionen und Anpassungsmöglichkeiten für Live- und Offline-Nutzung.
 
 ## Highlights / Features
 - Synchronisation von Philips Hue-kompatiblen Lichtern mit Musik in Echtzeit
-- Mehrere Visualisierungsmodi (z.B. Spektrumanalyse, Beat-Trigger, Farbflächen)
+- Mehrere Visualisierungsmodi (z. B. Spektrumanalyse, Beat-Trigger, Farbflächen)
 - Unterstützung für lokale und netzwerkbasierte Light-Controller (Hue-Bridge, kompatible Bridges)
 - Konfigurierbare Mapping-Profile für individuelle Licht-Layouts
-- CLI- und GUI-Komponenten (je nach Build/Distribution)
-- Erweiterbar: Plugins / Module für neue Effekte
-- Tests: Unit- und Integrationstests vorhanden (siehe src/test)
+- Erweiterbar: Plugin-/Modul-Architektur für neue Effekte
+- CLI- und GUI-Komponenten (je nach Distribution)
+- Umfangreiche Unit- und Integrationstests (siehe src/test)
 
 ## Quick Start (Developer)
 1. Repository klonen:
    git clone https://github.com/MrLongNight/PhotonJockey.git
-2. Siehe detaillierte Build-Anleitung:
+2. Detaillierte Build-Anleitung:
    docs/development/BUILD_INSTRUCTIONS.md
-3. Mit Gradle bauen (Java 17 erforderlich):
-   ./gradlew build
+3. Mit Gradle bauen (Java 17 empfohlen):
+   ./gradlew clean build
 
-Hinweis: Projekt nutzt Java 17 und Gradle. Für Entwicklungsdetails und CI-Informationen siehe die docs und .github.
+Hinweis: Projekt-Stack: Java 17 + Gradle. Codestil: Google Java Styleguide (Checkstyle).
 
-## Projektstruktur (Top-Level)
-Die folgende Liste zeigt die vorhandenen Top-Level-Dateien und -Ordner im Projekt (Stand: commit c1d6928fc1de8bc25d8474d1333116b8b2f986bb) mit kurzer Beschreibung:
+## Visuelle Projektstruktur (ASCII-Baum)
+Nachfolgend eine leicht lesbare Baum-Ansicht der Top-Level-Struktur (Stand: master). Unterverzeichnisse sind soweit sinnvoll bis zu 2–3 Ebenen eingerückt. Nebem jedem Eintrag steht eine kurze Zweckbeschreibung.
 
-- .editorconfig — Editor / Formatierungs-Regeln (zentrale Editor-Konfiguration)
-- .github/ — GitHub-spezifische Konfiguration (Workflows, Issue- / PR-Templates, Actions)
-- .gitignore — Dateien/Ordner, die nicht versioniert werden sollen
-- README.md — Dieses Dokument
-- build.gradle — Gradle Build-Skript (Build-Konfiguration, Dependencies, Tasks)
-- checkstyle.xml — Checkstyle-Regeln (Code Style, Google Java Styleguide)
-- docs/ — Projekt- und Entwicklungsdokumentation
-  - Enthält weitere Unterverzeichnisse wie docs/development mit BUILD_INSTRUCTIONS.md
-- gradle/ — Gradle Wrapper Hilfs-Skripte / Konfiguration
-- gradlew — Gradle Wrapper (Unix)
-- gradlew.bat — Gradle Wrapper (Windows)
-- reports/ — Build- / Test-Reports (Ergebnisberichte, z. B. Test-Reports, Lint)
-- settings.gradle — Gradle Settings (Projektdef.)
-- src/ — Quellcode und Tests
-  - src/main/java — Haupt-Source (Java-Klassen für die Anwendung)
-  - src/test/java — Tests (Unit- und Integrationstests)
-  - src/main/resources — ggf. Ressourcen (Konfigurationsvorlagen, Assets)
-- tools/ — Hilfs-Skripte / Tools (Build/Debug/Packaging Hilfs-Skripte)
+.
+├── .editorconfig
+│   └─ (Editor-/Formatierungsregeln: z. B. Einrückung, EOL, Charset)
+├── .github/
+│   └─ (GitHub-spezifische Einstellungen: Workflows, Issue/PR-Templates, Actions)
+├── .gitignore
+│   └─ (Listet nicht versionierte Dateien/Ordner)
+├── README.md
+│   └─ (Dieses Dokument)
+├── build.gradle
+│   └─ (Gradle Build-Skript — Dependencies, Tasks, Plugins)
+├── checkstyle.xml
+│   └─ (Checkstyle-Regeln / Google Java Styleguide)
+├── docs/
+│   ├── development/
+│   │   └─ BUILD_INSTRUCTIONS.md
+│   │      (Detaillierte Anleitungen zum Einrichten der Umgebung und Build)
+│   └─ (Weitere Benutzer- und Entwicklerdokus, Architekturhinweise)
+├── gradle/
+│   └─ (Wrapper-Hilfsdateien / Gradle-Konfiguration)
+├── gradlew
+│   └─ (Gradle Wrapper — Unix)
+├── gradlew.bat
+│   └─ (Gradle Wrapper — Windows)
+├── reports/
+│   └─ (Build- / Test-Reports, z. B. Test- oder Lint-Ausgaben)
+├── settings.gradle
+│   └─ (Gradle Settings / Projektdefinition)
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └─ (Java-Quellcode: Core-Logik – Audio-Analyse, Light-Controller, Effekte, Mapping)
+│   │   └── resources/
+│   │       └─ (Konfigurationen, Default-Profile, Assets)
+│   └── test/
+│       └─ java/
+│           └─ (Unit- und Integrationstests)
+└── tools/
+    └─ (Hilfsskripte für Build, Packaging, Debugging)
 
-Hinweise zur Struktur:
-- src/ enthält den Java-Quellcode (Projekt ist primär Java — ~90% laut Repo-Komposition). Die Tests sind zwingend erforderlich und sollen bei jeder Änderung mitgeführt werden.
-- .github/ enthält CI-Workflows (GitHub Actions) — hier werden Build- und Test-Pipelines konfiguriert.
-- docs/ ist die zentrale Stelle für Entwickleranleitungen, Architektur-Dokumentation und Benutzer-Guides.
-- checkstyle.xml stellt sicher, dass der Code dem Google Java Styleguide entspricht. (Im Projektkontext wird Checkstyle für die CI verwendet.)
-
-## Typische Dateien und Zweck (erläuternd)
-- build.gradle / settings.gradle: Konfiguration des Builds, Abhängigkeiten, Plugin-Konfigurationen.
-- checkstyle.xml: Automatische Stilprüfung; passt zur Regel "Codestil: Google Java Styleguide".
-- docs/development/BUILD_INSTRUCTIONS.md: Detaillierte Schritte zum Einrichten der Entwicklungsumgebung, benötigte Abhängigkeiten und Platform-spezifische Hinweise.
-- src/main/java/...: Implementierung der Core-Logik (Audio-Analyse, Light-Controller, Mapping, Effekte).
-- src/test/java/...: Unit-Tests für einzelne Komponenten sowie Integrationstests für End-to-End-Workflows.
-- .github/workflows/*: CI-Pipelines zum Bauen, Testen und ggf. Veröffentlichen.
+Kurze Erläuterungen:
+- src/main/java: Hier befinden sich die Kernklassen — Audio-Input, Analyzer, Effect-Engines, Bridge-Adapter (Hue), Konfigurations-Loader und CLI-/GUI-Entrypoints.
+- src/main/resources: Standardkonfigurationen, Effekt-Presets, ggf. Icons/Assets.
+- src/test/java: Unit-Tests für einzelne Module und Integrationstests, die z. B. das Zusammenspiel von Analyzer und Light-Adapter überprüfen.
+- docs/development/BUILD_INSTRUCTIONS.md: Schritt-für-Schritt zur lokalen Einrichtung (SDK-Versionen, native Abhängigkeiten, ggf. Bridge-Pairing).
+- .github/: Enthält CI-Pipelines (GitHub Actions), die Build, Tests und Checkstyle ausführen.
 
 ## Build, Tests & CI
-- Build: Gradle (Wrapper im Repo)
-  - ./gradlew clean build
+- Build: ./gradlew clean build
 - Tests: ./gradlew test
-- Checkstyle / Linting: Automatisch in CI. Projekt folgt striktem Style-Check.
-- CI-Konfiguration: GitHub Actions (in .github), sorgt dafür, dass Pull Requests nur bei grünem CI gemerged werden sollten.
+- Checkstyle / Linting: In CI aktiviert; Checkstyle-Konfiguration in checkstyle.xml.
+- CI: GitHub Actions (in .github/) baut und testet Pull Requests.
 
 ## Konfiguration & Laufzeit
-- Konfigurationen (IP/Bridge-Settings, Mapping-Profile, Effekt-Parameter) liegen üblicherweise in src/main/resources oder externen config-Dateien, die beim Start geladen werden.
-- Für lokale Hue-Integration: IP-Adresse der Bridge, Benutzer-Token bzw. Pairing-Schritte sind in der Build/Run-Doku beschrieben.
+- Laufzeitkonfigurationen (Bridge-IP, Token, Mappings) liegen typischerweise in resources oder in externen config-Dateien. Details in docs/development/BUILD_INSTRUCTIONS.md.
+- Für lokale Hue-Integration: Bridge-IP & Auth-Token; Pairing-Schritte sind dokumentiert.
 
-## Mitwirken / Contribution Guidelines
-- Arbeitsablauf (Team-intern): Feature-Branches pro Task (z.B. feature/3-hue-fast-udp) — atomare Commits — Tests sind Pflicht.
-- Pull Requests: PRs gegen main, CI muss grün sein bevor Mergen.
-- Codestil: Google Java Styleguide (Checkstyle enforced).
-- Tests: Jede Änderung sollte passende Unit- und (wenn nötig) Integrationstests enthalten.
+## Mitwirken / Contribution Guidelines (Kurz)
+- Arbeitsablauf: Feature-Branch für jede Task (z. B. feature/3-hue-fast-udp), atomare Commits.
+- PRs gegen main; CI muss grün sein bevor Mergen.
+- Tests sind Pflicht — ohne Tests keine Akzeptanz.
+- Codestil: Google Java Styleguide (Checkstyle erzwingt Regeln).
 
 ## Lizenz
-Angaben zur Lizenz sollten in der LICENSE-Datei stehen (falls vorhanden). Bitte prüfen Sie das Repo für die genaue Lizenzangabe.
+Prüfe die LICENSE-Datei (falls vorhanden) für rechtliche Hinweise und Nutzungsbedingungen.
 
 ## Kontakt
-Projekt-Maintainer / PM: Mr. LongNight  
-Diskussion & Hilfe: Discord-Server (Link oben)
-
----
-
-Wenn Sie weitere Details zur Struktur (z. B. rekursive Auflistung einzelner Dateien in subdirectories) wünschen, kann ich eine detailliertere Übersicht erzeugen — ansonsten sind die oben aufgeführten Ordner und Dateien die relevanten Einstiegspunkte für Entwickler und Mitwirkende.
+Projekt-Maintainer: Mr. LongNight  
+Hilfe & Diskussion: Discord (Link oben)
