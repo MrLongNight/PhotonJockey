@@ -109,14 +109,14 @@ tasks.register('bundleReleaseZip', Zip) {
             }
         }
         from('src/main/resources/launch_lightbeat.bat')
-        from('THIRD_PARTY_LICENSES.md')
+        from('docs/legal/THIRD_PARTY_LICENSES.md')
     }
 }
 
 jpackageImage {
     doLast {
         copy {
-            from('THIRD_PARTY_LICENSES.md')
+            from('docs/legal/THIRD_PARTY_LICENSES.md')
             into(layout.buildDirectory.dir("jpackage/${project.name}"))
         }
     }
