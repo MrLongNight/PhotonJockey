@@ -117,47 +117,15 @@ class BrightnessCalibrator {
             currentBrightnessPercentage = brightnessPercentage;
         }
 
-        return new BrightnessData(currentBrightnessPercentage, doBrightnessChange);
-    }
+        // Calculate brightness values
+        double brightnessPercentageLow = Math.max(brightnessPercentage - brightnessFadeDifference, 0d);
+        brightnessPercentageLow = Math.min(brightnessPercentageLow, brightnessHighestFade);
+        int brightnessFade = (int) Math.round(brightnessRange * brightnessPercentageLow) + brightnessMin;
 
+        double brightnessPercentageHigh = Math.min(brightnessPercentage + brightnessFadeDifference, 1d);
+        brightnessPercentageHigh = Math.max(brightnessPercentageHigh, brightnessLowestBeat);
+        int brightness = (int) Math.round(brightnessRange * brightnessPercentageHigh) + brightnessMin;
 
-    class BrightnessData {
-
-        private final double brightnessPercentage;
-        private final boolean doBrightnessChange;
-
-        private final int brightnessFade;
-        private final int brightness;
-
-
-        private BrightnessData(double brightnessPercentage, boolean doBrightnessChange) {
-
-            this.brightnessPercentage = brightnessPercentage;
-            this.doBrightnessChange = doBrightnessChange;
-
-            double brightnessPercentageLow = Math.max(brightnessPercentage - brightnessFadeDifference, 0d);
-            brightnessPercentageLow = Math.min(brightnessPercentageLow, brightnessHighestFade);
-            this.brightnessFade = (int) Math.round(brightnessRange * brightnessPercentageLow) + brightnessMin;
-
-            double brightnessPercentageHigh = Math.min(brightnessPercentage + brightnessFadeDifference, 1d);
-            brightnessPercentageHigh = Math.max(brightnessPercentageHigh, brightnessLowestBeat);
-            this.brightness = (int) Math.round(brightnessRange * brightnessPercentageHigh) + brightnessMin;
-        }
-
-        double getBrightnessPercentage() {
-            return brightnessPercentage;
-        }
-
-        boolean isBrightnessChange() {
-            return doBrightnessChange;
-        }
-
-        int getBrightnessFade() {
-            return brightnessFade;
-        }
-
-        int getBrightness() {
-            return brightness;
-        }
+        return new BrightnessData(currentBrightnessPercentage, doBrightnessChange, brightnessFade, brightness);
     }
 }

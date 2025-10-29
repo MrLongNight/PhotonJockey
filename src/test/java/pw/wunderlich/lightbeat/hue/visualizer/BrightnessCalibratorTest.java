@@ -45,7 +45,7 @@ class BrightnessCalibratorTest {
     @Test
     void testGetBrightness() {
 
-        BrightnessCalibrator.BrightnessData data;
+        BrightnessData data;
 
         // test calibration phase (brightness at 50%)
         for (int i = 0; i < BrightnessCalibrator.CALIBRATION_SIZE - 1; i++) {
@@ -73,7 +73,7 @@ class BrightnessCalibratorTest {
 
     @Test
     void testGetLowestBrightnessData() {
-        BrightnessCalibrator.BrightnessData data = calibrator.getLowestBrightnessData();
+        BrightnessData data = calibrator.getLowestBrightnessData();
 
         assertAll("lowestData",
                 () -> assertFalse(data.isBrightnessChange()),
@@ -85,7 +85,7 @@ class BrightnessCalibratorTest {
         assertTrue(calibrator.getLowestBrightnessData().isBrightnessChange());
     }
 
-    private int getAverageBrightness(BrightnessCalibrator.BrightnessData data) {
+    private int getAverageBrightness(BrightnessData data) {
         return (int) Math.round((data.getBrightness() + data.getBrightnessFade()) / 2d);
     }
 }

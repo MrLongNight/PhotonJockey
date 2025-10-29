@@ -7,6 +7,7 @@ import pw.wunderlich.lightbeat.AppTaskOrchestrator;
 import pw.wunderlich.lightbeat.audio.device.*;
 import pw.wunderlich.lightbeat.config.Config;
 import pw.wunderlich.lightbeat.config.ConfigNode;
+import pw.wunderlich.lightbeat.util.PlatformDetector;
 import pw.wunderlich.lightbeat.util.TimeThreshold;
 
 import java.nio.ByteBuffer;
@@ -54,12 +55,8 @@ public class LBAudioReader implements BeatEventManager, AudioReader {
         this.taskOrchestrator = taskOrchestrator;
 
         this.deviceProviders = new ArrayList<>();
-        if (WASAPIDeviceProvider.isWindows()) {
+        if (PlatformDetector.isWindows()) {
             deviceProviders.add(new WASAPIDeviceProvider(taskOrchestrator));
-        } else if (CoreAudioDeviceProvider.isMac()) {
-            deviceProviders.add(new CoreAudioDeviceProvider(taskOrchestrator));
-        } else if (PulseAudioDeviceProvider.isLinux()) {
-            deviceProviders.add(new PulseAudioDeviceProvider(taskOrchestrator));
         }
         // fallbacks, first port audio (also libjitsi wrapped), then java audio
         deviceProviders.add(new PortAudioDeviceProvider(taskOrchestrator));
