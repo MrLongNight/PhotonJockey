@@ -6,6 +6,7 @@ plugins {
     id 'com.datavitec.runtime' version '1.13.1-patch-2'
     id 'io.github.file5.guidesigner' version '1.0.2'
     id 'com.github.spotbugs' version '6.0.26'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'pw.wunderlich.lightbeat'
@@ -50,9 +51,16 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.mockito:mockito-core:5.20.0'
+    testImplementation 'org.testfx:testfx-core:4.0.18'
+    testImplementation 'org.testfx:testfx-junit5:4.0.18'
     mockitoAgent('org.mockito:mockito-core:5.20.0') {
         transitive = false
     }
+}
+
+javafx {
+    version = "21.0.1"
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 tasks.named('instrumentForms') {
