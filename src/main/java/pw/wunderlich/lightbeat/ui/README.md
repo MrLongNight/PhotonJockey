@@ -30,11 +30,12 @@ FXMLLoader loader = new FXMLLoader(
 Parent root = loader.load();
 AudioDashboardController controller = loader.getController();
 
-// Subscribe to audio analysis events
-// In your audio processing loop:
-audioAnalyzer.setAnalysisListener(result -> {
+// In your audio processing loop, call controller.onAnalysis() with each result:
+while (processing) {
+    AudioFrame frame = getNextAudioFrame();
+    AnalysisResult result = audioAnalyzer.analyze(frame);
     controller.onAnalysis(result);
-});
+}
 ```
 
 ### Demo Application

@@ -73,11 +73,13 @@ public class AudioDashboardDemo extends Application {
                     }
 
                     // Create and send analysis result
+                    // Parameters: frequency (Hz), amplitude (0.0-1.0), energy (0.0-1.0+)
                     AnalysisResult result = new AnalysisResult(frequency, amplitude, energy);
                     controller.onAnalysis(result);
 
-                    // Sleep to simulate frame rate (~60 FPS)
-                    Thread.sleep(16);
+                    // Sleep to simulate ~60 FPS update rate
+                    final int targetFrameIntervalMs = 16;
+                    Thread.sleep(targetFrameIntervalMs);
                 } catch (InterruptedException e) {
                     break;
                 }
