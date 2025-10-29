@@ -3,6 +3,7 @@ package pw.wunderlich.lightbeat.util;
 /**
  * Utility class for detecting the operating system platform.
  * Extracted from WASAPIDeviceProvider to improve testability and reusability.
+ * Note: Only Windows platform is supported by this application.
  */
 public final class PlatformDetector {
 
@@ -17,26 +18,6 @@ public final class PlatformDetector {
      */
     public static boolean isWindows() {
         return System.getProperty("os.name").startsWith("Windows");
-    }
-
-    /**
-     * Checks if the current operating system is macOS.
-     *
-     * @return true if running on macOS, false otherwise
-     */
-    public static boolean isMacOS() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return os.contains("mac") || os.contains("darwin");
-    }
-
-    /**
-     * Checks if the current operating system is Linux.
-     *
-     * @return true if running on Linux, false otherwise
-     */
-    public static boolean isLinux() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return os.contains("nix") || os.contains("nux") || os.contains("aix");
     }
 
     /**
