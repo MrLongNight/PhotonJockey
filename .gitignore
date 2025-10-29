@@ -52,3 +52,6 @@ gradle-app.setting
 # Generated documentation and diagrams (created by CI)
 docs/diagrams/*.png
 docs/diagrams/*.svg
+
+# Maven dependency repository (cloned during build)
+yetanotherhueapi_repo/
