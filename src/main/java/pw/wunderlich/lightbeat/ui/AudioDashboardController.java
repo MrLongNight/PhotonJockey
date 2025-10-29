@@ -84,7 +84,8 @@ public class AudioDashboardController {
     public void initialize() {
         // Initialize FFT processor with default values
         int fftSize = (int) Math.pow(2, fftSizeSlider.getValue());
-        fftProcessor = new FFTProcessor(fftSize, WindowFunction.HAMMING, smoothingSlider.getValue());
+        fftProcessor = new FFTProcessor(fftSize, WindowFunction.HAMMING,
+                smoothingSlider.getValue());
 
         // Setup slider listeners
         setupSliderListeners();
@@ -106,7 +107,8 @@ public class AudioDashboardController {
             int fftSize = (int) Math.pow(2, newVal.intValue());
             fftSizeLabel.setText(String.valueOf(fftSize));
             // Recreate FFT processor with new size
-            fftProcessor = new FFTProcessor(fftSize, WindowFunction.HAMMING, smoothingSlider.getValue());
+            fftProcessor = new FFTProcessor(fftSize, WindowFunction.HAMMING,
+                    smoothingSlider.getValue());
         });
 
         // Smoothing slider
@@ -114,7 +116,8 @@ public class AudioDashboardController {
             smoothingLabel.setText(String.format("%.2f", newVal.doubleValue()));
             // Recreate FFT processor with new smoothing
             int fftSize = (int) Math.pow(2, fftSizeSlider.getValue());
-            fftProcessor = new FFTProcessor(fftSize, WindowFunction.HAMMING, newVal.doubleValue());
+            fftProcessor = new FFTProcessor(fftSize, WindowFunction.HAMMING,
+                    newVal.doubleValue());
         });
 
         // Gain slider
@@ -255,10 +258,12 @@ public class AudioDashboardController {
     private void updateBeatIndicator() {
         if (currentBeat) {
             beatIndicator.setText("YES");
-            beatIndicator.setStyle("-fx-background-color: #00ff00; -fx-padding: 5 15; -fx-font-weight: bold;");
+            beatIndicator.setStyle(
+                    "-fx-background-color: #00ff00; -fx-padding: 5 15; -fx-font-weight: bold;");
         } else {
             beatIndicator.setText("NO");
-            beatIndicator.setStyle("-fx-background-color: #cccccc; -fx-padding: 5 15; -fx-font-weight: bold;");
+            beatIndicator.setStyle(
+                    "-fx-background-color: #cccccc; -fx-padding: 5 15; -fx-font-weight: bold;");
         }
     }
 

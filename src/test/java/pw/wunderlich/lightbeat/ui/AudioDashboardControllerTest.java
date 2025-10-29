@@ -215,16 +215,21 @@ class AudioDashboardControllerTest {
     void testPresetComboBox(FxRobot robot) {
         // Select different preset
         robot.interact(() -> {
-            javafx.scene.control.ComboBox<String> comboBox = robot.lookup("#presetComboBox").query();
+            javafx.scene.control.ComboBox<String> comboBox =
+                    robot.lookup("#presetComboBox").query();
             comboBox.setValue("High Sensitivity");
         });
         
         WaitForAsyncUtils.waitForFxEvents();
         
-        assertEquals("High Sensitivity", controller.getPreset(), "Preset should be High Sensitivity");
-        assertEquals(4096, controller.getFftSize(), "FFT size should change with preset");
-        assertEquals(0.3, controller.getSmoothing(), 0.01, "Smoothing should change with preset");
-        assertEquals(2.0, controller.getGain(), 0.01, "Gain should change with preset");
+        assertEquals("High Sensitivity", controller.getPreset(),
+                "Preset should be High Sensitivity");
+        assertEquals(4096, controller.getFftSize(),
+                "FFT size should change with preset");
+        assertEquals(0.3, controller.getSmoothing(), 0.01,
+                "Smoothing should change with preset");
+        assertEquals(2.0, controller.getGain(), 0.01,
+                "Gain should change with preset");
     }
 
     @Test
