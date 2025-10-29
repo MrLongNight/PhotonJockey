@@ -19,7 +19,7 @@ public class AudioFrame {
      * @param timestamp  the timestamp of this frame in milliseconds
      */
     public AudioFrame(byte[] data, int sampleRate, int channels, long timestamp) {
-        this.data = data;
+        this.data = data.clone();
         this.sampleRate = sampleRate;
         this.channels = channels;
         this.timestamp = timestamp;
@@ -31,7 +31,7 @@ public class AudioFrame {
      * @return the audio data as a byte array
      */
     public byte[] getData() {
-        return data;
+        return data.clone();
     }
 
     /**
