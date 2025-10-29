@@ -21,7 +21,7 @@ git clone https://github.com/Kakifrucht/yetanotherhueapi
 cd yetanotherhueapi
 
 # Build and install to local Maven repository
-./gradlew publishToMavenLocal
+mvn install
 
 # Return to PhotonJockey project
 cd ../PhotonJockey

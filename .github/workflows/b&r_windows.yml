@@ -8,25 +8,10 @@ on:
 
 jobs:
   build-installers:
-    name: Build on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: windows-latest
-            artifact_name: LightBeat-${{ github.ref_name }}-Windows
-            build_command: .\gradlew.bat jpackage -Pwindows-msi
-            artifact_path: 'build/jpackage/LightBeat-*.msi'
-
-          - os: macos-latest
-            artifact_name: LightBeat-${{ github.ref_name }}-macOS
-            build_command: ./gradlew jpackage -Pmacos-dmg
-            artifact_path: 'build/jpackage/LightBeat-*.dmg'
-
-          - os: ubuntu-22.04
-            artifact_name: LightBeat-${{ github.ref_name }}-Linux
-            build_command: ./gradlew jpackage -Plinux-deb
-            artifact_path: 'build/jpackage/*.deb'
+    name: Build Windows Installer
+    runs-on: windows-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -44,38 +29,22 @@ jobs:
           repository: Kakifrucht/yetanotherhueapi
           path: yetanotherhueapi_repo
 
-      - name: Make dependency gradlew executable
-        if: runner.os != 'Windows'
-        working-directory: yetanotherhueapi_repo
-        run: chmod +x ./gradlew
-
       - name: Install Maven Dependency
         working-directory: yetanotherhueapi_repo
-        run: ./gradlew publishToMavenLocal
-
-      - name: Make gradlew executable
-        if: runner.os != 'Windows'
-        run: chmod +x ./gradlew
+        shell: bash
+        run: |
+          echo "Building and installing dependency to Maven Local..."
+          mvn install
+          echo "Dependency installed successfully."
 
       - name: Build with Gradle
-        run: ${{ matrix.build_command }}
+        run: .\gradlew.bat jpackage -Pwindows-msi
 
       - name: Upload Installer Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
-          path: ${{ matrix.artifact_path }}
-
-      - name: Bundle JAR and Launch Script into ZIP
-        if: matrix.os == 'ubuntu-22.04'
-        run: ./gradlew bundleReleaseZip
-
-      - name: Upload ZIP Bundle Artifact
-        if: matrix.os == 'ubuntu-22.04'
-        uses: actions/upload-artifact@v4
-        with:
-          name: LightBeat-${{ github.ref_name }}-All
-          path: build/distributions/LightBeat-*.zip
+          name: LightBeat-${{ github.ref_name }}-Windows
+          path: build/jpackage/LightBeat-*.msi
 
   create-release:
     name: Create GitHub Release
@@ -99,6 +68,3 @@ jobs:
           generate_release_notes: true
           files: |
             installers/LightBeat-${{ github.ref_name }}-Windows/*
-            installers/LightBeat-${{ github.ref_name }}-macOS/*
-            installers/LightBeat-${{ github.ref_name }}-Linux/*
-            installers/LightBeat-${{ github.ref_name }}-All/*
