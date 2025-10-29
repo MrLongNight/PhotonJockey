@@ -10,6 +10,8 @@ jobs:
   build-installers:
     name: Build Windows Installer
     runs-on: windows-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
