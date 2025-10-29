@@ -141,7 +141,8 @@ public class BeatDetector {
             lastTimestamp = ts;
         }
 
-        if (firstTimestamp == null || lastTimestamp == null || firstTimestamp.equals(lastTimestamp)) {
+        if (firstTimestamp == null || lastTimestamp == null
+                || firstTimestamp.equals(lastTimestamp)) {
             return;
         }
 
