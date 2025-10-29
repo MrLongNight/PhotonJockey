@@ -29,7 +29,7 @@ public class LightUpdate {
 
 
     LightUpdate(Config config, List<Light> lights, ColorSet colorSet,
-                BrightnessCalibrator.BrightnessData brightnessData, long timeSinceLastBeat, int transitionTime) {
+                BrightnessData brightnessData, long timeSinceLastBeat, int transitionTime) {
 
         this.lights = lights;
         this.lightsTurnedOn = new ArrayList<>(lights);

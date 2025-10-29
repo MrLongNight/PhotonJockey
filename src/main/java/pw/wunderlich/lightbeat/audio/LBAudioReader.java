@@ -5,6 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pw.wunderlich.lightbeat.AppTaskOrchestrator;
 import pw.wunderlich.lightbeat.audio.device.*;
+import pw.wunderlich.lightbeat.audio.device.provider.DeviceProvider;
+import pw.wunderlich.lightbeat.audio.device.provider.JavaAudioDeviceProvider;
+import pw.wunderlich.lightbeat.audio.device.provider.PortAudioDeviceProvider;
+import pw.wunderlich.lightbeat.audio.device.provider.WASAPIDeviceProvider;
 import pw.wunderlich.lightbeat.config.Config;
 import pw.wunderlich.lightbeat.config.ConfigNode;
 import pw.wunderlich.lightbeat.util.PlatformDetector;
@@ -29,6 +33,7 @@ public class LBAudioReader implements BeatEventManager, AudioReader {
     private static final int AMPLITUDES_PER_SECOND = 50;
     private static final double BASS_CUTOFF_HZ = 200.0;
     private static final double MINIMUM_AMPLITUDE = 0.005d;
+    private static final boolean DUMP_ALL_DEVICES = false;
 
     private static final Logger logger = LoggerFactory.getLogger(LBAudioReader.class);
 

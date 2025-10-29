@@ -81,7 +81,7 @@ public class HueBeatObserver implements BeatObserver {
         amplitudeHistory.add(event.triggeringAmplitude());
 
         double amplitudeDifference = event.triggeringAmplitude() - amplitudeHistory.getCurrentAverage();
-        BrightnessCalibrator.BrightnessData data = brightnessCalibrator.getBrightness(amplitudeDifference);
+        BrightnessData data = brightnessCalibrator.getBrightness(amplitudeDifference);
 
         passDataToEffectPipe(data, true);
         lastBeatTimeStamp = System.currentTimeMillis();
@@ -107,7 +107,7 @@ public class HueBeatObserver implements BeatObserver {
         lights.forEach(Light::restoreState);
     }
 
-    private void passDataToEffectPipe(BrightnessCalibrator.BrightnessData data, boolean receivedBeat) {
+    private void passDataToEffectPipe(BrightnessData data, boolean receivedBeat) {
 
         List<Light> shuffledLights = new ArrayList<>(lights);
         Collections.shuffle(shuffledLights);
