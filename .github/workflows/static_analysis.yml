@@ -30,14 +30,14 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: codebase-overview
-        path: docs/Reports/CODEBASE_UEBERSICHT.md
+        path: docs/codebase_overview.md
         retention-days: 90
     
     - name: Upload dependency diagram
       uses: actions/upload-artifact@v4
       with:
         name: dependency-diagram
-        path: docs/Diagramme/dependency.dot
+        path: docs/diagrams/dependency.dot
         retention-days: 90
     
     - name: Generate dependency diagram visualization (optional)
@@ -45,8 +45,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y graphviz
-        dot -Tpng docs/Diagramme/dependency.dot -o docs/Diagramme/dependency.png
-        dot -Tsvg docs/Diagramme/dependency.dot -o docs/Diagramme/dependency.svg
+        dot -Tpng docs/diagrams/dependency.dot -o docs/diagrams/dependency.png
+        dot -Tsvg docs/diagrams/dependency.dot -o docs/diagrams/dependency.svg
     
     - name: Upload dependency diagram visualizations
       uses: actions/upload-artifact@v4
@@ -54,6 +54,6 @@ jobs:
       with:
         name: dependency-diagram-images
         path: |
-          docs/Diagramme/dependency.png
-          docs/Diagramme/dependency.svg
+          docs/diagrams/dependency.png
+          docs/diagrams/dependency.svg
         retention-days: 90

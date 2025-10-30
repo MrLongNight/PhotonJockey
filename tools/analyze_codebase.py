@@ -3,8 +3,8 @@
 Static code analysis tool for PhotonJockey project.
 
 This script scans the Java codebase and generates:
-- docs/Reports/CODEBASE_UEBERSICHT.md: A comprehensive overview of the codebase
-- docs/Diagramme/dependency.dot: A Graphviz diagram showing package dependencies
+- docs/codebase_overview.md: A comprehensive overview of the codebase
+- docs/diagrams/dependency.dot: A Graphviz diagram showing package dependencies
 """
 
 import os
@@ -356,8 +356,8 @@ def main():
     build_file = project_root / "build.gradle"
     
     # Output paths
-    overview_md = project_root / "docs" / "Reports" / "CODEBASE_UEBERSICHT.md"
-    dependency_dot = project_root / "docs" / "Diagramme" / "dependency.dot"
+    overview_md = project_root / "docs" / "codebase_overview.md"
+    dependency_dot = project_root / "docs" / "diagrams" / "dependency.dot"
     
     # Ensure output directories exist
     overview_md.parent.mkdir(parents=True, exist_ok=True)

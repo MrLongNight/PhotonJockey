@@ -43,8 +43,8 @@
   - `checkstyleTest` - Prüft src/test/java
 - **Ausführung:** `./gradlew check` führt Checkstyle aus
 
-### 5. ✅ `docs/Projekt_Vorgaben/CODING_KONVENTIONEN.md` erstellt
-- **Pfad:** `/docs/Projekt_Vorgaben/CODING_KONVENTIONEN.md`
+### 5. ✅ `docs/CODING_CONVENTIONS.md` erstellt
+- **Pfad:** `/docs/CODING_CONVENTIONS.md`
 - **Inhalt:** 53 Zeilen vollständige Dokumentation
 - **Enthält alle geforderten Punkte:**
   - ✅ Branch-Namen: `feature/<TG#>-<shortname>`
@@ -98,7 +98,7 @@ Die existierenden Java-Dateien (z.B. `LightBeat.java`) folgen dem Google Java St
 $ ls -1
 .editorconfig              ✅
 checkstyle.xml             ✅
-docs/Projekt_Vorgaben/CODING_KONVENTIONEN.md ✅
+docs/CODING_CONVENTIONS.md ✅
 .github/pull_request_template.md ✅
 ```
 
