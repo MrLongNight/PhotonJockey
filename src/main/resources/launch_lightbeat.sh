@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# --- LightBeat Launcher Script ---
+# --- PhotonJockey Launcher Script ---
 #
 # This script checks for a valid Java JDK 21+ installation. If not found,
 # it offers to download and set up a local copy for the application.
@@ -9,7 +9,7 @@
 # ## Usage:
 #
 #   ./launch_lightbeat.sh
-#   (Launches the application and creates 'lightbeat.log')
+#   (Launches the application and creates 'photonjockey.log')
 #
 #   ./launch_lightbeat.sh --no-log
 #   (Launches the application without creating a log file)
@@ -23,8 +23,8 @@ SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 cd -- "$SCRIPT_DIR"
 set -e # Exit immediately if a command exits with a non-zero status.
 
-JAR_PATTERN="LightBeat-*-all.jar"
-LOG_FILE="lightbeat.log"
+JAR_PATTERN="PhotonJockey-*-all.jar"
+LOG_FILE="photonjockey.log"
 REQUIRED_JAVA_VERSION=21
 
 exit_and_keep_open() {
@@ -138,7 +138,7 @@ download_and_unpack_jdk() {
     echo "JDK has been successfully unpacked to 'jdk'."
 }
 
-echo "Launching LightBeat"
+echo "Launching PhotonJockey"
 
 # --- Process Command-Line Flags ---
 LOGGING_ENABLED=true
@@ -206,7 +206,7 @@ if [ -z "$JAR_FILE" ]; then
 fi
 
 echo "Found application: $JAR_FILE"
-echo "Using JDK at '$JAVA_EXECUTABLE'. Starting LightBeat..."
+echo "Using JDK at '$JAVA_EXECUTABLE'. Starting PhotonJockey..."
 
 set +e # Disable exit on error
 
@@ -220,14 +220,14 @@ APP_PID=$!
 
 sleep 2
 if ! kill -0 "$APP_PID" >/dev/null 2>&1; then
-    echo "Error: LightBeat failed to start. The process is not running."
+    echo "Error: PhotonJockey failed to start. The process is not running."
     if [ "$LOGGING_ENABLED" = true ]; then
         echo "Please check the log file for details: $LOG_FILE"
     fi
     exit_and_keep_open
 fi
 
-echo "LightBeat has been launched successfully."
+echo "PhotonJockey has been launched successfully."
 echo "   - Process ID (PID): $APP_PID"
 if [ "$LOGGING_ENABLED" = true ]; then
     echo "   - Logs are being written to: $LOG_FILE (disable with --no-log flag)"
