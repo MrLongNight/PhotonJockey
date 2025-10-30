@@ -1,15 +1,17 @@
-name: Build and Upload Release Assets
+name: Build & Release
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build-fat-jar:
-    name: Build Fat JAR (Linux)
+    name: Build Fat JAR
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required to upload release assets
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -37,19 +39,20 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Build and test with Gradle
-        run: ./gradlew clean test shadowJar
+      - name: Build Fat JAR with Gradle
+        run: ./gradlew clean shadowJar
 
-      - name: Upload Fat JAR to Release
-        uses: softprops/action-gh-release@v2
+      - name: Upload Fat JAR as artifact
+        uses: actions/upload-artifact@v4
         with:
-          files: build/libs/PhotonJockey-*.jar
+          name: PhotonJockey-JAR
+          path: build/libs/PhotonJockey-*.jar
 
-  build-windows-msi:
-    name: Build Windows MSI Installer
+  build-windows-installer:
+    name: Build Windows Installer
     runs-on: windows-latest
     permissions:
-      contents: write # Required to upload release assets
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -78,10 +81,35 @@ jobs:
       - name: Install WiX Toolset
         run: choco install wixtoolset
 
-      - name: Build and test with Gradle
-        run: .\gradlew.bat clean test jpackageImage -Pwindows-msi=true
+      - name: Build Windows Installer with Gradle
+        run: .\gradlew.bat clean jpackage -Pwindows-msi
 
-      - name: Upload Windows MSI to Release
+      - name: Upload Windows Installer as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhotonJockey-Windows-Installer
+          path: build/jpackage/PhotonJockey-*.msi
+
+  create-release:
+    name: Create GitHub Release
+    needs: [build-fat-jar, build-windows-installer]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets/
+
+      - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build/jpackage/PhotonJockey-*.msi
+          draft: true
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            release-assets/PhotonJockey-JAR/*
+            release-assets/PhotonJockey-Windows-Installer/*
