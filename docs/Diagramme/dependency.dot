@@ -12,6 +12,7 @@ digraph PackageDependencies {
     "pw.wunderlich.lightbeat.gui" [label="lightbeat...gui"];
     "pw.wunderlich.lightbeat.gui.frame" [label="gui...frame"];
     "pw.wunderlich.lightbeat.gui.swing" [label="gui...swing"];
+    "pw.wunderlich.lightbeat.gui.util" [label="gui...util"];
     "pw.wunderlich.lightbeat.hue.bridge" [label="hue...bridge"];
     "pw.wunderlich.lightbeat.hue.bridge.color" [label="bridge...color"];
     "pw.wunderlich.lightbeat.hue.bridge.light" [label="bridge...light"];
@@ -27,11 +28,13 @@ digraph PackageDependencies {
     "pw.wunderlich.lightbeat" -> "pw.wunderlich.lightbeat.hue.bridge";
     "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat";
     "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat.audio.device";
+    "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat.audio.device.provider";
     "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat.config";
     "pw.wunderlich.lightbeat.audio" -> "pw.wunderlich.lightbeat.util";
     "pw.wunderlich.lightbeat.audio.device.provider" -> "org.jitsi.impl.neomedia.device";
     "pw.wunderlich.lightbeat.audio.device.provider" -> "pw.wunderlich.lightbeat";
     "pw.wunderlich.lightbeat.audio.device.provider" -> "pw.wunderlich.lightbeat.audio.device";
+    "pw.wunderlich.lightbeat.audio.device.provider" -> "pw.wunderlich.lightbeat.util";
     "pw.wunderlich.lightbeat.gui" -> "pw.wunderlich.lightbeat";
     "pw.wunderlich.lightbeat.gui" -> "pw.wunderlich.lightbeat.audio";
     "pw.wunderlich.lightbeat.gui" -> "pw.wunderlich.lightbeat.config";
@@ -42,6 +45,7 @@ digraph PackageDependencies {
     "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.audio.device";
     "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.config";
     "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.gui.swing";
+    "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.gui.util";
     "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.hue.bridge";
     "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.hue.bridge.color";
     "pw.wunderlich.lightbeat.gui.frame" -> "pw.wunderlich.lightbeat.hue.visualizer";

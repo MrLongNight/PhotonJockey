@@ -155,7 +155,7 @@ for (String id : profileIds) {
 A demo script is provided to showcase the functionality:
 
 ```bash
-./demo_audio_profiles.sh
+../Skripte/demo_audio_profiles.sh
 ```
 
 This script demonstrates:

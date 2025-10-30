@@ -33,7 +33,7 @@ Erstelle einen neuen Branch: `feature/1-setup`.
 In diesem Branch:
 1.  Erstelle eine `.editorconfig`-Datei und eine `checkstyle.xml`-Datei. Konfiguriere beide für den "Google Java Styleguide".
 2.  Integriere Checkstyle in das `build.gradle`, sodass `./gradlew check` den Stil prüft.
-3.  Erstelle `docs/CODING_CONVENTIONS.md`. Inhalt:
+3.  Erstelle `docs/Projekt_Vorgaben/CODING_KONVENTIONEN.md`. Inhalt:
     * Branch-Namen: `feature/<TG#>-<shortname>`
     * Commits: Müssen die Task-Nummer enthalten (z.B. "TG1.1: Add checkstyle").
 4.  Erstelle eine Pull-Request-Vorlage unter `.github/pull_request_template.md` mit einer Checkliste:
@@ -49,7 +49,7 @@ In diesem Branch:
 Erstelle einen neuen Branch: `feature/1-analysis`.
 In diesem Branch:
 1.  Füge eine neue Gradle-Task `generateCodeReport` zum `build.gradle` hinzu.
-2.  Diese Task soll das Verzeichnis `src/main/java` scannen und eine Datei `docs/codebase_overview.md` erstellen.
+2.  Diese Task soll das Verzeichnis `src/main/java` scannen und eine Datei `docs/Reports/CODEBASE_UEBERSICHT.md` erstellen.
 3.  Der Report muss enthalten:
     * Eine Liste aller Pakete (z.B. `pw.wunderlich.lightbeat.audio`).
     * Eine Liste der wichtigsten Klassen (Main-Klassen, Controller).

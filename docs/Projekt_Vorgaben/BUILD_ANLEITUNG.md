@@ -98,4 +98,4 @@ export PATH=$JAVA_HOME/bin:$PATH
 - **Code Style:** Google Java Style Guide
 - **Editor Config:** `.editorconfig` provided
 - **Style Checks:** Run `./gradlew checkstyleMain` before committing
-- **Conventions:** See `docs/CODING_CONVENTIONS.md`
+- **Conventions:** See `CODING_KONVENTIONEN.md`

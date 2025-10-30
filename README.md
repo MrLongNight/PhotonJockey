@@ -21,7 +21,7 @@ Dieses Projekt synchronisiert Beleuchtung mit Musik/Audioquellen und bietet Effe
 1. Repository klonen:
    git clone https://github.com/MrLongNight/PhotonJockey.git
 2. Detaillierte Build-Anleitung:
-   docs/development/BUILD_INSTRUCTIONS.md
+   docs/Projekt_Vorgaben/BUILD_ANLEITUNG.md
 3. Mit Gradle bauen (Java 17 empfohlen):
    ./gradlew clean build
 
@@ -44,9 +44,17 @@ Nachfolgend eine leicht lesbare Baum-Ansicht der Top-Level-Struktur (Stand: mast
 ├── checkstyle.xml
 │   └─ (Checkstyle-Regeln / Google Java Styleguide)
 ├── docs/
-│   ├── development/
-│   │   └─ BUILD_INSTRUCTIONS.md
+│   ├── Projekt_Vorgaben/
+│   │   └─ BUILD_ANLEITUNG.md
 │   │      (Detaillierte Anleitungen zum Einrichten der Umgebung und Build)
+│   ├── Reports/
+│   │   └─ (Analyseberichte, Abschlussberichte, Refactoring-Pläne)
+│   ├── Feature_Dokumentation/
+│   │   └─ (Feature-spezifische Dokumentationen)
+│   ├── Diagramme/
+│   │   └─ (Architektur- und Abhängigkeitsdiagramme)
+│   ├── Skripte/
+│   │   └─ (Demo- und Hilfsskripte)
 │   └─ (Weitere Benutzer- und Entwicklerdokus, Architekturhinweise)
 ├── gradle/
 │   └─ (Wrapper-Hilfsdateien / Gradle-Konfiguration)
@@ -74,7 +82,7 @@ Kurze Erläuterungen:
 - src/main/java: Hier befinden sich die Kernklassen — Audio-Input, Analyzer, Effect-Engines, Bridge-Adapter (Hue), Konfigurations-Loader und CLI-/GUI-Entrypoints.
 - src/main/resources: Standardkonfigurationen, Effekt-Presets, ggf. Icons/Assets.
 - src/test/java: Unit-Tests für einzelne Module und Integrationstests, die z. B. das Zusammenspiel von Analyzer und Light-Adapter überprüfen.
-- docs/development/BUILD_INSTRUCTIONS.md: Schritt-für-Schritt zur lokalen Einrichtung (SDK-Versionen, native Abhängigkeiten, ggf. Bridge-Pairing).
+- docs/Projekt_Vorgaben/BUILD_ANLEITUNG.md: Schritt-für-Schritt zur lokalen Einrichtung (SDK-Versionen, native Abhängigkeiten, ggf. Bridge-Pairing).
 - .github/: Enthält CI-Pipelines (GitHub Actions), die Build, Tests und Checkstyle ausführen.
 
 ## Build, Tests & CI
@@ -84,7 +92,7 @@ Kurze Erläuterungen:
 - CI: GitHub Actions (in .github/) baut und testet Pull Requests.
 
 ## Konfiguration & Laufzeit
-- Laufzeitkonfigurationen (Bridge-IP, Token, Mappings) liegen typischerweise in resources oder in externen config-Dateien. Details in docs/development/BUILD_INSTRUCTIONS.md.
+- Laufzeitkonfigurationen (Bridge-IP, Token, Mappings) liegen typischerweise in resources oder in externen config-Dateien. Details in docs/Projekt_Vorgaben/BUILD_ANLEITUNG.md.
 - Für lokale Hue-Integration: Bridge-IP & Auth-Token; Pairing-Schritte sind dokumentiert.
 
 ## Mitwirken / Contribution Guidelines (Kurz)
@@ -96,7 +104,7 @@ Kurze Erläuterungen:
 ## Lizenz
 Prüfe die LICENSE-Datei (falls vorhanden) für rechtliche Hinweise und Nutzungsbedingungen.
 
-See [BUILD_INSTRUCTIONS.md](docs/development/BUILD_INSTRUCTIONS.md) for detailed build instructions and dependency setup.
+See [BUILD_ANLEITUNG.md](docs/Projekt_Vorgaben/BUILD_ANLEITUNG.md) for detailed build instructions and dependency setup.
 ## Kontakt
 Projekt-Maintainer: Mr. LongNight  
 Hilfe & Diskussion: Discord (Link oben)
