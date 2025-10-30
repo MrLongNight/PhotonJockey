@@ -57,4 +57,5 @@ docs/diagrams/*.svg
 yetanotherhueapi_repo/
 
 # Runtime configuration files
-config/
+config/*
+!config/*.template
