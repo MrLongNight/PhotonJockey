@@ -106,8 +106,8 @@ Es wurden **7 Workflows entfernt** und durch **2 wesentliche Workflows** ersetzt
 ## Verwendung
 
 ### Release erstellen
-1. Erstelle einen Tag mit Versionsnummer: `git tag v0.0.3`
-2. Push den Tag: `git push origin v0.0.3`
+1. Erstelle einen Tag mit Versionsnummer: `git tag v1.0.0`
+2. Push den Tag: `git push origin v1.0.0`
 3. Der `build-and-release.yml` Workflow startet automatisch
 4. Nach Abschluss wird ein Draft-Release mit JAR und MSI erstellt
 5. Überprüfe das Release und veröffentliche es manuell
