@@ -43,7 +43,7 @@ jobs:
       - name: Upload Fat JAR to Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build/libs/LightBeat-*.jar
+          files: build/libs/PhotonJockey-*.jar
 
   build-windows-msi:
     name: Build Windows MSI Installer
@@ -84,4 +84,4 @@ jobs:
       - name: Upload Windows MSI to Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build/jpackage/LightBeat-*.msi
+          files: build/jpackage/PhotonJockey-*.msi

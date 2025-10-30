@@ -9,8 +9,8 @@ plugins {
 }
 
 group = 'pw.wunderlich.lightbeat'
-version = '1.8.0'
-description = 'LightBeat'
+version = '0.0.2'
+description = 'PhotonJockey'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -121,7 +121,7 @@ runShadow {
 }
 
 shadowJar {
-    archiveBaseName = 'LightBeat'
+    archiveBaseName = 'PhotonJockey'
     manifest {
         attributes(
                 'Main-Class': application.getMainClass(),
@@ -137,7 +137,7 @@ tasks.register('bundleReleaseZip', Zip) {
     group = 'Distribution'
     description = 'Bundles the application into a portable ZIP file with an app subfolder.'
 
-    archiveFileName = "LightBeat-${project.version}.zip"
+    archiveFileName = "PhotonJockey-${project.version}.zip"
     destinationDirectory = layout.buildDirectory.dir('distributions')
 
     rootSpec.into(project.name) {
@@ -186,7 +186,7 @@ runtime {
                     '--add-launcher', "${project.name}-console=src/main/resources/jpackage/debug_build.properties",
             ]
             installerOptions = [
-                    '--vendor', 'wunderlich.pw',
+                    '--vendor', 'Ai-LightBotEngine',
                     '--win-menu',
                     '--win-menu-group', project.name,
                     '--win-shortcut',
@@ -200,7 +200,7 @@ runtime {
                     '--icon', 'src/main/resources/jpackage/icon.icns'
             ]
             installerOptions = [
-                    '--vendor', 'wunderlich.pw',
+                    '--vendor', 'Ai-LightBotEngine',
                     '--mac-package-name', project.name,
             ]
         }
@@ -211,7 +211,7 @@ runtime {
                     '--icon', 'src/main/resources/jpackage/icon.png'
             ]
             installerOptions = [
-                    '--vendor', 'wunderlich.pw',
+                    '--vendor', 'Ai-LightBotEngine',
                     '--linux-deb-maintainer', 'lightbeat@wunderlich.pw',
                     '--linux-menu-group', 'Audio',
                     '--linux-app-category', 'Audio',

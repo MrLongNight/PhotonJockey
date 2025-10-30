@@ -43,8 +43,8 @@ jobs:
       - name: Upload Installer Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: LightBeat-${{ github.ref_name }}-Windows
-          path: build/jpackage/LightBeat-*.msi
+          name: PhotonJockey-${{ github.ref_name }}-Windows
+          path: build/jpackage/PhotonJockey-*.msi
 
   create-release:
     name: Create GitHub Release
@@ -67,4 +67,4 @@ jobs:
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
           files: |
-            installers/LightBeat-${{ github.ref_name }}-Windows/*
+            installers/PhotonJockey-${{ github.ref_name }}-Windows/*

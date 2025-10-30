@@ -6,7 +6,7 @@ setlocal
 :: ============================================================================
 set "REQUIRED_JAVA_VERSION=21"
 set "APP_DIR=app"
-set "JAR_PATTERN=LightBeat-*-all.jar"
+set "JAR_PATTERN=PhotonJockey-*-all.jar"
 
 :: ============================================================================
 :: Argument Parsing
@@ -118,7 +118,7 @@ if not defined ARCH_PARAM (
 )
 echo.
 if /i "%ARCH_PARAM%" == "x64" (
-    echo Alternatively use the LightBeat .msi installer on the website.
+    echo Alternatively use the PhotonJockey .msi installer on the website.
 )
 echo ============================================================================
 echo.
