@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardController"
+            prefHeight="600.0" prefWidth="800.0">
+    
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            
+            <!-- Waveform View -->
+            <Label text="Waveform" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Canvas fx:id="waveformCanvas" width="780" height="150" 
+                    style="-fx-border-color: #cccccc; -fx-border-width: 1;"/>
+            
+            <!-- Frequency Spectrum -->
+            <Label text="Frequency Spectrum" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Canvas fx:id="spectrumCanvas" width="780" height="150" 
+                    style="-fx-border-color: #cccccc; -fx-border-width: 1;"/>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets top="20" right="10" bottom="20" left="10"/>
+            </padding>
+            
+            <!-- Beat Indicator -->
+            <VBox alignment="CENTER" spacing="10">
+                <Label text="Beat Indicator" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <Circle fx:id="beatIndicator" radius="40" fill="#444444" 
+                        stroke="#888888" strokeWidth="2"/>
+                <Label fx:id="bpmLabel" text="BPM: 0.0" style="-fx-font-size: 12px;"/>
+            </VBox>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            
+            <!-- Gain Slider -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Gain:" minWidth="120" style="-fx-font-size: 12px;"/>
+                <Slider fx:id="gainSlider" min="0.0" max="2.0" value="1.0" 
+                        prefWidth="300" showTickMarks="true" showTickLabels="true"
+                        majorTickUnit="0.5" minorTickCount="4" blockIncrement="0.1"/>
+                <Label fx:id="gainValueLabel" text="1.00" minWidth="50" style="-fx-font-size: 12px;"/>
+            </HBox>
+            
+            <!-- Beat Sensitivity Slider -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Beat Sensitivity:" minWidth="120" style="-fx-font-size: 12px;"/>
+                <Slider fx:id="beatSensitivitySlider" min="0.5" max="2.0" value="1.3" 
+                        prefWidth="300" showTickMarks="true" showTickLabels="true"
+                        majorTickUnit="0.5" minorTickCount="4" blockIncrement="0.1"/>
+                <Label fx:id="beatSensitivityValueLabel" text="1.30" minWidth="50" style="-fx-font-size: 12px;"/>
+            </HBox>
+        </VBox>
+    </bottom>
+    
+</BorderPane>

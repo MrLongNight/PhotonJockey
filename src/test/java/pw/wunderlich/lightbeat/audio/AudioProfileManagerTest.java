@@ -197,7 +197,13 @@ class AudioProfileManagerTest {
     }
 
     @Test
-    void testReloadProfiles() {
+    void testReloadProfiles() throws Exception {
+        // Access internal profiles map via reflection to modify it
+        java.lang.reflect.Field field = AudioProfileManager.class.getDeclaredField("profiles");
+        field.setAccessible(true);
+        @SuppressWarnings("unchecked")
+        Map<String, AudioProfile> profiles = (Map<String, AudioProfile>) field.get(manager);
+        
         // Modify the profiles in memory
         AudioProfile custom = new AudioProfile("memory", "Memory Only");
         profiles.put("memory", custom);

@@ -6,6 +6,7 @@ plugins {
     id 'com.datavitec.runtime' version '1.13.1-patch-2'
     id 'io.github.file5.guidesigner' version '1.0.2'
     id 'com.github.spotbugs' version '6.0.26'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'pw.wunderlich.lightbeat'
@@ -23,7 +24,6 @@ sourceSets {
             // Temporarily exclude Hue-related and GUI classes due to dependency issues
             exclude '**/hue/**'
             exclude '**/gui/**'
-            exclude '**/ui/**'
             exclude '**/LightBeat.java'
             exclude '**/AppTaskOrchestrator.java'
             exclude '**/config/**'
@@ -43,7 +43,6 @@ sourceSets {
             // Exclude tests that depend on excluded classes
             exclude '**/hue/**'
             exclude '**/gui/**'
-            exclude '**/ui/**'
             exclude '**/util/**'
             exclude '**/SystemAudioSourceTest.java'
         }
@@ -87,17 +86,22 @@ dependencies {
     mockitoAgent('org.mockito:mockito-core:5.20.0') {
         transitive = false
     }
+    testImplementation 'org.testfx:testfx-core:4.0.18'
+    testImplementation 'org.testfx:testfx-junit5:4.0.18'
+    testImplementation 'org.testfx:openjfx-monocle:jdk-12.0.1+2'
 }
 
-// Temporarily disable JavaFX for audio-only tests
-//javafx {
-//    version = "21.0.1"
-//    modules = ['javafx.controls', 'javafx.fxml']
-//}
+javafx {
+    version = "21.0.1"
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.swing']
+    configuration = 'implementation'
+}
 
 tasks.named('instrumentForms') {
     inputs.files(sourceSets.main.allSource.filter { it.name.endsWith('.form') })
     outputs.dir(sourceSets.main.output.classesDirs)
+    // Skip instrumentForms if JavaFX is enabled to avoid classpath issues
+    enabled = false
 }
 
 boolean isWindowsBuild = project.hasProperty('windows-msi')
@@ -224,6 +228,13 @@ runtime {
 test {
     useJUnitPlatform()
     jvmArgs += "-javaagent:${configurations.mockitoAgent.asPath}"
+    
+    // Configure headless testing for JavaFX
+    systemProperty 'testfx.robot', 'glass'
+    systemProperty 'testfx.headless', 'true'
+    systemProperty 'prism.order', 'sw'
+    systemProperty 'prism.text', 't2k'
+    systemProperty 'java.awt.headless', 'true'
 }
 
 compileJava {
