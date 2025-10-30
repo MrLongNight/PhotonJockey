@@ -13,6 +13,7 @@ import java.nio.file.Path;
 /**
  * Utility class for JSON serialization and deserialization.
  * Provides convenient methods for working with JSON data.
+ * The ObjectMapper is configured with INDENT_OUTPUT for human-readable formatting.
  */
 public final class JsonUtils {
 

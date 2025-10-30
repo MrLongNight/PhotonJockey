@@ -35,8 +35,8 @@ class LightMapSchemaTest {
         mapper = new ObjectMapper();
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         
-        // Load schema from file
-        Path schemaPath = Paths.get("schemas/lightmap.schema.json");
+        // Load schema from classpath or file system
+        Path schemaPath = Paths.get("schemas/lightmap.schema.json").toAbsolutePath();
         try (InputStream schemaStream = Files.newInputStream(schemaPath)) {
             schema = factory.getSchema(schemaStream);
         }
@@ -254,7 +254,7 @@ class LightMapSchemaTest {
     @Test
     void testExampleLightmapJsonIsValid() throws IOException {
         // Test that the example lightmap.json in resources is valid
-        Path examplePath = Paths.get("src/main/resources/lightmap.json");
+        Path examplePath = Paths.get("src/main/resources/lightmap.json").toAbsolutePath();
         if (!Files.exists(examplePath)) {
             // If example doesn't exist, skip this test
             return;
