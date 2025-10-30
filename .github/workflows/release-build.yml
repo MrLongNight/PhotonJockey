@@ -40,14 +40,10 @@ jobs:
       - name: Build and test with Gradle
         run: ./gradlew clean test shadowJar
 
-      - name: Get the project version
-        id: get_version
-        run: echo "VERSION=$(./gradlew properties -q | grep '^version:' | awk '{print $2}')" >> $GITHUB_OUTPUT
-
       - name: Upload Fat JAR to Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build/libs/LightBeat-${{ steps.get_version.outputs.VERSION }}.jar
+          files: build/libs/LightBeat-*.jar
 
   build-windows-msi:
     name: Build Windows MSI Installer
@@ -85,12 +81,7 @@ jobs:
       - name: Build and test with Gradle
         run: .\gradlew.bat clean test jpackageImage -Pwindows-msi=true
 
-      - name: Get the project version
-        id: get_version
-        shell: bash
-        run: echo "VERSION=$(./gradlew properties -q | grep '^version:' | awk '{print $2}')" >> $GITHUB_OUTPUT
-
       - name: Upload Windows MSI to Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build/jpackage/LightBeat-${{ steps.get_version.outputs.VERSION }}.msi
+          files: build/jpackage/LightBeat-*.msi
