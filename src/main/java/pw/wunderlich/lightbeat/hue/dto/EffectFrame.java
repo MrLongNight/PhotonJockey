@@ -1,5 +1,6 @@
 package pw.wunderlich.lightbeat.hue.dto;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +28,7 @@ public class EffectFrame {
         if (sequenceNumber < 0) {
             throw new IllegalArgumentException("Sequence number cannot be negative");
         }
-        this.updates = Collections.unmodifiableList(updates);
+        this.updates = Collections.unmodifiableList(new ArrayList<>(updates));
         this.timestamp = timestamp;
         this.sequenceNumber = sequenceNumber;
     }

@@ -3,6 +3,7 @@ package pw.wunderlich.lightbeat.hue.dto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,9 +82,9 @@ class EffectFrameTest {
         EffectFrame frame = new EffectFrame(updates, 1000L, 42);
         String str = frame.toString();
 
-        assert str.contains("EffectFrame");
-        assert str.contains("1000");
-        assert str.contains("42");
+        assertTrue(str.contains("EffectFrame"));
+        assertTrue(str.contains("1000"));
+        assertTrue(str.contains("42"));
     }
 
     private List<LightUpdate> createTestUpdates() {

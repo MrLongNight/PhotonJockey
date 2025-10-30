@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -78,8 +79,8 @@ class LightUpdateTest {
         LightUpdate update = new LightUpdate("light-1", color, 400);
         String str = update.toString();
 
-        assert str.contains("LightUpdate");
-        assert str.contains("light-1");
-        assert str.contains("400");
+        assertTrue(str.contains("LightUpdate"));
+        assertTrue(str.contains("light-1"));
+        assertTrue(str.contains("400"));
     }
 }

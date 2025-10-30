@@ -3,6 +3,7 @@ package pw.wunderlich.lightbeat.hue.dto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -77,8 +78,8 @@ class XyColorTest {
         XyColor color = new XyColor(0.5, 0.5, 127);
         String str = color.toString();
         
-        assert str.contains("XyColor");
-        assert str.contains("0.5");
-        assert str.contains("127");
+        assertTrue(str.contains("XyColor"));
+        assertTrue(str.contains("0.5"));
+        assertTrue(str.contains("127"));
     }
 }
