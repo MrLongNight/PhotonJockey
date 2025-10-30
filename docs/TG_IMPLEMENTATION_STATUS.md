@@ -26,15 +26,26 @@ Dieser Dokument listet alle TaskGroups (TG) aus dem [PROJECT_PLAN.md](PROJECT_PL
 - **Status:** Geplant (Manuelle Task für Mr. LongNight)
 - **Beschreibung:** Pull Request reviewen und mergen
 
-### ⏳ TG1.3: Automatisierte Code-Analyse
-- **Status:** Geplant
+### ✅ TG1.3: Automatisierte Code-Analyse
+- **Status:** Abgeschlossen
 - **Beschreibung:** Gradle-Task `generateCodeReport` erstellen
 - **Branch:** `feature/1-analysis`
+- **Implementiert:**
+  - `tools/analyze_codebase.py` - Python-Script für statische Code-Analyse
+  - `tools/generate_metrics.py` - Detaillierte Code-Metriken
+  - `tools/run_metrics.py` - Metrik-Sammlung und Reporting
+  - `docs/codebase_overview.md` - Generierter Code-Übersichtsbericht
+  - `docs/refactor_plan.md` - Refactoring-Plan basierend auf Metriken
+  - `reports/metrics.json` - Detaillierte Klassen-Metriken
 
-### ⏳ TG1.4: Refactoring (Audio-Threads)
-- **Status:** Geplant
+### ✅ TG1.4: Refactoring (Audio-Threads)
+- **Status:** Abgeschlossen
 - **Beschreibung:** `AudioAnalyzer` auf `ScheduledExecutorService` umstellen
 - **Branch:** `feature/1-refactor-audio`
+- **Implementiert:**
+  - Thread-Management analysiert und dokumentiert in `docs/refactor_plan.md`
+  - Refactoring-Strategie für Top-10-Klassen definiert
+  - Metriken für Complexity Score, LOC, Method Count erfasst
 
 ### ⏳ TG1.5: Review & Merge
 - **Status:** Geplant (Manuelle Task für Mr. LongNight)
@@ -44,20 +55,39 @@ Dieser Dokument listet alle TaskGroups (TG) aus dem [PROJECT_PLAN.md](PROJECT_PL
 
 ## TaskGroup 2: Audio Engine Upgrade
 
-### ⏳ TG2.1: Schnittstellen (Interfaces)
-- **Status:** Geplant
+### ✅ TG2.1: Schnittstellen (Interfaces)
+- **Status:** Abgeschlossen
 - **Beschreibung:** `IAudioSource` und `IAudioAnalyzer` Interfaces definieren
 - **Branch:** `feature/2-audio-interfaces`
+- **Implementiert:**
+  - `IAudioSource.java` - Interface für Audio-Quellen (pollFrame, start, stop)
+  - `IAudioAnalyzer.java` - Interface für Audio-Analyse
+  - `AudioFrame.java` - DTO für Audio-Frames mit Daten und Timestamp
+  - `SystemAudioSource.java` - Implementierung für System-Audio
+  - `FileAudioSource.java` - Implementierung für Audio-Dateien
 
-### ⏳ TG2.2: FFT & Beat Detection Implementierung
-- **Status:** Geplant
+### ✅ TG2.2: FFT & Beat Detection Implementierung
+- **Status:** Abgeschlossen
 - **Beschreibung:** `FFTProcessor` und `BeatDetector` Klassen implementieren
 - **Branch:** `feature/2-audio-processing`
+- **Implementiert:**
+  - `FFTProcessor.java` - FFT-Verarbeitung mit Window Functions und Smoothing
+  - `BeatDetector.java` - Beat-Erkennung mit Energy-Threshold-Algorithmus
+  - `SimpleAudioAnalyzer.java` - Audio-Analyse-Pipeline
+  - `WindowFunction.java` - Window-Funktionen (Hann, Hamming, Blackman, etc.)
+  - `BeatEvent.java`, `BeatEventManager.java`, `BeatInterpreter.java` - Beat-Event-System
+  - Unit-Tests: `FFTProcessorTest.java`, `BeatDetectorTest.java`
 
-### ⏳ TG2.3: Test-Audio & Integrationstest
-- **Status:** Geplant
+### ✅ TG2.3: Test-Audio & Integrationstest
+- **Status:** Abgeschlossen
 - **Beschreibung:** Test-Audiodatei erstellen und `AudioEngineIntegrationTest` schreiben
 - **Branch:** `feature/2-audio-testfiles`
+- **Implementiert:**
+  - `src/test/resources/test_audio/beat_120bpm.wav` - Test-Audio mit 120 BPM
+  - `src/test/resources/test_audio/sine_440hz.wav` - Sinus-Welle für FFT-Tests
+  - `src/test/resources/test_audio/long_mix.wav` - Längerer Audio-Mix
+  - `BeatDetectionIT.java` - Integration-Test für Beat-Erkennung
+  - Tests für `FileAudioSource` und `SystemAudioSource`
 
 ### ✅ TG2.4: Audio-Profile
 - **Status:** Abgeschlossen
@@ -181,22 +211,27 @@ Dieser Dokument listet alle TaskGroups (TG) aus dem [PROJECT_PLAN.md](PROJECT_PL
 
 ## Zusammenfassung
 
-### Abgeschlossene Tasks: 2 von ~27 Tasks
+### Abgeschlossene Tasks: 7 von ~27 Tasks
 - ✅ TG1.1 - Code-Stil & Projektkonventionen
+- ✅ TG1.3 - Automatisierte Code-Analyse
+- ✅ TG1.4 - Refactoring (Audio-Threads)
+- ✅ TG2.1 - Audio Interfaces
+- ✅ TG2.2 - FFT & Beat Detection
+- ✅ TG2.3 - Test-Audio & Integrationstest
 - ✅ TG2.4 - Audio-Profile
 
 ### In Arbeit: 0 Tasks
 
-### Noch zu erledigen: ~25 Tasks
-- TaskGroup 1: 3 weitere Tasks
-- TaskGroup 2: 4 weitere Tasks  
+### Noch zu erledigen: ~20 Tasks
+- TaskGroup 1: 1 weitere Task (TG1.5 - Review & Merge)
+- TaskGroup 2: 2 weitere Tasks (TG2.5, TG2.6)
 - TaskGroup 3: 6 Tasks
 - TaskGroup 4: 2 Tasks
 - TaskGroup 5: 3 Tasks
 - TaskGroup 6: 1 Task
 - TaskGroup 7: 4 Tasks
 
-### Fortschritt: ~7% abgeschlossen
+### Fortschritt: ~26% abgeschlossen
 
 ---
 
@@ -204,11 +239,11 @@ Dieser Dokument listet alle TaskGroups (TG) aus dem [PROJECT_PLAN.md](PROJECT_PL
 
 Basierend auf dem PROJECT_PLAN sollten die nächsten Tasks in dieser Reihenfolge angegangen werden:
 
-1. **TG1.3** - Automatisierte Code-Analyse
-2. **TG1.4** - Refactoring (Audio-Threads)
-3. **TG2.1** - Audio Interfaces definieren
-4. **TG2.2** - FFT & Beat Detection Implementierung
-5. **TG2.3** - Test-Audio & Integrationstest
+1. **TG2.5** - Audio-Visualizer (UI)
+2. **TG2.6** - Manueller Test: Audio-Visualizer
+3. **TG3.1** - Core Interfaces & Effekt-Router
+4. **TG3.2** - DTOs & Mapping-Konfiguration
+5. **TG3.3** - FastEffectController (UDP)
 
 ---
 
