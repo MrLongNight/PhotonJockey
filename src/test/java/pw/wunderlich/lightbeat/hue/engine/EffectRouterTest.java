@@ -197,6 +197,26 @@ class EffectRouterTest {
     }
 
     @Test
+    void testLoadLightMapWithInvalidControlType() throws IOException {
+        String json = """
+                {
+                  "lights": [
+                    {"id": "light-001", "controlType": "FAST_UDP"},
+                    {"id": "light-002", "controlType": "INVALID_TYPE"},
+                    {"id": "light-003", "controlType": "LOW_HTTP"}
+                  ]
+                }
+                """;
+        router.loadLightMapFromStream(new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8)));
+
+        // Should load only valid lights, skipping the invalid one
+        assertEquals(2, router.getLightCount());
+        assertEquals(EffectRouter.ControlType.FAST_UDP, router.getControlType("light-001"));
+        assertNull(router.getControlType("light-002"));
+        assertEquals(EffectRouter.ControlType.LOW_HTTP, router.getControlType("light-003"));
+    }
+
+    @Test
     void testMultipleFrameRouting() throws IOException {
         String json = """
                 {

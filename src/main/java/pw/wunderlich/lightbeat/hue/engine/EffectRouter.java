@@ -74,9 +74,14 @@ public class EffectRouter {
             for (JsonNode light : lights) {
                 String id = light.get("id").asText();
                 String controlTypeStr = light.get("controlType").asText();
-                ControlType controlType = ControlType.valueOf(controlTypeStr);
-                lightControlMap.put(id, controlType);
-                LOG.debug("Loaded light {} with control type {}", id, controlType);
+                
+                try {
+                    ControlType controlType = ControlType.valueOf(controlTypeStr);
+                    lightControlMap.put(id, controlType);
+                    LOG.debug("Loaded light {} with control type {}", id, controlType);
+                } catch (IllegalArgumentException e) {
+                    LOG.warn("Invalid control type '{}' for light '{}', skipping", controlTypeStr, id);
+                }
             }
         }
 
