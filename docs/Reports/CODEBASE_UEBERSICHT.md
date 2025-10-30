@@ -13,7 +13,7 @@
 
 ## Package Structure
 
-The codebase contains **16 packages** with **101 classes**.
+The codebase contains **17 packages** with **117 classes**.
 
 ### `org.jitsi.impl.neomedia.device`
 
@@ -27,8 +27,8 @@ The codebase contains **16 packages** with **101 classes**.
 
 ### `pw.wunderlich.lightbeat.audio`
 
-- **Classes**: 9
-- **Types**: AudioReader, BeatEventManager, BeatInterpreter, BeatObserver, LBAudioReader, StopStatus, is, manages, receives
+- **Classes**: 23
+- **Types**: AnalysisResult, AudioException, AudioFrame, AudioProfile, AudioProfileManager, AudioReader, BeatDetector, BeatEventManager, BeatInterpreter, BeatObserver, FFTProcessor, FileAudioSource, IAudioAnalyzer, IAudioSource, LBAudioReader, SimpleAudioAnalyzer, SimpleJsonUtil, StopStatus, SystemAudioSource, WindowFunction, is, manages, receives
 
 ### `pw.wunderlich.lightbeat.audio.device`
 
@@ -37,8 +37,8 @@ The codebase contains **16 packages** with **101 classes**.
 
 ### `pw.wunderlich.lightbeat.audio.device.provider`
 
-- **Classes**: 12
-- **Types**: CoreAudioDeviceProvider, DeviceProvider, JavaAudioDevice, JavaAudioDeviceProvider, LibJitsiDeviceProvider, PortAudioDeviceProvider, PulseAudioDeviceProvider, WASAPIDeviceProvider, WASAPILoopbackAudioDevice, for, handles, provides
+- **Classes**: 10
+- **Types**: DeviceProvider, JavaAudioDevice, JavaAudioDeviceProvider, LibJitsiDeviceProvider, PortAudioDeviceProvider, WASAPIDeviceProvider, WASAPILoopbackAudioDevice, for, handles, provides
 
 ### `pw.wunderlich.lightbeat.config`
 
@@ -59,6 +59,11 @@ The codebase contains **16 packages** with **101 classes**.
 
 - **Classes**: 8
 - **Types**: ConfigComponent, JColorPanel, JColorTile, JConfigCheckBox, JConfigSlider, JIconLabel, WrapLayout, handles
+
+### `pw.wunderlich.lightbeat.gui.util`
+
+- **Classes**: 2
+- **Types**: BrowserLauncher, for
 
 ### `pw.wunderlich.lightbeat.hue.bridge`
 
@@ -92,8 +97,8 @@ The codebase contains **16 packages** with **101 classes**.
 
 ### `pw.wunderlich.lightbeat.util`
 
-- **Classes**: 4
-- **Types**: DoubleAverageBuffer, TimeThreshold, UpdateChecker, offering
+- **Classes**: 6
+- **Types**: DoubleAverageBuffer, PlatformDetector, TimeThreshold, UpdateChecker, for, offering
 
 ## Main Classes
 
@@ -130,17 +135,73 @@ Entry point for application. Starts modules to bootstrap the application.
 
 Interprets a stream of audio amplitudes (RMS) to detect beat events. Uses a hybrid dual-threshold model to improve detection consistency. A beat must be both relatively louder than the average and a significant fraction of the last major peak's amplitude.
 
+#### `SystemAudioSource`
+
+Stub implementation of an audio source that captures system audio. TODO: Implement system audio capture functionality.
+
+#### `BeatDetector`
+
+Detects beats in audio by analyzing energy levels from AnalysisResult objects. Uses a threshold-based approach with energy history to identify significant peaks. Also tracks beat timestamps to estimate beats per minute (BPM).
+
+#### `AnalysisResult`
+
+Represents the result of analyzing an audio frame.
+
+#### `AudioFrame`
+
+Represents a frame of audio data with associated metadata.
+
 #### `BeatEventManager`
 
 Implementing class manages all registered {@link BeatObserver}'s, issuing the callbacks defined in said interface.
+
+#### `AudioException`
+
+Exception thrown when audio operations fail.
 
 #### `LBAudioReader`
 
 Default {@link AudioReader} implementation that also serves as an {@link BeatEventManager}. This implementation uses a listener-based approach to process audio data as it becomes available. It can filter frequencies for bass detection and notifies registered {@link BeatObserver}s when a beat is detected.
 
+#### `IAudioSource`
+
+Interface for audio source implementations that provide audio frames.
+
+#### `SimpleAudioAnalyzer`
+
+Simple audio analyzer that converts audio frames into analysis results. Computes basic audio features like energy and RMS amplitude.
+
+#### `FFTProcessor`
+
+Processes audio samples using Fast Fourier Transform (FFT) to compute frequency spectrum. Supports window functions and temporal smoothing for more stable frequency analysis.
+
+#### `WindowFunction`
+
+Enum representing different window functions for FFT processing. Window functions are used to reduce spectral leakage by smoothing the signal at the edges.
+
+#### `AudioProfile`
+
+Represents an audio profile with customizable parameters for beat detection and audio analysis. Each profile has a unique identifier and a set of parameters stored as key-value pairs.
+
+#### `SimpleJsonUtil`
+
+Simple JSON utility for reading and writing audio profiles. This is a minimal implementation to avoid adding external dependencies.
+
 #### `AudioReader`
 
 Implementing class is able to return a list containing all readable audio mixers of the system, and reads audio data from a selected {@link AudioDevice}.
+
+#### `FileAudioSource`
+
+Implementation of an audio source that reads from a WAV file. Reads audio data in frames and provides them for analysis.
+
+#### `IAudioAnalyzer`
+
+Interface for analyzing audio frames and extracting audio features.
+
+#### `AudioProfileManager`
+
+Manages audio profiles for beat detection and audio analysis. Profiles are stored in /config/audio_profiles.json and can be loaded and saved dynamically.
 
 #### `BeatObserver`
 
@@ -174,10 +235,6 @@ An AudioDevice implementation that uses the JMF "pull" model. It extends the Bas
 
 ### Package: `pw.wunderlich.lightbeat.audio.device.provider`
 
-#### `CoreAudioDeviceProvider`
-
-Provides {@link AudioDevice}'s for CoreAudio devices on macOS. This provider discovers all available input devices, including virtual ones like BlackHole which can be used for loopback.
-
 #### `LibJitsiDeviceProvider`
 
 An abstract base class for DeviceProviders that use libjitsi. This class handles the common initialization logic and provides a reusable JMF-based AudioDevice implementation.
@@ -185,10 +242,6 @@ An abstract base class for DeviceProviders that use libjitsi. This class handles
 #### `JavaAudioDeviceProvider`
 
 Provides {@link AudioDevice}'s via Java audio API.
-
-#### `PulseAudioDeviceProvider`
-
-Provides {@link AudioDevice}'s for PulseAudio devices on Linux. This provider discovers both standard capture devices (microphones) and loopback devices (monitors of output sinks).
 
 #### `WASAPIDeviceProvider`
 
@@ -269,6 +322,12 @@ Slider that sets a given {@link ConfigNode} to its value whenever it changes. Al
 #### `JColorPanel`
 
 A panel that draws a color palette for hue and sat selection in its background. x-axis represents hue value, y-axis saturation (0 is highest sat value)
+
+### Package: `pw.wunderlich.lightbeat.gui.util`
+
+#### `BrowserLauncher`
+
+Utility class for launching URLs in the system's default browser. Extracted from MainFrame to improve testability and reusability.
 
 ### Package: `pw.wunderlich.lightbeat.hue.bridge`
 
@@ -376,6 +435,10 @@ Stores the current beats light update information while passing through effects.
 
 Receives {@link BeatEvent}'s dispatched by the audio module. Determines brightness changes and passes the data through its effect pipe, which will then update selected lights accordingly.
 
+#### `BrightnessData`
+
+Value object containing brightness information for light updates. Encapsulates both the brightness percentage and the calculated brightness values for fading and direct brightness control.
+
 ### Package: `pw.wunderlich.lightbeat.hue.visualizer.effect`
 
 #### `ColorFlipEffect`
@@ -440,6 +503,10 @@ Helper class offering methods to compare time easily and check if a given time t
 
 Efficient ring buffer that calculates the average directly (O(1)) and can determine the max element in the buffer.
 
+#### `PlatformDetector`
+
+Utility class for detecting the operating system platform. Extracted from WASAPIDeviceProvider to improve testability and reusability. Note: Only Windows platform is supported by this application.
+
 ## Thread Creation Points
 
 Locations where threads or concurrent execution is used:
@@ -486,9 +553,9 @@ Potential areas of interest for optimization or careful review:
 
 Packages with the most dependencies (top 5):
 
-- `pw.wunderlich.lightbeat.gui.frame`: 9 package dependencies
+- `pw.wunderlich.lightbeat.gui.frame`: 10 package dependencies
+- `pw.wunderlich.lightbeat.audio.device.provider`: 7 package dependencies
 - `pw.wunderlich.lightbeat.hue.visualizer`: 6 package dependencies
-- `pw.wunderlich.lightbeat.audio.device.provider`: 6 package dependencies
+- `pw.wunderlich.lightbeat.audio`: 5 package dependencies
 - `pw.wunderlich.lightbeat.gui`: 5 package dependencies
-- `pw.wunderlich.lightbeat.hue.visualizer.effect`: 5 package dependencies
 

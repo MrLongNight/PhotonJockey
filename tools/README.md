@@ -24,7 +24,7 @@ Python script that performs static code analysis on the Java codebase.
 #### Outputs
 ### Outputs
 
-1. **docs/codebase_overview.md**: A comprehensive markdown document containing:
+1. **docs/Reports/CODEBASE_UEBERSICHT.md**: A comprehensive markdown document containing:
    - Complete package structure
    - List of main entry point classes
    - Class responsibilities (extracted from Javadoc)
@@ -32,7 +32,7 @@ Python script that performs static code analysis on the Java codebase.
    - External dependencies from build.gradle
    - Analysis of package coupling and potential hot spots
 
-2. **docs/diagrams/dependency.dot**: A Graphviz DOT file showing package-to-package dependencies
+2. **docs/Diagramme/dependency.dot**: A Graphviz DOT file showing package-to-package dependencies
 
 #### Usage
 
@@ -208,7 +208,7 @@ The tool generates `reports/metrics_tg13.json` with the following structure:
 - If dependencies are missing, SpotBugs will be skipped but other metrics will still be collected
 - All tools automatically handle errors and provide informative messages
 - Different tools output to different files to avoid conflicts:
-  - `analyze_codebase.py` → `docs/codebase_overview.md`
+  - `analyze_codebase.py` → `docs/Reports/CODEBASE_UEBERSICHT.md`
   - `generate_metrics.py` → `reports/metrics.json`
   - `run_metrics.py` → `reports/metrics_tg13.json`
 ### Usage
@@ -298,7 +298,7 @@ complexity = (LOC / 10) + (methods × 3) + fields + (threads × 10) + (executors
 
 ### Integration with Refactoring
 
-The metrics.json output is used to generate the refactoring plan in `docs/refactor_plan.md`. Classes are prioritized by complexity score:
+The metrics.json output is used to generate the refactoring plan in `docs/Reports/REFACTORING_PLAN.md`. Classes are prioritized by complexity score:
 
 - **High Priority**: Complexity > 150
 - **Medium Priority**: Complexity 80-150

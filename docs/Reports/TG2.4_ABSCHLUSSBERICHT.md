@@ -115,7 +115,7 @@ Tests were manually verified to work correctly. Full automated test execution vi
 
 ### Documentation
 
-#### docs/AUDIO_PROFILES.md
+#### docs/Feature_Dokumentation/AUDIO_PROFILE_FEATURE.md
 Comprehensive documentation including:
 - Feature overview
 - Component descriptions
@@ -127,7 +127,7 @@ Comprehensive documentation including:
 
 ### Demo Script
 
-#### demo_audio_profiles.sh
+#### docs/Skripte/demo_audio_profiles.sh
 Executable demo script that:
 1. Compiles the audio profile classes
 2. Runs a demonstration program
@@ -207,7 +207,7 @@ All functionality has been verified through manual testing:
 - `src/test/java/pw/wunderlich/lightbeat/audio/AudioProfileTest.java` (202 lines)
 - `src/test/java/pw/wunderlich/lightbeat/audio/AudioProfileManagerTest.java` (265 lines)
 - `docs/AUDIO_PROFILES.md` (248 lines)
-- `demo_audio_profiles.sh` (92 lines)
+- `docs/Skripte/demo_audio_profiles.sh` (92 lines)
 - `TG2.4_COMPLETION_SUMMARY.md` (this file)
 
 ### Total Lines Added
