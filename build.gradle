@@ -17,39 +17,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-sourceSets {
-    main {
-        java {
-            // Temporarily exclude Hue-related and GUI classes due to dependency issues
-            exclude '**/hue/**'
-            exclude '**/gui/**'
-            exclude '**/ui/**'
-            exclude '**/LightBeat.java'
-            exclude '**/AppTaskOrchestrator.java'
-            exclude '**/config/**'
-            exclude '**/util/**'
-            exclude '**/audio/LBAudioReader.java'
-            exclude '**/audio/BeatInterpreter.java'
-            exclude '**/audio/BeatEventManager.java'
-            exclude '**/audio/BeatEvent.java'
-            exclude '**/audio/BeatObserver.java'
-            exclude '**/audio/AudioReader.java'
-            exclude '**/audio/SystemAudioSource.java'
-            exclude '**/audio/device/**'
-        }
-    }
-    test {
-        java {
-            // Exclude tests that depend on excluded classes
-            exclude '**/hue/**'
-            exclude '**/gui/**'
-            exclude '**/ui/**'
-            exclude '**/util/**'
-            exclude '**/SystemAudioSourceTest.java'
-        }
-    }
-}
-
 application {
     mainClass = 'pw.wunderlich.lightbeat.LightBeat'
 }
@@ -70,8 +37,7 @@ configurations {
 }
 
 dependencies {
-    // Temporarily commented out due to unavailability in CI environment
-    // implementation 'io.github.zeroone3010:yetanotherhueapi:2.8.0-lb' // Custom fork from github.com/Kakifrucht/yetanotherhueapi
+    implementation 'io.github.zeroone3010:yetanotherhueapi:2.8.0-lb' // Custom fork from github.com/Kakifrucht/yetanotherhueapi
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'org.slf4j:slf4j-simple:2.0.17'
     implementation 'org.slf4j:jul-to-slf4j:2.0.17'
@@ -88,12 +54,6 @@ dependencies {
         transitive = false
     }
 }
-
-// Temporarily disable JavaFX for audio-only tests
-//javafx {
-//    version = "21.0.1"
-//    modules = ['javafx.controls', 'javafx.fxml']
-//}
 
 tasks.named('instrumentForms') {
     inputs.files(sourceSets.main.allSource.filter { it.name.endsWith('.form') })
