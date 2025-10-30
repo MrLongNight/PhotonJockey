@@ -55,3 +55,6 @@ docs/diagrams/*.svg
 
 # Maven dependency repository (cloned during build)
 yetanotherhueapi_repo/
+
+# Runtime configuration files
+config/
