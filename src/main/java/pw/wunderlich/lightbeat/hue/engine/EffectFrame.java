@@ -1,5 +1,8 @@
 package pw.wunderlich.lightbeat.hue.engine;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +21,10 @@ public class EffectFrame {
      * @param updates list of light updates in this frame
      * @param timestamp timestamp when this frame was created
      */
-    public EffectFrame(List<LightUpdateDTO> updates, long timestamp) {
+    @JsonCreator
+    public EffectFrame(
+            @JsonProperty("updates") List<LightUpdateDTO> updates,
+            @JsonProperty("timestamp") long timestamp) {
         this.updates = Objects.requireNonNull(updates, "Updates cannot be null");
         this.timestamp = timestamp;
     }
@@ -28,6 +34,7 @@ public class EffectFrame {
      *
      * @return list of light updates
      */
+    @JsonProperty("updates")
     public List<LightUpdateDTO> getUpdates() {
         return updates;
     }
@@ -37,6 +44,7 @@ public class EffectFrame {
      *
      * @return timestamp in milliseconds
      */
+    @JsonProperty("timestamp")
     public long getTimestamp() {
         return timestamp;
     }

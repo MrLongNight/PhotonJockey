@@ -1,5 +1,8 @@
 package pw.wunderlich.lightbeat.hue.engine;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 /**
@@ -23,8 +26,13 @@ public class LightUpdateDTO {
      * @param saturation saturation value (0.0-1.0), or null if not changing
      * @param transitionTime transition time in 100ms steps, or null for instant
      */
-    public LightUpdateDTO(String lightId, Integer brightness, Double hue,
-                          Double saturation, Integer transitionTime) {
+    @JsonCreator
+    public LightUpdateDTO(
+            @JsonProperty("lightId") String lightId,
+            @JsonProperty("brightness") Integer brightness,
+            @JsonProperty("hue") Double hue,
+            @JsonProperty("saturation") Double saturation,
+            @JsonProperty("transitionTime") Integer transitionTime) {
         this.lightId = Objects.requireNonNull(lightId, "Light ID cannot be null");
         this.brightness = brightness;
         this.hue = hue;
@@ -32,22 +40,27 @@ public class LightUpdateDTO {
         this.transitionTime = transitionTime;
     }
 
+    @JsonProperty("lightId")
     public String getLightId() {
         return lightId;
     }
 
+    @JsonProperty("brightness")
     public Integer getBrightness() {
         return brightness;
     }
 
+    @JsonProperty("hue")
     public Double getHue() {
         return hue;
     }
 
+    @JsonProperty("saturation")
     public Double getSaturation() {
         return saturation;
     }
 
+    @JsonProperty("transitionTime")
     public Integer getTransitionTime() {
         return transitionTime;
     }
