@@ -83,7 +83,7 @@ javac -cp "/tmp/demo-compile:$SLF4J_JAR" -d /tmp/demo-compile /tmp/AudioProfileD
 # Run
 echo "Running demo..."
 echo ""
-java -cp "/tmp/demo-compile:$SLF4J_JAR" AudioProfileDemo 2>&1 | grep -v "SLF4J"
+java -cp "/tmp/demo-compile:$SLF4J_JAR" AudioProfileDemo 2>&1 | grep -v "SLF4J(W): No SLF4J providers" | grep -v "SLF4J(W): Defaulting to" | grep -v "SLF4J(W): See https"
 
 echo ""
 echo "Demo completed. Check config/audio_profiles.json for the saved profiles."
