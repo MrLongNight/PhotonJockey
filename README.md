@@ -27,6 +27,10 @@ Dieses Projekt synchronisiert Beleuchtung mit Musik/Audioquellen und bietet Effe
 
 Hinweis: Projekt-Stack: Java 17 + Gradle. Codestil: Google Java Styleguide (Checkstyle).
 
+## Projekt-Status & Implementierungsfortschritt
+📊 **Implementierte Tasks:** Siehe [IMPLEMENTED_TASKS.md](IMPLEMENTED_TASKS.md) für eine Übersicht aller umgesetzten TG-Tasks.
+📋 **Detaillierter Status:** [docs/TG_IMPLEMENTATION_STATUS.md](docs/TG_IMPLEMENTATION_STATUS.md) zeigt den vollständigen Fortschritt aller geplanten TaskGroups.
+
 ## Visuelle Projektstruktur (ASCII-Baum)
 Nachfolgend eine leicht lesbare Baum-Ansicht der Top-Level-Struktur (Stand: master). Unterverzeichnisse sind soweit sinnvoll bis zu 2–3 Ebenen eingerückt. Nebem jedem Eintrag steht eine kurze Zweckbeschreibung.
 
