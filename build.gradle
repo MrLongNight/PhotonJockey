@@ -22,7 +22,9 @@ sourceSets {
     main {
         java {
             // Temporarily exclude Hue-related and GUI classes due to dependency issues
-            exclude '**/hue/**'
+            // Allow hue/engine package for TG3.1
+            exclude '**/hue/bridge/**'
+            exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
             exclude '**/LightBeat.java'
             exclude '**/AppTaskOrchestrator.java'
@@ -41,7 +43,9 @@ sourceSets {
     test {
         java {
             // Exclude tests that depend on excluded classes
-            exclude '**/hue/**'
+            // Allow hue/engine tests for TG3.1
+            exclude '**/hue/bridge/**'
+            exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
             exclude '**/util/**'
             exclude '**/SystemAudioSourceTest.java'
@@ -78,6 +82,7 @@ dependencies {
     implementation 'com.github.weisj:darklaf-core:3.1.1'
     implementation 'com.jetbrains.intellij.java:java-gui-forms-rt:252.26199.158'
     implementation 'org.jitsi:libjitsi:1.1-34-gb93ce2ee'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
 
     testImplementation platform('org.junit:junit-bom:5.13.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
