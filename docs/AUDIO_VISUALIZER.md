@@ -173,7 +173,7 @@ Use the demo application for manual verification:
 The demo simulates audio data with:
 - Synthetic waveforms (sine waves with noise)
 - Random frequency spectrum with bass emphasis
-- Periodic beat detection every 30 frames
+- Periodic beat detection approximately every 1.5 seconds (30 frames at 50ms intervals)
 
 ## Requirements
 
@@ -187,8 +187,11 @@ The demo simulates audio data with:
 javafx {
     version = "21.0.1"
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.swing']
+    configuration = 'implementation'
 }
 ```
+
+Note: `javafx.swing` module is included for potential integration with Swing components and for test initialization (JFXPanel).
 
 ## Files
 
