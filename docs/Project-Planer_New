@@ -1,625 +1,385 @@
-PhotonJockey – powered by LightBot Engine
+# PhotonJockey — Project Plan (Copilot-driven, Human-supervised)
 
-Ein KI-gestütztes Licht-Performance-System für DJs, VJs und Streamer
+Kurzbeschreibung
+----------------
+PhotonJockey — powered by LightBot Engine
 
+Ein KI-gestütztes Licht-Performance-System für DJs, VJs und Streamer.
 
----
+Governance
+----------
+- Project Lead: @MrLongNight — entscheidet über Sicherheits- und Release-Gates.
+- Copilot / Copilot Agents: ausführende Entwickler — erzeugen Code, Tests, Docs, PRs.
+- Humans: führen sicherheitsrelevante Aufgaben, Secrets & Releases manuell aus.
 
-> Governance: Project Lead: @MrLongNight (entscheidet über Sicherheits- und Release-Gates). Copilot / Copilot Agents = ausführende Entwickler: erzeugen Code, Tests, Docs, PRs. Humans führen Security/Permissions/Repo-Setup und finalen Gate-Signoffs durch.
-
-
-
-
----
-
-PhotonJockey – PROJECT PLAN (Copilot-driven, Human-supervised)
-
-Hinweis: Dieses Dokument ist vollständig Copilot-kompatibel. Jede Task enthält zwei Sektionen: (A) Developer Directive (technische, präzise Anweisung für Copilot Agents) und (B) Project Lead Note (kurze, natürliche Sprache für dich). Zusätzlich hat jede Task ein Responsibility Flag: copilot, human oder shared.
-
-Alle Aufgaben, bei denen copilot steht, darf Copilot vollständig ausführen (Code, Tests, Docs, PRs). Aufgaben mit human bedürfen manueller Ausführung (z. B. Fork, Secrets, Repo-Settings, Security Review). shared bedeutet: Copilot erstellt die Artefakte und einen PR, du reviewst und mergest.
-
-
----
+Wichtige Rollen & Verantwortungen
+--------------------------------
+- Projektmanager: @MrLongNight — weist Aufgaben als @copilot:task zu, merget PRs nach grünem CI (keine manuelle Code-Reviewtätigkeit erwartet).
+- Entwickler / Copilot Agent: Du (Copilot) — verantwortlich für Code, Tests, CI, Docs. Du erstellst Branches, implementierst Tasks, schreibst Tests und öffnest PRs.
+- Hinweis: Da der Project Lead keinen Code reviewt, sind automatisierte Tests und CI unsere einzige Absicherung.
 
 Konventionen / Regeln (immer befolgen)
+-------------------------------------
+- Repo-Name: PhotonJockey
+- Stack: Java 17, Gradle
+- Codestyle: Google Java Styleguide (Checkstyle)
+- Branch-Naming: feature/TG<group>-<short> (z. B. feature/TG3-FastEffect)
+- Commit-Message Template:
+  TG<group>-T<task>: <short description>
 
-Repo-Name: PhotonJockey (maintain this in all docs).
+  Details:
+  - test: <test-id>
+  - reviewer: @MrLongNight
 
-Branch-Naming: feature/TG<group>-<short> (e.g. feature/TG3-FastEffect).
+- PR Template (Checklist, in .github/pull_request_template.md):
+  - [ ] Build is green
+  - [ ] Unit tests are green
+  - [ ] Integration tests are green
+  - [ ] Docs updated
+  - [ ] Manual UI review required? (yes/no)
 
-Commit Template:
+- Copilot constraint: Maximal eine Klasse / Datei pro PR (CI kann dies erzwingen).
+- Alle Änderungen müssen atomar sein (1 Feature / 1 Klasse pro PR).
+- Tasks ohne Tests sind ungültig.
 
-TG<group>-T<task>: <short description>
-
-Details:
-- test: <test-id>
-- reviewer: @MrLongNight
-
-PR Template: include checklist: Build green, Unit tests green, Integration tests green, Docs updated, Manual UI review required? (yes/no).
-
-Copilot constraint: Max one class/file creation or modification per PR. CI enforces via script.
-
-Java target: Java 17 (Gradle). Use Google Java Style.
-
-
-
----
-
-Overview der TaskGroups (TG)
-
-TG1: Codeanalyse & Refactoring
-
-TG2: Audio Engine Upgrade
-
-TG3: Hue Engine NextGen (Fast + Low) & Mapping
-
-TG4: UI/UX Redesign
-
-TG5: Performance & Stability
-
-TG6: CI/CD & Tests
-
-TG7: Docs, Release & Monitoring
-
-
-
----
-
-Detaillierter, Copilot-ready Plan
-
-> Format jeder Task:
-
+Dokumentstruktur & Format der Tasks
+----------------------------------
+Jede Task enthält:
 1. Title
-
-
 2. Responsibility: copilot / human / shared
-
-
-3. Developer Directive (für Copilot Agents) — präzise, technische Instruktion.
-
-
-4. Project Lead Note — kurze, natürliche Sprache, was du tun/melden musst.
-
-
+3. Developer Directive (präzise @copilot:task Anweisung)
+4. Project Lead Note (was der Mensch tun muss)
 5. Acceptance Criteria / Tests
 
+Überblick: TaskGroups (TG)
+--------------------------
+- TG1: Codeanalyse & Refactoring
+- TG2: Audio Engine Upgrade
+- TG3: Hue Engine NextGen (Fast + Low) & Mapping
+- TG4: UI/UX Redesign
+- TG5: Performance & Stability
+- TG6: CI/CD & Tests
+- TG7: Docs, Release & Monitoring
 
+Detaillierter Plan (zusammengeführt)
+-----------------------------------
 
-
-
-
----
-
-TG1 – Codeanalyse & Refactoring
-
-TG1.1 Fork & Initial Build
-
-Responsibility: human (setup) / copilot (docs creation)
-
-
-Developer Directive (Copilot):
-
-@copilot: Create docs/setup.md containing:
-- required JDK (17), Gradle wrapper usage commands, build steps (`./gradlew clean build`), expected env vars, and quickstart steps to run the app locally. Include CI badge placeholders.
-- Create .editorconfig and checkstyle.xml templates (Google Java Style) under repo root.
-- Commit files to branch feature/TG1-setup and open PR. Do NOT push to main without review.
-
+TG1 — Codeanalyse & Projekt-Struktur
+------------------------------------
+TG1.1 Setup & Coding Conventions
+Responsibility: shared (human: repo / fork, copilot: files)
+Developer Directive:
+@copilot:task
+- Erstelle Branch: feature/TG1-setup
+- Lege an:
+  - .editorconfig (Google Java Style sensible defaults)
+  - checkstyle.xml (Google Java Style)
+  - docs/CODING_CONVENTIONS.md (Branch-Namen, Commit-Template, PR-Verhalten)
+  - docs/setup.md (JDK 17, Gradle wrapper usage, Build- & Run-Schritte, CI-Badge-Placeholder)
+  - .github/pull_request_template.md (Checklist)
+- Integriere Checkstyle ins build.gradle, sodass `./gradlew check` Stil prüft.
 Project Lead Note:
+- Human: Fork / initiales Repo-Setup, lokal ./gradlew build ausführen.
+Acceptance:
+- Style-Files + docs existieren; PR erstellt.
 
-Du forkt das Original LightBeat-Repo oder importierst den Code in ein neues repo PhotonJockey. Anschließend überprüfst du lokal ./gradlew build. Copilot erstellt die docs/setup.md und Style-Files, PR wird von dir geprüft und gemerged.
-
-
-Acceptance: docs/setup.md exists; style files present; PR created.
-
-
----
-
-TG1.2 Automated Static Analysis
-
+TG1.2 Automated Static Analysis / Codebase Report
 Responsibility: copilot
-
-
-Developer Directive (Copilot):
-
-@copilot: Implement tools/analyze_codebase.py (Python) that:
-- scans src/ for package/class list, public entrypoints, thread creation points, external dependencies from build.gradle.
-- generates docs/codebase_overview.md with: package list, main classes, brief class responsibilities, and list of suspected hot spots.
-- outputs docs/diagrams/dependency.dot (Graphviz) showing package->package dependencies.
-- run script in CI step to upload outputs as artifacts.
-- commit results to feature/TG1-analysis and open PR.
-
-Project Lead Note:
-
-Copilot erstellt automatisch die Code-Übersicht. Du checkst docs/codebase_overview.md und gibst das Gate frei, wenn Struktur und Einstiegspunkte plausibel aussehen.
-
-
-Acceptance: docs/codebase_overview.md + dependency.dot present; PR created.
-
-
----
+Developer Directive:
+@copilot:task
+- Erstelle Branch: feature/TG1-analysis
+- Implementiere ein Tool (z. B. tools/analyze_codebase.py) oder eine Gradle-Task `generateCodeReport`:
+  - Scan von src/main/java
+  - Ausgabe: docs/codebase_overview.md mit Paketliste, Hauptklassen, vermuteten EntryPoints, Stellen mit `new Thread()` usw.
+  - Optional: docs/diagrams/dependency.dot (Graphviz)
+- Commit & PR öffnen.
+Acceptance:
+- docs/codebase_overview.md + dependency.dot vorhanden.
 
 TG1.3 Code Metrics
-
 Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG1-metrics
+- Implementiere Report-Generator (SpotBugs + Metriken):
+  - LOC pro Package
+  - Cyclomatic Complexity Top-20
+  - Threads gestartet pro Klasse
+  - Externe Libs
+- Ergebnis: reports/metrics.json, PR erstellen.
+Acceptance:
+- reports/metrics.json vorhanden.
 
+TG1.4 Refactor Plan & kleine Refactors
+Responsibility: copilot (implementierung) / shared (merge)
+Developer Directive:
+@copilot:task
+- Branch(es): feature/TG1-REF-<n>
+- Aus reports/metrics.json ein docs/refactor_plan.md erzeugen (Top-10 Hotspots).
+- Pro TG1-REF-<n> eine atomare Änderung: 1 Klasse refactor + Unit-Test.
+Beispiel (aus ORIGINAL): Ersetze `new Thread()` in AudioAnalyzer-Klasse durch `ScheduledExecutorService`.
+Acceptance:
+- docs/refactor_plan.md; einzelne PRs je Refactor.
 
-Developer Directive (Copilot):
-
-@copilot: Implement tools/run_metrics.sh (or .py) that runs SpotBugs and either maven/gradle plugins to produce reports/metrics.json containing:
-- LOC per package
-- cyclomatic complexity per method (top 20)
-- number of threads started per class
-- list of external libs
-Place results into reports/metrics.json and commit to feature/TG1-metrics.
-
-Project Lead Note:
-
-Copilot liefert Metriken; du prüfst die Top-Hotspots und bestätigst Refactor-Prioritäten.
-
-
-Acceptance: reports/metrics.json exists; PR created.
-
-
----
-
-TG1.4 Generate Refactor Plan
-
+TG2 — Audio Engine Upgrade
+--------------------------
+TG2.1 Audio Interfaces
 Responsibility: copilot
-
-
-Developer Directive (Copilot):
-
-@copilot: From reports/metrics.json produce docs/refactor_plan.md listing the top 10 classes/methods to refactor. For each hotspot, add proposed small-step refactor actions (1 class per PR), risk notes, and suggested unit tests to add. Commit to feature/TG1-refactor-plan and open PR.
-
-Project Lead Note:
-
-Überprüfe die vorgeschlagenen Refactor-Aufgaben. Du markierst per PR-Review welche priorisiert werden.
-
-
-Acceptance: docs/refactor_plan.md with TG1-REF-<n> items.
-
-
----
-
-TG1.5 Execute Small Refactors (iterativ)
-
-Responsibility: copilot (generate code + tests) / shared (human reviews & merge)
-
-
-Developer Directive (Copilot):
-
-@copilot: For each TG1-REF-<n> item, create a separate branch feature/TG1-REF-<n>. Implement only the minimal safe refactor touching a single class file; add unit tests verifying current behavior. Ensure all tests pass. Create PR with description referencing TG1-REF-<n>. Do not change public APIs without explicit instruction.
-
-Project Lead Note:
-
-Du reviewst PRs einzeln. Merge nur wenn Unit Tests & smoke run are green and no regressions.
-
-
-Acceptance: each PR modifies 1 class, tests green, reviewer approves.
-
-
----
-
-TG2 – Audio Engine Upgrade
-
-TG2.1 Create Audio Interfaces
-
-Responsibility: copilot
-
-
-Developer Directive (Copilot):
-
-@copilot: Add interfaces under src/main/java/pw/wunderlich/lightbeat/audio:
-- IAudioSource { AudioFrame pollFrame() throws AudioException; void start(); void stop(); }
-- IAudioAnalyzer { AnalysisResult analyze(AudioFrame frame); }
-- Add FileAudioSource and SystemAudioSource stub implementations with TODOs and minimal functionality for tests.
-- Add unit tests stubbing audio frames.
-
-Project Lead Note:
-
-Copilot erstellt Interfaces und Stubs. Du prüfst die Interface-Signaturen und bestätigst Kompatibilität mit bestehenden code.
-
-
-Acceptance: Interfaces exist; simple unit tests present.
-
-
----
+Developer Directive:
+@copilot:task
+- Branch: feature/TG2-audio-interfaces
+- Füge Interfaces hinzu (package: pw.wunderlich.lightbeat.audio):
+  - IAudioSource { AudioFrame pollFrame(); void start(); void stop(); }
+  - IAudioAnalyzer { AnalysisResult analyze(AudioFrame frame); }
+- DTOs: AudioFrame, AnalysisResult (fields: data, timestamp, currentBPM, fftBands, isBeat)
+- Stubs: FileAudioSource/SystemAudioSource für Tests.
+Acceptance:
+- Interfaces + Unit-Tests vorhanden.
 
 TG2.2 FFTProcessor & BeatDetector
-
 Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG2-audio-processing
+- Implementiere FFTProcessor(fftSize, smoothing...) mit computeSpectrum().
+- Implementiere BeatDetector, der BPM aus AudioFrames erkennt.
+- Tests:
+  - FFTProcessorTest (synthetischer Sinus => Peak in erwarteter Band)
+  - BeatDetector integration test with beat_120bpm.wav (BPM within 119.5–120.5)
+Acceptance:
+- Tests grün.
 
+TG2.3 Deterministic Test-Audio
+Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG2-audio-testfiles
+- Füge deterministische Test-Audios hinzu: src/test/resources/audio/beat_120bpm.wav, sine_440hz.wav
+- Integrationstest: AudioEngineIntegrationTest laden & prüfen BPM.
+Acceptance:
+- BeatDetectionIT grün.
 
-Developer Directive (Copilot):
+TG2.4 Audio Profiles
+Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG2-audio-profiles
+- Implementiere ProfileManager, lädt /config/audio_profiles.json (Beispiele: techno, ambient).
+Acceptance:
+- JSON + Tests vorhanden.
 
-@copilot: Implement FFTProcessor class with constructor FFTProcessor(int fftSize, WindowFunction window, double smoothing) and computeSpectrum(double[] samples) returning magnitude array. Implement BeatDetector with methods isBeat(AnalysisResult) and getBPM().
-- Add deterministic unit tests using generated sine wave samples and provided test WAVs.
-- Place tests under src/test/java/... and include tolerances.
-
-Project Lead Note:
-
-Copilot implementiert präzise numerische Tests. Du prüfst numerische Toleranzen und Freigabe.
-
-
-Acceptance: FFTProcessorTest passes; BeatDetectorIT on beat_120bpm.wav returns 119.5–120.5 BPM.
-
-
----
-
-TG2.3 Audio Dashboard (Visualizer)
-
+TG2.5 Audio Visualizer (UI)
 Responsibility: copilot (dev) / shared (UI review)
+Developer Directive:
+@copilot:task
+- Branch: feature/TG2-audio-visualizer
+- JavaFX View: AudioAnalyzerDashboard.fxml + AudioAnalyzerDashboardController.java
+  - Wellenform-Ansicht
+  - Frequenz-Balken (Spectrum)
+  - Beat-Indikator (Circle)
+  - Slider für gain & beatSensitivity
+- Test: TestFX (headless wo möglich)
+Acceptance:
+- TestFX-Tests + manuelle UI-Checks.
 
-
-Developer Directive (Copilot):
-
-@copilot: Create JavaFX UI resources:
-- src/main/resources/ui/audio_dashboard.fxml
-- src/main/java/pw/wunderlich/lightbeat/ui/AudioDashboardController.java
-Functional: waveform view (last N ms), spectrum bars from FFT, beat indicator (boolean), sliders for fftSize, smoothing, gain, and preset dropdown. Controller subscribes to IAudioAnalyzer events (onAnalysis(AnalysisResult r)).
-- Add TestFX tests simulating onAnalysis events to verify UI element updates.
-
-Project Lead Note:
-
-Copilot baut das Dashboard. Du führst Visual-Checks (manual) und entscheidest ob das Layout für Streams passt.
-
-
-Acceptance: Visualizer updates onAnalysis frames in TestFX; sliders change analyzer params at runtime.
-
-
----
-
-TG2.4 Profiles & Presets
-
+TG3 — Hue Engine NextGen (Multi-Bridge + Mapping)
+-----------------------------------------------
+TG3.1 Core Interfaces & EffectRouter
 Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG3-hue-interfaces
+- Schnittstellen:
+  - IFastEffectController { startSession(); sendFrame(...); stopSession(); }
+  - ILowEffectController { updateLights(List<LightUpdate> updates); }
+- Implementiere EffectRouter, lädt lightmap.json und routet Frames entsprechend.
+Acceptance:
+- Unit-Tests validieren Routing-Logik.
 
-
-Developer Directive (Copilot):
-
-@copilot: Implement AudioProfileManager reading/writing /config/audio_profiles.json. Provide default profiles: techno, house, ambient. Expose API: loadProfile(String id), saveProfile(Profile p). Add Unit tests for loading/saving.
-
-Project Lead Note:
-
-Du kannst später Profile anpassen; Copilot liefert initiale Presets.
-
-
-Acceptance: /config/audio_profiles.json present; tests pass.
-
-
----
-
-TG2.5 Deterministic Test Data
-
+TG3.2 DTOs & Mapping-Schema
 Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG3-hue-config
+- DTOs: LightUpdate, EffectFrame, Color (XY+bri)
+- Schema: schemas/lightmap.schema.json (bridges + lights) — siehe Beispiel in Projektplan
+- Utilities: JSON (de)serializer
+Acceptance:
+- Schema + load/save Tests vorhanden.
 
-
-Developer Directive (Copilot):
-
-@copilot: Add deterministic test audio under tests/resources/test_audio/ (beat_120bpm.wav, sine_440hz.wav, long_mix.wav). Implement BeatDetectionIT that uses FileAudioSource to assert expected BPMs.
-
-Project Lead Note:
-
-Copilot fügt Testdateien hinzu (ensure license/redistribution OK). Du prüfst Out-of-repo sample usage policy.
-
-
-Acceptance: BeatDetectionIT green.
-
-
----
-
-TG3 – Hue Engine NextGen (Fast + Low) & Smart Mapping
-
-TG3.1 Core Interfaces & Manager
-
+TG3.3 FastEffectController (UDP)
 Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG3-hue-fast-udp
+- Implementiere FastEffectController (DatagramSocket) — Hue Entertainment V2 like
+  - UDP-Paket enthält sequenceNumber (int) und per-light payload
+- Tests:
+  - MockUdpServer + MockUdpServerTest prüft Paketankunft & sequenceNumber-Inkrement
+- Metriken: fast.framesSent, fast.packetLossPct
+Acceptance:
+- Unit-Tests grün.
 
-
-Developer Directive (Copilot):
-
-@copilot: Implement under package pw.wunderlich.lightbeat.hue the following:
-- HueBridgeManager.java with methods discoverBridges(), getBridgeById(String id), addBridge(BridgeConfig cfg).
-- BridgeSession DTO representing credentials/session info.
-- IFastEffectController & ILowEffectController interfaces as described in project plan.
-- EffectRouter.java that accepts List<LightFrame> and dispatches to controllers based on mapping config.
-- Add unit tests using Mock controllers.
-
-Project Lead Note:
-
-Copilot erstellt die Kernschnittstellen. Du prüfst, dass EffectRouter Logik die Entertainment-V2 Ergänzung berücksichtigt (max 10 per Fast group).
-
-
-Acceptance: Interfaces compiled; unit tests validate routing logic.
-
-
----
-
-TG3.2 DTOs & Mapping Schema
-
+TG3.4 LowEffectController (HTTP)
 Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG3-hue-low-http
+- Implementiere LowEffectController mit:
+  - Batching (z. B. 100ms)
+  - Rate-Limiter (configurable, z. B. 10 req/s)
+  - Backoff bei HTTP 429
+- Tests:
+  - MockHttpServer Tests (inkl. 429 Handling)
+Acceptance:
+- Tests grün.
 
-
-Developer Directive (Copilot):
-
-@copilot: Create LightFrame.java DTO, Color representation (XY + bri), and schemas/lightmap.schema.json JSON Schema. Implement JSON (de)serializer utilities for loading/saving /config/lightmap.json.
-
-Project Lead Note:
-
-Copilot liefert strukturiertes Mapping-Format; du kannst später Lampen im UI positionieren.
-
-
-Acceptance: schema file present; JSON load/save unit tests pass.
-
-
----
-
-TG3.3 FastEffectController (UDP, Entertainment V2)
-
-Responsibility: copilot (dev & tests) / shared (review)
-
-
-Developer Directive (Copilot):
-
-@copilot: Implement FastEffectController.java that:
-- Opens UDP socket to configured bridge endpoint.
-- Implements startSession(BridgeSession) handshake (simulate token retrieval for mocks).
-- Implements sendFrame(List<LightFrame>) packing frames into binary protocol (sequenceNumber:int, timestamp:long, per-light: id-length + id-bytes, xy floats, bri int).
-- Implements stopSession().
-- Add MockUdpServer test verifying sequence numbers and packet format.
-- Expose metrics: fast.framesSent, fast.lastAckMs, fast.packetLossPct via /metrics endpoint.
-
-Project Lead Note:
-
-Copilot baut die UDP engine; du reviewst PR and runs integration against a local MockUdpServer.
-
-
-Acceptance: FastEffectControllerTest green; metrics available.
-
-
----
-
-TG3.4 LowEffectController (HTTP fallback)
-
-Responsibility: copilot
-
-
-Developer Directive (Copilot):
-
-@copilot: Implement LowEffectController.java which:
-- Batches per-light HTTP PUT updates into configurable intervals (default 100ms).
-- Respects rate-limit configuration (default 10 req/s) and backoff on 429.
-- Add MockHttpServer tests for success and 429 handling.
-
-Project Lead Note:
-
-Copilot sorgt für robusten HTTP-Fallback. Du beobachtest Latenz- & error-logs.
-
-
-Acceptance: LowEffectControllerTest passes; backoff works.
-
-
----
-
-TG3.5 EffectRouter Rules & Logic
-
-Responsibility: copilot
-
-
-Developer Directive (Copilot):
-
-@copilot: Implement EffectRouter.java with routing rules:
-1) If light in entertainment group and group size <= 10 and FastController.active => route to Fast
-2) else => route to Low
-3) If multi-bridge configured, distribute by bridge mapping
-Add unit tests with synthetic lightmap.json (12 lights; expect 10 UDP frames, 2 HTTP updates).
-
-Project Lead Note:
-
-Copilot sorgt für deterministic routing; du prüfst edge-cases (group resize, bridge disconnect).
-
-
-Acceptance: Unit tests validate frame counts and destinations.
-
-
----
+TG3.5 Smart Mapping Tool (UI)
+Responsibility: copilot (dev) / shared (UI review)
+Developer Directive:
+@copilot:task
+- Branch: feature/TG3-hue-mapping-tool
+- JavaFX View: SmartMappingTool.fxml + SmartMappingToolController.java
+  - Canvas mit Drag&Drop, assign bridgeId & controlType, Save/Load config/lightmap.json
+  - Live-Preview (test effect through EffectRouter)
+- Test: TestFX save/load + drag/drop
+Acceptance:
+- TestFX-Tests + manuelle UI-Checks.
 
 TG3.6 Multi-Bridge Support
-
 Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG3-multibridge
+- HueBridgeManager: support for multiple bridges, sequencing & timestamp compensation between bridges (stubs + tests)
+Acceptance:
+- Multi-bridge Tests grün.
 
-
-Developer Directive (Copilot):
-
-@copilot: Extend HueBridgeManager to support up to 2 bridges. Implement Bridge discovery stubs and synchronization primitives: sequence alignment, timestamp offset compensation. Add tests mocking two bridges with different latencies and assert max offset < configured tolerance.
-
-Project Lead Note:
-
-Copilot liefert multi-bridge tests. Du definierst tolerances in /config/system.json.
-
-
-Acceptance: Multi-bridge tests green.
-
-
----
-
-TG3.7 Smart Mapping Tool (UI)
-
-Responsibility: copilot (dev) / shared (UI review)
-
-
-Developer Directive (Copilot):
-
-@copilot: Implement JavaFX-based LightMapController with FXML ui/lightmap.fxml. Features:
-- Canvas with zoom/pan
-- Drag & drop light nodes (x,y), select multiple
-- Assign node to bridge/group
-- Save/Load /config/lightmap.json
-- Live preview toggle sends test frames via EffectRouter (respect routing). Add TestFX tests to simulate drag/drop and save/load cycle.
-
-Project Lead Note:
-
-Copilot baut das Mapping UI; du testest live preview in a controlled environment.
-
-
-Acceptance: TestFX mapping tests pass; JSON saved correct coordinates.
-
-
----
-
-TG4 – UI/UX Redesign
-
+TG4 — UI/UX Redesign
+--------------------
+TG4.1 Hauptnavigation & UserPrefs
 Responsibility: copilot (dev) / shared (UX review)
+Developer Directive:
+@copilot:task
+- Branch: feature/TG4-ui-redesign
+- Refactor Main UI: permanent sidebar (Audio Dashboard, Light Mapping, Settings)
+- Implement user_prefs.json persistence (window size, last volume, last opened view)
+- ShortcutManager (Hotkeys z. B. Ctrl+1)
+- Test: TestFX
+Acceptance:
+- Tests grün; manuelle UX-Signoff dokumentiert.
 
-
-Developer Directive (Copilot):
-
-@copilot: Redesign main UI with sidebar: Audio | Licht Setup | Settings | Status. Implement Basic/Advanced mode toggle stored in user_prefs.json. Implement ShortcutManager for hotkeys (F5 reload config, Ctrl+L light test). Add TestFX UI flows for mode toggle and settings persistence.
-
-Project Lead Note:
-
-Copilot erstellt UI; du führst finales UX-Review und ggf. Änderungen via Issues.
-
-
-Acceptance: TestFX UI tests pass; manual UX signoff documented.
-
-
----
-
-TG5 – Performance & Stability
-
-Responsibility: copilot (scripts & tests) / shared (final review)
-
-
-Developer Directive (Copilot):
-
-@copilot: Implement tools/run_perf.sh which runs java -jar build/libs/*.jar with tests/resources/test_audio/long_mix.wav and MockBridges for 1h. Collect reports/perf.log with heap usage, GC events, queue sizes. Add automated smoke test that ensures queue stays <80% and heap growth <5% over run.
-
-Project Lead Note:
-
-Copilot führt Langzeit-Test-Skripte; du überprüfst Reports und signierst Gate D.
-
-
-Acceptance: perf.log within thresholds.
-
-
----
-
-TG6 – CI/CD & Tests
-
+TG5 — Performance & Stabilität
+------------------------------
+TG5.1 Thread-Management & Queues
 Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG5-stability
+- Effekt-Pipeline via zentralem ExecutorService (max 4 Threads)
+- BoundedBlockingQueue (ArrayBlockingQueue size=10) zwischen Analyzer und EffectRouter
+- Verhalten: wenn Queue voll, ältesten Frame verwerfen (poll()) bevor neues offer()
+- Tests: Unit-Tests zur Queue-Policy
+Acceptance:
+- Unit-Tests grün.
 
+TG5.2 Langzeit-Stresstest
+Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG5-perf-test
+- Implementiere StressTest (z. B. StressTest.java) mit MockAudioSource (60 FPS), MockBridges
+- Laufzeit: 30–60 Minuten (für CI ggf. 30min oder kürzer)
+- Log: JVM Heap alle 5 Minuten, Fail bei >10% Heap-Wachstum nach 10min Warmup
+Acceptance:
+- Perf-Logs unter Threshold.
 
-Developer Directive (Copilot):
+TG6 — CI/CD (Automatische Tests)
+-------------------------------
+TG6.1 GitHub Actions Workflow
+Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG6-ci-cd
+- Erstelle .github/workflows/ci.yml:
+  - Trigger: push auf main, pull_request
+  - Steps:
+    - actions/checkout@v4
+    - actions/setup-java@v4 (JDK 17)
+    - ./gradlew clean build
+    - ./gradlew test
+    - ./gradlew checkstyleMain
+    - Optional: run tools/analyze_codebase.py and upload artifacts
+- CI muss Unit Tests, Integrationstests und (soweit möglich) headless TestFX ausführen.
+Acceptance:
+- CI Workflow vorhanden; PRs laufen im CI.
 
-@copilot: Create .github/workflows/ci.yml with steps: checkout, setup-java(17), ./gradlew clean build, run unit tests (JUnit), run TestFX headless UI tests where possible, run tools/analyze_codebase.py, upload docs and reports as artifacts. Implement tools/check_pr_size.sh to enforce max changed files per PR and integrate it into the workflow. Publish junit reports.
+TG7 — Monitoring & Release
+--------------------------
+TG7.1 Metrik-Endpunkt
+Responsibility: copilot
+Developer Directive:
+@copilot:task
+- Branch: feature/TG7-monitoring
+- Implementiere leichter HTTP-Server (Javalin / NanoHTTPD) auf localhost:9000
+- Endpoint: /metrics liefert JSON:
+  {
+    "appStatus":"RUNNING",
+    "currentBPM":120.5,
+    "audioQueueSize":3,
+    "fastFramesSent":10500,
+    "lowRequestsSent":50
+  }
+Acceptance:
+- /metrics liefert validen JSON.
 
+TG7.2 CI-Failure Alerts (Discord)
+Responsibility: copilot (workflow change) / human (secret)
+Developer Directive:
+@copilot:task
+- Branch: feature/TG7-ci-alert
+- Modifiziere .github/workflows/ci.yml:
+  - Füge Step hinzu mit `if: failure()` am Ende des Test-Jobs, der Discord Webhook Action nutzt.
+  - Webhook-URL als GitHub Secret: DISCORD_WEBHOOK_URL (human eintragen)
 Project Lead Note:
+- Human erzeugt Discord Webhook und trägt Secret in Settings -> Secrets ein.
+Acceptance:
+- Workflow step existiert; Secret muss manuell hinzugefügt.
 
-Copilot erzeugt CI. Du fügst ggf. Secrets and self-hosted runners if needed for TestFX.
+Konkrete Templates (Issues / Tasks)
+-----------------------------------
+- Verwende die standardisierten Issue-Templates (siehe Dokumentteil "Issue / Copilot Task Templates" im Original).
+- Beispiel (TG1.2) siehe Vorlagen im Projektplan: exaktes Format verwenden, damit @copilot:task richtig erkannt wird.
 
+Gates & Acceptance Policy
+-------------------------
+- Gate A (Codeanalyse Complete): docs/codebase_overview.md + reports/metrics.json vorhanden und vom Project Lead genehmigt.
+- Gate B (Audio MVP): FFTProcessorTest & BeatDetectionIT grün.
+- Gate C (Hue MVP): FastEffectControllerTest & LowEffectControllerTest grün; EffectRouter validiert.
+- Gate D (Integration & Stability): Langzeit-Perf-Test innerhalb Threshold; docs aktualisiert; Release-Tag erstellt.
 
-Acceptance: CI runs green on main branch for baseline commit.
+Manual Steps for Project Lead (Kurz)
+-----------------------------------
+1. Fork LightBeat als PhotonJockey oder push initiales Repo (human).
+2. Prüfe lokal `./gradlew clean build`.
+3. Erstelle Issues für initiale Aufgaben mit den bereitgestellten Templates.
+4. Review & Merge PRs nur wenn CI grün ist; führe UI-Reviews manuell durch.
+5. Setze Secrets (z. B. DISCORD_WEBHOOK_URL) und Branch Protection Rules (require PR + status checks).
 
+Zu klären / offene Punkte
+-------------------------
+- Dateinamen-Case: die Repo-Umgebung ist case-sensitive. Stelle sicher, dass die Ziel-Dateinamen exakt sind (z. B. Project-Planer_new.Md vs Project-Planer_New).
+- Test-Audio-Files: Lizenz/Distribution prüfen bevor Sample-Audio in Repo aufgenommen wird.
+- Mock-Server-Abhängigkeiten für Tests (NanoHTTPD / Testcontainers / Jetty) werden in build.gradle als Test-Dependencies ergänzt.
+- CI Headless TestFX: ggf. zusätzliche Runner/Headless-Flags / xvfb auf Runner nötig.
+- Real-Bridge Tests: die manuellen Hue-Tests benötigen echte Hardware und werden als human Tasks markiert.
 
----
+Appendix: Konkrete technische Hinweise & Beispiele
+-------------------------------------------------
+- JSON-Schema Beispiel für lightmap.schema.json (bridges + lights) ist Bestandteil des TG3.2 Developer Directive und muss so in schemas/ abgelegt werden.
+- UDP Frame Format: sequenceNumber (int), timestamp (long), per-light payload: id-length + id-bytes + float X + float Y + int bri — Genaues Serialisat ist in TG3.3 spezifiziert.
+- Rate-Limiter / Backoff: LowEffectController muss 429 korrekt behandeln (exponentielles Backoff, höchstens 3 Retries pro Batch).
 
-TG7 – Docs, Release & Monitoring
-
-Responsibility: copilot (docs & metrics) / human (release sign-off)
-
-
-Developer Directive (Copilot):
-
-@copilot: Auto-generate docs in /docs: codebase_overview.md, refactor_plan.md, hue_integration.md, lightmap_guide.md. Implement simple HTTP metrics endpoint in core app at /metrics returning JSON with fast.framesSent, fast.packetLossPct, low.requestsLastMin. Add GitHub Actions webhook to send failure notifications to Discord channel via config/alerts.json.
-
-Project Lead Note:
-
-Copilot erstellt und aktualisiert Doku automatisch. Du signierst releases and tags after Gate D.
-
-
-Acceptance: docs updated; metrics endpoint reachable; webhook configured (test alert).
-
-
----
-
-Issue / Copilot Task Templates (use as Issue body)
-
-Use these exact templates to create GitHub Issues that Copilot Agents will pick up.
-
-Template: TG1.2 (example)
-
-title: TG1-2: Generate codebase overview
-labels: [copilot-task, TG1]
-body: |
-  @copilot:task
-  Produce docs/codebase_overview.md and docs/diagrams/dependency.dot by analyzing src/.
-  Output must list packages, main classes, threads created, and external dependencies.
-  Commit to feature/TG1-analysis and open PR.
-
-Template: TG3.3 FastEffectController
-
-title: TG3-3: Implement FastEffectController (UDP)
-labels: [copilot-task, TG3]
-body: |
-  @copilot:task
-  Implement FastEffectController.java with startSession(BridgeSession), sendFrame(List<LightFrame>), stopSession().
-  Use binary UDP frame format with sequenceNumber/int, timestamp/long, per-light payload (id length + id bytes, xy floats, bri int).
-  Add MockUdpServer unit test validating sequence handling.
-  Publish metrics: fast.framesSent, fast.packetLossPct.
-
-
----
-
-Acceptance / Gates (explicit)
-
-Gate A (Codeanalyse Complete): docs/codebase_overview.md + reports/metrics.json present and approved by @MrLongNight.
-
-Gate B (Audio MVP): FFTProcessorTest and BeatDetectionIT green.
-
-Gate C (Hue MVP): FastEffectControllerTest and LowEffectControllerTest green; EffectRouter routing validated.
-
-Gate D (Integration & Stability): 1h perf run within thresholds; documentation updated; release tag created.
-
-
-Merging beyond Gate D requires explicit human sign-off in /docs/reviews/gateD-approved.md with timestamp and GitHub handle.
-
-
----
-
-Quickstart for Project Lead (du) — was du tust
-
-1. Fork LightBeat into your GitHub account as PhotonJockey (or push a fresh clone to new repo). Responsibility: human.
-
-
-2. Push the file docs/PROJECT_PLAN_VK_v2.md (this document) into repo root. Responsibility: copilot creates file if not present; but repo creation is human.
-
-
-3. Create Issues for initial copilot tasks using provided templates (e.g., TG1-2).
-
-
-4. Review PRs created by Copilot and merge after human checks.
-
-
-5. Perform Gate sign-offs in docs/reviews/*.md when Acceptance Criteria satisfied.
-
-
-
-
----
-
-Ende – PhotonJockey Project Plan (Copilot-driven, Human-supervised)
-
-Alle Anweisungen sind so geschrieben, dass Copilot Agents sofort Tasks übernehmen können. Du übernimmst Kontrolle über Sicherheits-, Rechte- und Release-Entscheidungen. Viel Erfolg – ich starte jetzt mit der Erstellung aller Copilot-Task-Issue-Templates und den initialen Copilot-Markdown-Artefakten in deinem Repo (als Copilot-Aufgaben).
-
-Fertig — ich habe das komplette, überarbeitete Projektplan-Dokument für PhotonJockey – powered by LightBot Engine erstellt und so formatiert, dass Copilot Agents sofort und sicher loslegen können.
-
-Was ich gemacht habe (kurz):
-
-Vollständiges, Copilot-kompatibles PROJECT PLAN erzeugt (Developer-Direktiven + Project-Lead-Notizen für jede Task).
-
-Jede Task hat jetzt ein Responsibility Flag (copilot, human, shared).
-
-Alle Copilot-Aufgaben enthalten @copilot: Direktiven in technischer Sprache, plus Issue-/PR-Vorlagen.
-
-Akzeptanzkriterien, CI-Spezifikationen, JSON-Schemas, Test-Skeletons & Gate-Signoffs eingebaut.
-
-App-Name PhotonJockey überall verwendet, mit Untertitel powered by LightBot Engine.
+Ende
+----
+Dieses Dokument wurde aus den beiden ursprünglichen Dateien zusammengeführt, Duplikate entfernt und sprachlich konsolidiert. Nutze die Task-Vorlagen, um Issues zu erstellen und anschließend @copilot:task Anweisungen zu geben, damit ich (Copilot) die implementierbaren Tasks ausführen kann.
