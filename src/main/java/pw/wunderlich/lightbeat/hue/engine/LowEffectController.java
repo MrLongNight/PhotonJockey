@@ -33,6 +33,7 @@ public class LowEffectController implements ILowEffectController {
     private final double requestsPerSecond;
     private final List<LightUpdateDTO> pendingUpdates;
     private final Map<String, Long> lightBackoffUntil;
+    private final Map<String, Long> lightBackoffDuration;
     private final AtomicLong lastRequestTime;
     private final long minRequestIntervalMs;
     private volatile boolean isRunning;
@@ -65,6 +66,7 @@ public class LowEffectController implements ILowEffectController {
         
         this.pendingUpdates = new ArrayList<>();
         this.lightBackoffUntil = new ConcurrentHashMap<>();
+        this.lightBackoffDuration = new ConcurrentHashMap<>();
         this.lastRequestTime = new AtomicLong(0);
         this.isRunning = false;
     }
@@ -204,6 +206,7 @@ public class LowEffectController implements ILowEffectController {
             } else if (statusCode >= 200 && statusCode < 300) {
                 LOG.debug("Successfully updated light {}", update.getLightId());
                 lightBackoffUntil.remove(update.getLightId());
+                lightBackoffDuration.remove(update.getLightId());
             } else {
                 LOG.warn("HTTP request failed with status {} for light {}: {}",
                         statusCode, update.getLightId(), response.body());
@@ -234,14 +237,14 @@ public class LowEffectController implements ILowEffectController {
                 LOG.warn("Invalid Retry-After header value");
             }
         } else {
-            // Use exponential backoff
-            Long currentBackoff = lightBackoffUntil.get(lightId);
-            if (currentBackoff != null) {
-                long timeSinceBackoff = System.currentTimeMillis() - currentBackoff;
-                if (timeSinceBackoff < 10000) { // Within 10 seconds, double the backoff
-                    backoffMs = Math.min(backoffMs * 2, 10000); // Max 10 seconds
-                }
+            // Use exponential backoff based on previous backoff duration
+            Long previousBackoffMs = lightBackoffDuration.get(lightId);
+            if (previousBackoffMs != null && previousBackoffMs < 10000) {
+                // Double the previous backoff, up to max 10 seconds
+                backoffMs = Math.min(previousBackoffMs * 2, 10000);
             }
+            // Store the backoff duration for next time
+            lightBackoffDuration.put(lightId, backoffMs);
         }
         
         long backoffUntil = System.currentTimeMillis() + backoffMs;
