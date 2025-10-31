@@ -3,8 +3,8 @@ package io.github.mrlongnight.photonjockey.hue.engine;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pw.wunderlich.lightbeat.hue.engine.EffectFrame;
-import pw.wunderlich.lightbeat.hue.engine.LightUpdateDTO;
+import io.github.mrlongnight.photonjockey.hue.engine.EffectFrame;
+import io.github.mrlongnight.photonjockey.hue.engine.LightUpdateDTO;
 
 import java.util.ArrayList;
 import java.util.List;
