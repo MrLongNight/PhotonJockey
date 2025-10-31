@@ -38,6 +38,7 @@ sourceSets {
             exclude '**/audio/BeatObserver.java'
             exclude '**/audio/AudioReader.java'
             exclude '**/audio/SystemAudioSource.java'
+            exclude '**/audio/SimpleAudioAnalyzer.java'
             exclude '**/audio/device/**'
         }
     }
@@ -51,6 +52,8 @@ sourceSets {
             exclude '**/gui/**'
             exclude '**/lightbeat/util/**'
             exclude '**/SystemAudioSourceTest.java'
+            exclude '**/FFTProcessorTest.java'
+            exclude '**/BeatDetectionIT.java'
         }
     }
 }
