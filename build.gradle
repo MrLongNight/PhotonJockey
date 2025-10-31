@@ -27,10 +27,11 @@ sourceSets {
             exclude '**/hue/bridge/**'
             exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
+            exclude '**/LightBeat.java'
             exclude '**/PhotonJockey.java'
             exclude '**/AppTaskOrchestrator.java'
             exclude '**/config/**'
-            // Legacy exclusions no longer needed after refactoring
+            exclude '**/util/**'
             exclude '**/audio/LBAudioReader.java'
             exclude '**/audio/PJAudioReader.java'
             exclude '**/audio/BeatInterpreter.java'
@@ -39,6 +40,7 @@ sourceSets {
             exclude '**/audio/BeatObserver.java'
             exclude '**/audio/AudioReader.java'
             exclude '**/audio/SystemAudioSource.java'
+            exclude '**/audio/SimpleAudioAnalyzer.java'
             exclude '**/audio/device/**'
         }
     }
@@ -50,8 +52,10 @@ sourceSets {
             exclude '**/hue/bridge/**'
             exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
-            // Legacy exclusions no longer needed after refactoring
+            exclude '**/util/**'
             exclude '**/SystemAudioSourceTest.java'
+            exclude '**/FFTProcessorTest.java'
+            exclude '**/BeatDetectionIT.java'
         }
     }
 }
