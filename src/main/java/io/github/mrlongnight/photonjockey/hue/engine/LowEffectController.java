@@ -1,7 +1,9 @@
-package pw.wunderlich.lightbeat.hue.engine;
+package io.github.mrlongnight.photonjockey.hue.engine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pw.wunderlich.lightbeat.hue.engine.ILowEffectController;
+import pw.wunderlich.lightbeat.hue.engine.LightUpdateDTO;
 
 import java.net.URI;
 import java.net.http.HttpClient;

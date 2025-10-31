@@ -1,9 +1,10 @@
-package pw.wunderlich.lightbeat.hue.engine;
+package io.github.mrlongnight.photonjockey.hue.engine;
 
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pw.wunderlich.lightbeat.hue.engine.LightUpdateDTO;
 
 import java.io.IOException;
 import java.io.OutputStream;
