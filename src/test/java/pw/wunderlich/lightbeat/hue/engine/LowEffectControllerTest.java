@@ -317,8 +317,8 @@ class LowEffectControllerTest {
         
         controller.updateLights(updates);
         
-        // Wait for batch
-        Thread.sleep(300);
+        // Wait for batch + rate limiting (100ms batch + 3 requests * 100ms rate limit = ~400ms)
+        Thread.sleep(500);
         
         // Should have sent 3 requests (one per light)
         assertTrue(requestCount.get() >= 3);
@@ -378,8 +378,8 @@ class LowEffectControllerTest {
         
         assertTrue(latch.await(1, TimeUnit.SECONDS));
         
-        // Wait for batch processing
-        Thread.sleep(300);
+        // Wait for batch processing + rate limiting (100ms batch + 3 requests * 100ms = ~400ms)
+        Thread.sleep(500);
         
         // All 3 updates should have been processed
         assertTrue(requestCount.get() >= 3);

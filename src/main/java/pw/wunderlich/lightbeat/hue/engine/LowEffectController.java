@@ -158,19 +158,7 @@ public class LowEffectController implements ILowEffectController {
             return;
         }
         
-        // Apply rate limiting
-        long timeSinceLastRequest = now - lastRequestTime.get();
-        if (timeSinceLastRequest < minRequestIntervalMs) {
-            long sleepTime = minRequestIntervalMs - timeSinceLastRequest;
-            try {
-                Thread.sleep(sleepTime);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                return;
-            }
-        }
-        
-        // Send updates
+        // Send updates with rate limiting applied between each request
         for (LightUpdateDTO update : filteredBatch) {
             sendUpdate(update);
         }
@@ -183,6 +171,23 @@ public class LowEffectController implements ILowEffectController {
      */
     private void sendUpdate(LightUpdateDTO update) {
         try {
+            // Apply rate limiting before each request
+            long now = System.currentTimeMillis();
+            long previousRequestTime = lastRequestTime.getAndSet(now);
+            long timeSinceLastRequest = now - previousRequestTime;
+            
+            if (timeSinceLastRequest < minRequestIntervalMs) {
+                long sleepTime = minRequestIntervalMs - timeSinceLastRequest;
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+                // Update the actual request time after sleeping
+                lastRequestTime.set(System.currentTimeMillis());
+            }
+            
             String url = String.format("http://%s/api/%s/lights/%s/state",
                     bridgeIp, apiKey, update.getLightId());
             
@@ -195,7 +200,6 @@ public class LowEffectController implements ILowEffectController {
                     .timeout(Duration.ofSeconds(5))
                     .build();
             
-            lastRequestTime.set(System.currentTimeMillis());
             HttpResponse<String> response = httpClient.send(request, 
                     HttpResponse.BodyHandlers.ofString());
             
