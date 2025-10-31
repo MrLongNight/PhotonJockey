@@ -227,6 +227,7 @@ public class LowEffectController implements ILowEffectController {
     private void handleRateLimitExceeded(String lightId, HttpResponse<String> response) {
         // Try to get Retry-After header
         long backoffMs = 1000; // Default 1 second
+        boolean useExponentialBackoff = false;
         
         if (response.headers().firstValue("Retry-After").isPresent()) {
             try {
@@ -235,8 +236,13 @@ public class LowEffectController implements ILowEffectController {
                 backoffMs = retryAfter * 1000L;
             } catch (NumberFormatException e) {
                 LOG.warn("Invalid Retry-After header value");
+                useExponentialBackoff = true;
             }
         } else {
+            useExponentialBackoff = true;
+        }
+        
+        if (useExponentialBackoff) {
             // Use exponential backoff based on previous backoff duration
             Long previousBackoffMs = lightBackoffDuration.get(lightId);
             if (previousBackoffMs != null && previousBackoffMs < 10000) {
