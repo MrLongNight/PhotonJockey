@@ -196,9 +196,9 @@ Note: `javafx.swing` module is included for potential integration with Swing com
 ## Files
 
 - **FXML**: `src/main/resources/fxml/AudioAnalyzerDashboard.fxml`
-- **Controller**: `src/main/java/pw/wunderlich/lightbeat/ui/AudioAnalyzerDashboardController.java`
-- **Demo**: `src/main/java/pw/wunderlich/lightbeat/ui/AudioAnalyzerDashboardDemo.java`
-- **Tests**: `src/test/java/pw/wunderlich/lightbeat/ui/AudioAnalyzerDashboardControllerUnitTest.java`
+- **Controller**: `src/main/java/io/github/mrlongnight/photonjockey/ui/AudioAnalyzerDashboardController.java`
+- **Demo**: `src/main/java/io/github/mrlongnight/photonjockey/ui/AudioAnalyzerDashboardDemo.java`
+- **Tests**: `src/test/java/io/github/mrlongnight/photonjockey/ui/AudioAnalyzerDashboardControllerUnitTest.java`
 
 ## Future Enhancements
 

@@ -74,9 +74,9 @@ JAVA_EOF
 echo "Compiling classes..."
 mkdir -p /tmp/demo-compile
 javac -cp "$SLF4J_JAR" -d /tmp/demo-compile \
-    src/main/java/pw/wunderlich/lightbeat/audio/AudioProfile.java \
-    src/main/java/pw/wunderlich/lightbeat/audio/SimpleJsonUtil.java \
-    src/main/java/pw/wunderlich/lightbeat/audio/AudioProfileManager.java
+    src/main/java/io/github/mrlongnight/photonjockey/audio/AudioProfile.java \
+    src/main/java/io/github/mrlongnight/photonjockey/audio/SimpleJsonUtil.java \
+    src/main/java/io/github/mrlongnight/photonjockey/audio/AudioProfileManager.java
 
 javac -cp "/tmp/demo-compile:$SLF4J_JAR" -d /tmp/demo-compile /tmp/AudioProfileDemo.java
 

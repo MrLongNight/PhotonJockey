@@ -8,7 +8,7 @@ Implement AudioProfileManager reading/writing /config/audio_profiles.json. Provi
 ### Components Created
 
 #### 1. AudioProfile.java
-- Location: `src/main/java/pw/wunderlich/lightbeat/audio/AudioProfile.java`
+- Location: `src/main/java/io/github/mrlongnight/photonjockey/audio/AudioProfile.java`
 - Purpose: Represents an audio profile with ID, name, and parameters
 - Features:
   - Immutable ID and name
@@ -17,7 +17,7 @@ Implement AudioProfileManager reading/writing /config/audio_profiles.json. Provi
   - Proper equals/hashCode/toString implementations
 
 #### 2. AudioProfileManager.java
-- Location: `src/main/java/pw/wunderlich/lightbeat/audio/AudioProfileManager.java`
+- Location: `src/main/java/io/github/mrlongnight/photonjockey/audio/AudioProfileManager.java`
 - Purpose: Manages audio profiles with JSON persistence
 - Features:
   - Automatic directory creation
@@ -26,7 +26,7 @@ Implement AudioProfileManager reading/writing /config/audio_profiles.json. Provi
   - Full CRUD operations
 
 #### 3. SimpleJsonUtil.java
-- Location: `src/main/java/pw/wunderlich/lightbeat/audio/SimpleJsonUtil.java`
+- Location: `src/main/java/io/github/mrlongnight/photonjockey/audio/SimpleJsonUtil.java`
 - Purpose: Lightweight JSON serialization/deserialization utility
 - Features:
   - No external dependencies required
@@ -91,7 +91,7 @@ boolean reloadProfiles()
 #### Unit Tests Created
 
 ##### AudioProfileTest.java
-- Location: `src/test/java/pw/wunderlich/lightbeat/audio/AudioProfileTest.java`
+- Location: `src/test/java/io/github/mrlongnight/photonjockey/audio/AudioProfileTest.java`
 - Tests: 22 test methods covering:
   - Profile creation with various constructors
   - Parameter storage and retrieval
@@ -101,7 +101,7 @@ boolean reloadProfiles()
   - toString implementation
 
 ##### AudioProfileManagerTest.java
-- Location: `src/test/java/pw/wunderlich/lightbeat/audio/AudioProfileManagerTest.java`
+- Location: `src/test/java/io/github/mrlongnight/photonjockey/audio/AudioProfileManagerTest.java`
 - Tests: 24 test methods covering:
   - Default profile initialization
   - Profile loading and saving
@@ -201,11 +201,11 @@ All functionality has been verified through manual testing:
 ## Files Added/Modified
 
 ### New Files
-- `src/main/java/pw/wunderlich/lightbeat/audio/AudioProfile.java` (145 lines)
-- `src/main/java/pw/wunderlich/lightbeat/audio/AudioProfileManager.java` (235 lines)
-- `src/main/java/pw/wunderlich/lightbeat/audio/SimpleJsonUtil.java` (332 lines)
-- `src/test/java/pw/wunderlich/lightbeat/audio/AudioProfileTest.java` (202 lines)
-- `src/test/java/pw/wunderlich/lightbeat/audio/AudioProfileManagerTest.java` (265 lines)
+- `src/main/java/io/github/mrlongnight/photonjockey/audio/AudioProfile.java` (145 lines)
+- `src/main/java/io/github/mrlongnight/photonjockey/audio/AudioProfileManager.java` (235 lines)
+- `src/main/java/io/github/mrlongnight/photonjockey/audio/SimpleJsonUtil.java` (332 lines)
+- `src/test/java/io/github/mrlongnight/photonjockey/audio/AudioProfileTest.java` (202 lines)
+- `src/test/java/io/github/mrlongnight/photonjockey/audio/AudioProfileManagerTest.java` (265 lines)
 - `docs/AUDIO_PROFILES.md` (248 lines)
 - `demo_audio_profiles.sh` (92 lines)
 - `TG2.4_COMPLETION_SUMMARY.md` (this file)

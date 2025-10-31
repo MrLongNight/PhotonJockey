@@ -611,7 +611,7 @@ public class PulseAudioSystem
             List<CaptureDeviceInfo2> deviceList,
             List<Format> formatList)
     {
-        /* LIGHTBEAT MOD: we want monitor devices (this is the only change)
+        /* PHOTONJOCKEY MOD: we want monitor devices (this is the only change)
         int monitorOfSink = PA.source_info_get_monitor_of_sink(sourceInfo);
 
         if (monitorOfSink != PA.INVALID_INDEX)

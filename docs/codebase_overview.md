@@ -101,7 +101,7 @@ Classes with `public static void main(String[] args)` methods:
 
 ### `io.github.mrlongnight.photonjockey.PhotonJockey`
 
-- **File**: `java/pw/wunderlich/lightbeat/PhotonJockey.java`
+- **File**: `java/io/github/mrlongnight/photonjockey/PhotonJockey.java`
 - **Description**: Entry point for application. Starts modules to bootstrap the application.
 
 ## Class Responsibilities
@@ -444,7 +444,7 @@ Efficient ring buffer that calculates the average directly (O(1)) and can determ
 
 Locations where threads or concurrent execution is used:
 
-### `java/pw/wunderlich/lightbeat/AppTaskOrchestrator.java`
+### `java/io/github/mrlongnight/photonjockey/AppTaskOrchestrator.java`
 
 - Line 24: ExecutorService
 - Line 24: ScheduledExecutorService
