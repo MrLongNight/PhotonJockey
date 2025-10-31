@@ -31,11 +31,12 @@ public class PhotonJockeyLauncher {
 
     private static final Logger logger = LoggerFactory.getLogger(PhotonJockeyLauncher.class);
     private static final String ERROR_LOG_FILE = "photonjockey_error.log";
+    private static final String SEPARATOR = "================================================================================";
 
     public static void main(String[] args) {
         try {
             // Log startup information
-            logger.info("=".repeat(80));
+            logger.info(SEPARATOR);
             logger.info("PhotonJockey Launcher starting");
             logger.info("Java Version: {}", System.getProperty("java.version"));
             logger.info("Java Vendor: {}", System.getProperty("java.vendor"));
@@ -44,7 +45,7 @@ public class PhotonJockeyLauncher {
             logger.info("User Directory: {}", System.getProperty("user.dir"));
             logger.info("User Home: {}", System.getProperty("user.home"));
             logger.info("JavaFX Available: {}", isJavaFXAvailable());
-            logger.info("=".repeat(80));
+            logger.info(SEPARATOR);
 
             // Check JavaFX availability
             if (!isJavaFXAvailable()) {
@@ -119,7 +120,7 @@ public class PhotonJockeyLauncher {
             Path logPath = Paths.get(ERROR_LOG_FILE);
             String logEntry = String.format(
                 "\n%s\n%s\n%s\n%s\n",
-                "=".repeat(80),
+                SEPARATOR,
                 LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                 message,
                 t != null ? getStackTraceAsString(t) : ""
@@ -151,8 +152,9 @@ public class PhotonJockeyLauncher {
      */
     private static String getStackTraceAsString(Throwable t) {
         StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        t.printStackTrace(pw);
+        try (PrintWriter pw = new PrintWriter(sw)) {
+            t.printStackTrace(pw);
+        }
         return sw.toString();
     }
 
