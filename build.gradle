@@ -46,8 +46,6 @@ sourceSets {
             exclude '**/SystemAudioSourceTest.java'
             exclude '**/FFTProcessorTest.java'
             exclude '**/BeatDetectionIT.java'
-            // Temporarily exclude UI test that might be causing timeouts
-            exclude '**/ui/**'
         }
     }
 }
