@@ -1,4 +1,4 @@
-package pw.wunderlich.lightbeat.hue.engine;
+package io.github.mrlongnight.photonjockey.hue.engine;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

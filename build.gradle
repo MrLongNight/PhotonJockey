@@ -9,7 +9,7 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
-group = 'pw.wunderlich.lightbeat'
+group = 'io.github.mrlongnight.photonjockey'
 version = '0.0.2'
 description = 'PhotonJockey'
 
@@ -28,9 +28,10 @@ sourceSets {
             exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
             exclude '**/LightBeat.java'
+            exclude '**/PhotonJockey.java'
             exclude '**/AppTaskOrchestrator.java'
             exclude '**/config/**'
-            exclude '**/lightbeat/util/**'
+            exclude '**/util/**'
             exclude '**/audio/LBAudioReader.java'
             exclude '**/audio/BeatInterpreter.java'
             exclude '**/audio/BeatEventManager.java'
@@ -50,7 +51,7 @@ sourceSets {
             exclude '**/hue/bridge/**'
             exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
-            exclude '**/lightbeat/util/**'
+            exclude '**/util/**'
             exclude '**/SystemAudioSourceTest.java'
             exclude '**/FFTProcessorTest.java'
             exclude '**/BeatDetectionIT.java'
