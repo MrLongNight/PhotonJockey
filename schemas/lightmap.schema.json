@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/MrLongNight/PhotonJockey/schemas/lightmap.schema.json",
+  "title": "Light Mapping Configuration",
+  "description": "Configuration schema for Philips Hue bridge and light mappings",
+  "type": "object",
+  "required": ["bridges", "lights"],
+  "properties": {
+    "bridges": {
+      "type": "array",
+      "description": "List of Philips Hue bridges",
+      "items": {
+        "type": "object",
+        "required": ["id", "ip"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the bridge",
+            "minLength": 1
+          },
+          "ip": {
+            "type": "string",
+            "description": "IP address of the bridge",
+            "pattern": "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$"
+          },
+          "username": {
+            "type": "string",
+            "description": "API username for the bridge"
+          }
+        }
+      }
+    },
+    "lights": {
+      "type": "array",
+      "description": "List of lights with their spatial and control configuration",
+      "items": {
+        "type": "object",
+        "required": ["id", "x", "y", "bridgeId", "controlType"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the light",
+            "minLength": 1
+          },
+          "x": {
+            "type": "number",
+            "description": "X coordinate of the light in 2D space"
+          },
+          "y": {
+            "type": "number",
+            "description": "Y coordinate of the light in 2D space"
+          },
+          "bridgeId": {
+            "type": "string",
+            "description": "Reference to the bridge ID this light belongs to",
+            "minLength": 1
+          },
+          "controlType": {
+            "type": "string",
+            "description": "Type of control protocol to use",
+            "enum": ["FAST_UDP", "LOW_HTTP"]
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for the light"
+          }
+        }
+      }
+    }
+  }
+}

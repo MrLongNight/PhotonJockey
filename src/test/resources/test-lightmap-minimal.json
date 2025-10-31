@@ -1,0 +1,17 @@
+{
+  "bridges": [
+    {
+      "id": "bridge-1",
+      "ip": "192.168.1.100"
+    }
+  ],
+  "lights": [
+    {
+      "id": "light-1",
+      "x": 0.0,
+      "y": 0.0,
+      "bridgeId": "bridge-1",
+      "controlType": "FAST_UDP"
+    }
+  ]
+}

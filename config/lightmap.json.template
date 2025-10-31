@@ -1,0 +1,27 @@
+{
+  "bridges": [
+    {
+      "id": "bridge-main",
+      "ip": "192.168.1.XXX",
+      "username": "YOUR-API-USERNAME-HERE"
+    }
+  ],
+  "lights": [
+    {
+      "id": "light-1",
+      "x": 0.0,
+      "y": 0.0,
+      "bridgeId": "bridge-main",
+      "controlType": "FAST_UDP",
+      "name": "Example Light 1"
+    },
+    {
+      "id": "light-2",
+      "x": 100.0,
+      "y": 0.0,
+      "bridgeId": "bridge-main",
+      "controlType": "LOW_HTTP",
+      "name": "Example Light 2"
+    }
+  ]
+}
