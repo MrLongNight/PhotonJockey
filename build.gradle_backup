@@ -9,7 +9,7 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
-group = 'io.github.mrlongnight.photonjockey'
+group = 'pw.wunderlich.lightbeat'
 version = '0.0.2'
 description = 'PhotonJockey'
 
@@ -27,11 +27,11 @@ sourceSets {
             exclude '**/hue/bridge/**'
             exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
-            exclude '**/PhotonJockey.java'
+            exclude '**/LightBeat.java'
             exclude '**/AppTaskOrchestrator.java'
             exclude '**/config/**'
             exclude '**/lightbeat/util/**'
-            exclude '**/audio/PJAudioReader.java'
+            exclude '**/audio/LBAudioReader.java'
             exclude '**/audio/BeatInterpreter.java'
             exclude '**/audio/BeatEventManager.java'
             exclude '**/audio/BeatEvent.java'
@@ -56,7 +56,7 @@ sourceSets {
 }
 
 application {
-    mainClass = 'io.github.mrlongnight.photonjockey.PhotonJockey'
+    mainClass = 'pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo'
 }
 
 repositories {
@@ -97,6 +97,7 @@ dependencies {
     testImplementation 'org.testfx:testfx-core:4.0.18'
     testImplementation 'org.testfx:testfx-junit5:4.0.18'
     testImplementation 'org.testfx:openjfx-monocle:jdk-12.0.1+2'
+    testImplementation 'com.networknt:json-schema-validator:1.5.3'
 }
 
 javafx {
@@ -128,7 +129,7 @@ def libjitsiAddOpensArgs = [ '--add-opens', 'java.base/java.lang=ALL-UNNAMED' ]
 runShadow {
     jvmArgs libjitsiAddOpensArgs
     if (project.hasProperty('dumpAll')) {
-        systemProperty 'photonjockey.audio.dumpAll', 'true'
+        systemProperty 'lightbeat.audio.dumpAll', 'true'
     }
 }
 
@@ -156,12 +157,12 @@ tasks.register('bundleReleaseZip', Zip) {
         into('app') {
             from(shadowJar.archiveFile)
         }
-        from('src/main/resources/launch_photonjockey.sh') {
+        from('src/main/resources/launch_lightbeat.sh') {
             filePermissions {
                 unix('0755')
             }
         }
-        from('src/main/resources/launch_photonjockey.bat')
+        from('src/main/resources/launch_lightbeat.bat')
         from('docs/legal/THIRD_PARTY_LICENSES.md')
     }
 }
@@ -179,7 +180,7 @@ runtime {
     launcher {
         def customJvmArgs = new ArrayList(libjitsiAddOpensArgs)
         if (project.hasProperty('updatechecker-disabled')) {
-            customJvmArgs.add('-Dphotonjockey.updatechecker.disabled=true')
+            customJvmArgs.add('-Dlightbeat.updatechecker.disabled=true')
         }
 
         jvmArgs = customJvmArgs
@@ -202,7 +203,7 @@ runtime {
                     '--win-menu',
                     '--win-menu-group', project.name,
                     '--win-shortcut',
-                    '--win-upgrade-uuid', 'c7d7f7e9-7b5c-4f1a-9a0e-8f2c3d4b5e6f',
+                    '--win-upgrade-uuid', '3646e8cc-645a-441b-9c4f-e119d90f8657',
             ]
         }
         // macOS DMG Configuration
@@ -224,7 +225,7 @@ runtime {
             ]
             installerOptions = [
                     '--vendor', 'Ai-LightBotEngine',
-                    '--linux-deb-maintainer', 'contact@photonjockey.io',
+                    '--linux-deb-maintainer', 'lightbeat@wunderlich.pw',
                     '--linux-menu-group', 'Audio',
                     '--linux-app-category', 'Audio',
                     '--linux-shortcut'
