@@ -29,6 +29,7 @@ import java.awt.event.MouseEvent;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -655,6 +656,6 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
      */
     private String getApplicationVersion() {
         String version = MainFrame.class.getPackage().getImplementationVersion();
-        return java.util.Objects.requireNonNullElse(version, "");
+        return Objects.requireNonNullElse(version, "");
     }
 }
