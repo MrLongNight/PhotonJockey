@@ -1,4 +1,4 @@
-# Building PhotonJockey (PhotonJockey)
+# Building PhotonJockey
 
 ## Prerequisites
 
