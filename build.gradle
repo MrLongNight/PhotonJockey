@@ -51,7 +51,7 @@ sourceSets {
 }
 
 application {
-    mainClass = 'io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo'
+    mainClass = 'io.github.mrlongnight.photonjockey.PhotonJockeyLauncher'
 }
 
 repositories {

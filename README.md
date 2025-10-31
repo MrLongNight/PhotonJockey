@@ -91,6 +91,12 @@ Kurze Erläuterungen:
 - Laufzeitkonfigurationen (Bridge-IP, Token, Mappings) liegen typischerweise in resources oder in externen config-Dateien. Details in docs/development/BUILD_INSTRUCTIONS.md.
 - Für lokale Hue-Integration: Bridge-IP & Auth-Token; Pairing-Schritte sind dokumentiert.
 
+## Fehlerbehebung
+Falls PhotonJockey nicht startet oder Probleme auftreten, siehe [TROUBLESHOOTING_DE.md](docs/TROUBLESHOOTING_DE.md) für:
+- Informationen zu Log-Dateien (photonjockey.log, photonjockey_error.log)
+- Lösungen für häufige Probleme
+- Anleitung zur Fehlerdiagnose
+
 ## Mitwirken / Contribution Guidelines (Kurz)
 - Arbeitsablauf: Feature-Branch für jede Task (z. B. feature/3-hue-fast-udp), atomare Commits.
 - PRs gegen main; CI muss grün sein bevor Mergen.
