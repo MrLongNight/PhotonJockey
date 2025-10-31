@@ -34,6 +34,20 @@ import java.util.Optional;
  */
 public class SmartMappingToolController {
 
+    // Visual constants
+    private static final double LIGHT_RADIUS = 10.0;
+    private static final double SELECTION_RADIUS = 15.0;
+    private static final double HIT_RADIUS = 15.0;
+    private static final double GRID_SPACING = 50.0;
+    private static final double LABEL_OFFSET_X = 15.0;
+    private static final double LABEL_OFFSET_Y = 5.0;
+
+    // Test effect constants
+    private static final int TEST_BRIGHTNESS = 200;
+    private static final double TEST_HUE = 0.0;
+    private static final double TEST_SATURATION = 1.0;
+    private static final int TEST_TRANSITION_TIME = 5;
+
     @FXML
     private Canvas mapCanvas;
 
@@ -175,11 +189,10 @@ public class SmartMappingToolController {
      * Finds a light at the given coordinates.
      */
     private LightConfig findLightAt(double x, double y) {
-        final double hitRadius = 15.0;
         for (LightConfig light : config.getLights()) {
             double dx = light.getX() - x;
             double dy = light.getY() - y;
-            if (Math.sqrt(dx * dx + dy * dy) <= hitRadius) {
+            if (Math.sqrt(dx * dx + dy * dy) <= HIT_RADIUS) {
                 return light;
             }
         }
@@ -238,10 +251,10 @@ public class SmartMappingToolController {
         // Draw grid
         gc.setStroke(Color.web("#333333"));
         gc.setLineWidth(1);
-        for (int i = 0; i < mapCanvas.getWidth(); i += 50) {
+        for (double i = 0; i < mapCanvas.getWidth(); i += GRID_SPACING) {
             gc.strokeLine(i, 0, i, mapCanvas.getHeight());
         }
-        for (int i = 0; i < mapCanvas.getHeight(); i += 50) {
+        for (double i = 0; i < mapCanvas.getHeight(); i += GRID_SPACING) {
             gc.strokeLine(0, i, mapCanvas.getWidth(), i);
         }
 
@@ -266,17 +279,19 @@ public class SmartMappingToolController {
 
         // Draw circle
         gc.setFill(fillColor);
-        gc.fillOval(x - 10, y - 10, 20, 20);
+        gc.fillOval(x - LIGHT_RADIUS, y - LIGHT_RADIUS, LIGHT_RADIUS * 2, LIGHT_RADIUS * 2);
 
         // Draw selection indicator
         if (isSelected) {
             gc.setStroke(Color.web("#00ff00"));
             gc.setLineWidth(3);
-            gc.strokeOval(x - 15, y - 15, 30, 30);
+            gc.strokeOval(x - SELECTION_RADIUS, y - SELECTION_RADIUS, 
+                SELECTION_RADIUS * 2, SELECTION_RADIUS * 2);
         } else {
             gc.setStroke(Color.web("#ffffff"));
             gc.setLineWidth(1);
-            gc.strokeOval(x - 10, y - 10, 20, 20);
+            gc.strokeOval(x - LIGHT_RADIUS, y - LIGHT_RADIUS, 
+                LIGHT_RADIUS * 2, LIGHT_RADIUS * 2);
         }
 
         // Draw label
@@ -284,7 +299,7 @@ public class SmartMappingToolController {
         String label = light.getName() != null && !light.getName().isEmpty()
             ? light.getName()
             : light.getId();
-        gc.fillText(label, x + 15, y + 5);
+        gc.fillText(label, x + LABEL_OFFSET_X, y + LABEL_OFFSET_Y);
     }
 
     /**
@@ -374,10 +389,10 @@ public class SmartMappingToolController {
         for (LightConfig light : config.getLights()) {
             updates.add(new LightUpdateDTO(
                 light.getId(),
-                200,
-                0.0,
-                1.0,
-                5
+                TEST_BRIGHTNESS,
+                TEST_HUE,
+                TEST_SATURATION,
+                TEST_TRANSITION_TIME
             ));
         }
 

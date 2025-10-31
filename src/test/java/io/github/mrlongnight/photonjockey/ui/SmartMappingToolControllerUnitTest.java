@@ -102,21 +102,28 @@ class SmartMappingToolControllerUnitTest {
         LightMapConfig testConfig = createTestConfig();
         File testFile = tempDir.resolve("test-lightmap.json").toFile();
 
-        CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch saveLatch = new CountDownLatch(1);
         javafx.application.Platform.runLater(() -> {
             controller.setConfig(testConfig);
             controller.saveConfiguration(testFile);
-            latch.countDown();
+            saveLatch.countDown();
         });
-        latch.await();
+        saveLatch.await();
 
-        // Give some time for file to be written
-        Thread.sleep(100);
-
-        assertTrue(testFile.exists(), "Configuration file should be created");
-        String content = Files.readString(testFile.toPath());
-        assertTrue(content.contains("bridge-1"), "File should contain bridge ID");
-        assertTrue(content.contains("light-1"), "File should contain light ID");
+        // Verify file exists and content is correct
+        CountDownLatch verifyLatch = new CountDownLatch(1);
+        javafx.application.Platform.runLater(() -> {
+            try {
+                assertTrue(testFile.exists(), "Configuration file should be created");
+                String content = Files.readString(testFile.toPath());
+                assertTrue(content.contains("bridge-1"), "File should contain bridge ID");
+                assertTrue(content.contains("light-1"), "File should contain light ID");
+            } catch (Exception e) {
+                fail("Verification failed: " + e.getMessage());
+            }
+            verifyLatch.countDown();
+        });
+        verifyLatch.await();
     }
 
     @Test
@@ -133,7 +140,6 @@ class SmartMappingToolControllerUnitTest {
             saveLatch.countDown();
         });
         saveLatch.await();
-        Thread.sleep(100);
 
         // Now load it back
         CountDownLatch loadLatch = new CountDownLatch(1);
@@ -143,8 +149,8 @@ class SmartMappingToolControllerUnitTest {
             loadLatch.countDown();
         });
         loadLatch.await();
-        Thread.sleep(100);
 
+        // Verify loaded configuration
         CountDownLatch checkLatch = new CountDownLatch(1);
         javafx.application.Platform.runLater(() -> {
             LightMapConfig config = controller.getConfig();
@@ -170,7 +176,6 @@ class SmartMappingToolControllerUnitTest {
             saveLatch.countDown();
         });
         saveLatch.await();
-        Thread.sleep(100);
 
         // Load
         CountDownLatch loadLatch = new CountDownLatch(1);
@@ -180,7 +185,6 @@ class SmartMappingToolControllerUnitTest {
             loadLatch.countDown();
         });
         loadLatch.await();
-        Thread.sleep(100);
 
         // Verify
         CountDownLatch verifyLatch = new CountDownLatch(1);
