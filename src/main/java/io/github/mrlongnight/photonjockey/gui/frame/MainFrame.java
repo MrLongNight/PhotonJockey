@@ -5,7 +5,6 @@ import com.github.weisj.darklaf.components.help.HelpButton;
 import com.github.weisj.darklaf.theme.IntelliJTheme;
 import com.github.weisj.darklaf.theme.OneDarkTheme;
 import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
-import io.github.mrlongnight.photonjockey.PhotonJockey;
 import io.github.mrlongnight.photonjockey.audio.AudioReader;
 import io.github.mrlongnight.photonjockey.audio.BeatEvent;
 import io.github.mrlongnight.photonjockey.audio.BeatEventManager;
@@ -30,6 +29,7 @@ import java.awt.event.MouseEvent;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -172,7 +172,7 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
             }
         });
 
-        String version = PhotonJockey.getVersion();
+        String version = getApplicationVersion();
         urlLabel.setText("v" + version + " | " + urlLabel.getText());
         urlLabel.addMouseListener(new MouseInputAdapter() {
             @Override
@@ -648,5 +648,14 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
     private void showErrorMessage(String message) {
         setInfoLabelText(message, false);
         JOptionPane.showMessageDialog(frame, message + ".", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * Gets the application version from the package manifest.
+     * @return the version string or empty string if not available
+     */
+    private String getApplicationVersion() {
+        String version = MainFrame.class.getPackage().getImplementationVersion();
+        return Objects.requireNonNullElse(version, "");
     }
 }

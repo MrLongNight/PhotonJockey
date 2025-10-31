@@ -21,28 +21,15 @@ java {
 sourceSets {
     main {
         java {
-            // Temporarily exclude Hue-related and GUI classes due to dependency issues
-            // But include new TG3.2 DTO and utility classes (hue/dto and hue/util)
-            // Allow hue/engine package for TG3.1
-            // Re-enable audio and util classes for unit tests
-            exclude '**/hue/bridge/**'
-            exclude '**/hue/visualizer/**'
-            exclude '**/gui/**'
+            // All packages re-enabled after dependency resolution
+            // Only exclude specific entry points that are not needed
             exclude '**/LightBeat.java'
             exclude '**/PhotonJockey.java'
-            // Re-enabled: AppTaskOrchestrator, config/**, util/** for audio classes
-            // Re-enabled: audio classes (PJAudioReader, BeatInterpreter, etc.)
         }
     }
     test {
         java {
-            // Exclude tests that depend on excluded classes
-            // But include new TG3.2 DTO and utility tests (hue/dto and hue/util)
-            // Allow hue/engine tests for TG3.1
-            // Re-enable util tests for unit testing
-            exclude '**/hue/bridge/**'
-            exclude '**/hue/visualizer/**'
-            exclude '**/gui/**'
+            // Re-enable all tests after dependency resolution
             exclude '**/SystemAudioSourceTest.java'
             exclude '**/FFTProcessorTest.java'
             exclude '**/BeatDetectionIT.java'
@@ -70,8 +57,8 @@ configurations {
 }
 
 dependencies {
-    // Temporarily commented out due to unavailability in CI environment
-    // implementation 'io.github.zeroone3010:yetanotherhueapi:2.8.0-lb' // Custom fork from github.com/Kakifrucht/yetanotherhueapi
+    // Custom fork from github.com/Kakifrucht/yetanotherhueapi with PhotonJockey-specific enhancements
+    implementation 'io.github.zeroone3010:yetanotherhueapi:2.8.0-lb'
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'org.slf4j:slf4j-simple:2.0.17'
     implementation 'org.slf4j:jul-to-slf4j:2.0.17'

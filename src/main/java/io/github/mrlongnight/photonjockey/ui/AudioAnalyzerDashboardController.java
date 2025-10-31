@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
@@ -14,6 +16,7 @@ import io.github.mrlongnight.photonjockey.audio.AudioFrame;
 /**
  * Controller for the Audio Analyzer Dashboard UI.
  * Provides real-time visualization of audio waveform, frequency spectrum, and beat detection.
+ * Includes controls for audio device selection and Hue bridge connection.
  */
 public class AudioAnalyzerDashboardController {
 
@@ -41,10 +44,36 @@ public class AudioAnalyzerDashboardController {
     @FXML
     private Label beatSensitivityValueLabel;
 
+    @FXML
+    private ComboBox<String> audioDeviceComboBox;
+
+    @FXML
+    private Button refreshDevicesButton;
+
+    @FXML
+    private Label hueStatusLabel;
+
+    @FXML
+    private Button connectHueButton;
+
+    @FXML
+    private Button disconnectHueButton;
+
+    @FXML
+    private Label statusLabel;
+
+    @FXML
+    private Label infoLabel;
+
     private double[] waveformData;
     private double[] spectrumData;
     private double currentBpm;
     private boolean beatActive;
+
+    // Callback handlers for the main application
+    private Runnable onRefreshDevicesCallback;
+    private Runnable onConnectHueCallback;
+    private Runnable onDisconnectHueCallback;
 
     /**
      * Initializes the controller.
@@ -276,8 +305,105 @@ public class AudioAnalyzerDashboardController {
     public void clear() {
         Platform.runLater(() -> {
             initializeCanvases();
-            beatIndicator.setFill(Color.web("#444444"));
+            beatIndicator.setFill(Color.web("#2b2b2b"));
             bpmLabel.setText("BPM: 0.0");
+        });
+    }
+
+    /**
+     * Sets callback handlers for UI actions.
+     */
+    public void setCallbacks(Runnable onRefreshDevices, Runnable onConnectHue, Runnable onDisconnectHue) {
+        this.onRefreshDevicesCallback = onRefreshDevices;
+        this.onConnectHueCallback = onConnectHue;
+        this.onDisconnectHueCallback = onDisconnectHue;
+    }
+
+    /**
+     * Event handler for refresh devices button.
+     */
+    @FXML
+    private void onRefreshDevices() {
+        if (onRefreshDevicesCallback != null) {
+            onRefreshDevicesCallback.run();
+        }
+    }
+
+    /**
+     * Event handler for connect Hue button.
+     */
+    @FXML
+    private void onConnectHue() {
+        if (onConnectHueCallback != null) {
+            onConnectHueCallback.run();
+        }
+    }
+
+    /**
+     * Event handler for disconnect Hue button.
+     */
+    @FXML
+    private void onDisconnectHue() {
+        if (onDisconnectHueCallback != null) {
+            onDisconnectHueCallback.run();
+        }
+    }
+
+    /**
+     * Updates the audio device list.
+     */
+    public void updateAudioDevices(java.util.List<String> deviceNames, String selectedDevice) {
+        Platform.runLater(() -> {
+            audioDeviceComboBox.getItems().clear();
+            audioDeviceComboBox.getItems().addAll(deviceNames);
+            if (selectedDevice != null && deviceNames.contains(selectedDevice)) {
+                audioDeviceComboBox.setValue(selectedDevice);
+            } else if (!deviceNames.isEmpty()) {
+                audioDeviceComboBox.setValue(deviceNames.get(0));
+            }
+        });
+    }
+
+    /**
+     * Gets the selected audio device name.
+     * @return the selected device name, or null if no device is selected
+     */
+    public String getSelectedAudioDevice() {
+        return audioDeviceComboBox.getValue();
+    }
+
+    /**
+     * Updates the Hue connection status.
+     */
+    public void updateHueStatus(String status, boolean connected) {
+        Platform.runLater(() -> {
+            hueStatusLabel.setText(status);
+            connectHueButton.setDisable(connected);
+            disconnectHueButton.setDisable(!connected);
+            
+            if (connected) {
+                hueStatusLabel.setStyle("-fx-text-fill: #00ff00; -fx-font-size: 12px;");
+            } else {
+                hueStatusLabel.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 12px;");
+            }
+        });
+    }
+
+    /**
+     * Updates the status label.
+     */
+    public void updateStatus(String status) {
+        Platform.runLater(() -> {
+            statusLabel.setText("Status: " + status);
+        });
+    }
+
+    /**
+     * Updates the info label.
+     */
+    public void updateInfo(String info) {
+        Platform.runLater(() -> {
+            infoLabel.setText(info);
         });
     }
 }

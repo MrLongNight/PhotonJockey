@@ -1,0 +1,393 @@
+package io.github.mrlongnight.photonjockey.ui;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
+import io.github.mrlongnight.photonjockey.audio.AudioFrame;
+import io.github.mrlongnight.photonjockey.audio.BeatEvent;
+import io.github.mrlongnight.photonjockey.audio.BeatObserver;
+import io.github.mrlongnight.photonjockey.audio.FFTProcessor;
+import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
+import io.github.mrlongnight.photonjockey.audio.WindowFunction;
+import io.github.mrlongnight.photonjockey.audio.device.AudioDevice;
+import io.github.mrlongnight.photonjockey.config.Config;
+import io.github.mrlongnight.photonjockey.config.PJConfig;
+import io.github.mrlongnight.photonjockey.hue.bridge.AccessPoint;
+import io.github.mrlongnight.photonjockey.hue.bridge.BridgeConnection;
+import io.github.mrlongnight.photonjockey.hue.bridge.HueManager;
+import io.github.mrlongnight.photonjockey.hue.bridge.HueStateObserver;
+import io.github.mrlongnight.photonjockey.hue.bridge.PJHueManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.URL;
+import java.util.List;
+
+/**
+ * Main application for AudioAnalyzerDashboard.
+ * Integrates real audio analysis with Philips Hue light control.
+ * Provides comprehensive visualization and control of audio-to-light synchronization.
+ */
+public class AudioAnalyzerDashboard extends Application implements BeatObserver, HueStateObserver {
+
+    private static final Logger logger = LoggerFactory.getLogger(AudioAnalyzerDashboard.class);
+
+    private AudioAnalyzerDashboardController controller;
+    private AppTaskOrchestrator taskOrchestrator;
+    private Config config;
+    private PJAudioReader audioReader;
+    private HueManager hueManager;
+    private boolean running = true;
+    private FFTProcessor fftProcessor;
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        logger.info("Starting AudioAnalyzerDashboard application");
+
+        // Initialize configuration
+        config = new PJConfig();
+        
+        // Initialize task orchestrator
+        taskOrchestrator = new AppTaskOrchestrator();
+
+        // Initialize audio reader
+        audioReader = new PJAudioReader(config, taskOrchestrator);
+        audioReader.registerBeatObserver(this);
+
+        // Initialize FFT processor for spectrum analysis
+        fftProcessor = new FFTProcessor(2048, WindowFunction.HANN, 0.5);
+
+        // Initialize Hue manager
+        hueManager = new PJHueManager(config, taskOrchestrator);
+        hueManager.setStateObserver(this);
+
+        // Load UI
+        URL fxmlUrl = getClass().getResource("/fxml/AudioAnalyzerDashboard.fxml");
+        if (fxmlUrl == null) {
+            logger.error("Could not find FXML file");
+            showError("Resource Error", "Could not load UI definition file");
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(fxmlUrl);
+        Parent root = loader.load();
+        controller = loader.getController();
+
+        // Set up callbacks for UI actions
+        controller.setCallbacks(
+            this::refreshAudioDevices,
+            this::connectToHue,
+            this::disconnectFromHue
+        );
+
+        Scene scene = new Scene(root, 1000, 700);
+        primaryStage.setTitle("PhotonJockey - Audio Analyzer Dashboard");
+        primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            shutdown();
+        });
+        primaryStage.show();
+
+        // Initialize UI with available devices
+        refreshAudioDevices();
+
+        // Auto-start audio monitoring
+        startAudioMonitoring();
+
+        logger.info("AudioAnalyzerDashboard started successfully");
+    }
+
+    /**
+     * Refreshes the list of available audio devices.
+     */
+    private void refreshAudioDevices() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                List<AudioDevice> devices = audioReader.getSupportedDevices();
+                List<String> deviceNames = devices.stream()
+                    .map(AudioDevice::getName)
+                    .collect(java.util.stream.Collectors.toList());
+                
+                String currentDevice = audioReader.isOpen() ? 
+                    devices.stream()
+                        .filter(d -> d.isOpen())
+                        .map(AudioDevice::getName)
+                        .findFirst().orElse(null) : null;
+                
+                controller.updateAudioDevices(deviceNames, currentDevice);
+                controller.updateInfo("Found " + deviceNames.size() + " audio device(s)");
+                
+                if (deviceNames.isEmpty()) {
+                    logger.warn("No audio devices found");
+                    Platform.runLater(() -> 
+                        showWarning("No Audio Devices", "No audio capture devices found on this system")
+                    );
+                }
+            } catch (Exception e) {
+                logger.error("Error refreshing audio devices", e);
+                Platform.runLater(() -> 
+                    showError("Device Error", "Error refreshing audio devices: " + e.getMessage())
+                );
+            }
+        });
+    }
+
+    /**
+     * Starts audio monitoring from the default or configured device.
+     */
+    private void startAudioMonitoring() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                List<AudioDevice> devices = audioReader.getSupportedDevices();
+                if (devices.isEmpty()) {
+                    logger.warn("No audio devices found");
+                    Platform.runLater(() -> 
+                        showWarning("No Audio Devices", "No audio capture devices found on this system")
+                    );
+                    return;
+                }
+
+                // Use the first available device
+                AudioDevice device = devices.get(0);
+                logger.info("Starting audio monitoring on device: {}", device.getName());
+                
+                boolean started = audioReader.start(device);
+                if (started) {
+                    controller.updateStatus("Monitoring: " + device.getName());
+                    controller.updateInfo("Audio capture active");
+                } else {
+                    logger.error("Failed to start audio device");
+                    Platform.runLater(() -> 
+                        showError("Audio Error", "Failed to start audio capture device")
+                    );
+                }
+            } catch (Exception e) {
+                logger.error("Error starting audio monitoring", e);
+                Platform.runLater(() -> 
+                    showError("Audio Error", "Error starting audio monitoring: " + e.getMessage())
+                );
+            }
+        });
+    }
+
+    /**
+     * Connects to a Hue bridge.
+     */
+    private void connectToHue() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                controller.updateHueStatus("Scanning...", false);
+                controller.updateInfo("Scanning for Hue bridges...");
+                
+                // Try to connect to a previously saved bridge
+                List<AccessPoint> previousBridges = hueManager.getPreviousBridges();
+                if (!previousBridges.isEmpty()) {
+                    AccessPoint bridge = previousBridges.get(0);
+                    logger.info("Attempting to connect to previous bridge at {}", bridge.ip());
+                    hueManager.setAttemptConnection(bridge);
+                } else {
+                    // Scan for new bridges
+                    hueManager.doBridgesScan();
+                }
+            } catch (Exception e) {
+                logger.error("Error connecting to Hue", e);
+                Platform.runLater(() -> {
+                    controller.updateHueStatus("Error", false);
+                    showError("Hue Error", "Error connecting to Hue bridge: " + e.getMessage());
+                });
+            }
+        });
+    }
+
+    /**
+     * Disconnects from the Hue bridge.
+     */
+    private void disconnectFromHue() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                hueManager.disconnect();
+                controller.updateHueStatus("Disconnected", false);
+                controller.updateInfo("Disconnected from Hue bridge");
+            } catch (Exception e) {
+                logger.error("Error disconnecting from Hue", e);
+                Platform.runLater(() -> 
+                    showError("Hue Error", "Error disconnecting from Hue bridge: " + e.getMessage())
+                );
+            }
+        });
+    }
+
+    // BeatObserver implementation
+
+    @Override
+    public void beatReceived(BeatEvent beatEvent) {
+        if (controller != null) {
+            // TODO: Proper BPM estimation from beat events is not yet implemented.
+            // Currently using a placeholder value for display purposes.
+            double estimatedBpm = 120.0; // Default/placeholder
+            controller.updateBeatIndicator(true, estimatedBpm);
+
+            // Reset beat indicator after a short delay
+            taskOrchestrator.schedule(() -> {
+                controller.updateBeatIndicator(false, estimatedBpm);
+            }, 100, java.util.concurrent.TimeUnit.MILLISECONDS);
+        }
+    }
+
+    @Override
+    public void noBeatReceived() {
+        // Called when no beat is detected in a frame
+        // The beat indicator will be reset by the beatReceived method
+    }
+
+    @Override
+    public void silenceDetected() {
+        if (controller != null) {
+            controller.updateBeatIndicator(false, 0.0);
+        }
+    }
+
+    @Override
+    public void audioReaderStopped(StopStatus status) {
+        logger.info("Audio reader stopped: {}", status);
+        Platform.runLater(() -> {
+            if (controller != null) {
+                controller.clear();
+            }
+            if (status == StopStatus.ERROR) {
+                showWarning("Audio Stopped", "Audio monitoring stopped due to an error");
+            }
+        });
+    }
+
+    // HueStateObserver implementation
+
+    @Override
+    public void isScanningForBridges() {
+        logger.info("Scanning for Hue bridges...");
+    }
+
+    @Override
+    public void displayFoundBridges(List<AccessPoint> accessPoints) {
+        logger.info("Found {} Hue bridge(s)", accessPoints.size());
+        for (AccessPoint ap : accessPoints) {
+            logger.info("  Bridge at {}: {}", ap.ip(), ap.name());
+        }
+    }
+
+    @Override
+    public void isAttemptingConnection() {
+        logger.info("Attempting to connect to Hue bridge...");
+    }
+
+    @Override
+    public void hasConnected() {
+        logger.info("Successfully connected to Hue bridge");
+        String bridgeName = hueManager.getBridge() != null ? hueManager.getBridge().getName() : "Unknown";
+        controller.updateHueStatus("Connected: " + bridgeName, true);
+        controller.updateInfo("Hue bridge connected and ready");
+        Platform.runLater(() -> 
+            showInfo("Hue Connected", "Successfully connected to Philips Hue bridge: " + bridgeName)
+        );
+    }
+
+    @Override
+    public void requestPushlink() {
+        logger.info("Please press the link button on your Hue bridge");
+        Platform.runLater(() -> 
+            showInfo("Pushlink Required", "Please press the link button on your Hue bridge to authenticate")
+        );
+    }
+
+    @Override
+    public void pushlinkHasFailed() {
+        logger.warn("Pushlink authentication failed");
+        Platform.runLater(() -> 
+            showWarning("Authentication Failed", "Failed to authenticate with Hue bridge. Please try again.")
+        );
+    }
+
+    @Override
+    public void connectionWasLost(AccessPoint accessPoint, BridgeConnection.ConnectionListener.Error error) {
+        logger.warn("Connection to Hue bridge lost: {}", error);
+        Platform.runLater(() -> 
+            showWarning("Connection Lost", "Lost connection to Hue bridge: " + error)
+        );
+    }
+
+    @Override
+    public void disconnected() {
+        logger.info("Disconnected from Hue bridge");
+    }
+
+    /**
+     * Shuts down the application gracefully.
+     */
+    private void shutdown() {
+        logger.info("Shutting down AudioAnalyzerDashboard");
+
+        running = false;
+
+        // Stop audio reader
+        if (audioReader != null && audioReader.isOpen()) {
+            audioReader.stop();
+        }
+
+        // Disconnect from Hue
+        if (hueManager != null) {
+            hueManager.disconnect();
+        }
+
+        // Shutdown task orchestrator
+        if (taskOrchestrator != null) {
+            taskOrchestrator.shutdown();
+        }
+
+        // Close application
+        Platform.exit();
+        System.exit(0);
+    }
+
+    /**
+     * Shows an error dialog.
+     */
+    private void showError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Shows a warning dialog.
+     */
+    private void showWarning(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Shows an information dialog.
+     */
+    private void showInfo(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}

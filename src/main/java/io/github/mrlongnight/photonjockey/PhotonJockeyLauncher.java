@@ -62,8 +62,8 @@ public class PhotonJockeyLauncher {
             }
 
             // Launch the actual application
-            logger.info("Starting AudioAnalyzerDashboardDemo...");
-            io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo.main(args);
+            logger.info("Starting AudioAnalyzerDashboard...");
+            io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboard.main(args);
             logger.info("Application launched successfully");
 
         } catch (Throwable t) {
