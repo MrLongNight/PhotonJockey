@@ -32,6 +32,7 @@ sourceSets {
             exclude '**/config/**'
             // Legacy exclusions no longer needed after refactoring
             exclude '**/audio/LBAudioReader.java'
+            exclude '**/audio/PJAudioReader.java'
             exclude '**/audio/BeatInterpreter.java'
             exclude '**/audio/BeatEventManager.java'
             exclude '**/audio/BeatEvent.java'
