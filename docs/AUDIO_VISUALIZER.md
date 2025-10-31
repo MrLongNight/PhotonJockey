@@ -52,8 +52,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardController;
-import pw.wunderlich.lightbeat.audio.AudioFrame;
+import io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardController;
+import io.github.mrlongnight.photonjockey.audio.AudioFrame;
 
 // Load the FXML
 FXMLLoader loader = new FXMLLoader(
@@ -84,14 +84,14 @@ controller.updateBeatIndicator(isBeat, bpm);
 A demo application is provided to see the visualizer in action with simulated data:
 
 ```bash
-./gradlew run -PmainClass=pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo
+./gradlew run -PmainClass=io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo
 ```
 
 Or with Java directly:
 
 ```bash
 java -cp build/libs/PhotonJockey-shadow.jar \
-     pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo
+     io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo
 ```
 
 ## API Reference
@@ -159,7 +159,7 @@ Audio Source → AudioFrame → updateWaveform()
 Run the unit tests:
 
 ```bash
-./gradlew test --tests "pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardControllerUnitTest"
+./gradlew test --tests "io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardControllerUnitTest"
 ```
 
 ### Manual Testing
@@ -167,7 +167,7 @@ Run the unit tests:
 Use the demo application for manual verification:
 
 ```bash
-./gradlew run -PmainClass=pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo
+./gradlew run -PmainClass=io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo
 ```
 
 The demo simulates audio data with:

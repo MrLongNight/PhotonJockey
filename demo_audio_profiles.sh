@@ -19,7 +19,7 @@ fi
 
 # Create demo program
 cat > /tmp/AudioProfileDemo.java << 'JAVA_EOF'
-import pw.wunderlich.lightbeat.audio.*;
+import io.github.mrlongnight.photonjockey.audio.*;
 
 public class AudioProfileDemo {
     public static void main(String[] args) {

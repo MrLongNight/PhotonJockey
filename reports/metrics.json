@@ -3,8 +3,8 @@
   "total_classes": 74,
   "classes": [
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.frame.MainFrame",
-      "file_path": "pw/wunderlich/lightbeat/gui/frame/MainFrame.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.frame.MainFrame",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/frame/MainFrame.java",
       "metrics": {
         "lines_of_code": 516,
         "method_count": 28,
@@ -76,8 +76,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.WASAPIDeviceProvider",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/WASAPIDeviceProvider.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.provider.WASAPIDeviceProvider",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/provider/WASAPIDeviceProvider.java",
       "metrics": {
         "lines_of_code": 216,
         "method_count": 17,
@@ -149,8 +149,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.frame.ConnectFrame",
-      "file_path": "pw/wunderlich/lightbeat/gui/frame/ConnectFrame.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.frame.ConnectFrame",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/frame/ConnectFrame.java",
       "metrics": {
         "lines_of_code": 210,
         "method_count": 16,
@@ -222,8 +222,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.frame.ColorSelectionFrame",
-      "file_path": "pw/wunderlich/lightbeat/gui/frame/ColorSelectionFrame.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.frame.ColorSelectionFrame",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/frame/ColorSelectionFrame.java",
       "metrics": {
         "lines_of_code": 187,
         "method_count": 15,
@@ -317,8 +317,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.LBAudioReader",
-      "file_path": "pw/wunderlich/lightbeat/audio/LBAudioReader.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.LBAudioReader",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/PJAudioReader.java",
       "metrics": {
         "lines_of_code": 200,
         "method_count": 9,
@@ -332,7 +332,7 @@
       },
       "methods": [
         {
-          "name": "LBAudioReader",
+          "name": "PJAudioReader",
           "line_number": 52,
           "lines_of_code": 16
         },
@@ -385,8 +385,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.BrightnessCalibrator",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/BrightnessCalibrator.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.BrightnessCalibrator",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/BrightnessCalibrator.java",
       "metrics": {
         "lines_of_code": 96,
         "method_count": 10,
@@ -458,8 +458,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.FrameManager",
-      "file_path": "pw/wunderlich/lightbeat/gui/FrameManager.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.FrameManager",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/FrameManager.java",
       "metrics": {
         "lines_of_code": 120,
         "method_count": 11,
@@ -531,8 +531,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.LBHueManager",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/LBHueManager.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.LBHueManager",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/PJHueManager.java",
       "metrics": {
         "lines_of_code": 152,
         "method_count": 12,
@@ -546,7 +546,7 @@
       },
       "methods": [
         {
-          "name": "LBHueManager",
+          "name": "PJHueManager",
           "line_number": 36,
           "lines_of_code": 4
         },
@@ -604,8 +604,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.JavaAudioDeviceProvider",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/JavaAudioDeviceProvider.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.provider.JavaAudioDeviceProvider",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/provider/JavaAudioDeviceProvider.java",
       "metrics": {
         "lines_of_code": 125,
         "method_count": 10,
@@ -677,8 +677,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.config.LBConfig",
-      "file_path": "pw/wunderlich/lightbeat/config/LBConfig.java",
+      "class_name": "io.github.mrlongnight.photonjockey.config.LBConfig",
+      "file_path": "io/github/mrlongnight/photonjockey/config/PJConfig.java",
       "metrics": {
         "lines_of_code": 129,
         "method_count": 15,
@@ -692,7 +692,7 @@
       },
       "methods": [
         {
-          "name": "LBConfig",
+          "name": "PJConfig",
           "line_number": 27,
           "lines_of_code": 50
         },
@@ -750,8 +750,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.LightUpdate",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/LightUpdate.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.LightUpdate",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/LightUpdate.java",
       "metrics": {
         "lines_of_code": 70,
         "method_count": 10,
@@ -823,8 +823,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.util.UpdateChecker",
-      "file_path": "pw/wunderlich/lightbeat/util/UpdateChecker.java",
+      "class_name": "io.github.mrlongnight.photonjockey.util.UpdateChecker",
+      "file_path": "io/github/mrlongnight/photonjockey/util/UpdateChecker.java",
       "metrics": {
         "lines_of_code": 98,
         "method_count": 4,
@@ -866,8 +866,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.LBColor",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/LBColor.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.color.LBColor",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/color/PJColor.java",
       "metrics": {
         "lines_of_code": 75,
         "method_count": 8,
@@ -929,8 +929,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.HueBeatObserver",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/HueBeatObserver.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.HueBeatObserver",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/HueBeatObserver.java",
       "metrics": {
         "lines_of_code": 111,
         "method_count": 7,
@@ -987,8 +987,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.LBLight",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/LBLight.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.light.LBLight",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/light/PJLight.java",
       "metrics": {
         "lines_of_code": 109,
         "method_count": 10,
@@ -1002,7 +1002,7 @@
       },
       "methods": [
         {
-          "name": "LBLight",
+          "name": "PJLight",
           "line_number": 30,
           "lines_of_code": 13
         },
@@ -1060,8 +1060,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.CustomColorSet",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/CustomColorSet.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.color.CustomColorSet",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/color/CustomColorSet.java",
       "metrics": {
         "lines_of_code": 81,
         "method_count": 6,
@@ -1113,8 +1113,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.BaseJmfAudioDevice",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/BaseJmfAudioDevice.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.BaseJmfAudioDevice",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/BaseJmfAudioDevice.java",
       "metrics": {
         "lines_of_code": 99,
         "method_count": 6,
@@ -1166,8 +1166,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.frame.AbstractFrame",
-      "file_path": "pw/wunderlich/lightbeat/gui/frame/AbstractFrame.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.frame.AbstractFrame",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/frame/AbstractFrame.java",
       "metrics": {
         "lines_of_code": 102,
         "method_count": 8,
@@ -1229,8 +1229,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.swing.JColorPanel",
-      "file_path": "pw/wunderlich/lightbeat/gui/swing/JColorPanel.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.swing.JColorPanel",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/swing/JColorPanel.java",
       "metrics": {
         "lines_of_code": 92,
         "method_count": 8,
@@ -1292,8 +1292,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.util.DoubleAverageBuffer",
-      "file_path": "pw/wunderlich/lightbeat/util/DoubleAverageBuffer.java",
+      "class_name": "io.github.mrlongnight.photonjockey.util.DoubleAverageBuffer",
+      "file_path": "io/github/mrlongnight/photonjockey/util/DoubleAverageBuffer.java",
       "metrics": {
         "lines_of_code": 71,
         "method_count": 9,
@@ -1360,8 +1360,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.LightStateBuilder",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/LightStateBuilder.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.light.LightStateBuilder",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/light/LightStateBuilder.java",
       "metrics": {
         "lines_of_code": 82,
         "method_count": 10,
@@ -1433,8 +1433,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.UpdateQueue",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/UpdateQueue.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.light.UpdateQueue",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/light/UpdateQueue.java",
       "metrics": {
         "lines_of_code": 83,
         "method_count": 4,
@@ -1476,8 +1476,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.swing.WrapLayout",
-      "file_path": "pw/wunderlich/lightbeat/gui/swing/WrapLayout.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.swing.WrapLayout",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/swing/WrapLayout.java",
       "metrics": {
         "lines_of_code": 66,
         "method_count": 5,
@@ -1524,8 +1524,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.BridgeConnection",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/BridgeConnection.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.BridgeConnection",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/BridgeConnection.java",
       "metrics": {
         "lines_of_code": 130,
         "method_count": 6,
@@ -1577,8 +1577,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.AppTaskOrchestrator",
-      "file_path": "pw/wunderlich/lightbeat/AppTaskOrchestrator.java",
+      "class_name": "io.github.mrlongnight.photonjockey.AppTaskOrchestrator",
+      "file_path": "io/github/mrlongnight/photonjockey/AppTaskOrchestrator.java",
       "metrics": {
         "lines_of_code": 76,
         "method_count": 5,
@@ -1625,8 +1625,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.BeatInterpreter",
-      "file_path": "pw/wunderlich/lightbeat/audio/BeatInterpreter.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.BeatInterpreter",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/BeatInterpreter.java",
       "metrics": {
         "lines_of_code": 75,
         "method_count": 3,
@@ -1663,8 +1663,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.ColorStrobeEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/ColorStrobeEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.ColorStrobeEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/ColorStrobeEffect.java",
       "metrics": {
         "lines_of_code": 88,
         "method_count": 7,
@@ -1721,8 +1721,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.controller.StrobeController",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/controller/StrobeController.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.light.controller.StrobeController",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/light/controller/StrobeController.java",
       "metrics": {
         "lines_of_code": 78,
         "method_count": 8,
@@ -1784,8 +1784,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.swing.JConfigSlider",
-      "file_path": "pw/wunderlich/lightbeat/gui/swing/JConfigSlider.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/swing/JConfigSlider.java",
       "metrics": {
         "lines_of_code": 83,
         "method_count": 5,
@@ -1832,8 +1832,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.controller.BrightnessController",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/controller/BrightnessController.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.light.controller.BrightnessController",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/light/controller/BrightnessController.java",
       "metrics": {
         "lines_of_code": 47,
         "method_count": 8,
@@ -1895,8 +1895,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.util.TimeThreshold",
-      "file_path": "pw/wunderlich/lightbeat/util/TimeThreshold.java",
+      "class_name": "io.github.mrlongnight.photonjockey.util.TimeThreshold",
+      "file_path": "io/github/mrlongnight/photonjockey/util/TimeThreshold.java",
       "metrics": {
         "lines_of_code": 35,
         "method_count": 7,
@@ -1953,8 +1953,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.LightBeat",
-      "file_path": "pw/wunderlich/lightbeat/LightBeat.java",
+      "class_name": "io.github.mrlongnight.photonjockey.PhotonJockey",
+      "file_path": "io/github/mrlongnight/photonjockey/PhotonJockey.java",
       "metrics": {
         "lines_of_code": 48,
         "method_count": 4,
@@ -1978,7 +1978,7 @@
           "lines_of_code": 4
         },
         {
-          "name": "LightBeat",
+          "name": "PhotonJockey",
           "line_number": 34,
           "lines_of_code": 25
         },
@@ -1996,8 +1996,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.LibJitsiDeviceProvider",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/LibJitsiDeviceProvider.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.provider.LibJitsiDeviceProvider",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/provider/LibJitsiDeviceProvider.java",
       "metrics": {
         "lines_of_code": 71,
         "method_count": 3,
@@ -2034,8 +2034,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.PullModelAudioDevice",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/PullModelAudioDevice.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.PullModelAudioDevice",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/PullModelAudioDevice.java",
       "metrics": {
         "lines_of_code": 54,
         "method_count": 6,
@@ -2087,8 +2087,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.controller.ColorController",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/controller/ColorController.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.light.controller.ColorController",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/light/controller/ColorController.java",
       "metrics": {
         "lines_of_code": 56,
         "method_count": 7,
@@ -2145,8 +2145,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.AbstractThresholdEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/AbstractThresholdEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.AbstractThresholdEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/AbstractThresholdEffect.java",
       "metrics": {
         "lines_of_code": 56,
         "method_count": 5,
@@ -2193,8 +2193,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.ColorFlipEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/ColorFlipEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.ColorFlipEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/ColorFlipEffect.java",
       "metrics": {
         "lines_of_code": 62,
         "method_count": 5,
@@ -2241,8 +2241,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.StrobeEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/StrobeEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.StrobeEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/StrobeEffect.java",
       "metrics": {
         "lines_of_code": 71,
         "method_count": 5,
@@ -2289,8 +2289,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.ColorChainEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/ColorChainEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.ColorChainEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/ColorChainEffect.java",
       "metrics": {
         "lines_of_code": 55,
         "method_count": 4,
@@ -2332,8 +2332,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.PulseAudioDeviceProvider",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/PulseAudioDeviceProvider.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.provider.PulseAudioDeviceProvider",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/provider/PulseAudioDeviceProvider.java",
       "metrics": {
         "lines_of_code": 37,
         "method_count": 5,
@@ -2380,8 +2380,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.BeatEvent",
-      "file_path": "pw/wunderlich/lightbeat/audio/BeatEvent.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.BeatEvent",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/BeatEvent.java",
       "metrics": {
         "lines_of_code": 25,
         "method_count": 5,
@@ -2428,8 +2428,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.RandomColorSet",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/RandomColorSet.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.color.RandomColorSet",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/color/RandomColorSet.java",
       "metrics": {
         "lines_of_code": 37,
         "method_count": 4,
@@ -2471,8 +2471,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.PushModelAudioDevice",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/PushModelAudioDevice.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.PushModelAudioDevice",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/PushModelAudioDevice.java",
       "metrics": {
         "lines_of_code": 44,
         "method_count": 4,
@@ -2514,8 +2514,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.swing.JIconLabel",
-      "file_path": "pw/wunderlich/lightbeat/gui/swing/JIconLabel.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.swing.JIconLabel",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/swing/JIconLabel.java",
       "metrics": {
         "lines_of_code": 35,
         "method_count": 3,
@@ -2552,8 +2552,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.DefaultEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/DefaultEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.DefaultEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/DefaultEffect.java",
       "metrics": {
         "lines_of_code": 43,
         "method_count": 4,
@@ -2595,8 +2595,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.AccessPoint",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/AccessPoint.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.AccessPoint",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/AccessPoint.java",
       "metrics": {
         "lines_of_code": 18,
         "method_count": 6,
@@ -2648,8 +2648,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.controller.AbstractController",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/controller/AbstractController.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.light.controller.AbstractController",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/light/controller/AbstractController.java",
       "metrics": {
         "lines_of_code": 30,
         "method_count": 3,
@@ -2686,8 +2686,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.LBAudioFormat",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/LBAudioFormat.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.LBAudioFormat",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/PJAudioFormat.java",
       "metrics": {
         "lines_of_code": 34,
         "method_count": 5,
@@ -2701,17 +2701,17 @@
       },
       "methods": [
         {
-          "name": "LBAudioFormat",
+          "name": "PJAudioFormat",
           "line_number": 10,
           "lines_of_code": 38
         },
         {
-          "name": "LBAudioFormat",
+          "name": "PJAudioFormat",
           "line_number": 12,
           "lines_of_code": 8
         },
         {
-          "name": "LBAudioFormat",
+          "name": "PJAudioFormat",
           "line_number": 21,
           "lines_of_code": 8
         },
@@ -2734,8 +2734,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.AlertEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/AlertEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.AlertEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/AlertEffect.java",
       "metrics": {
         "lines_of_code": 33,
         "method_count": 4,
@@ -2777,8 +2777,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.StrobeChainEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/StrobeChainEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.StrobeChainEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/StrobeChainEffect.java",
       "metrics": {
         "lines_of_code": 42,
         "method_count": 4,
@@ -2820,8 +2820,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.CoreAudioDeviceProvider",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/CoreAudioDeviceProvider.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.provider.CoreAudioDeviceProvider",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/provider/CoreAudioDeviceProvider.java",
       "metrics": {
         "lines_of_code": 29,
         "method_count": 5,
@@ -2868,8 +2868,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.config.ConfigNode",
-      "file_path": "pw/wunderlich/lightbeat/config/ConfigNode.java",
+      "class_name": "io.github.mrlongnight.photonjockey.config.ConfigNode",
+      "file_path": "io/github/mrlongnight/photonjockey/config/ConfigNode.java",
       "metrics": {
         "lines_of_code": 46,
         "method_count": 3,
@@ -2906,8 +2906,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox",
-      "file_path": "pw/wunderlich/lightbeat/gui/swing/JConfigCheckBox.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.swing.JConfigCheckBox",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/swing/JConfigCheckBox.java",
       "metrics": {
         "lines_of_code": 33,
         "method_count": 3,
@@ -2944,8 +2944,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.TransitionTimeCalibrator",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/TransitionTimeCalibrator.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.TransitionTimeCalibrator",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/TransitionTimeCalibrator.java",
       "metrics": {
         "lines_of_code": 28,
         "method_count": 2,
@@ -2977,8 +2977,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.ColorFadeEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/ColorFadeEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.ColorFadeEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/ColorFadeEffect.java",
       "metrics": {
         "lines_of_code": 30,
         "method_count": 4,
@@ -3020,8 +3020,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.PortAudioDeviceProvider",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/PortAudioDeviceProvider.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.provider.PortAudioDeviceProvider",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/provider/PortAudioDeviceProvider.java",
       "metrics": {
         "lines_of_code": 23,
         "method_count": 4,
@@ -3063,8 +3063,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.swing.JColorTile",
-      "file_path": "pw/wunderlich/lightbeat/gui/swing/JColorTile.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.swing.JColorTile",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/swing/JColorTile.java",
       "metrics": {
         "lines_of_code": 28,
         "method_count": 3,
@@ -3101,8 +3101,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.AbstractEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/AbstractEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.AbstractEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/AbstractEffect.java",
       "metrics": {
         "lines_of_code": 23,
         "method_count": 3,
@@ -3139,8 +3139,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.AbstractRandomEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/AbstractRandomEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.AbstractRandomEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/AbstractRandomEffect.java",
       "metrics": {
         "lines_of_code": 24,
         "method_count": 1,
@@ -3167,8 +3167,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.AudioReader",
-      "file_path": "pw/wunderlich/lightbeat/audio/AudioReader.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.AudioReader",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/AudioReader.java",
       "metrics": {
         "lines_of_code": 10,
         "method_count": 0,
@@ -3189,8 +3189,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.BeatObserver",
-      "file_path": "pw/wunderlich/lightbeat/audio/BeatObserver.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.BeatObserver",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/BeatObserver.java",
       "metrics": {
         "lines_of_code": 11,
         "method_count": 0,
@@ -3211,8 +3211,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.AudioDevice",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/AudioDevice.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.AudioDevice",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/AudioDevice.java",
       "metrics": {
         "lines_of_code": 13,
         "method_count": 0,
@@ -3233,8 +3233,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.config.Config",
-      "file_path": "pw/wunderlich/lightbeat/config/Config.java",
+      "class_name": "io.github.mrlongnight.photonjockey.config.Config",
+      "file_path": "io/github/mrlongnight/photonjockey/config/Config.java",
       "metrics": {
         "lines_of_code": 17,
         "method_count": 0,
@@ -3255,8 +3255,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.HueManager",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/HueManager.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.HueManager",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/HueManager.java",
       "metrics": {
         "lines_of_code": 12,
         "method_count": 0,
@@ -3277,8 +3277,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.HueStateObserver",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/HueStateObserver.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.HueStateObserver",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/HueStateObserver.java",
       "metrics": {
         "lines_of_code": 12,
         "method_count": 0,
@@ -3299,8 +3299,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.light.Light",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/light/Light.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.light.Light",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/light/Light.java",
       "metrics": {
         "lines_of_code": 16,
         "method_count": 0,
@@ -3321,8 +3321,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.BeatEventManager",
-      "file_path": "pw/wunderlich/lightbeat/audio/BeatEventManager.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.BeatEventManager",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/BeatEventManager.java",
       "metrics": {
         "lines_of_code": 4,
         "method_count": 0,
@@ -3343,8 +3343,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.audio.device.provider.DeviceProvider",
-      "file_path": "pw/wunderlich/lightbeat/audio/device/provider/DeviceProvider.java",
+      "class_name": "io.github.mrlongnight.photonjockey.audio.device.provider.DeviceProvider",
+      "file_path": "io/github/mrlongnight/photonjockey/audio/device/provider/DeviceProvider.java",
       "metrics": {
         "lines_of_code": 6,
         "method_count": 0,
@@ -3365,8 +3365,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.frame.HueFrame",
-      "file_path": "pw/wunderlich/lightbeat/gui/frame/HueFrame.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.frame.HueFrame",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/frame/HueFrame.java",
       "metrics": {
         "lines_of_code": 6,
         "method_count": 0,
@@ -3387,8 +3387,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.gui.swing.ConfigComponent",
-      "file_path": "pw/wunderlich/lightbeat/gui/swing/ConfigComponent.java",
+      "class_name": "io.github.mrlongnight.photonjockey.gui.swing.ConfigComponent",
+      "file_path": "io/github/mrlongnight/photonjockey/gui/swing/ConfigComponent.java",
       "metrics": {
         "lines_of_code": 4,
         "method_count": 0,
@@ -3409,8 +3409,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.Color",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/Color.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.color.Color",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/color/Color.java",
       "metrics": {
         "lines_of_code": 8,
         "method_count": 0,
@@ -3431,8 +3431,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.bridge.color.ColorSet",
-      "file_path": "pw/wunderlich/lightbeat/hue/bridge/color/ColorSet.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.bridge.color.ColorSet",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/bridge/color/ColorSet.java",
       "metrics": {
         "lines_of_code": 7,
         "method_count": 0,
@@ -3453,8 +3453,8 @@
       }
     },
     {
-      "class_name": "pw.wunderlich.lightbeat.hue.visualizer.effect.LightEffect",
-      "file_path": "pw/wunderlich/lightbeat/hue/visualizer/effect/LightEffect.java",
+      "class_name": "io.github.mrlongnight.photonjockey.hue.visualizer.effect.LightEffect",
+      "file_path": "io/github/mrlongnight/photonjockey/hue/visualizer/effect/LightEffect.java",
       "metrics": {
         "lines_of_code": 6,
         "method_count": 0,

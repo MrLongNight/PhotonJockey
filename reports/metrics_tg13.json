@@ -1,46 +1,46 @@
 {
   "loc_per_package": {
     "org.jitsi.impl.neomedia.device": 490,
-    "pw.wunderlich.lightbeat": 124,
-    "pw.wunderlich.lightbeat.audio": 325,
-    "pw.wunderlich.lightbeat.audio.device": 244,
-    "pw.wunderlich.lightbeat.audio.device.provider": 507,
-    "pw.wunderlich.lightbeat.config": 192,
-    "pw.wunderlich.lightbeat.gui": 120,
-    "pw.wunderlich.lightbeat.gui.frame": 1021,
-    "pw.wunderlich.lightbeat.gui.swing": 341,
-    "pw.wunderlich.lightbeat.hue.bridge": 324,
-    "pw.wunderlich.lightbeat.hue.bridge.color": 208,
-    "pw.wunderlich.lightbeat.hue.bridge.light": 290,
-    "pw.wunderlich.lightbeat.hue.bridge.light.controller": 211,
-    "pw.wunderlich.lightbeat.hue.visualizer": 305,
-    "pw.wunderlich.lightbeat.hue.visualizer.effect": 533,
-    "pw.wunderlich.lightbeat.util": 204
+    "io.github.mrlongnight.photonjockey": 124,
+    "io.github.mrlongnight.photonjockey.audio": 325,
+    "io.github.mrlongnight.photonjockey.audio.device": 244,
+    "io.github.mrlongnight.photonjockey.audio.device.provider": 507,
+    "io.github.mrlongnight.photonjockey.config": 192,
+    "io.github.mrlongnight.photonjockey.gui": 120,
+    "io.github.mrlongnight.photonjockey.gui.frame": 1021,
+    "io.github.mrlongnight.photonjockey.gui.swing": 341,
+    "io.github.mrlongnight.photonjockey.hue.bridge": 324,
+    "io.github.mrlongnight.photonjockey.hue.bridge.color": 208,
+    "io.github.mrlongnight.photonjockey.hue.bridge.light": 290,
+    "io.github.mrlongnight.photonjockey.hue.bridge.light.controller": 211,
+    "io.github.mrlongnight.photonjockey.hue.visualizer": 305,
+    "io.github.mrlongnight.photonjockey.hue.visualizer.effect": 533,
+    "io.github.mrlongnight.photonjockey.util": 204
   },
   "cyclomatic_complexity_top_20": [
     {
       "method": "WASAPIDeviceProvider.start",
-      "file": "src/main/java/pw/wunderlich/lightbeat/audio/device/provider/WASAPIDeviceProvider.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/audio/device/provider/WASAPIDeviceProvider.java",
       "complexity": 15
     },
     {
       "method": "StrobeEffect.execute",
-      "file": "src/main/java/pw/wunderlich/lightbeat/hue/visualizer/effect/StrobeEffect.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/hue/visualizer/effect/StrobeEffect.java",
       "complexity": 13
     },
     {
       "method": "LBAudioReader.onDataAvailable",
-      "file": "src/main/java/pw/wunderlich/lightbeat/audio/LBAudioReader.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/audio/PJAudioReader.java",
       "complexity": 12
     },
     {
       "method": "ColorSelectionFrame.ColorSelectionFrame",
-      "file": "src/main/java/pw/wunderlich/lightbeat/gui/frame/ColorSelectionFrame.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/gui/frame/ColorSelectionFrame.java",
       "complexity": 12
     },
     {
       "method": "MainFrame.MainFrame",
-      "file": "src/main/java/pw/wunderlich/lightbeat/gui/frame/MainFrame.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/gui/frame/MainFrame.java",
       "complexity": 11
     },
     {
@@ -50,37 +50,37 @@
     },
     {
       "method": "BeatInterpreter.interpretValue",
-      "file": "src/main/java/pw/wunderlich/lightbeat/audio/BeatInterpreter.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/audio/BeatInterpreter.java",
       "complexity": 10
     },
     {
       "method": "ConnectFrame.ConnectFrame",
-      "file": "src/main/java/pw/wunderlich/lightbeat/gui/frame/ConnectFrame.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/gui/frame/ConnectFrame.java",
       "complexity": 10
     },
     {
       "method": "BridgeConnection.BridgeConnection",
-      "file": "src/main/java/pw/wunderlich/lightbeat/hue/bridge/BridgeConnection.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/hue/bridge/BridgeConnection.java",
       "complexity": 9
     },
     {
       "method": "LightStateBuilder.copyFromBuilder",
-      "file": "src/main/java/pw/wunderlich/lightbeat/hue/bridge/light/LightStateBuilder.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/hue/bridge/light/LightStateBuilder.java",
       "complexity": 9
     },
     {
       "method": "ConnectFrame.connectionWasLost",
-      "file": "src/main/java/pw/wunderlich/lightbeat/gui/frame/ConnectFrame.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/gui/frame/ConnectFrame.java",
       "complexity": 9
     },
     {
       "method": "JConfigSlider.JConfigSlider",
-      "file": "src/main/java/pw/wunderlich/lightbeat/gui/swing/JConfigSlider.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/gui/swing/JConfigSlider.java",
       "complexity": 9
     },
     {
       "method": "JColorPanel.repaintCanvas",
-      "file": "src/main/java/pw/wunderlich/lightbeat/gui/swing/JColorPanel.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/gui/swing/JColorPanel.java",
       "complexity": 9
     },
     {
@@ -95,34 +95,34 @@
     },
     {
       "method": "UpdateChecker.isNewerVersion",
-      "file": "src/main/java/pw/wunderlich/lightbeat/util/UpdateChecker.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/util/UpdateChecker.java",
       "complexity": 8
     },
     {
       "method": "DoubleAverageBuffer.add",
-      "file": "src/main/java/pw/wunderlich/lightbeat/util/DoubleAverageBuffer.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/util/DoubleAverageBuffer.java",
       "complexity": 8
     },
     {
       "method": "CustomColorSet.equals",
-      "file": "src/main/java/pw/wunderlich/lightbeat/hue/bridge/color/CustomColorSet.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/hue/bridge/color/CustomColorSet.java",
       "complexity": 8
     },
     {
       "method": "ColorFlipEffect.execute",
-      "file": "src/main/java/pw/wunderlich/lightbeat/hue/visualizer/effect/ColorFlipEffect.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/hue/visualizer/effect/ColorFlipEffect.java",
       "complexity": 8
     },
     {
       "method": "ColorChainEffect.execute",
-      "file": "src/main/java/pw/wunderlich/lightbeat/hue/visualizer/effect/ColorChainEffect.java",
+      "file": "src/main/java/io/github/mrlongnight/photonjockey/hue/visualizer/effect/ColorChainEffect.java",
       "complexity": 8
     }
   ],
   "threads_per_class": {
     "AppTaskOrchestrator": 3,
     "WASAPIDeviceProvider": 2,
-    "LBAudioReader": 1,
+    "PJAudioReader": 1,
     "HueBeatObserver": 1,
     "BaseJmfAudioDevice": 1,
     "PushModelAudioDevice": 1,
