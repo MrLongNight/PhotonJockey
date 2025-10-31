@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
 import io.github.mrlongnight.photonjockey.audio.AudioFrame;
@@ -116,7 +115,7 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
                     .collect(java.util.stream.Collectors.toList());
                 
                 String currentDevice = audioReader.isOpen() ? 
-                    audioReader.getSupportedDevices().stream()
+                    devices.stream()
                         .filter(d -> d.isOpen())
                         .map(AudioDevice::getName)
                         .findFirst().orElse(null) : null;
@@ -224,46 +223,13 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         });
     }
 
-    /**
-     * Processes audio frame data and updates the UI.
-     * Note: Currently audio frames are processed internally by PJAudioReader.
-     * This method would be used if we need additional processing.
-     */
-    private void processAudioFrame(AudioFrame frame) {
-        if (frame == null || controller == null) {
-            return;
-        }
-
-        // Update waveform visualization
-        controller.updateWaveform(frame);
-
-        // Analyze spectrum using FFT
-        try {
-            // Convert byte data to double samples
-            byte[] data = frame.getData();
-            int sampleCount = Math.min(data.length / 2, 2048);
-            double[] samples = new double[sampleCount];
-            
-            for (int i = 0; i < sampleCount && i * 2 < data.length; i++) {
-                short sample = (short) ((data[i * 2 + 1] << 8) | (data[i * 2] & 0xFF));
-                samples[i] = sample / 32768.0;
-            }
-            
-            double[] spectrum = fftProcessor.computeSpectrum(samples);
-            controller.updateSpectrum(spectrum);
-        } catch (Exception e) {
-            logger.debug("Error analyzing spectrum: {}", e.getMessage());
-        }
-    }
-
     // BeatObserver implementation
 
     @Override
     public void beatReceived(BeatEvent beatEvent) {
         if (controller != null) {
-            // BeatEvent doesn't have BPM directly, use amplitude to estimate activity
-            double amplitude = beatEvent.triggeringAmplitude();
-            // Estimate BPM from beat events (this is a simplified approach)
+            // TODO: Proper BPM estimation from beat events is not yet implemented.
+            // Currently using a placeholder value for display purposes.
             double estimatedBpm = 120.0; // Default/placeholder
             controller.updateBeatIndicator(true, estimatedBpm);
 

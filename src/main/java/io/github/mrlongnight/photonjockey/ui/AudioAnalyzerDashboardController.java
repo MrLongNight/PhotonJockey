@@ -366,6 +366,7 @@ public class AudioAnalyzerDashboardController {
 
     /**
      * Gets the selected audio device name.
+     * @return the selected device name, or null if no device is selected
      */
     public String getSelectedAudioDevice() {
         return audioDeviceComboBox.getValue();
