@@ -1,4 +1,4 @@
-# Building PhotonJockey (LightBeat)
+# Building PhotonJockey
 
 ## Prerequisites
 
@@ -71,7 +71,34 @@ Once the dependency is installed:
 ./gradlew runShadow
 
 # Or run the compiled JAR
-java -jar build/libs/LightBeat-<version>.jar
+java -jar build/libs/PhotonJockey-<version>-all.jar
+```
+
+## Platform-Specific Installers
+
+### Windows MSI
+
+To build a Windows installer:
+```bash
+./gradlew jpackage -Pwindows-msi
+```
+
+The installer will be created in `build/jpackage/PhotonJockey-<version>.msi`
+
+**Important:** PhotonJockey uses a unique Windows upgrade UUID (`3646e8cc-645a-441b-9c4f-e119d90f8657`) that is different from LightBeat's UUID. This allows both applications to be installed side-by-side on the same system without conflicts.
+
+### macOS DMG
+
+To build a macOS installer:
+```bash
+./gradlew jpackage -Pmacos-dmg
+```
+
+### Linux DEB
+
+To build a Linux installer:
+```bash
+./gradlew jpackage -Plinux-deb
 ```
 
 ## Troubleshooting
