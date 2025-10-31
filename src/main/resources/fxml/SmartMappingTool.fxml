@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="io.github.mrlongnight.photonjockey.ui.SmartMappingToolController"
+            prefHeight="700.0" prefWidth="1000.0">
+    
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            
+            <Label text="Smart Mapping Tool" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            
+            <!-- File operations -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="loadButton" text="Load Configuration" onAction="#handleLoad" 
+                        style="-fx-min-width: 140px;"/>
+                <Button fx:id="saveButton" text="Save Configuration" onAction="#handleSave" 
+                        style="-fx-min-width: 140px;"/>
+                <Button fx:id="testEffectButton" text="Test Effect" onAction="#handleTestEffect" 
+                        style="-fx-min-width: 140px;"/>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="10" VBox.vgrow="ALWAYS">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            
+            <Label text="Light Map Canvas (Drag lights to position)" 
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            
+            <!-- Canvas for light positioning -->
+            <Canvas fx:id="mapCanvas" width="960" height="500" 
+                    style="-fx-border-color: #333333; -fx-border-width: 2; -fx-background-color: #1a1a1a;"/>
+            
+            <Label fx:id="statusLabel" text="Status: Ready" 
+                   style="-fx-font-size: 12px; -fx-text-fill: #00ff00;"/>
+        </VBox>
+    </center>
+    
+    <right>
+        <VBox spacing="15" prefWidth="250">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            
+            <!-- Lights list -->
+            <Label text="Lights" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <ListView fx:id="lightsListView" prefHeight="250" VBox.vgrow="ALWAYS"/>
+            
+            <HBox spacing="10">
+                <Button fx:id="addLightButton" text="Add Light" onAction="#handleAddLight" 
+                        prefWidth="110"/>
+                <Button fx:id="removeLightButton" text="Remove" onAction="#handleRemoveLight" 
+                        prefWidth="110"/>
+            </HBox>
+            
+            <!-- Light properties -->
+            <Label text="Light Properties" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="ID:" minWidth="80" style="-fx-font-size: 11px;"/>
+                <TextField fx:id="lightIdField" promptText="light-001" prefWidth="140"/>
+            </HBox>
+            
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Name:" minWidth="80" style="-fx-font-size: 11px;"/>
+                <TextField fx:id="lightNameField" promptText="Living Room" prefWidth="140"/>
+            </HBox>
+            
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Bridge ID:" minWidth="80" style="-fx-font-size: 11px;"/>
+                <ComboBox fx:id="bridgeIdCombo" promptText="Select..." prefWidth="140"/>
+            </HBox>
+            
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Control Type:" minWidth="80" style="-fx-font-size: 11px;"/>
+                <ComboBox fx:id="controlTypeCombo" prefWidth="140"/>
+            </HBox>
+            
+            <Button fx:id="updateLightButton" text="Update Light" onAction="#handleUpdateLight" 
+                    prefWidth="230"/>
+            
+            <!-- Bridges section -->
+            <Label text="Bridges" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Bridge ID:" minWidth="80" style="-fx-font-size: 11px;"/>
+                <TextField fx:id="bridgeIdField" promptText="bridge-1" prefWidth="140"/>
+            </HBox>
+            
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Bridge IP:" minWidth="80" style="-fx-font-size: 11px;"/>
+                <TextField fx:id="bridgeIpField" promptText="192.168.1.100" prefWidth="140"/>
+            </HBox>
+            
+            <Button fx:id="addBridgeButton" text="Add Bridge" onAction="#handleAddBridge" 
+                    prefWidth="230"/>
+        </VBox>
+    </right>
+    
+</BorderPane>
