@@ -20,77 +20,77 @@ The codebase contains **16 packages** with **101 classes**.
 - **Classes**: 1
 - **Types**: PulseAudioSystem
 
-### `pw.wunderlich.lightbeat`
+### `io.github.mrlongnight.photonjockey`
 
 - **Classes**: 2
-- **Types**: AppTaskOrchestrator, LightBeat
+- **Types**: AppTaskOrchestrator, PhotonJockey
 
-### `pw.wunderlich.lightbeat.audio`
+### `io.github.mrlongnight.photonjockey.audio`
 
 - **Classes**: 9
 - **Types**: AudioReader, BeatEventManager, BeatInterpreter, BeatObserver, LBAudioReader, StopStatus, is, manages, receives
 
-### `pw.wunderlich.lightbeat.audio.device`
+### `io.github.mrlongnight.photonjockey.audio.device`
 
 - **Classes**: 7
 - **Types**: AudioDataListener, AudioDevice, BaseJmfAudioDevice, PullModelAudioDevice, PushModelAudioDevice, for, handles
 
-### `pw.wunderlich.lightbeat.audio.device.provider`
+### `io.github.mrlongnight.photonjockey.audio.device.provider`
 
 - **Classes**: 12
 - **Types**: CoreAudioDeviceProvider, DeviceProvider, JavaAudioDevice, JavaAudioDeviceProvider, LibJitsiDeviceProvider, PortAudioDeviceProvider, PulseAudioDeviceProvider, WASAPIDeviceProvider, WASAPILoopbackAudioDevice, for, handles, provides
 
-### `pw.wunderlich.lightbeat.config`
+### `io.github.mrlongnight.photonjockey.config`
 
 - **Classes**: 4
 - **Types**: Config, ConfigNode, LBConfig, allows
 
-### `pw.wunderlich.lightbeat.gui`
+### `io.github.mrlongnight.photonjockey.gui`
 
 - **Classes**: 2
 - **Types**: FrameManager, to
 
-### `pw.wunderlich.lightbeat.gui.frame`
+### `io.github.mrlongnight.photonjockey.gui.frame`
 
 - **Classes**: 7
 - **Types**: AbstractFrame, ColorSelectionFrame, ConnectFrame, HueFrame, MainFrame, elements, represents
 
-### `pw.wunderlich.lightbeat.gui.swing`
+### `io.github.mrlongnight.photonjockey.gui.swing`
 
 - **Classes**: 8
 - **Types**: ConfigComponent, JColorPanel, JColorTile, JConfigCheckBox, JConfigSlider, JIconLabel, WrapLayout, handles
 
-### `pw.wunderlich.lightbeat.hue.bridge`
+### `io.github.mrlongnight.photonjockey.hue.bridge`
 
 - **Classes**: 11
 - **Types**: BridgeConnection, ConnectionListener, Error, HueManager, HueStateObserver, LBHueManager, ManagerState, given, listens, manages, will
 
-### `pw.wunderlich.lightbeat.hue.bridge.color`
+### `io.github.mrlongnight.photonjockey.hue.bridge.color`
 
 - **Classes**: 6
 - **Types**: Color, ColorSet, CustomColorSet, LBColor, RandomColorSet, returns
 
-### `pw.wunderlich.lightbeat.hue.bridge.light`
+### `io.github.mrlongnight.photonjockey.hue.bridge.light`
 
 - **Classes**: 7
 - **Types**: LBLight, Light, LightStateBuilder, QueueEntry, UpdateQueue, represents, to
 
-### `pw.wunderlich.lightbeat.hue.bridge.light.controller`
+### `io.github.mrlongnight.photonjockey.hue.bridge.light.controller`
 
 - **Classes**: 4
 - **Types**: AbstractController, BrightnessController, ColorController, StrobeController
 
-### `pw.wunderlich.lightbeat.hue.visualizer`
+### `io.github.mrlongnight.photonjockey.hue.visualizer`
 
 - **Classes**: 5
 - **Types**: BrightnessCalibrator, BrightnessData, HueBeatObserver, LightUpdate, TransitionTimeCalibrator
 
-### `pw.wunderlich.lightbeat.hue.visualizer.effect`
+### `io.github.mrlongnight.photonjockey.hue.visualizer.effect`
 
 - **Classes**: 12
 - **Types**: AbstractEffect, AbstractRandomEffect, AbstractThresholdEffect, AlertEffect, ColorChainEffect, ColorFadeEffect, ColorFlipEffect, ColorStrobeEffect, DefaultEffect, LightEffect, StrobeChainEffect, StrobeEffect
 
-### `pw.wunderlich.lightbeat.util`
+### `io.github.mrlongnight.photonjockey.util`
 
 - **Classes**: 4
 - **Types**: DoubleAverageBuffer, TimeThreshold, UpdateChecker, offering
@@ -99,9 +99,9 @@ The codebase contains **16 packages** with **101 classes**.
 
 Classes with `public static void main(String[] args)` methods:
 
-### `pw.wunderlich.lightbeat.LightBeat`
+### `io.github.mrlongnight.photonjockey.PhotonJockey`
 
-- **File**: `java/pw/wunderlich/lightbeat/LightBeat.java`
+- **File**: `java/pw/wunderlich/lightbeat/PhotonJockey.java`
 - **Description**: Entry point for application. Starts modules to bootstrap the application.
 
 ## Class Responsibilities
@@ -114,17 +114,17 @@ Key classes and their responsibilities (from Javadoc):
 
 Implements an <tt>AudioSystem</tt> using the native PulseAudio API/library.
 
-### Package: `pw.wunderlich.lightbeat`
+### Package: `io.github.mrlongnight.photonjockey`
 
 #### `AppTaskOrchestrator`
 
 Orchestrates application-wide task execution using a combination of a scheduled executor for timed tasks and a virtual thread executor for lightweight, concurrent task handling. <p> Designed to efficiently manage I/O-bound operations, particularly those involving communication with external devices like Hue bridges, while preventing resource exhaustion through controlled concurrency limits. <p> Provides methods to dispatch immediate tasks, schedule delayed or periodic tasks, and ensures graceful shutdown of executors.
 
-#### `LightBeat`
+#### `PhotonJockey`
 
 Entry point for application. Starts modules to bootstrap the application.
 
-### Package: `pw.wunderlich.lightbeat.audio`
+### Package: `io.github.mrlongnight.photonjockey.audio`
 
 #### `BeatInterpreter`
 
@@ -150,7 +150,7 @@ Implementing class receives callbacks whenever a peak in the audio data was read
 
 Status enumerator for {@link #audioReaderStopped(StopStatus)}.
 
-### Package: `pw.wunderlich.lightbeat.audio.device`
+### Package: `io.github.mrlongnight.photonjockey.audio.device`
 
 #### `AudioDevice`
 
@@ -172,7 +172,7 @@ An AudioDevice implementation that uses the JMF "push" model. It receives data p
 
 An AudioDevice implementation that uses the JMF "pull" model. It extends the BaseJmfAudioDevice to inherit the common JMF lifecycle management.
 
-### Package: `pw.wunderlich.lightbeat.audio.device.provider`
+### Package: `io.github.mrlongnight.photonjockey.audio.device.provider`
 
 #### `CoreAudioDeviceProvider`
 
@@ -198,7 +198,7 @@ Provides {@link AudioDevice}'s for WASAPI devices on Windows. This provider disc
 
 Implementing class provides implementations for {@link AudioDevice}'s.
 
-### Package: `pw.wunderlich.lightbeat.config`
+### Package: `io.github.mrlongnight.photonjockey.config`
 
 #### `LBConfig`
 
@@ -212,13 +212,13 @@ Implementing class allows access to the application's configuration.
 
 Contains list of all config nodes used.
 
-### Package: `pw.wunderlich.lightbeat.gui`
+### Package: `io.github.mrlongnight.photonjockey.gui`
 
 #### `FrameManager`
 
 Manages the applications main frame, only showing one main frame at a time, which are either the connect-frame or the main application frame. Stores the current window position. Implements {@link HueStateObserver} interface to receive state callbacks and update the currently shown window accordingly.
 
-### Package: `pw.wunderlich.lightbeat.gui.frame`
+### Package: `io.github.mrlongnight.photonjockey.gui.frame`
 
 #### `HueFrame`
 
@@ -240,7 +240,7 @@ Connection frame. Displays found bridges, allows manual enter and gives instruct
 
 Abstract implementation of {@link HueFrame} that handles standard frame drawing.
 
-### Package: `pw.wunderlich.lightbeat.gui.swing`
+### Package: `io.github.mrlongnight.photonjockey.gui.swing`
 
 #### `JConfigCheckBox`
 
@@ -270,7 +270,7 @@ Slider that sets a given {@link ConfigNode} to its value whenever it changes. Al
 
 A panel that draws a color palette for hue and sat selection in its background. x-axis represents hue value, y-axis saturation (0 is highest sat value)
 
-### Package: `pw.wunderlich.lightbeat.hue.bridge`
+### Package: `io.github.mrlongnight.photonjockey.hue.bridge`
 
 #### `HueManager`
 
@@ -300,7 +300,7 @@ Default {@link HueManager} implementation.
 
 Implementing class will interpret communication received by the hue bridge to render the information to the end user and allowing interaction.
 
-### Package: `pw.wunderlich.lightbeat.hue.bridge.color`
+### Package: `io.github.mrlongnight.photonjockey.hue.bridge.color`
 
 #### `Color`
 
@@ -322,7 +322,7 @@ Set consisting of the colors stored in {@link Config}, accessed via set name. Li
 
 Implementing class returns a {@link Color} upon querying {@link #getNextColor()}.
 
-### Package: `pw.wunderlich.lightbeat.hue.bridge.light`
+### Package: `io.github.mrlongnight.photonjockey.hue.bridge.light`
 
 #### `UpdateQueue`
 
@@ -340,7 +340,7 @@ Implementing class represents a controllable light. Update its state via exposed
 
 Default and thread safe {@link Light} implementation.
 
-### Package: `pw.wunderlich.lightbeat.hue.bridge.light.controller`
+### Package: `io.github.mrlongnight.photonjockey.hue.bridge.light.controller`
 
 #### `BrightnessController`
 
@@ -358,7 +358,7 @@ Controls the lights color and fade color.
 
 Controls the lights' strobing ability.
 
-### Package: `pw.wunderlich.lightbeat.hue.visualizer`
+### Package: `io.github.mrlongnight.photonjockey.hue.visualizer`
 
 #### `TransitionTimeCalibrator`
 
@@ -376,7 +376,7 @@ Stores the current beats light update information while passing through effects.
 
 Receives {@link BeatEvent}'s dispatched by the audio module. Determines brightness changes and passes the data through its effect pipe, which will then update selected lights accordingly.
 
-### Package: `pw.wunderlich.lightbeat.hue.visualizer.effect`
+### Package: `io.github.mrlongnight.photonjockey.hue.visualizer.effect`
 
 #### `ColorFlipEffect`
 
@@ -426,7 +426,7 @@ Effect to add a strobing, while turning all but one lights off and strobing the 
 
 Passes one color to all lights one by one and selects a new one after all have the new color. Keeps the order of the lights and may strobe multiple lights at once, if {@link LightUpdate#getMainLights()} contains more than one light.
 
-### Package: `pw.wunderlich.lightbeat.util`
+### Package: `io.github.mrlongnight.photonjockey.util`
 
 #### `UpdateChecker`
 
@@ -486,9 +486,9 @@ Potential areas of interest for optimization or careful review:
 
 Packages with the most dependencies (top 5):
 
-- `pw.wunderlich.lightbeat.gui.frame`: 9 package dependencies
-- `pw.wunderlich.lightbeat.hue.visualizer`: 6 package dependencies
-- `pw.wunderlich.lightbeat.audio.device.provider`: 6 package dependencies
-- `pw.wunderlich.lightbeat.gui`: 5 package dependencies
-- `pw.wunderlich.lightbeat.hue.visualizer.effect`: 5 package dependencies
+- `io.github.mrlongnight.photonjockey.gui.frame`: 9 package dependencies
+- `io.github.mrlongnight.photonjockey.hue.visualizer`: 6 package dependencies
+- `io.github.mrlongnight.photonjockey.audio.device.provider`: 6 package dependencies
+- `io.github.mrlongnight.photonjockey.gui`: 5 package dependencies
+- `io.github.mrlongnight.photonjockey.hue.visualizer.effect`: 5 package dependencies
 

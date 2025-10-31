@@ -1,0 +1,152 @@
+package io.github.mrlongnight.photonjockey.gui;
+
+import com.github.weisj.darklaf.LafManager;
+import com.github.weisj.darklaf.theme.IntelliJTheme;
+import com.github.weisj.darklaf.theme.OneDarkTheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
+import io.github.mrlongnight.photonjockey.audio.AudioReader;
+import io.github.mrlongnight.photonjockey.audio.BeatEventManager;
+import io.github.mrlongnight.photonjockey.config.Config;
+import io.github.mrlongnight.photonjockey.config.ConfigNode;
+import io.github.mrlongnight.photonjockey.gui.frame.ConnectFrame;
+import io.github.mrlongnight.photonjockey.gui.frame.HueFrame;
+import io.github.mrlongnight.photonjockey.gui.frame.MainFrame;
+import io.github.mrlongnight.photonjockey.hue.bridge.AccessPoint;
+import io.github.mrlongnight.photonjockey.hue.bridge.BridgeConnection;
+import io.github.mrlongnight.photonjockey.hue.bridge.HueManager;
+import io.github.mrlongnight.photonjockey.hue.bridge.HueStateObserver;
+
+import javax.swing.*;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Manages the applications main frame, only showing one main frame at a time, which are either
+ * the connect-frame or the main application frame. Stores the current window position.
+ * Implements {@link HueStateObserver} interface to receive state callbacks and update
+ * the currently shown window accordingly.
+ */
+public class FrameManager implements HueStateObserver {
+
+    private static final Logger logger = LoggerFactory.getLogger(FrameManager.class);
+
+    private final Config config;
+    private final AppTaskOrchestrator taskOrchestrator;
+    private final AudioReader audioReader;
+    private final BeatEventManager beatEventManager;
+    private final HueManager hueManager;
+
+    private volatile HueFrame currentFrame;
+    private final Object frameLock = new Object();
+    private int lastX = 100;
+    private int lastY = 100;
+
+
+    public FrameManager(Config config, AppTaskOrchestrator taskOrchestrator,
+                        AudioReader audioReader, BeatEventManager beatEventManager,
+                        HueManager hueManager) {
+        this.config = config;
+        this.taskOrchestrator = taskOrchestrator;
+        this.audioReader = audioReader;
+        this.beatEventManager = beatEventManager;
+        this.hueManager = hueManager;
+
+        this.hueManager.setStateObserver(this);
+
+        boolean lightTheme = this.config.getBoolean(ConfigNode.WINDOW_LIGHT_THEME);
+        LafManager.installTheme(lightTheme ? new IntelliJTheme() : new OneDarkTheme());
+
+        // show connect frame with delay, prevents "flashing" the frame when it connects quickly on launch.
+        // if in the meantime we have successfully connected this does nothing, only main frame shows.
+        taskOrchestrator.schedule(() -> {
+            synchronized (frameLock) {
+                if (currentFrame == null) {
+                    showConnectFrame().isAttemptingConnection();
+                }
+            }
+        }, 2, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void isScanningForBridges() {
+        showConnectFrame().isScanningForBridges();
+    }
+
+    @Override
+    public void displayFoundBridges(List<AccessPoint> foundBridges) {
+        showConnectFrame().displayFoundBridges(foundBridges);
+    }
+
+    @Override
+    public void isAttemptingConnection() {
+        if (currentFrame != null) {
+            showConnectFrame().isAttemptingConnection();
+        }
+    }
+
+    @Override
+    public void requestPushlink() {
+        showConnectFrame().requestPushlink();
+    }
+
+    @Override
+    public void pushlinkHasFailed() {
+        showConnectFrame().pushlinkHasFailed();
+    }
+
+    @Override
+    public void hasConnected() {
+        showMainFrame();
+    }
+
+    @Override
+    public void connectionWasLost(AccessPoint accessPoint, BridgeConnection.ConnectionListener.Error error) {
+        showConnectFrame().connectionWasLost(accessPoint, error);
+    }
+
+    @Override
+    public void disconnected() {
+        showConnectFrame().disconnected();
+    }
+
+    private HueStateObserver showConnectFrame() {
+        synchronized (frameLock) {
+            if (currentFrame instanceof ConnectFrame) {
+                return (HueStateObserver) currentFrame;
+            }
+
+            disposeCurrentWindow();
+            try {
+                currentFrame = new ConnectFrame(taskOrchestrator, hueManager, lastX, lastY);
+            } catch (Throwable t) {
+                logger.error("Exception thrown during frame creation", t);
+            }
+            return (HueStateObserver) currentFrame;
+        }
+    }
+
+    private void showMainFrame() {
+        synchronized (frameLock) {
+            if (currentFrame instanceof MainFrame) {
+                return;
+            }
+
+            disposeCurrentWindow();
+            try {
+                currentFrame = new MainFrame(config, taskOrchestrator, audioReader, beatEventManager, hueManager, lastX, lastY);
+            } catch (Throwable t) {
+                logger.error("Exception thrown during frame creation", t);
+            }
+        }
+    }
+
+    private void disposeCurrentWindow() {
+        if (currentFrame != null) {
+            lastX = currentFrame.getJFrame().getBounds().x;
+            lastY = currentFrame.getJFrame().getBounds().y;
+            SwingUtilities.invokeLater(currentFrame::dispose);
+        }
+    }
+}

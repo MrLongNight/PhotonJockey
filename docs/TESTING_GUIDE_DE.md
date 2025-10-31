@@ -9,7 +9,7 @@ Der einfachste Weg, den Audio Visualizer zu testen, ist die Demo-Anwendung mit s
 ```bash
 cd /pfad/zu/PhotonJockey
 export JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64  # oder Ihr Java 21 Pfad
-./gradlew run -PmainClass=pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo
+./gradlew run -PmainClass=io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo
 ```
 
 ### Option 2: Mit kompiliertem JAR
@@ -20,7 +20,7 @@ export JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64  # oder Ihr Java 21 Pfad
 
 # Dann ausführen
 java -cp build/libs/PhotonJockey-*.jar \
-     pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo
+     io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo
 ```
 
 ## Was Sie sehen werden
@@ -69,7 +69,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardController;
+import io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardController;
 
 // In Ihrer JavaFX Application.start() Methode:
 FXMLLoader loader = new FXMLLoader(
@@ -86,7 +86,7 @@ stage.show();
 ### 2. Audio-Pipeline aufbauen
 
 ```java
-import pw.wunderlich.lightbeat.audio.*;
+import io.github.mrlongnight.photonjockey.audio.*;
 
 // Audio-Analyse-Komponenten erstellen
 int sampleRate = 44100;
@@ -169,10 +169,10 @@ IAudioSource audioSource = new FileAudioSource(
 
 ```bash
 # Alle UI-Tests
-./gradlew test --tests "pw.wunderlich.lightbeat.ui.*"
+./gradlew test --tests "io.github.mrlongnight.photonjockey.ui.*"
 
 # Nur Unit Tests (keine GUI)
-./gradlew test --tests "pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardControllerUnitTest"
+./gradlew test --tests "io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardControllerUnitTest"
 ```
 
 ## Troubleshooting
@@ -188,7 +188,7 @@ export JAVA_HOME=/pfad/zu/java-21
 **Lösung**: Projekt neu bauen:
 ```bash
 ./gradlew clean compileJava
-./gradlew run -PmainClass=pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo
+./gradlew run -PmainClass=io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo
 ```
 
 ### Problem: Schwarzer Bildschirm

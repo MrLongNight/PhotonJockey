@@ -1,4 +1,4 @@
-# Building PhotonJockey (LightBeat)
+# Building PhotonJockey (PhotonJockey)
 
 ## Prerequisites
 
@@ -9,7 +9,7 @@
 
 ### Custom Hue API Fork
 
-This project requires a custom fork of the Yet Another Hue API library with LightBeat-specific enhancements.
+This project requires a custom fork of the Yet Another Hue API library with PhotonJockey-specific enhancements.
 
 **Dependency:** `io.github.zeroone3010:yetanotherhueapi:2.8.0-lb`
 
@@ -71,7 +71,7 @@ Once the dependency is installed:
 ./gradlew runShadow
 
 # Or run the compiled JAR
-java -jar build/libs/LightBeat-<version>.jar
+java -jar build/libs/PhotonJockey-<version>.jar
 ```
 
 ## Troubleshooting

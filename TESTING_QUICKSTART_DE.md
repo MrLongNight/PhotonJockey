@@ -5,7 +5,7 @@
 ### 1. Demo starten
 ```bash
 cd /pfad/zu/PhotonJockey
-./gradlew run -PmainClass=pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo
+./gradlew run -PmainClass=io.github.mrlongnight.photonjockey.ui.AudioAnalyzerDashboardDemo
 ```
 
 ### 2. Fenster erscheint mit

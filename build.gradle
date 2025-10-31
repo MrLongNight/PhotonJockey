@@ -9,7 +9,7 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
-group = 'pw.wunderlich.lightbeat'
+group = 'io.github.mrlongnight.photonjockey'
 version = '0.0.2'
 description = 'PhotonJockey'
 
@@ -27,11 +27,11 @@ sourceSets {
             exclude '**/hue/bridge/**'
             exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
-            exclude '**/LightBeat.java'
+            exclude '**/PhotonJockey.java'
             exclude '**/AppTaskOrchestrator.java'
             exclude '**/config/**'
             exclude '**/lightbeat/util/**'
-            exclude '**/audio/LBAudioReader.java'
+            exclude '**/audio/PJAudioReader.java'
             exclude '**/audio/BeatInterpreter.java'
             exclude '**/audio/BeatEventManager.java'
             exclude '**/audio/BeatEvent.java'
@@ -56,7 +56,7 @@ sourceSets {
 }
 
 application {
-    mainClass = 'pw.wunderlich.lightbeat.LightBeat'
+    mainClass = 'io.github.mrlongnight.photonjockey.PhotonJockey'
 }
 
 repositories {
@@ -128,7 +128,7 @@ def libjitsiAddOpensArgs = [ '--add-opens', 'java.base/java.lang=ALL-UNNAMED' ]
 runShadow {
     jvmArgs libjitsiAddOpensArgs
     if (project.hasProperty('dumpAll')) {
-        systemProperty 'lightbeat.audio.dumpAll', 'true'
+        systemProperty 'photonjockey.audio.dumpAll', 'true'
     }
 }
 
@@ -156,12 +156,12 @@ tasks.register('bundleReleaseZip', Zip) {
         into('app') {
             from(shadowJar.archiveFile)
         }
-        from('src/main/resources/launch_lightbeat.sh') {
+        from('src/main/resources/launch_photonjockey.sh') {
             filePermissions {
                 unix('0755')
             }
         }
-        from('src/main/resources/launch_lightbeat.bat')
+        from('src/main/resources/launch_photonjockey.bat')
         from('docs/legal/THIRD_PARTY_LICENSES.md')
     }
 }
@@ -179,7 +179,7 @@ runtime {
     launcher {
         def customJvmArgs = new ArrayList(libjitsiAddOpensArgs)
         if (project.hasProperty('updatechecker-disabled')) {
-            customJvmArgs.add('-Dlightbeat.updatechecker.disabled=true')
+            customJvmArgs.add('-Dphotonjockey.updatechecker.disabled=true')
         }
 
         jvmArgs = customJvmArgs
@@ -224,7 +224,7 @@ runtime {
             ]
             installerOptions = [
                     '--vendor', 'Ai-LightBotEngine',
-                    '--linux-deb-maintainer', 'lightbeat@wunderlich.pw',
+                    '--linux-deb-maintainer', 'contact@photonjockey.io',
                     '--linux-menu-group', 'Audio',
                     '--linux-app-category', 'Audio',
                     '--linux-shortcut'

@@ -1,21 +1,21 @@
 {
   "loc_per_package": {
     "org.jitsi.impl.neomedia.device": 490,
-    "pw.wunderlich.lightbeat": 124,
-    "pw.wunderlich.lightbeat.audio": 325,
-    "pw.wunderlich.lightbeat.audio.device": 244,
-    "pw.wunderlich.lightbeat.audio.device.provider": 507,
-    "pw.wunderlich.lightbeat.config": 192,
-    "pw.wunderlich.lightbeat.gui": 120,
-    "pw.wunderlich.lightbeat.gui.frame": 1021,
-    "pw.wunderlich.lightbeat.gui.swing": 341,
-    "pw.wunderlich.lightbeat.hue.bridge": 324,
-    "pw.wunderlich.lightbeat.hue.bridge.color": 208,
-    "pw.wunderlich.lightbeat.hue.bridge.light": 290,
-    "pw.wunderlich.lightbeat.hue.bridge.light.controller": 211,
-    "pw.wunderlich.lightbeat.hue.visualizer": 305,
-    "pw.wunderlich.lightbeat.hue.visualizer.effect": 533,
-    "pw.wunderlich.lightbeat.util": 204
+    "io.github.mrlongnight.photonjockey": 124,
+    "io.github.mrlongnight.photonjockey.audio": 325,
+    "io.github.mrlongnight.photonjockey.audio.device": 244,
+    "io.github.mrlongnight.photonjockey.audio.device.provider": 507,
+    "io.github.mrlongnight.photonjockey.config": 192,
+    "io.github.mrlongnight.photonjockey.gui": 120,
+    "io.github.mrlongnight.photonjockey.gui.frame": 1021,
+    "io.github.mrlongnight.photonjockey.gui.swing": 341,
+    "io.github.mrlongnight.photonjockey.hue.bridge": 324,
+    "io.github.mrlongnight.photonjockey.hue.bridge.color": 208,
+    "io.github.mrlongnight.photonjockey.hue.bridge.light": 290,
+    "io.github.mrlongnight.photonjockey.hue.bridge.light.controller": 211,
+    "io.github.mrlongnight.photonjockey.hue.visualizer": 305,
+    "io.github.mrlongnight.photonjockey.hue.visualizer.effect": 533,
+    "io.github.mrlongnight.photonjockey.util": 204
   },
   "cyclomatic_complexity_top_20": [
     {

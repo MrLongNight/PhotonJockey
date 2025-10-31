@@ -22,7 +22,7 @@ Classes were analyzed based on:
 
 ---
 
-## 1. pw.wunderlich.lightbeat.gui.frame.MainFrame
+## 1. io.github.mrlongnight.photonjockey.gui.frame.MainFrame
 
 ### Metrics
 
@@ -65,7 +65,7 @@ Large GUI class with many responsibilities
 
 ---
 
-## 2. pw.wunderlich.lightbeat.audio.device.provider.WASAPIDeviceProvider
+## 2. io.github.mrlongnight.photonjockey.audio.device.provider.WASAPIDeviceProvider
 
 ### Metrics
 
@@ -107,7 +107,7 @@ Windows audio device provider with platform-specific code
 
 ---
 
-## 3. pw.wunderlich.lightbeat.gui.frame.ConnectFrame
+## 3. io.github.mrlongnight.photonjockey.gui.frame.ConnectFrame
 
 ### Metrics
 
@@ -149,7 +149,7 @@ Connection UI with multiple concerns
 
 ---
 
-## 4. pw.wunderlich.lightbeat.gui.frame.ColorSelectionFrame
+## 4. io.github.mrlongnight.photonjockey.gui.frame.ColorSelectionFrame
 
 ### Metrics
 
@@ -232,7 +232,7 @@ Linux audio system with JNI calls
 
 ---
 
-## 6. pw.wunderlich.lightbeat.audio.LBAudioReader
+## 6. io.github.mrlongnight.photonjockey.audio.LBAudioReader
 
 ### Metrics
 
@@ -274,7 +274,7 @@ Audio processing with multiple responsibilities
 
 ---
 
-## 7. pw.wunderlich.lightbeat.hue.visualizer.BrightnessCalibrator
+## 7. io.github.mrlongnight.photonjockey.hue.visualizer.BrightnessCalibrator
 
 ### Metrics
 
@@ -316,7 +316,7 @@ Brightness calibration with stateful operations
 
 ---
 
-## 8. pw.wunderlich.lightbeat.gui.FrameManager
+## 8. io.github.mrlongnight.photonjockey.gui.FrameManager
 
 ### Metrics
 
@@ -358,7 +358,7 @@ GUI lifecycle management with synchronization
 
 ---
 
-## 9. pw.wunderlich.lightbeat.hue.bridge.LBHueManager
+## 9. io.github.mrlongnight.photonjockey.hue.bridge.LBHueManager
 
 ### Metrics
 
@@ -400,7 +400,7 @@ Hue bridge management with multiple responsibilities
 
 ---
 
-## 10. pw.wunderlich.lightbeat.audio.device.provider.JavaAudioDeviceProvider
+## 10. io.github.mrlongnight.photonjockey.audio.device.provider.JavaAudioDeviceProvider
 
 ### Metrics
 
@@ -447,20 +447,20 @@ Java Sound API integration
 ### Priority Order
 
 #### High Priority (Complexity > 150)
-- pw.wunderlich.lightbeat.gui.frame.MainFrame
+- io.github.mrlongnight.photonjockey.gui.frame.MainFrame
 
 #### Medium Priority (Complexity 80-150)
-- pw.wunderlich.lightbeat.audio.device.provider.WASAPIDeviceProvider
-- pw.wunderlich.lightbeat.gui.frame.ConnectFrame
-- pw.wunderlich.lightbeat.gui.frame.ColorSelectionFrame
+- io.github.mrlongnight.photonjockey.audio.device.provider.WASAPIDeviceProvider
+- io.github.mrlongnight.photonjockey.gui.frame.ConnectFrame
+- io.github.mrlongnight.photonjockey.gui.frame.ColorSelectionFrame
 - org.jitsi.impl.neomedia.device.PulseAudioSystem
-- pw.wunderlich.lightbeat.audio.LBAudioReader
+- io.github.mrlongnight.photonjockey.audio.LBAudioReader
 
 #### Low Priority (Complexity < 80)
-- pw.wunderlich.lightbeat.hue.visualizer.BrightnessCalibrator
-- pw.wunderlich.lightbeat.gui.FrameManager
-- pw.wunderlich.lightbeat.hue.bridge.LBHueManager
-- pw.wunderlich.lightbeat.audio.device.provider.JavaAudioDeviceProvider
+- io.github.mrlongnight.photonjockey.hue.visualizer.BrightnessCalibrator
+- io.github.mrlongnight.photonjockey.gui.FrameManager
+- io.github.mrlongnight.photonjockey.hue.bridge.LBHueManager
+- io.github.mrlongnight.photonjockey.audio.device.provider.JavaAudioDeviceProvider
 
 ### Next Steps
 

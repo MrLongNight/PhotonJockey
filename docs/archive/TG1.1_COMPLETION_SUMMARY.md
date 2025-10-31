@@ -66,7 +66,7 @@
 
 ## Abhängigkeitsdokumentation
 
-Die verwendete Abhängigkeit `yetanotherhueapi:2.8.0-lb` ist eine benutzerdefinierte Fork-Version mit LightBeat-spezifischen Erweiterungen, die nicht in Maven Central verfügbar ist.
+Die verwendete Abhängigkeit `yetanotherhueapi:2.8.0-lb` ist eine benutzerdefinierte Fork-Version mit PhotonJockey-spezifischen Erweiterungen, die nicht in Maven Central verfügbar ist.
 
 **Lösung:** Vollständige Bauanleitung wurde hinzugefügt:
 - **BUILD.md** - Detaillierte Anleitung zum Bauen und Installieren der benutzerdefinierten Abhängigkeit
@@ -87,7 +87,7 @@ Die Anforderung war, einen Branch `feature/1-setup` zu erstellen. Dieser existie
 ## Verifikation
 
 ### Manuelle Code-Überprüfung
-Die existierenden Java-Dateien (z.B. `LightBeat.java`) folgen dem Google Java Style:
+Die existierenden Java-Dateien (z.B. `PhotonJockey.java`) folgen dem Google Java Style:
 - 2-Leerzeichen Einrückung ✅
 - Korrekte Benennung ✅
 - JavaDoc vorhanden ✅
