@@ -80,13 +80,13 @@ dependencies {
 ```
 src/
 ├── main/
-│   ├── java/pw/wunderlich/lightbeat/ui/
+│   ├── java/io/github/mrlongnight/photonjockey/ui/
 │   │   ├── AudioAnalyzerDashboardController.java
 │   │   └── AudioAnalyzerDashboardDemo.java
 │   └── resources/fxml/
 │       └── AudioAnalyzerDashboard.fxml
 └── test/
-    └── java/pw/wunderlich/lightbeat/ui/
+    └── java/io/github/mrlongnight/photonjockey/ui/
         └── AudioAnalyzerDashboardControllerUnitTest.java
 docs/
 └── AUDIO_VISUALIZER.md
