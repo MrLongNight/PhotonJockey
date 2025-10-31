@@ -56,7 +56,7 @@ sourceSets {
 }
 
 application {
-    mainClass = 'pw.wunderlich.lightbeat.LightBeat'
+    mainClass = 'pw.wunderlich.lightbeat.ui.AudioAnalyzerDashboardDemo'
 }
 
 repositories {
