@@ -14,14 +14,15 @@ version = '0.0.2'
 description = 'PhotonJockey'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 sourceSets {
     main {
         java {
             // Temporarily exclude Hue-related and GUI classes due to dependency issues
+            // But include new TG3.2 DTO and utility classes (hue/dto and hue/util)
             // Allow hue/engine package for TG3.1
             exclude '**/hue/bridge/**'
             exclude '**/hue/visualizer/**'
@@ -29,7 +30,7 @@ sourceSets {
             exclude '**/LightBeat.java'
             exclude '**/AppTaskOrchestrator.java'
             exclude '**/config/**'
-            exclude '**/util/**'
+            exclude '**/lightbeat/util/**'
             exclude '**/audio/LBAudioReader.java'
             exclude '**/audio/BeatInterpreter.java'
             exclude '**/audio/BeatEventManager.java'
@@ -43,11 +44,12 @@ sourceSets {
     test {
         java {
             // Exclude tests that depend on excluded classes
+            // But include new TG3.2 DTO and utility tests (hue/dto and hue/util)
             // Allow hue/engine tests for TG3.1
             exclude '**/hue/bridge/**'
             exclude '**/hue/visualizer/**'
             exclude '**/gui/**'
-            exclude '**/util/**'
+            exclude '**/lightbeat/util/**'
             exclude '**/SystemAudioSourceTest.java'
         }
     }
@@ -78,6 +80,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'org.slf4j:slf4j-simple:2.0.17'
     implementation 'org.slf4j:jul-to-slf4j:2.0.17'
+    implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'com.github.wendykierp:JTransforms:3.1'
     implementation 'com.github.weisj:darklaf-core:3.1.1'
     implementation 'com.jetbrains.intellij.java:java-gui-forms-rt:252.26199.158'

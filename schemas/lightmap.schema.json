@@ -1,75 +1,73 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://lightbeat.wunderlich.pw/schemas/lightmap.schema.json",
-  "title": "Light Map Configuration",
-  "description": "Schema for light bridge and light configuration mapping",
+  "$id": "https://github.com/MrLongNight/PhotonJockey/schemas/lightmap.schema.json",
+  "title": "Light Mapping Configuration",
+  "description": "Configuration schema for Philips Hue bridge and light mappings",
   "type": "object",
+  "required": ["bridges", "lights"],
   "properties": {
     "bridges": {
       "type": "array",
-      "description": "List of bridge configurations",
+      "description": "List of Philips Hue bridges",
       "items": {
-        "$ref": "#/definitions/bridge"
+        "type": "object",
+        "required": ["id", "ip"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the bridge",
+            "minLength": 1
+          },
+          "ip": {
+            "type": "string",
+            "description": "IP address of the bridge",
+            "pattern": "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+          },
+          "username": {
+            "type": "string",
+            "description": "API username for the bridge"
+          }
+        },
+        "additionalProperties": false
       }
     },
     "lights": {
       "type": "array",
-      "description": "List of light configurations",
+      "description": "List of lights with their spatial and control configuration",
       "items": {
-        "$ref": "#/definitions/light"
+        "type": "object",
+        "required": ["id", "x", "y", "bridgeId", "controlType"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the light",
+            "minLength": 1
+          },
+          "x": {
+            "type": "number",
+            "description": "X coordinate of the light in 2D space"
+          },
+          "y": {
+            "type": "number",
+            "description": "Y coordinate of the light in 2D space"
+          },
+          "bridgeId": {
+            "type": "string",
+            "description": "Reference to the bridge ID this light belongs to",
+            "minLength": 1
+          },
+          "controlType": {
+            "type": "string",
+            "description": "Type of control protocol to use",
+            "enum": ["FAST_UDP", "LOW_HTTP"]
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for the light"
+          }
+        },
+        "additionalProperties": false
       }
-    }
-  },
-  "required": ["lights"],
-  "definitions": {
-    "bridge": {
-      "type": "object",
-      "description": "Bridge configuration",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the bridge",
-          "minLength": 1
-        },
-        "ip": {
-          "type": "string",
-          "description": "IP address of the bridge",
-          "pattern": "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-        }
-      },
-      "required": ["id", "ip"],
-      "additionalProperties": false
-    },
-    "light": {
-      "type": "object",
-      "description": "Light configuration",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the light",
-          "minLength": 1
-        },
-        "x": {
-          "type": "number",
-          "description": "X coordinate in the light layout"
-        },
-        "y": {
-          "type": "number",
-          "description": "Y coordinate in the light layout"
-        },
-        "bridgeId": {
-          "type": "string",
-          "description": "ID of the bridge this light is connected to",
-          "minLength": 1
-        },
-        "controlType": {
-          "type": "string",
-          "description": "Control type for this light",
-          "enum": ["FAST_UDP", "LOW_HTTP"]
-        }
-      },
-      "required": ["id", "controlType"],
-      "additionalProperties": false
     }
   }
 }
