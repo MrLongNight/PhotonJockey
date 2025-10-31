@@ -1,4 +1,4 @@
-package pw.wunderlich.lightbeat.ui;
+package io.github.mrlongnight.photonjockey.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
-import pw.wunderlich.lightbeat.audio.AudioFrame;
+import io.github.mrlongnight.photonjockey.audio.AudioFrame;
 
 import java.net.URL;
 

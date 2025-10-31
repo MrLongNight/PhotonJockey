@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Code Metrics Collection Script for PhotonJockey (PhotonJockey)
+# Code Metrics Collection Script for PhotonJockey
 #
 # This script runs the Python-based metrics collection tool.
 # It generates reports/metrics.json containing:
