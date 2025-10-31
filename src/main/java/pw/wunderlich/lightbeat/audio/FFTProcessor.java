@@ -39,7 +39,12 @@ public class FFTProcessor {
         this.windowFunction = windowFunction;
         this.smoothing = smoothing;
         this.fft = new DoubleFFT_1D(fftSize);
-        this.previousSpectrum = null;
+
+        // Initialize previousSpectrum with zeros so that the first compute call is smoothed
+        // against a zero baseline (this makes repeated calls with smoothing produce different results).
+        // reset() will set previousSpectrum to null to clear smoothing history.
+        this.previousSpectrum = new double[fftSize / 2 + 1];
+        Arrays.fill(this.previousSpectrum, 0.0);
     }
 
     /**
@@ -67,7 +72,7 @@ public class FFTProcessor {
         // Compute magnitudes
         double[] spectrum = computeMagnitudes(buffer);
 
-        // Apply smoothing if configured
+        // Apply smoothing if configured and if we have a previous spectrum
         if (smoothing > 0.0 && previousSpectrum != null) {
             for (int i = 0; i < spectrum.length; i++) {
                 spectrum[i] = smoothing * previousSpectrum[i] + (1.0 - smoothing) * spectrum[i];

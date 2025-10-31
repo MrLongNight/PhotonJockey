@@ -36,6 +36,12 @@ public enum WindowFunction {
             return;
         }
 
+        // Handle single-sample case to avoid division by zero when computing formulas that use (n - 1).
+        // For a single sample, the window factor should be 1.0 (or effectively no change).
+        if (n == 1) {
+            return;
+        }
+
         switch (this) {
             case NONE:
                 // No modification needed
