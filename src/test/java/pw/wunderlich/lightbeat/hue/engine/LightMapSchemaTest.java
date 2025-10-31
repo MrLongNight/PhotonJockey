@@ -66,19 +66,18 @@ class LightMapSchemaTest {
     }
 
     @Test
-    void testValidLightMapWithoutBridges() throws IOException {
+    void testInvalidLightMapWithoutBridges() throws IOException {
         String json = """
                 {
                   "lights": [
-                    {"id": "light-001", "controlType": "FAST_UDP"},
-                    {"id": "light-002", "controlType": "LOW_HTTP"}
+                    {"id": "light-001", "x": 0.0, "y": 0.0, "bridgeId": "bridge-001", "controlType": "FAST_UDP"}
                   ]
                 }
                 """;
         JsonNode node = mapper.readTree(json);
         Set<ValidationMessage> errors = schema.validate(node);
         
-        assertTrue(errors.isEmpty(), "Valid light map should not have errors: " + errors);
+        assertFalse(errors.isEmpty(), "Should have validation errors for missing bridges");
     }
 
     @Test
@@ -118,6 +117,60 @@ class LightMapSchemaTest {
     }
 
     @Test
+    void testInvalidLightMissingX() throws IOException {
+        String json = """
+                {
+                  "bridges": [
+                    {"id": "bridge-001", "ip": "192.168.1.100"}
+                  ],
+                  "lights": [
+                    {"id": "light-001", "y": 0.0, "bridgeId": "bridge-001", "controlType": "FAST_UDP"}
+                  ]
+                }
+                """;
+        JsonNode node = mapper.readTree(json);
+        Set<ValidationMessage> errors = schema.validate(node);
+        
+        assertFalse(errors.isEmpty(), "Should have validation errors for light missing x");
+    }
+
+    @Test
+    void testInvalidLightMissingY() throws IOException {
+        String json = """
+                {
+                  "bridges": [
+                    {"id": "bridge-001", "ip": "192.168.1.100"}
+                  ],
+                  "lights": [
+                    {"id": "light-001", "x": 0.0, "bridgeId": "bridge-001", "controlType": "FAST_UDP"}
+                  ]
+                }
+                """;
+        JsonNode node = mapper.readTree(json);
+        Set<ValidationMessage> errors = schema.validate(node);
+        
+        assertFalse(errors.isEmpty(), "Should have validation errors for light missing y");
+    }
+
+    @Test
+    void testInvalidLightMissingBridgeId() throws IOException {
+        String json = """
+                {
+                  "bridges": [
+                    {"id": "bridge-001", "ip": "192.168.1.100"}
+                  ],
+                  "lights": [
+                    {"id": "light-001", "x": 0.0, "y": 0.0, "controlType": "FAST_UDP"}
+                  ]
+                }
+                """;
+        JsonNode node = mapper.readTree(json);
+        Set<ValidationMessage> errors = schema.validate(node);
+        
+        assertFalse(errors.isEmpty(), "Should have validation errors for light missing bridgeId");
+    }
+
+    @Test
     void testInvalidBridgeMissingId() throws IOException {
         String json = """
                 {
@@ -125,7 +178,7 @@ class LightMapSchemaTest {
                     {"ip": "192.168.1.100"}
                   ],
                   "lights": [
-                    {"id": "light-001", "controlType": "FAST_UDP"}
+                    {"id": "light-001", "x": 0.0, "y": 0.0, "bridgeId": "bridge-001", "controlType": "FAST_UDP"}
                   ]
                 }
                 """;
@@ -143,7 +196,7 @@ class LightMapSchemaTest {
                     {"id": "bridge-001"}
                   ],
                   "lights": [
-                    {"id": "light-001", "controlType": "FAST_UDP"}
+                    {"id": "light-001", "x": 0.0, "y": 0.0, "bridgeId": "bridge-001", "controlType": "FAST_UDP"}
                   ]
                 }
                 """;
@@ -161,7 +214,7 @@ class LightMapSchemaTest {
                     {"id": "bridge-001", "ip": "not-an-ip"}
                   ],
                   "lights": [
-                    {"id": "light-001", "controlType": "FAST_UDP"}
+                    {"id": "light-001", "x": 0.0, "y": 0.0, "bridgeId": "bridge-001", "controlType": "FAST_UDP"}
                   ]
                 }
                 """;
@@ -175,8 +228,11 @@ class LightMapSchemaTest {
     void testInvalidLightMissingId() throws IOException {
         String json = """
                 {
+                  "bridges": [
+                    {"id": "bridge-001", "ip": "192.168.1.100"}
+                  ],
                   "lights": [
-                    {"controlType": "FAST_UDP"}
+                    {"x": 0.0, "y": 0.0, "bridgeId": "bridge-001", "controlType": "FAST_UDP"}
                   ]
                 }
                 """;
@@ -190,8 +246,11 @@ class LightMapSchemaTest {
     void testInvalidLightMissingControlType() throws IOException {
         String json = """
                 {
+                  "bridges": [
+                    {"id": "bridge-001", "ip": "192.168.1.100"}
+                  ],
                   "lights": [
-                    {"id": "light-001"}
+                    {"id": "light-001", "x": 0.0, "y": 0.0, "bridgeId": "bridge-001"}
                   ]
                 }
                 """;
@@ -205,8 +264,11 @@ class LightMapSchemaTest {
     void testInvalidLightInvalidControlType() throws IOException {
         String json = """
                 {
+                  "bridges": [
+                    {"id": "bridge-001", "ip": "192.168.1.100"}
+                  ],
                   "lights": [
-                    {"id": "light-001", "controlType": "INVALID_TYPE"}
+                    {"id": "light-001", "x": 0.0, "y": 0.0, "bridgeId": "bridge-001", "controlType": "INVALID_TYPE"}
                   ]
                 }
                 """;
