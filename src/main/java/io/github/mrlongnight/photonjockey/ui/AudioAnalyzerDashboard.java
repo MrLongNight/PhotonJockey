@@ -79,6 +79,13 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         Parent root = loader.load();
         controller = loader.getController();
 
+        // Set up callbacks for UI actions
+        controller.setCallbacks(
+            this::refreshAudioDevices,
+            this::connectToHue,
+            this::disconnectFromHue
+        );
+
         Scene scene = new Scene(root, 1000, 700);
         primaryStage.setTitle("PhotonJockey - Audio Analyzer Dashboard");
         primaryStage.setScene(scene);
@@ -88,10 +95,48 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         });
         primaryStage.show();
 
+        // Initialize UI with available devices
+        refreshAudioDevices();
+
         // Auto-start audio monitoring
         startAudioMonitoring();
 
         logger.info("AudioAnalyzerDashboard started successfully");
+    }
+
+    /**
+     * Refreshes the list of available audio devices.
+     */
+    private void refreshAudioDevices() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                List<AudioDevice> devices = audioReader.getSupportedDevices();
+                List<String> deviceNames = devices.stream()
+                    .map(AudioDevice::getName)
+                    .collect(java.util.stream.Collectors.toList());
+                
+                String currentDevice = audioReader.isOpen() ? 
+                    audioReader.getSupportedDevices().stream()
+                        .filter(d -> d.isOpen())
+                        .map(AudioDevice::getName)
+                        .findFirst().orElse(null) : null;
+                
+                controller.updateAudioDevices(deviceNames, currentDevice);
+                controller.updateInfo("Found " + deviceNames.size() + " audio device(s)");
+                
+                if (deviceNames.isEmpty()) {
+                    logger.warn("No audio devices found");
+                    Platform.runLater(() -> 
+                        showWarning("No Audio Devices", "No audio capture devices found on this system")
+                    );
+                }
+            } catch (Exception e) {
+                logger.error("Error refreshing audio devices", e);
+                Platform.runLater(() -> 
+                    showError("Device Error", "Error refreshing audio devices: " + e.getMessage())
+                );
+            }
+        });
     }
 
     /**
@@ -114,7 +159,10 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
                 logger.info("Starting audio monitoring on device: {}", device.getName());
                 
                 boolean started = audioReader.start(device);
-                if (!started) {
+                if (started) {
+                    controller.updateStatus("Monitoring: " + device.getName());
+                    controller.updateInfo("Audio capture active");
+                } else {
                     logger.error("Failed to start audio device");
                     Platform.runLater(() -> 
                         showError("Audio Error", "Failed to start audio capture device")
@@ -124,6 +172,53 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
                 logger.error("Error starting audio monitoring", e);
                 Platform.runLater(() -> 
                     showError("Audio Error", "Error starting audio monitoring: " + e.getMessage())
+                );
+            }
+        });
+    }
+
+    /**
+     * Connects to a Hue bridge.
+     */
+    private void connectToHue() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                controller.updateHueStatus("Scanning...", false);
+                controller.updateInfo("Scanning for Hue bridges...");
+                
+                // Try to connect to a previously saved bridge
+                List<AccessPoint> previousBridges = hueManager.getPreviousBridges();
+                if (!previousBridges.isEmpty()) {
+                    AccessPoint bridge = previousBridges.get(0);
+                    logger.info("Attempting to connect to previous bridge at {}", bridge.ip());
+                    hueManager.setAttemptConnection(bridge);
+                } else {
+                    // Scan for new bridges
+                    hueManager.doBridgesScan();
+                }
+            } catch (Exception e) {
+                logger.error("Error connecting to Hue", e);
+                Platform.runLater(() -> {
+                    controller.updateHueStatus("Error", false);
+                    showError("Hue Error", "Error connecting to Hue bridge: " + e.getMessage());
+                });
+            }
+        });
+    }
+
+    /**
+     * Disconnects from the Hue bridge.
+     */
+    private void disconnectFromHue() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                hueManager.disconnect();
+                controller.updateHueStatus("Disconnected", false);
+                controller.updateInfo("Disconnected from Hue bridge");
+            } catch (Exception e) {
+                logger.error("Error disconnecting from Hue", e);
+                Platform.runLater(() -> 
+                    showError("Hue Error", "Error disconnecting from Hue bridge: " + e.getMessage())
                 );
             }
         });
@@ -228,8 +323,11 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
     @Override
     public void hasConnected() {
         logger.info("Successfully connected to Hue bridge");
+        String bridgeName = hueManager.getBridge() != null ? hueManager.getBridge().getName() : "Unknown";
+        controller.updateHueStatus("Connected: " + bridgeName, true);
+        controller.updateInfo("Hue bridge connected and ready");
         Platform.runLater(() -> 
-            showInfo("Hue Connected", "Successfully connected to Philips Hue bridge")
+            showInfo("Hue Connected", "Successfully connected to Philips Hue bridge: " + bridgeName)
         );
     }
 
