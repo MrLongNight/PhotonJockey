@@ -10,6 +10,7 @@ import io.github.mrlongnight.photonjockey.audio.AudioFrame;
 
 import java.net.URL;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +30,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             new JFXPanel(); // Initializes JavaFX environment
             latch.countDown();
         }).start();
-        latch.await();
+        if (!latch.await(10, TimeUnit.SECONDS)) {
+            throw new RuntimeException("JavaFX initialization timed out");
+        }
     }
 
     @BeforeEach
@@ -49,7 +52,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
                 fail("Failed to load FXML: " + e.getMessage());
             }
         });
-        latch.await();
+        if (!latch.await(10, TimeUnit.SECONDS)) {
+            throw new RuntimeException("Controller setup timed out");
+        }
     }
 
     @Test
@@ -64,7 +69,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             assertEquals(1.0, controller.getGain(), 0.01, "Default gain should be 1.0");
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -75,7 +82,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
                          "Default beat sensitivity should be 1.3");
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -86,7 +95,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             assertEquals(1.5, controller.getGain(), 0.01, "Gain should be set to 1.5");
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -98,7 +109,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
                          "Beat sensitivity should be set to 1.8");
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -108,7 +121,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             assertDoesNotThrow(() -> controller.updateWaveform(null));
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -126,7 +141,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             assertDoesNotThrow(() -> controller.updateWaveform(frame));
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -136,7 +153,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             assertDoesNotThrow(() -> controller.updateSpectrum(null));
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -151,7 +170,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             assertDoesNotThrow(() -> controller.updateSpectrum(spectrum));
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -162,7 +183,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             assertDoesNotThrow(() -> controller.updateBeatIndicator(true, 120.0));
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -172,7 +195,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
             assertDoesNotThrow(() -> controller.clear());
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -189,7 +214,9 @@ class AudioAnalyzerDashboardControllerUnitTest {
 
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -206,6 +233,8 @@ class AudioAnalyzerDashboardControllerUnitTest {
 
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 }

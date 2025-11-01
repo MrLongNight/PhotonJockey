@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +34,9 @@ class SmartMappingToolDragDropTest {
             new JFXPanel();
             latch.countDown();
         }).start();
-        latch.await();
+        if (!latch.await(10, TimeUnit.SECONDS)) {
+            throw new RuntimeException("JavaFX initialization timed out");
+        }
     }
 
     @BeforeEach
@@ -55,7 +58,9 @@ class SmartMappingToolDragDropTest {
                 fail("Failed to load FXML: " + e.getMessage());
             }
         });
-        latch.await();
+        if (!latch.await(10, TimeUnit.SECONDS)) {
+            throw new RuntimeException("Controller setup timed out");
+        }
     }
 
     @Test
@@ -80,7 +85,9 @@ class SmartMappingToolDragDropTest {
             controller.setConfig(config);
             setupLatch.countDown();
         });
-        setupLatch.await();
+        if (!setupLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Setup timed out");
+        }
 
         // Simulate drag from initial position to new position
         double initialX = 100.0;
@@ -131,7 +138,9 @@ class SmartMappingToolDragDropTest {
 
             dragLatch.countDown();
         });
-        dragLatch.await();
+        if (!dragLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Drag operation timed out");
+        }
 
         // Verify the light position was updated
         CountDownLatch verifyLatch = new CountDownLatch(1);
@@ -141,7 +150,9 @@ class SmartMappingToolDragDropTest {
             assertEquals(targetY, movedLight.getY(), 1.0, "Y position should be updated");
             verifyLatch.countDown();
         });
-        verifyLatch.await();
+        if (!verifyLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Verification timed out");
+        }
     }
 
     @Test
@@ -165,7 +176,9 @@ class SmartMappingToolDragDropTest {
             controller.setConfig(config);
             setupLatch.countDown();
         });
-        setupLatch.await();
+        if (!setupLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Setup timed out");
+        }
 
         // Drag first light
         CountDownLatch drag1Latch = new CountDownLatch(1);
@@ -173,7 +186,9 @@ class SmartMappingToolDragDropTest {
             simulateDrag(canvas, 100.0, 100.0, 150.0, 150.0);
             drag1Latch.countDown();
         });
-        drag1Latch.await();
+        if (!drag1Latch.await(5, TimeUnit.SECONDS)) {
+            fail("First drag operation timed out");
+        }
 
         // Drag second light
         CountDownLatch drag2Latch = new CountDownLatch(1);
@@ -181,7 +196,9 @@ class SmartMappingToolDragDropTest {
             simulateDrag(canvas, 200.0, 200.0, 250.0, 250.0);
             drag2Latch.countDown();
         });
-        drag2Latch.await();
+        if (!drag2Latch.await(5, TimeUnit.SECONDS)) {
+            fail("Second drag operation timed out");
+        }
 
         // Verify both lights were moved
         CountDownLatch verifyLatch = new CountDownLatch(1);
@@ -196,7 +213,9 @@ class SmartMappingToolDragDropTest {
             
             verifyLatch.countDown();
         });
-        verifyLatch.await();
+        if (!verifyLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Verification timed out");
+        }
     }
 
     @Test
@@ -216,7 +235,9 @@ class SmartMappingToolDragDropTest {
             controller.setConfig(config);
             setupLatch.countDown();
         });
-        setupLatch.await();
+        if (!setupLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Setup timed out");
+        }
 
         // Try to drag beyond canvas bounds
         double canvasWidth = canvas.getWidth();
@@ -228,7 +249,9 @@ class SmartMappingToolDragDropTest {
             simulateDrag(canvas, 400.0, 250.0, canvasWidth + 100, canvasHeight + 100);
             dragLatch.countDown();
         });
-        dragLatch.await();
+        if (!dragLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Drag operation timed out");
+        }
 
         // Verify light is clamped to canvas bounds
         CountDownLatch verifyLatch = new CountDownLatch(1);
@@ -240,7 +263,9 @@ class SmartMappingToolDragDropTest {
             assertTrue(movedLight.getY() >= 0, "Y should be non-negative");
             verifyLatch.countDown();
         });
-        verifyLatch.await();
+        if (!verifyLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Verification timed out");
+        }
     }
 
     @Test
@@ -260,7 +285,9 @@ class SmartMappingToolDragDropTest {
             controller.setConfig(config);
             setupLatch.countDown();
         });
-        setupLatch.await();
+        if (!setupLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Setup timed out");
+        }
 
         double originalX = light.getX();
         double originalY = light.getY();
@@ -271,7 +298,9 @@ class SmartMappingToolDragDropTest {
             simulateDrag(canvas, 500.0, 500.0, 600.0, 600.0);
             dragLatch.countDown();
         });
-        dragLatch.await();
+        if (!dragLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Drag operation timed out");
+        }
 
         // Verify light position unchanged
         CountDownLatch verifyLatch = new CountDownLatch(1);
@@ -281,7 +310,9 @@ class SmartMappingToolDragDropTest {
             assertEquals(originalY, unchangedLight.getY(), 0.01, "Y should be unchanged");
             verifyLatch.countDown();
         });
-        verifyLatch.await();
+        if (!verifyLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Verification timed out");
+        }
     }
 
     /**
