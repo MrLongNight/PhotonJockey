@@ -34,8 +34,8 @@ Dieser Dokument listet alle TaskGroups (TG) aus dem [PROJECT_PLAN.md](PROJECT_PL
   - `tools/analyze_codebase.py` - Python-Script für statische Code-Analyse
   - `tools/generate_metrics.py` - Detaillierte Code-Metriken
   - `tools/run_metrics.py` - Metrik-Sammlung und Reporting
-  - `docs/codebase_overview.md` - Generierter Code-Übersichtsbericht
-  - `docs/refactor_plan.md` - Refactoring-Plan basierend auf Metriken
+  - `refactor/01-CODEBASE_OVERVIEW.md` - Generierter Code-Übersichtsbericht
+  - `refactor/02-REFACTOR_PLAN.md` - Refactoring-Plan basierend auf Metriken
   - `reports/metrics.json` - Detaillierte Klassen-Metriken
 
 ### ✅ TG1.4: Refactoring (Audio-Threads)
@@ -43,7 +43,7 @@ Dieser Dokument listet alle TaskGroups (TG) aus dem [PROJECT_PLAN.md](PROJECT_PL
 - **Beschreibung:** `AudioAnalyzer` auf `ScheduledExecutorService` umstellen
 - **Branch:** `feature/1-refactor-audio`
 - **Implementiert:**
-  - Thread-Management analysiert und dokumentiert in `docs/refactor_plan.md`
+  - Thread-Management analysiert und dokumentiert in `refactor/02-REFACTOR_PLAN.md`
   - Refactoring-Strategie für Top-10-Klassen definiert
   - Metriken für Complexity Score, LOC, Method Count erfasst
 
@@ -100,7 +100,7 @@ Dieser Dokument listet alle TaskGroups (TG) aus dem [PROJECT_PLAN.md](PROJECT_PL
   - ✅ `AudioProfileManager.java` - Manager für Profile mit JSON-Persistierung
   - ✅ `SimpleJsonUtil.java` - JSON Serialisierung/Deserialisierung
   - ✅ Unit Tests (46 Tests)
-  - ✅ Dokumentation in `docs/AUDIO_PROFILES.md`
+  - ✅ Dokumentation in `../features/01-AUDIO_PROFILES.md`
   - ✅ Demo-Script `demo_audio_profiles.sh`
 
 ### ⏳ TG2.5: Audio-Visualizer (UI)

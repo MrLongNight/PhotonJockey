@@ -21,15 +21,16 @@ Dieses Projekt synchronisiert Beleuchtung mit Musik/Audioquellen und bietet Effe
 1. Repository klonen:
    git clone https://github.com/MrLongNight/PhotonJockey.git
 2. Detaillierte Build-Anleitung:
-   docs/development/BUILD_INSTRUCTIONS.md
+   [docs/development/01-BUILD_INSTRUCTIONS.md](docs/development/01-BUILD_INSTRUCTIONS.md)
 3. Mit Gradle bauen (Java 17 empfohlen):
    ./gradlew clean build
 
 Hinweis: Projekt-Stack: Java 17 + Gradle. Codestil: Google Java Styleguide (Checkstyle).
 
 ## Projekt-Status & Implementierungsfortschritt
-📊 **Implementierte Tasks:** Siehe [IMPLEMENTED_TASKS.md](IMPLEMENTED_TASKS.md) für eine Übersicht aller umgesetzten TG-Tasks.
-📋 **Detaillierter Status:** [docs/TG_IMPLEMENTATION_STATUS.md](docs/TG_IMPLEMENTATION_STATUS.md) zeigt den vollständigen Fortschritt aller geplanten TaskGroups.
+📊 **Implementierte Tasks:** Siehe [docs/project/03-IMPLEMENTED_TASKS.md](docs/project/03-IMPLEMENTED_TASKS.md) für eine Übersicht aller umgesetzten TG-Tasks.
+📋 **Detaillierter Status:** [docs/project/02-IMPLEMENTATION_STATUS.md](docs/project/02-IMPLEMENTATION_STATUS.md) zeigt den vollständigen Fortschritt aller geplanten TaskGroups.
+📖 **Alle Dokumentation:** Siehe [docs/README.md](docs/README.md) für einen kompletten Überblick.
 
 ## Visuelle Projektstruktur (ASCII-Baum)
 Nachfolgend eine leicht lesbare Baum-Ansicht der Top-Level-Struktur (Stand: master). Unterverzeichnisse sind soweit sinnvoll bis zu 2–3 Ebenen eingerückt. Nebem jedem Eintrag steht eine kurze Zweckbeschreibung.
@@ -88,11 +89,11 @@ Kurze Erläuterungen:
 - CI: GitHub Actions (in .github/) baut und testet Pull Requests.
 
 ## Konfiguration & Laufzeit
-- Laufzeitkonfigurationen (Bridge-IP, Token, Mappings) liegen typischerweise in resources oder in externen config-Dateien. Details in docs/development/BUILD_INSTRUCTIONS.md.
+- Laufzeitkonfigurationen (Bridge-IP, Token, Mappings) liegen typischerweise in resources oder in externen config-Dateien. Details in [docs/development/01-BUILD_INSTRUCTIONS.md](docs/development/01-BUILD_INSTRUCTIONS.md).
 - Für lokale Hue-Integration: Bridge-IP & Auth-Token; Pairing-Schritte sind dokumentiert.
 
 ## Fehlerbehebung
-Falls PhotonJockey nicht startet oder Probleme auftreten, siehe [TROUBLESHOOTING_DE.md](docs/TROUBLESHOOTING_DE.md) für:
+Falls PhotonJockey nicht startet oder Probleme auftreten, siehe [docs/guides/troubleshooting/01-TROUBLESHOOTING_DE.md](docs/guides/troubleshooting/01-TROUBLESHOOTING_DE.md) für:
 - Informationen zu Log-Dateien (photonjockey.log, photonjockey_error.log)
 - Lösungen für häufige Probleme
 - Anleitung zur Fehlerdiagnose
@@ -102,11 +103,10 @@ Falls PhotonJockey nicht startet oder Probleme auftreten, siehe [TROUBLESHOOTING
 - PRs gegen main; CI muss grün sein bevor Mergen.
 - Tests sind Pflicht — ohne Tests keine Akzeptanz.
 - Codestil: Google Java Styleguide (Checkstyle erzwingt Regeln).
+- Siehe [docs/development/02-CODING_CONVENTIONS.md](docs/development/02-CODING_CONVENTIONS.md) für Details.
 
 ## Lizenz
-Prüfe die LICENSE-Datei (falls vorhanden) für rechtliche Hinweise und Nutzungsbedingungen.
-
-See [BUILD_INSTRUCTIONS.md](docs/development/BUILD_INSTRUCTIONS.md) for detailed build instructions and dependency setup.
+Siehe [docs/legal/01-LICENSE.md](docs/legal/01-LICENSE.md) für rechtliche Hinweise und Nutzungsbedingungen.
 ## Kontakt
 Projekt-Maintainer: Mr. LongNight  
 Hilfe & Diskussion: Discord (Link oben)

@@ -21,7 +21,7 @@ cd /pfad/zu/PhotonJockey
 ---
 
 ## Detaillierte Anleitung
-Siehe: [docs/TESTING_GUIDE_DE.md](docs/TESTING_GUIDE_DE.md)
+Siehe: [02-TESTING_GUIDE_DE.md](02-TESTING_GUIDE_DE.md)
 
 ## Was wird visualisiert?
 
@@ -39,4 +39,4 @@ Siehe: [docs/TESTING_GUIDE_DE.md](docs/TESTING_GUIDE_DE.md)
 - Grafikkarte mit OpenGL/DirectX Support
 
 ## Problem? 
-Siehe Troubleshooting in [docs/TESTING_GUIDE_DE.md](docs/TESTING_GUIDE_DE.md)
+Siehe Troubleshooting in [02-TESTING_GUIDE_DE.md](02-TESTING_GUIDE_DE.md)

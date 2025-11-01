@@ -131,5 +131,5 @@ rm photonjockey.log photonjockey_error.log
 - **README:** Siehe `README.md` für allgemeine Informationen
 
 Bei Problemen mit der Installation oder Konfiguration konsultieren Sie bitte auch:
-- `docs/development/BUILD_INSTRUCTIONS.md` - Build-Anleitung für Entwickler
-- `docs/TESTING_GUIDE_DE.md` - Test-Anleitung
+- `../../development/01-BUILD_INSTRUCTIONS.md` - Build-Anleitung für Entwickler
+- `../testing/02-TESTING_GUIDE_DE.md` - Test-Anleitung

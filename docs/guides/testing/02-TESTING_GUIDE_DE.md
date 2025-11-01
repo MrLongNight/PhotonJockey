@@ -220,6 +220,6 @@ Nach dem Testen der Demo können Sie:
 
 ## Weitere Dokumentation
 
-- **API-Referenz**: `docs/AUDIO_VISUALIZER.md`
+- **API-Referenz**: `../../features/02-AUDIO_VISUALIZER.md`
 - **Completion Summary**: `TG2.5_COMPLETION_SUMMARY.md`
 - **Code-Beispiele**: `AudioAnalyzerDashboardDemo.java`

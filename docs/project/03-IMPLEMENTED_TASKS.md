@@ -8,11 +8,11 @@
 **Implementiert:**
 - `.editorconfig` (Google Java Styleguide)
 - `checkstyle.xml` (Vollständige Checkstyle-Konfiguration)
-- `docs/CODING_CONVENTIONS.md` (Branch- und Commit-Konventionen)
+- `../development/02-CODING_CONVENTIONS.md` (Branch- und Commit-Konventionen)
 - `.github/pull_request_template.md` (PR-Checkliste)
 - Checkstyle-Integration in `build.gradle`
 
-**Completion Summary:** [docs/archive/TG1.1_COMPLETION_SUMMARY.md](docs/archive/TG1.1_COMPLETION_SUMMARY.md)
+**Completion Summary:** [../completion/01-TG1.1_COMPLETION.md](../completion/01-TG1.1_COMPLETION.md)
 
 ---
 
@@ -23,8 +23,8 @@
 - `tools/analyze_codebase.py` - Python-Script für statische Code-Analyse
 - `tools/generate_metrics.py` - Code-Metriken-Generator
 - `tools/run_metrics.py` - Metrik-Sammlung und Reporting
-- `docs/codebase_overview.md` - Generierter Code-Übersichtsbericht
-- `docs/refactor_plan.md` - Refactoring-Plan basierend auf Metriken
+- `refactor/01-CODEBASE_OVERVIEW.md` - Generierter Code-Übersichtsbericht
+- `refactor/02-REFACTOR_PLAN.md` - Refactoring-Plan basierend auf Metriken
 - `reports/metrics.json` - Detaillierte Klassen-Metriken
 
 ---
@@ -36,7 +36,7 @@
 - Thread-Management analysiert und dokumentiert
 - Refactoring-Strategie für Top-10-Klassen definiert
 - Complexity-Metriken (LOC, Method Count, Concurrency Patterns) erfasst
-- Siehe `docs/refactor_plan.md` für Details
+- Siehe `refactor/02-REFACTOR_PLAN.md` für Details
 
 ---
 
@@ -92,10 +92,10 @@
   - `deleteProfile(String id)` ✅
   - `reloadProfiles()` ✅
 - **46 Unit-Tests** (AudioProfileTest, AudioProfileManagerTest)
-- Vollständige Dokumentation in `docs/AUDIO_PROFILES.md`
+- Vollständige Dokumentation in `../features/01-AUDIO_PROFILES.md`
 - Demo-Script: `demo_audio_profiles.sh`
 
-**Completion Summary:** [TG2.4_COMPLETION_SUMMARY.md](TG2.4_COMPLETION_SUMMARY.md)
+**Completion Summary:** [../completion/02-TG2.4_COMPLETION.md](../completion/02-TG2.4_COMPLETION.md)
 
 ---
 
@@ -112,6 +112,6 @@
 
 ---
 
-**Vollständige Übersicht:** Siehe [docs/TG_IMPLEMENTATION_STATUS.md](docs/TG_IMPLEMENTATION_STATUS.md) für alle geplanten Tasks.
+**Vollständige Übersicht:** Siehe [02-IMPLEMENTATION_STATUS.md](02-IMPLEMENTATION_STATUS.md) für alle geplanten Tasks.
 
-**Projektplan:** Siehe [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md) für detaillierte Task-Beschreibungen.
+**Projektplan:** Siehe [01-PROJECT_PLAN.md](01-PROJECT_PLAN.md) für detaillierte Task-Beschreibungen.
