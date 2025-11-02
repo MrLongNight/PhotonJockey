@@ -60,4 +60,14 @@ public interface Light {
      * Does nothing if no state was stored.
      */
     void restoreState();
+
+    /**
+     * @return the name of the light
+     */
+    String getName();
+
+    /**
+     * @return the id of the light as given by the bridge
+     */
+    String getId();
 }

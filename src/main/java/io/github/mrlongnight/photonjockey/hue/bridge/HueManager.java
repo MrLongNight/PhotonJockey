@@ -11,9 +11,9 @@ import java.util.List;
 public interface HueManager {
 
     /**
-     * @return connection to current bridge
+     * @return a list of all currently connected bridges
      */
-    BridgeConnection getBridge();
+    List<BridgeConnection> getBridges();
 
     /**
      * @param disabledLights true if disabled lights should be omitted
@@ -46,7 +46,14 @@ public interface HueManager {
     void setAttemptConnection(AccessPoint accessPoint);
 
     /**
-     * Disconnect from the currently connected bridge.
+     * Disconnects from the given bridge.
+     *
+     * @param bridgeConnection the bridge to disconnect from
      */
-    void disconnect();
+    void disconnect(BridgeConnection bridgeConnection);
+
+    /**
+     * Disconnects from all currently connected bridges.
+     */
+    void disconnectAll();
 }

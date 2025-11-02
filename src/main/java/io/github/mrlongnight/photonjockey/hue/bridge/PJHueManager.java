@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -27,7 +29,7 @@ public class PJHueManager implements HueManager {
     private final Config config;
     private final AppTaskOrchestrator taskOrchestrator;
 
-    private BridgeConnection bridgeConnection;
+    private final Map<String, BridgeConnection> bridgeConnections = new ConcurrentHashMap<>();
     private ManagerState currentState = ManagerState.NOT_CONNECTED;
 
     private HueStateObserver stateObserver;
@@ -39,19 +41,20 @@ public class PJHueManager implements HueManager {
     }
 
     @Override
-    public BridgeConnection getBridge() {
-        return bridgeConnection;
+    public List<BridgeConnection> getBridges() {
+        return new ArrayList<>(bridgeConnections.values());
     }
 
     @Override
     public List<Light> getLights(boolean disabledLights) {
-        bridgeConnection.refresh();
         var disabledLightsList = config.getStringList(ConfigNode.LIGHTS_DISABLED);
-
-        return bridgeConnection.getLights()
-                .stream()
+        return bridgeConnections.values().stream()
+                .flatMap(bridge -> {
+                    bridge.refresh();
+                    return bridge.getKnownLights().stream();
+                })
                 .filter(light -> !disabledLights || !disabledLightsList.contains(light.getId()))
-                .map((light -> new PJLight(light, taskOrchestrator)))
+                .map(light -> new PJLight(light, taskOrchestrator))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -117,8 +120,9 @@ public class PJHueManager implements HueManager {
         stateObserver.isAttemptingConnection();
         BridgeConnection.ConnectionListener listener = new BridgeConnection.ConnectionListener() {
             @Override
-            public void connectionSuccess(String key, String name, String certificateHash) {
+            public void connectionSuccess(BridgeConnection connection, String key, String name, String certificateHash) {
                 logger.info("Connected to bridge {} at {} with key {}", name, bridgeIp, key);
+                bridgeConnections.put(bridgeIp, connection);
 
                 var bridgeList = new ArrayList<>(config.getStringList(ConfigNode.BRIDGE_LIST));
                 bridgeList.remove(bridgeIp);
@@ -139,11 +143,14 @@ public class PJHueManager implements HueManager {
             public void connectionError(AccessPoint ap, Error error) {
                 if (error.equals(Error.CONNECTION_LOST)) {
                     logger.info("Connection to bridge at {} was lost", bridgeIp);
+                    bridgeConnections.remove(ap.ip());
                 } else {
                     logger.info("Connection to bridge at {} could not be established (Error {})", bridgeIp, error);
                 }
 
-                currentState = ManagerState.CONNECTION_LOST;
+                if (bridgeConnections.isEmpty()) {
+                    currentState = ManagerState.CONNECTION_LOST;
+                }
                 stateObserver.connectionWasLost(ap, error);
             }
 
@@ -161,17 +168,33 @@ public class PJHueManager implements HueManager {
                 stateObserver.pushlinkHasFailed();
             }
         };
-        bridgeConnection = new BridgeConnection(accessPoint, taskOrchestrator, listener);
+        createBridgeConnection(accessPoint, taskOrchestrator, listener);
+    }
+
+    /**
+     * Creates a new BridgeConnection. Extracted for testability.
+     */
+    protected BridgeConnection createBridgeConnection(AccessPoint accessPoint, AppTaskOrchestrator taskOrchestrator, BridgeConnection.ConnectionListener listener) {
+        return new BridgeConnection(accessPoint, taskOrchestrator, listener);
     }
 
     @Override
-    public void disconnect() {
-        if (currentState.equals(ManagerState.CONNECTED)) {
-            bridgeConnection.disconnect();
-            logger.info("Disconnected from bridge");
-            bridgeConnection = null;
-        }
+    public void disconnect(BridgeConnection bridgeConnection) {
+        bridgeConnections.values().remove(bridgeConnection);
+        bridgeConnection.disconnect();
+        logger.info("Disconnected from bridge");
 
+        if (bridgeConnections.isEmpty()) {
+            currentState = ManagerState.NOT_CONNECTED;
+            stateObserver.disconnected();
+        }
+    }
+
+    @Override
+    public void disconnectAll() {
+        bridgeConnections.values().forEach(BridgeConnection::disconnect);
+        bridgeConnections.clear();
+        logger.info("Disconnected from all bridges");
         currentState = ManagerState.NOT_CONNECTED;
         stateObserver.disconnected();
     }

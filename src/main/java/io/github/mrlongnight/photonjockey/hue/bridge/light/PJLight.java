@@ -143,4 +143,14 @@ public class PJLight implements Light {
     public int hashCode() {
         return light.getId().hashCode();
     }
+
+    @Override
+    public String getName() {
+        return light.getName();
+    }
+
+    @Override
+    public String getId() {
+        return light.getId();
+    }
 }

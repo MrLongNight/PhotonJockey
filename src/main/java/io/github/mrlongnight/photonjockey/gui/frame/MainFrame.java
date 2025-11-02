@@ -162,7 +162,7 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
         // advanced panel
         readdColorSetPresetsButton.addActionListener(e -> addColorSetPresets());
         restoreAdvancedButton.addActionListener(e -> restoreDefaults(advancedPanel));
-        disconnectBridgeButton.addActionListener(e -> hueManager.disconnect());
+        disconnectBridgeButton.addActionListener(e -> hueManager.disconnectAll());
 
         startButton.addActionListener(e -> {
             if (audioReader.isOpen()) {
@@ -515,10 +515,13 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
 
         lightSelectPanel.removeAll();
 
+        if (hueManager.getBridges().isEmpty()) {
+            lightSelectPanel.add(new JLabel("No lights found. Connect to a bridge."));
+            return;
+        }
+
         var disabledLights = config.getStringList(ConfigNode.LIGHTS_DISABLED);
-        hueManager.getBridge()
-                .getLights()
-                .forEach(light -> {
+        hueManager.getLights(false).forEach(light -> {
             JCheckBox checkBox = new JCheckBox();
             checkBox.setText(light.getName());
             if (!disabledLights.contains(light.getId())) {
@@ -637,9 +640,18 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
 
     private void setInfoLabelText(String message, boolean running) {
         final String spacer = " | ";
-        final String bridgeName = hueManager.getBridge().getName();
+        int bridgeCount = hueManager.getBridges().size();
+        String bridgeStatus;
+        if (bridgeCount == 0) {
+            bridgeStatus = "No Bridge Connected";
+        } else if (bridgeCount == 1) {
+            bridgeStatus = "Connected to " + hueManager.getBridges().getFirst().getName();
+        } else {
+            bridgeStatus = "Connected to " + bridgeCount + " Bridges";
+        }
+
         String status = (running ? "Running" : "Idle") + spacer;
-        status += "Connected to " + bridgeName + spacer;
+        status += bridgeStatus + spacer;
         status += message;
 
         infoLabel.setText(status);

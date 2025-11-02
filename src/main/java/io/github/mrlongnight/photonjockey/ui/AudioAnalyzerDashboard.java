@@ -211,7 +211,7 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
     private void disconnectFromHue() {
         taskOrchestrator.dispatch(() -> {
             try {
-                hueManager.disconnect();
+                hueManager.disconnectAll();
                 controller.updateHueStatus("Disconnected", false);
                 controller.updateInfo("Disconnected from Hue bridge");
             } catch (Exception e) {
@@ -289,11 +289,19 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
     @Override
     public void hasConnected() {
         logger.info("Successfully connected to Hue bridge");
-        String bridgeName = hueManager.getBridge() != null ? hueManager.getBridge().getName() : "Unknown";
-        controller.updateHueStatus("Connected: " + bridgeName, true);
-        controller.updateInfo("Hue bridge connected and ready");
-        Platform.runLater(() -> 
-            showInfo("Hue Connected", "Successfully connected to Philips Hue bridge: " + bridgeName)
+        int bridgeCount = hueManager.getBridges().size();
+        String bridgeStatus;
+        if (bridgeCount == 0) {
+            bridgeStatus = "Error"; // Should not happen in hasConnected
+        } else if (bridgeCount == 1) {
+            bridgeStatus = "Connected: " + hueManager.getBridges().getFirst().getName();
+        } else {
+            bridgeStatus = "Connected: " + bridgeCount + " Bridges";
+        }
+        controller.updateHueStatus(bridgeStatus, true);
+        controller.updateInfo("Hue bridge(s) connected and ready");
+        Platform.runLater(() ->
+            showInfo("Hue Connected", "Successfully connected to Philips Hue bridge(s).")
         );
     }
 
@@ -341,7 +349,7 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
 
         // Disconnect from Hue
         if (hueManager != null) {
-            hueManager.disconnect();
+            hueManager.disconnectAll();
         }
 
         // Shutdown task orchestrator
