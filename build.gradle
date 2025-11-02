@@ -59,6 +59,7 @@ configurations {
 dependencies {
     // Custom fork from github.com/Kakifrucht/yetanotherhueapi with PhotonJockey-specific enhancements
     implementation 'io.github.zeroone3010:yetanotherhueapi:2.8.0-lb'
+    implementation files('libs/huevana-4.0.3.jar')
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'org.slf4j:slf4j-simple:2.0.17'
     implementation 'org.slf4j:jul-to-slf4j:2.0.17'
