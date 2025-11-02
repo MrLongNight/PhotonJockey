@@ -180,7 +180,7 @@ public class PJHueManager implements HueManager {
 
     @Override
     public void disconnect(BridgeConnection bridgeConnection) {
-        bridgeConnections.values().remove(bridgeConnection);
+        bridgeConnections.entrySet().removeIf(entry -> entry.getValue().equals(bridgeConnection));
         bridgeConnection.disconnect();
         logger.info("Disconnected from bridge");
 

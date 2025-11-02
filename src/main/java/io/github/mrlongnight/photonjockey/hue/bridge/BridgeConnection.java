@@ -169,7 +169,7 @@ public class BridgeConnection {
      * through the {@link ConnectionListener} interface given via the constructor.
      */
     void disconnect() {
-        if (isConnected) {
+        if (heartbeatTask != null) {
             heartbeatTask.cancel(true);
         }
     }
