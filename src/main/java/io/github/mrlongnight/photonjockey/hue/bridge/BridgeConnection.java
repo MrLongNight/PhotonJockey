@@ -30,15 +30,17 @@ public class BridgeConnection {
 
     private final AppTaskOrchestrator taskOrchestrator;
     private final ConnectionListener connectionListener;
+    private final AccessPoint accessPoint;
 
     private Hue hue;
 
     private ScheduledFuture<?> heartbeatTask;
     private boolean isConnected = false;
+    private long lastLatencyMs = -1;
 
 
     public BridgeConnection(AccessPoint accessPoint, AppTaskOrchestrator taskOrchestrator, ConnectionListener listener) {
-
+        this.accessPoint = accessPoint;
         this.taskOrchestrator = taskOrchestrator;
         this.connectionListener = listener;
 
@@ -104,7 +106,9 @@ public class BridgeConnection {
 
         heartbeatTask = taskOrchestrator.schedulePeriodicTask(() -> {
             try {
+                long startTime = System.currentTimeMillis();
                 hue.refresh();
+                lastLatencyMs = System.currentTimeMillis() - startTime;
             } catch (Exception e) {
                 if (isConnected) {
                     connectionListener.connectionError(accessPoint, ConnectionListener.Error.CONNECTION_LOST);
@@ -118,10 +122,10 @@ public class BridgeConnection {
 
             if (!isConnected) {
                 isConnected = true;
-                if (getLights().isEmpty()) {
+                if (getKnownLights().isEmpty()) {
                     connectionListener.connectionError(accessPoint, ConnectionListener.Error.NO_LIGHTS);
                 } else {
-                    connectionListener.connectionSuccess(accessPoint.key(), getName(), certificateHash);
+                    connectionListener.connectionSuccess(this, accessPoint.key(), getName(), certificateHash);
                 }
             }
         }, 0, CONNECTION_CHECK_SECONDS, TimeUnit.SECONDS);
@@ -131,10 +135,18 @@ public class BridgeConnection {
         return hue.getRaw().getConfig().getName();
     }
 
+    public AccessPoint getAccessPoint() {
+        return accessPoint;
+    }
+
+    public long getLatency() {
+        return lastLatencyMs;
+    }
+
     /**
      * @return list containing all valid lights with brightness controls.
      */
-    public List<Light> getLights() {
+    public List<Light> getKnownLights() {
         if (!isConnected) {
             throw new IllegalStateException("Not connected to bridge");
         }
@@ -168,11 +180,12 @@ public class BridgeConnection {
     public interface ConnectionListener {
 
         /**
+         * @param connection the successful connection
          * @param key key/username to connect to given bridge
          * @param name name of the bridge
          * @param certificateHash SHA-256 hash of the TLS certificate used by this bridge
          */
-        void connectionSuccess(String key, String name, String certificateHash);
+        void connectionSuccess(BridgeConnection connection, String key, String name, String certificateHash);
 
         void connectionError(AccessPoint accessPoint, Error error);
 

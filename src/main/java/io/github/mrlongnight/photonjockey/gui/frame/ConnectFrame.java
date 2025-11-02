@@ -42,11 +42,18 @@ public class ConnectFrame extends AbstractFrame implements HueStateObserver {
     private JButton connectButton;
 
     private List<AccessPoint> currentAccessPoints = null;
+    private JPanel connectedBridgesPanel;
 
 
     public ConnectFrame(AppTaskOrchestrator taskOrchestrator, HueManager hueManager, int x, int y) {
         super(taskOrchestrator, "Connect", x, y);
         this.hueManager = hueManager;
+
+        // Panel for connected bridges
+        connectedBridgesPanel = new JPanel();
+        connectedBridgesPanel.setLayout(new BoxLayout(connectedBridgesPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(connectedBridgesPanel, BorderLayout.NORTH);
+        updateConnectedBridgesList();
 
         selectBridgeBox.addActionListener(e -> {
 
@@ -121,10 +128,20 @@ public class ConnectFrame extends AbstractFrame implements HueStateObserver {
 
     @Override
     public void displayFoundBridges(List<AccessPoint> foundBridges) {
+        List<String> connectedIps = hueManager.getBridges().stream()
+                .map(b -> b.getAccessPoint().ip())
+                .toList();
+
         List<AccessPoint> allBridges = new ArrayList<>(hueManager.getPreviousBridges());
         allBridges.addAll(foundBridges);
-        setBridgeList(allBridges);
-        toggleButtonAndDropdown(true, foundBridges.isEmpty() ? "No bridges found" : "Bridges found, please select your bridge");
+
+        List<AccessPoint> filteredBridges = allBridges.stream()
+                .filter(ap -> !connectedIps.contains(ap.ip()))
+                .distinct()
+                .toList();
+
+        setBridgeList(filteredBridges);
+        toggleButtonAndDropdown(true, foundBridges.isEmpty() ? "No new bridges found" : "Bridges found, please select your bridge");
     }
 
     @Override
@@ -163,10 +180,14 @@ public class ConnectFrame extends AbstractFrame implements HueStateObserver {
     }
 
     @Override
-    public void hasConnected() {}
+    public void hasConnected() {
+        updateConnectedBridgesList();
+        hueManager.doBridgesScan(); // Refresh the list of found bridges
+    }
 
     @Override
     public void connectionWasLost(AccessPoint accessPoint, BridgeConnection.ConnectionListener.Error error) {
+        updateConnectedBridgesList();
         String message = switch (error) {
             case CONNECTION_LOST -> "Connection was lost";
             case EXCEPTION -> "Connection could not be established";
@@ -209,8 +230,35 @@ public class ConnectFrame extends AbstractFrame implements HueStateObserver {
 
     @Override
     public void disconnected() {
+        updateConnectedBridgesList();
         setBridgeList(hueManager.getPreviousBridges());
         toggleButtonAndDropdown(true, "Bridge disconnected");
+    }
+
+    private void updateConnectedBridgesList() {
+        runOnSwingThread(() -> {
+            connectedBridgesPanel.removeAll();
+            List<BridgeConnection> bridges = hueManager.getBridges();
+            if (bridges.isEmpty()) {
+                connectedBridgesPanel.setVisible(false);
+                return;
+            }
+
+            connectedBridgesPanel.setVisible(true);
+            JLabel titleLabel = new JLabel("Connected Bridges:");
+            titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
+            connectedBridgesPanel.add(titleLabel);
+
+            for (BridgeConnection bridge : bridges) {
+                JPanel bridgePanel = new JPanel(new BorderLayout());
+                bridgePanel.add(new JLabel(bridge.getName() + " (" + bridge.getAccessPoint().ip() + ")"), BorderLayout.CENTER);
+                JButton disconnectButton = new JButton("Disconnect");
+                disconnectButton.addActionListener(e -> hueManager.disconnect(bridge));
+                bridgePanel.add(disconnectButton, BorderLayout.EAST);
+                connectedBridgesPanel.add(bridgePanel);
+            }
+            frame.pack();
+        });
     }
 
     private void setBridgeList(List<AccessPoint> bridges) {
