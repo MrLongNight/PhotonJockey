@@ -32,48 +32,35 @@ Hinweis: Projekt-Stack: Java 17 + Gradle. Codestil: Google Java Styleguide (Chec
 📋 **Detaillierter Status:** [docs/project/02-IMPLEMENTATION_STATUS.md](docs/project/02-IMPLEMENTATION_STATUS.md) zeigt den vollständigen Fortschritt aller geplanten TaskGroups.
 📖 **Alle Dokumentation:** Siehe [docs/README.md](docs/README.md) für einen kompletten Überblick.
 
-## Visuelle Projektstruktur (ASCII-Baum)
+## Visuelle Projektstruktur (ASCII-Baum, Top-Level, Stand: 02.11.25)
 Nachfolgend eine leicht lesbare Baum-Ansicht der Top-Level-Struktur (Stand: master). Unterverzeichnisse sind soweit sinnvoll bis zu 2–3 Ebenen eingerückt. Nebem jedem Eintrag steht eine kurze Zweckbeschreibung.
+## Visuelle Projektstruktur (Top-Level, Stand: aktueller Repo-Stand)
 
-.
+/
 ├── .editorconfig
-│   └─ (Editor-/Formatierungsregeln: z. B. Einrückung, EOL, Charset)
-├── .github/
-│   └─ (GitHub-spezifische Einstellungen: Workflows, Issue/PR-Templates, Actions)
+├── .github/                    (Workflows, Issue/PR-Templates, ggf. CI Packaging)
 ├── .gitignore
-│   └─ (Listet nicht versionierte Dateien/Ordner)
 ├── README.md
-│   └─ (Dieses Dokument)
-├── build.gradle
-│   └─ (Gradle Build-Skript — Dependencies, Tasks, Plugins)
+├── build.gradle                (Gradle Buildskript — Dependencies, Packaging Tasks)
 ├── checkstyle.xml
-│   └─ (Checkstyle-Regeln / Google Java Styleguide)
-├── docs/
+├── docs/                       (User- und Entwicklerdokumentation)
 │   ├── development/
-│   │   └─ BUILD_INSTRUCTIONS.md
-│   │      (Detaillierte Anleitungen zum Einrichten der Umgebung und Build)
-│   └─ (Weitere Benutzer- und Entwicklerdokus, Architekturhinweise)
-├── gradle/
-│   └─ (Wrapper-Hilfsdateien / Gradle-Konfiguration)
+│   ├── features/
+│   ├── guides/
+│   └── project/
+├── gradle/                     (Gradle Wrapper / Helper)
 ├── gradlew
-│   └─ (Gradle Wrapper — Unix)
 ├── gradlew.bat
-│   └─ (Gradle Wrapper — Windows)
-├── reports/
-│   └─ (Build- / Test-Reports, z. B. Test- oder Lint-Ausgaben)
+├── reports/                    (Build- / Test-Reports)
 ├── settings.gradle
-│   └─ (Gradle Settings / Projektdefinition)
 ├── src/
 │   ├── main/
-│   │   ├── java/
-│   │   │   └─ (Java-Quellcode: Core-Logik – Audio-Analyse, Light-Controller, Effekte, Mapping)
-│   │   └── resources/
-│   │       └─ (Konfigurationen, Default-Profile, Assets)
+│   │   ├── java/               (Java-Quellcode: Audio-Analyse, Effects, Hue-Adapter...)
+│   │   └── resources/          (Konfigurationen, Presets, Icons/Assets — erster Ort für App-Icon)
 │   └── test/
-│       └─ java/
-│           └─ (Unit- und Integrationstests)
-└── tools/
-    └─ (Hilfsskripte für Build, Packaging, Debugging)
+│       └── java/               (Unit- und Integrationstests)
+├── tools/                      (Hilfsskripte für Build, Packaging, Installer-Templates)
+└── packaging/ (optional)       (falls vorhanden: WiX/NSIS/Inno-Vorlagen, icons/, installer-assets)
 
 Kurze Erläuterungen:
 - src/main/java: Hier befinden sich die Kernklassen — Audio-Input, Analyzer, Effect-Engines, Bridge-Adapter (Hue), Konfigurations-Loader und CLI-/GUI-Entrypoints.
