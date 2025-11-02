@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,7 +42,9 @@ class SmartMappingToolControllerUnitTest {
             new JFXPanel(); // Initializes JavaFX environment
             latch.countDown();
         }).start();
-        latch.await();
+        if (!latch.await(10, TimeUnit.SECONDS)) {
+            throw new RuntimeException("JavaFX initialization timed out");
+        }
     }
 
     @BeforeEach
@@ -61,7 +64,9 @@ class SmartMappingToolControllerUnitTest {
                 fail("Failed to load FXML: " + e.getMessage());
             }
         });
-        latch.await();
+        if (!latch.await(10, TimeUnit.SECONDS)) {
+            throw new RuntimeException("Controller setup timed out");
+        }
     }
 
     @Test
@@ -79,7 +84,9 @@ class SmartMappingToolControllerUnitTest {
             assertEquals(0, config.getLights().size(), "Initial lights should be empty");
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -94,7 +101,9 @@ class SmartMappingToolControllerUnitTest {
             assertEquals(2, config.getLights().size(), "Should have 2 lights");
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -108,7 +117,9 @@ class SmartMappingToolControllerUnitTest {
             controller.saveConfiguration(testFile);
             saveLatch.countDown();
         });
-        saveLatch.await();
+        if (!saveLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Save operation timed out");
+        }
 
         // Verify file exists and content is correct
         CountDownLatch verifyLatch = new CountDownLatch(1);
@@ -123,7 +134,9 @@ class SmartMappingToolControllerUnitTest {
             }
             verifyLatch.countDown();
         });
-        verifyLatch.await();
+        if (!verifyLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Verification timed out");
+        }
     }
 
     @Test
@@ -139,7 +152,9 @@ class SmartMappingToolControllerUnitTest {
             controller.saveConfiguration(testFile);
             saveLatch.countDown();
         });
-        saveLatch.await();
+        if (!saveLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Save operation timed out");
+        }
 
         // Now load it back
         CountDownLatch loadLatch = new CountDownLatch(1);
@@ -148,7 +163,9 @@ class SmartMappingToolControllerUnitTest {
             controller.loadConfiguration(testFile);
             loadLatch.countDown();
         });
-        loadLatch.await();
+        if (!loadLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Load operation timed out");
+        }
 
         // Verify loaded configuration
         CountDownLatch checkLatch = new CountDownLatch(1);
@@ -160,7 +177,9 @@ class SmartMappingToolControllerUnitTest {
             assertEquals("192.168.1.100", config.getBridges().get(0).getIp());
             checkLatch.countDown();
         });
-        checkLatch.await();
+        if (!checkLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Verification timed out");
+        }
     }
 
     @Test
@@ -175,7 +194,9 @@ class SmartMappingToolControllerUnitTest {
             controller.saveConfiguration(testFile);
             saveLatch.countDown();
         });
-        saveLatch.await();
+        if (!saveLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Save operation timed out");
+        }
 
         // Load
         CountDownLatch loadLatch = new CountDownLatch(1);
@@ -184,7 +205,9 @@ class SmartMappingToolControllerUnitTest {
             controller.loadConfiguration(testFile);
             loadLatch.countDown();
         });
-        loadLatch.await();
+        if (!loadLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Load operation timed out");
+        }
 
         // Verify
         CountDownLatch verifyLatch = new CountDownLatch(1);
@@ -209,7 +232,9 @@ class SmartMappingToolControllerUnitTest {
             
             verifyLatch.countDown();
         });
-        verifyLatch.await();
+        if (!verifyLatch.await(5, TimeUnit.SECONDS)) {
+            fail("Verification timed out");
+        }
     }
 
     @Test
@@ -223,7 +248,9 @@ class SmartMappingToolControllerUnitTest {
             assertEquals(0, config.getLights().size());
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     @Test
@@ -252,7 +279,9 @@ class SmartMappingToolControllerUnitTest {
             assertEquals(5, config.getLights().size(), "Should have 5 lights");
             latch.countDown();
         });
-        latch.await();
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
     }
 
     /**

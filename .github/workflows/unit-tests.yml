@@ -45,7 +45,35 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run tests with Gradle
-        run: ./gradlew test
+        run: ./gradlew test --continue
+      
+      - name: Generate Test Summary
+        if: always()
+        run: |
+          echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -d "build/test-results/test" ]; then
+            TOTAL=$(find build/test-results/test -name "*.xml" -exec grep -oh "<testcase" {} \; | wc -l)
+            PASSED=$(find build/test-results/test -name "*.xml" -exec grep -oh '<testcase.*time="[0-9.]*"[^>]*>' {} \; | grep -v "failure\|error" | wc -l)
+            FAILED=$(find build/test-results/test -name "*.xml" -exec grep -oh "<failure" {} \; | wc -l)
+            ERRORS=$(find build/test-results/test -name "*.xml" -exec grep -oh "<error" {} \; | wc -l)
+            
+            echo "- **Total Tests:** $TOTAL" >> $GITHUB_STEP_SUMMARY
+            echo "- **Passed:** ✅ $PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "- **Failed:** ❌ $FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "- **Errors:** ⚠️ $ERRORS" >> $GITHUB_STEP_SUMMARY
+            
+            if [ $FAILED -gt 0 ] || [ $ERRORS -gt 0 ]; then
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "### Failed Tests" >> $GITHUB_STEP_SUMMARY
+              find build/test-results/test -name "*.xml" -exec grep -l "failure\|error" {} \; | while read file; do
+                classname=$(grep -oh 'classname="[^"]*"' "$file" | head -1 | cut -d'"' -f2)
+                testname=$(grep -oh 'name="[^"]*"' "$file" | head -1 | cut -d'"' -f2)
+                echo "- \`$classname.$testname\`" >> $GITHUB_STEP_SUMMARY
+              done
+            fi
+          else
+            echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Upload test results
         if: always()
