@@ -38,6 +38,8 @@ import java.util.List;
 public class AudioAnalyzerDashboard extends Application implements BeatObserver {
 
     private static final Logger logger = LoggerFactory.getLogger(AudioAnalyzerDashboard.class);
+    private static final int FFT_SIZE = 2048;
+    private static final int BPM_HISTORY_SIZE = 20;
 
     private static AppTaskOrchestrator staticTaskOrchestrator;
     private static Config staticConfig;
@@ -47,9 +49,9 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
     private AppTaskOrchestrator taskOrchestrator;
     private Config config;
     private PJAudioReader audioReader;
-    private boolean running = true;
     private FFTProcessor fftProcessor;
     private BPMDetector bpmDetector;
+    private final java.util.concurrent.atomic.AtomicBoolean visualizationsEnabled = new java.util.concurrent.atomic.AtomicBoolean(true);
 
     public static void init(Config config, AppTaskOrchestrator taskOrchestrator, PJAudioReader audioReader) {
         staticConfig = config;
@@ -72,10 +74,10 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
         audioReader.registerBeatObserver(this);
 
         // Initialize FFT processor for spectrum analysis
-        fftProcessor = new FFTProcessor(2048, WindowFunction.HANN, 0.5);
+        fftProcessor = new FFTProcessor(FFT_SIZE, WindowFunction.HANN, 0.5);
 
         // Initialize BPM detector
-        bpmDetector = new BPMDetector(20);
+        bpmDetector = new BPMDetector(BPM_HISTORY_SIZE);
 
         // Load UI
         URL fxmlUrl = getClass().getResource("/fxml/AudioAnalyzerDashboard.fxml");
@@ -93,7 +95,8 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
         controller.setCallbacks(
             this::refreshAudioDevices,
             this::onAudioDeviceSelected,
-            this::updateConfigFromUi
+            this::updateConfigFromUi,
+            visualizationsEnabled::set
         );
 
         Scene scene = new Scene(root, 1000, 700);
@@ -153,12 +156,12 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
     }
 
     private void onAudioDeviceSelected(String deviceName) {
+        if (audioReader.isOpen()) {
+            audioReader.stop();
+        }
         taskOrchestrator.dispatch(() -> {
             try {
                 logger.info("Audio device selected: {}", deviceName);
-                if (audioReader.isOpen()) {
-                    audioReader.stop();
-                }
 
                 AudioDevice selectedDevice = audioReader.getSupportedDevices().stream()
                     .filter(d -> d.getName().equals(deviceName))
@@ -250,7 +253,7 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
             rms = Math.sqrt(rms / samples.length);
             controller.updateLevel(rms);
 
-            if (controller.isVisualizationsEnabled()) {
+            if (visualizationsEnabled.get()) {
                 controller.updateWaveform(audioFrame);
 
                 // Perform FFT for spectrum analysis
@@ -308,8 +311,6 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
     private void shutdown() {
         logger.info("Shutting down AudioAnalyzerDashboard");
 
-        running = false;
-
         // Stop audio reader
         if (audioReader != null && audioReader.isOpen()) {
             audioReader.stop();
@@ -320,9 +321,11 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
             taskOrchestrator.shutdown();
         }
 
+        bpmDetector = null;
+        fftProcessor = null;
+
         // Close application
         Platform.exit();
-        System.exit(0);
     }
 
     private void loadConfigToUi() {
@@ -336,7 +339,7 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
     }
 
     private void updateConfigFromUi() {
-        if (controller == null) {
+        if (controller == null || config == null) {
             return;
         }
 
