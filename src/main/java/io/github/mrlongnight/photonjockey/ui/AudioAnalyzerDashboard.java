@@ -63,12 +63,30 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
 
         // Initialize configuration
         config = staticConfig;
+        if (config == null) {
+            logger.error("Configuration not initialized");
+            showError("Initialization Error", "Configuration is not available");
+            Platform.exit();
+            return;
+        }
         
         // Initialize task orchestrator
         taskOrchestrator = staticTaskOrchestrator;
+        if (taskOrchestrator == null) {
+            logger.error("Task orchestrator not initialized");
+            showError("Initialization Error", "Task orchestrator is not available");
+            Platform.exit();
+            return;
+        }
 
         // Initialize audio reader
         audioReader = staticAudioReader;
+        if (audioReader == null) {
+            logger.error("Audio reader not initialized");
+            showError("Initialization Error", "Audio reader is not available");
+            Platform.exit();
+            return;
+        }
         audioReader.registerBeatObserver(this);
 
         // Initialize FFT processor for spectrum analysis
