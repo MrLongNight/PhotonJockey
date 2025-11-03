@@ -146,6 +146,7 @@ public class AudioAnalyzerDashboardController {
         });
 
         beatSensitivitySlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            beatSensitivityValueLabel.setText(String.format("%.2f", newVal.doubleValue()));
             if (onConfigChangedCallback != null) {
                 onConfigChangedCallback.run();
             }

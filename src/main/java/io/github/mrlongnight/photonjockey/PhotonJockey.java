@@ -17,15 +17,15 @@ public class PhotonJockey {
         // Initialize core components
         Config config = new PJConfig();
         AppTaskOrchestrator taskOrchestrator = new AppTaskOrchestrator();
-        AudioReader audioReader = new PJAudioReader(config, taskOrchestrator);
-        BeatEventManager beatEventManager = (BeatEventManager) audioReader;
+        PJAudioReader audioReader = new PJAudioReader(config, taskOrchestrator);
+        BeatEventManager beatEventManager = audioReader;
         HueManager hueManager = new PJHueManager(config, taskOrchestrator);
 
         // Start the old Swing UI
         new MainFrame(config, taskOrchestrator, audioReader, beatEventManager, hueManager, 100, 100);
 
         // Initialize and start the new JavaFX UI
-        AudioAnalyzerDashboard.init(config, taskOrchestrator, (PJAudioReader) audioReader);
+        AudioAnalyzerDashboard.init(config, taskOrchestrator, audioReader);
         Application.launch(AudioAnalyzerDashboard.class, args);
     }
 }
