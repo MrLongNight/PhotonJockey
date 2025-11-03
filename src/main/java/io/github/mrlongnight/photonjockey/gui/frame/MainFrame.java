@@ -282,6 +282,11 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
     public void silenceDetected() {}
 
     @Override
+    public void audioReceived(io.github.mrlongnight.photonjockey.audio.AudioFrame audioFrame) {
+        // Not used in this observer
+    }
+
+    @Override
     public void audioReaderStopped(StopStatus status) {
         runOnSwingThread(() -> {
 
