@@ -96,6 +96,7 @@ public class AudioAnalyzerDashboardController {
     private Runnable onRefreshDevicesCallback;
     private Consumer<String> onAudioDeviceSelectedCallback;
     private Runnable onConfigChangedCallback;
+    private Consumer<Boolean> onVisualizationsToggledCallback;
 
     /**
      * Initializes the controller.
@@ -117,11 +118,6 @@ public class AudioAnalyzerDashboardController {
         // Gain slider
         gainSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             gainValueLabel.setText(String.format("%.2f", newVal.doubleValue()));
-        });
-
-        // Beat sensitivity slider
-        beatSensitivitySlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            beatSensitivityValueLabel.setText(String.format("%.2f", newVal.doubleValue()));
         });
 
         // Audio device selection
@@ -158,6 +154,12 @@ public class AudioAnalyzerDashboardController {
         bassOnlyModeCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> {
             if (onConfigChangedCallback != null) {
                 onConfigChangedCallback.run();
+            }
+        });
+
+        visualizationsCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            if (onVisualizationsToggledCallback != null) {
+                onVisualizationsToggledCallback.accept(newVal);
             }
         });
 
@@ -399,10 +401,11 @@ public class AudioAnalyzerDashboardController {
     /**
      * Sets callback handlers for UI actions.
      */
-    public void setCallbacks(Runnable onRefreshDevices, Consumer<String> onAudioDeviceSelected, Runnable onConfigChanged) {
+    public void setCallbacks(Runnable onRefreshDevices, Consumer<String> onAudioDeviceSelected, Runnable onConfigChanged, Consumer<Boolean> onVisualizationsToggled) {
         this.onRefreshDevicesCallback = onRefreshDevices;
         this.onAudioDeviceSelectedCallback = onAudioDeviceSelected;
         this.onConfigChangedCallback = onConfigChanged;
+        this.onVisualizationsToggledCallback = onVisualizationsToggled;
     }
 
     /**
