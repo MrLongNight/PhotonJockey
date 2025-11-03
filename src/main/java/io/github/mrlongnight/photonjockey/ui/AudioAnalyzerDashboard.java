@@ -10,12 +10,14 @@ import javafx.stage.Stage;
 import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
 import io.github.mrlongnight.photonjockey.audio.AudioFrame;
 import io.github.mrlongnight.photonjockey.audio.BeatEvent;
+import io.github.mrlongnight.photonjockey.audio.BPMDetector;
 import io.github.mrlongnight.photonjockey.audio.BeatObserver;
 import io.github.mrlongnight.photonjockey.audio.FFTProcessor;
 import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
 import io.github.mrlongnight.photonjockey.audio.WindowFunction;
 import io.github.mrlongnight.photonjockey.audio.device.AudioDevice;
 import io.github.mrlongnight.photonjockey.config.Config;
+import io.github.mrlongnight.photonjockey.config.ConfigNode;
 import io.github.mrlongnight.photonjockey.config.PJConfig;
 import io.github.mrlongnight.photonjockey.hue.bridge.AccessPoint;
 import io.github.mrlongnight.photonjockey.hue.bridge.BridgeConnection;
@@ -33,38 +35,47 @@ import java.util.List;
  * Integrates real audio analysis with Philips Hue light control.
  * Provides comprehensive visualization and control of audio-to-light synchronization.
  */
-public class AudioAnalyzerDashboard extends Application implements BeatObserver, HueStateObserver {
+public class AudioAnalyzerDashboard extends Application implements BeatObserver {
 
     private static final Logger logger = LoggerFactory.getLogger(AudioAnalyzerDashboard.class);
+
+    private static AppTaskOrchestrator staticTaskOrchestrator;
+    private static Config staticConfig;
+    private static PJAudioReader staticAudioReader;
 
     private AudioAnalyzerDashboardController controller;
     private AppTaskOrchestrator taskOrchestrator;
     private Config config;
     private PJAudioReader audioReader;
-    private HueManager hueManager;
     private boolean running = true;
     private FFTProcessor fftProcessor;
+    private BPMDetector bpmDetector;
+
+    public static void init(Config config, AppTaskOrchestrator taskOrchestrator, PJAudioReader audioReader) {
+        staticConfig = config;
+        staticTaskOrchestrator = taskOrchestrator;
+        staticAudioReader = audioReader;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         logger.info("Starting AudioAnalyzerDashboard application");
 
         // Initialize configuration
-        config = new PJConfig();
+        config = staticConfig;
         
         // Initialize task orchestrator
-        taskOrchestrator = new AppTaskOrchestrator();
+        taskOrchestrator = staticTaskOrchestrator;
 
         // Initialize audio reader
-        audioReader = new PJAudioReader(config, taskOrchestrator);
+        audioReader = staticAudioReader;
         audioReader.registerBeatObserver(this);
 
         // Initialize FFT processor for spectrum analysis
         fftProcessor = new FFTProcessor(2048, WindowFunction.HANN, 0.5);
 
-        // Initialize Hue manager
-        hueManager = new PJHueManager(config, taskOrchestrator);
-        hueManager.setStateObserver(this);
+        // Initialize BPM detector
+        bpmDetector = new BPMDetector(20);
 
         // Load UI
         URL fxmlUrl = getClass().getResource("/fxml/AudioAnalyzerDashboard.fxml");
@@ -81,8 +92,8 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         // Set up callbacks for UI actions
         controller.setCallbacks(
             this::refreshAudioDevices,
-            this::connectToHue,
-            this::disconnectFromHue
+            this::onAudioDeviceSelected,
+            this::updateConfigFromUi
         );
 
         Scene scene = new Scene(root, 1000, 700);
@@ -96,6 +107,9 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
 
         // Initialize UI with available devices
         refreshAudioDevices();
+
+        // Load config and set UI elements
+        loadConfigToUi();
 
         // Auto-start audio monitoring
         startAudioMonitoring();
@@ -138,6 +152,36 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         });
     }
 
+    private void onAudioDeviceSelected(String deviceName) {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                logger.info("Audio device selected: {}", deviceName);
+                if (audioReader.isOpen()) {
+                    audioReader.stop();
+                }
+
+                AudioDevice selectedDevice = audioReader.getSupportedDevices().stream()
+                    .filter(d -> d.getName().equals(deviceName))
+                    .findFirst()
+                    .orElse(null);
+
+                if (selectedDevice != null) {
+                    startAudioMonitoring(selectedDevice);
+                } else {
+                    logger.error("Selected audio device not found: {}", deviceName);
+                    Platform.runLater(() ->
+                        showError("Audio Error", "Selected audio device not found.")
+                    );
+                }
+            } catch (Exception e) {
+                logger.error("Error switching audio device", e);
+                Platform.runLater(() ->
+                    showError("Audio Error", "Error switching audio device: " + e.getMessage())
+                );
+            }
+        });
+    }
+
     /**
      * Starts audio monitoring from the default or configured device.
      */
@@ -154,19 +198,7 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
                 }
 
                 // Use the first available device
-                AudioDevice device = devices.get(0);
-                logger.info("Starting audio monitoring on device: {}", device.getName());
-                
-                boolean started = audioReader.start(device);
-                if (started) {
-                    controller.updateStatus("Monitoring: " + device.getName());
-                    controller.updateInfo("Audio capture active");
-                } else {
-                    logger.error("Failed to start audio device");
-                    Platform.runLater(() -> 
-                        showError("Audio Error", "Failed to start audio capture device")
-                    );
-                }
+                startAudioMonitoring(devices.get(0));
             } catch (Exception e) {
                 logger.error("Error starting audio monitoring", e);
                 Platform.runLater(() -> 
@@ -176,48 +208,30 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         });
     }
 
-    /**
-     * Connects to a Hue bridge.
-     */
-    private void connectToHue() {
+    private void startAudioMonitoring(AudioDevice device) {
+        if (device == null) {
+            logger.error("Cannot start monitoring on a null device.");
+            return;
+        }
+
         taskOrchestrator.dispatch(() -> {
             try {
-                controller.updateHueStatus("Scanning...", false);
-                controller.updateInfo("Scanning for Hue bridges...");
+                logger.info("Starting audio monitoring on device: {}", device.getName());
                 
-                // Try to connect to a previously saved bridge
-                List<AccessPoint> previousBridges = hueManager.getPreviousBridges();
-                if (!previousBridges.isEmpty()) {
-                    AccessPoint bridge = previousBridges.get(0);
-                    logger.info("Attempting to connect to previous bridge at {}", bridge.ip());
-                    hueManager.setAttemptConnection(bridge);
+                boolean started = audioReader.start(device);
+                if (started) {
+                    controller.updateStatus("Monitoring: " + device.getName());
+                    controller.updateInfo("Audio capture active");
                 } else {
-                    // Scan for new bridges
-                    hueManager.doBridgesScan();
+                    logger.error("Failed to start audio device: {}", device.getName());
+                    Platform.runLater(() ->
+                        showError("Audio Error", "Failed to start audio capture on " + device.getName())
+                    );
                 }
             } catch (Exception e) {
-                logger.error("Error connecting to Hue", e);
-                Platform.runLater(() -> {
-                    controller.updateHueStatus("Error", false);
-                    showError("Hue Error", "Error connecting to Hue bridge: " + e.getMessage());
-                });
-            }
-        });
-    }
-
-    /**
-     * Disconnects from the Hue bridge.
-     */
-    private void disconnectFromHue() {
-        taskOrchestrator.dispatch(() -> {
-            try {
-                hueManager.disconnectAll();
-                controller.updateHueStatus("Disconnected", false);
-                controller.updateInfo("Disconnected from Hue bridge");
-            } catch (Exception e) {
-                logger.error("Error disconnecting from Hue", e);
+                logger.error("Error starting audio monitoring on device: {}", device.getName(), e);
                 Platform.runLater(() -> 
-                    showError("Hue Error", "Error disconnecting from Hue bridge: " + e.getMessage())
+                    showError("Audio Error", "Error starting audio monitoring: " + e.getMessage())
                 );
             }
         });
@@ -226,16 +240,38 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
     // BeatObserver implementation
 
     @Override
+    public void audioReceived(AudioFrame audioFrame) {
+        if (controller != null) {
+            double[] samples = audioFrame.toNormalizedSamples();
+            double rms = 0.0;
+            for (double sample : samples) {
+                rms += sample * sample;
+            }
+            rms = Math.sqrt(rms / samples.length);
+            controller.updateLevel(rms);
+
+            if (controller.isVisualizationsEnabled()) {
+                controller.updateWaveform(audioFrame);
+
+                // Perform FFT for spectrum analysis
+                double[] spectrum = fftProcessor.computeSpectrum(samples);
+                controller.updateSpectrum(spectrum);
+            }
+        }
+    }
+
+    @Override
     public void beatReceived(BeatEvent beatEvent) {
         if (controller != null) {
-            // TODO: Proper BPM estimation from beat events is not yet implemented.
-            // Currently using a placeholder value for display purposes.
-            double estimatedBpm = 120.0; // Default/placeholder
-            controller.updateBeatIndicator(true, estimatedBpm);
+            bpmDetector.setBpmRange(controller.getMinBpm(), controller.getMaxBpm());
+            bpmDetector.recordBeat();
+            double bpm = bpmDetector.getBpm();
+
+            controller.updateBeatIndicator(true, bpm);
 
             // Reset beat indicator after a short delay
             taskOrchestrator.schedule(() -> {
-                controller.updateBeatIndicator(false, estimatedBpm);
+                controller.updateBeatIndicator(false, bpm);
             }, 100, java.util.concurrent.TimeUnit.MILLISECONDS);
         }
     }
@@ -266,74 +302,6 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         });
     }
 
-    // HueStateObserver implementation
-
-    @Override
-    public void isScanningForBridges() {
-        logger.info("Scanning for Hue bridges...");
-    }
-
-    @Override
-    public void displayFoundBridges(List<AccessPoint> accessPoints) {
-        logger.info("Found {} Hue bridge(s)", accessPoints.size());
-        for (AccessPoint ap : accessPoints) {
-            logger.info("  Bridge at {}: {}", ap.ip(), ap.name());
-        }
-    }
-
-    @Override
-    public void isAttemptingConnection() {
-        logger.info("Attempting to connect to Hue bridge...");
-    }
-
-    @Override
-    public void hasConnected() {
-        logger.info("Successfully connected to Hue bridge");
-        int bridgeCount = hueManager.getBridges().size();
-        String bridgeStatus;
-        if (bridgeCount == 0) {
-            bridgeStatus = "Error"; // Should not happen in hasConnected
-        } else if (bridgeCount == 1) {
-            bridgeStatus = "Connected: " + hueManager.getBridges().getFirst().getName();
-        } else {
-            bridgeStatus = "Connected: " + bridgeCount + " Bridges";
-        }
-        controller.updateHueStatus(bridgeStatus, true);
-        controller.updateInfo("Hue bridge(s) connected and ready");
-        Platform.runLater(() ->
-            showInfo("Hue Connected", "Successfully connected to Philips Hue bridge(s).")
-        );
-    }
-
-    @Override
-    public void requestPushlink() {
-        logger.info("Please press the link button on your Hue bridge");
-        Platform.runLater(() -> 
-            showInfo("Pushlink Required", "Please press the link button on your Hue bridge to authenticate")
-        );
-    }
-
-    @Override
-    public void pushlinkHasFailed() {
-        logger.warn("Pushlink authentication failed");
-        Platform.runLater(() -> 
-            showWarning("Authentication Failed", "Failed to authenticate with Hue bridge. Please try again.")
-        );
-    }
-
-    @Override
-    public void connectionWasLost(AccessPoint accessPoint, BridgeConnection.ConnectionListener.Error error) {
-        logger.warn("Connection to Hue bridge lost: {}", error);
-        Platform.runLater(() -> 
-            showWarning("Connection Lost", "Lost connection to Hue bridge: " + error)
-        );
-    }
-
-    @Override
-    public void disconnected() {
-        logger.info("Disconnected from Hue bridge");
-    }
-
     /**
      * Shuts down the application gracefully.
      */
@@ -347,11 +315,6 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
             audioReader.stop();
         }
 
-        // Disconnect from Hue
-        if (hueManager != null) {
-            hueManager.disconnectAll();
-        }
-
         // Shutdown task orchestrator
         if (taskOrchestrator != null) {
             taskOrchestrator.shutdown();
@@ -360,6 +323,26 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         // Close application
         Platform.exit();
         System.exit(0);
+    }
+
+    private void loadConfigToUi() {
+        if (controller == null) {
+            return;
+        }
+
+        controller.setBeatSensitivity(config.getInt(ConfigNode.BEAT_SENSITIVITY));
+        controller.setMinBeatInterval(config.getInt(ConfigNode.BEAT_MIN_TIME_BETWEEN));
+        controller.setBassOnlyMode(config.getBoolean(ConfigNode.BEAT_BASS_ONLY_MODE));
+    }
+
+    private void updateConfigFromUi() {
+        if (controller == null) {
+            return;
+        }
+
+        config.putInt(ConfigNode.BEAT_SENSITIVITY, (int) controller.getBeatSensitivity());
+        config.putInt(ConfigNode.BEAT_MIN_TIME_BETWEEN, (int) controller.getMinBeatInterval());
+        config.putBoolean(ConfigNode.BEAT_BASS_ONLY_MODE, controller.isBassOnlyModeEnabled());
     }
 
     /**
@@ -393,9 +376,5 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver,
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
