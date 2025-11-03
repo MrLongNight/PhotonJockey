@@ -21,6 +21,7 @@ public class PJConfig implements Config {
 
     private final Map<String, String> defaults = new HashMap<>();
     private final Map<String, Integer> defaultInts = new HashMap<>();
+    private final Map<String, Double> defaultDoubles = new HashMap<>();
     private final Map<String, Boolean> defaultBools = new HashMap<>();
 
 
@@ -52,8 +53,8 @@ public class PJConfig implements Config {
             logger.error("Error during settings migration.", e);
         }
 
-        defaultInts.put(ConfigNode.BEAT_SENSITIVITY.getKey(), 5);
-        defaultInts.put(ConfigNode.BEAT_MIN_TIME_BETWEEN.getKey(), 200);
+        defaultDoubles.put(ConfigNode.BEAT_SENSITIVITY.getKey(), 5.0);
+        defaultDoubles.put(ConfigNode.BEAT_MIN_TIME_BETWEEN.getKey(), 200.0);
         defaultInts.put(ConfigNode.BRIGHTNESS_FADE_DIFFERENCE.getKey(), 5);
         defaultInts.put(ConfigNode.BRIGHTNESS_FADE_MAX_TIME.getKey(), 5);
         defaultInts.put(ConfigNode.BRIGHTNESS_MIN.getKey(), 1);
@@ -112,6 +113,21 @@ public class PJConfig implements Config {
     @Override
     public void putLong(ConfigNode node, long value) {
         preferences.putLong(node.getKey(), value);
+    }
+
+    @Override
+    public double getDouble(ConfigNode node) {
+        return preferences.getDouble(node.getKey(), getDefaultDouble(node));
+    }
+
+    @Override
+    public double getDefaultDouble(ConfigNode node) {
+        return defaultDoubles.getOrDefault(node.getKey(), 0.0);
+    }
+
+    @Override
+    public void putDouble(ConfigNode node, double value) {
+        preferences.putDouble(node.getKey(), value);
     }
 
     @Override

@@ -21,6 +21,12 @@ public interface Config {
 
     void putLong(ConfigNode node, long value);
 
+    double getDouble(ConfigNode node);
+
+    double getDefaultDouble(ConfigNode node);
+
+    void putDouble(ConfigNode node, double value);
+
     boolean getBoolean(ConfigNode node);
 
     boolean getDefaultBoolean(ConfigNode node);

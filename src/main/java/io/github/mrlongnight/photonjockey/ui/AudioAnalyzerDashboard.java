@@ -333,8 +333,8 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
             return;
         }
 
-        controller.setBeatSensitivity((double) config.getInt(ConfigNode.BEAT_SENSITIVITY));
-        controller.setMinBeatInterval((double) config.getInt(ConfigNode.BEAT_MIN_TIME_BETWEEN));
+        controller.setBeatSensitivity(config.getDouble(ConfigNode.BEAT_SENSITIVITY));
+        controller.setMinBeatInterval(config.getDouble(ConfigNode.BEAT_MIN_TIME_BETWEEN));
         controller.setBassOnlyMode(config.getBoolean(ConfigNode.BEAT_BASS_ONLY_MODE));
     }
 
@@ -343,8 +343,8 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
             return;
         }
 
-        config.putInt(ConfigNode.BEAT_SENSITIVITY, (int) controller.getBeatSensitivity());
-        config.putInt(ConfigNode.BEAT_MIN_TIME_BETWEEN, (int) controller.getMinBeatInterval());
+        config.putDouble(ConfigNode.BEAT_SENSITIVITY, controller.getBeatSensitivity());
+        config.putDouble(ConfigNode.BEAT_MIN_TIME_BETWEEN, controller.getMinBeatInterval());
         config.putBoolean(ConfigNode.BEAT_BASS_ONLY_MODE, controller.isBassOnlyModeEnabled());
     }
 

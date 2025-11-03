@@ -208,7 +208,7 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
             } else if (beatEvent.isNoBeat()) {
                 beatEventObservers.forEach(BeatObserver::noBeatReceived);
             } else if (nextBeatThreshold.isMet()) {
-                nextBeatThreshold.setCurrentThreshold(config.getInt(ConfigNode.BEAT_MIN_TIME_BETWEEN));
+                nextBeatThreshold.setCurrentThreshold((long) config.getDouble(ConfigNode.BEAT_MIN_TIME_BETWEEN));
                 beatEventObservers.forEach(toNotify -> toNotify.beatReceived(beatEvent));
             } else {
                 logger.info("Beat received, but it was skipped due to BEAT_MIN_TIME_BETWEEN");

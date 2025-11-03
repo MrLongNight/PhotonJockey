@@ -63,7 +63,7 @@ class BeatInterpreter {
         amplitudeHistory.add(amplitude);
         double average = amplitudeHistory.getCurrentAverage();
 
-        double normalizedSensitivity = (config.getInt(ConfigNode.BEAT_SENSITIVITY) - 1) / 9d;
+        double normalizedSensitivity = (config.getDouble(ConfigNode.BEAT_SENSITIVITY) - 1) / 9d;
         double beatMultiplier = MAX_MULTIPLIER - (normalizedSensitivity * (MAX_MULTIPLIER - MIN_MULTIPLIER));
         double dynamicThreshold = average * beatMultiplier;
 
