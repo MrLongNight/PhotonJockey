@@ -28,14 +28,15 @@
                 <Label text="Audio Device:" style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
                 <ComboBox fx:id="audioDeviceComboBox" prefWidth="250" promptText="Select Audio Device"/>
                 <Button fx:id="refreshDevicesButton" text="Refresh" onAction="#onRefreshDevices"/>
-                
+
                 <Separator orientation="VERTICAL"/>
-                
-                <!-- Hue Controls -->
-                <Label text="Hue Bridge:" style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
-                <Label fx:id="hueStatusLabel" text="Not Connected" style="-fx-text-fill: #cccccc; -fx-font-size: 12px;"/>
-                <Button fx:id="connectHueButton" text="Connect" onAction="#onConnectHue"/>
-                <Button fx:id="disconnectHueButton" text="Disconnect" onAction="#onDisconnectHue" disable="true"/>
+
+                <Label text="Level:" style="-fx-text-fill: #ffffff;"/>
+                <ProgressBar fx:id="levelProgressBar" prefWidth="200" progress="0.0"/>
+
+                <Separator orientation="VERTICAL"/>
+
+                <CheckBox fx:id="visualizationsCheckbox" text="Enable Visualizations" selected="true" style="-fx-text-fill: #ffffff;"/>
             </HBox>
             
             <Separator/>
@@ -101,7 +102,40 @@
                 <Label fx:id="beatSensitivityValueLabel" text="1.30" minWidth="50" 
                        style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
             </HBox>
+
+            <!-- Min/Max BPM Sliders -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Min BPM:" minWidth="120" style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
+                <Slider fx:id="minBpmSlider" min="60" max="180" value="80"
+                        prefWidth="400" showTickMarks="true" showTickLabels="false"
+                        majorTickUnit="20" minorTickCount="4" blockIncrement="5"/>
+                <Label fx:id="minBpmValueLabel" text="80" minWidth="50"
+                       style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Max BPM:" minWidth="120" style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
+                <Slider fx:id="maxBpmSlider" min="60" max="180" value="160"
+                        prefWidth="400" showTickMarks="true" showTickLabels="false"
+                        majorTickUnit="20" minorTickCount="4" blockIncrement="5"/>
+                <Label fx:id="maxBpmValueLabel" text="160" minWidth="50"
+                       style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
+            </HBox>
+
+            <Separator/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Min Beat Interval (ms):" minWidth="120" style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
+                <Slider fx:id="minBeatIntervalSlider" min="0" max="500" value="200"
+                        prefWidth="400" showTickMarks="true" showTickLabels="false"
+                        majorTickUnit="100" minorTickCount="4" blockIncrement="10"/>
+                <Label fx:id="minBeatIntervalValueLabel" text="200" minWidth="50"
+                       style="-fx-text-fill: #ffffff; -fx-font--size: 12px;"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <CheckBox fx:id="bassOnlyModeCheckbox" text="Bass Only Mode" style="-fx-text-fill: #ffffff;"/>
+            </HBox>
         </VBox>
     </bottom>
-    
+
 </BorderPane>

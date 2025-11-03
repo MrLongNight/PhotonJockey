@@ -183,6 +183,9 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
             if (beatEventInner != null) {
                 beatEvent = beatEventInner;
             }
+
+            // Notify observers about the raw audio frame for visualization
+            notifyAudioFrame(new AudioFrame(chunkData, (int) audioFormat.sampleRate(), audioFormat.channels(), System.currentTimeMillis()));
         }
 
         if (newData.hasRemaining()) {
@@ -210,6 +213,16 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
             } else {
                 logger.info("Beat received, but it was skipped due to BEAT_MIN_TIME_BETWEEN");
             }
+        });
+    }
+
+    /**
+     * Notifies registered observers about a new audio frame.
+     * This is dispatched on the task orchestrator to avoid blocking the audio thread.
+     */
+    private void notifyAudioFrame(AudioFrame audioFrame) {
+        taskOrchestrator.dispatch(() -> {
+            beatEventObservers.forEach(observer -> observer.audioReceived(audioFrame));
         });
     }
 
