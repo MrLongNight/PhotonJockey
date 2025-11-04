@@ -60,4 +60,22 @@ public class AudioFrame {
     public long getTimestamp() {
         return timestamp;
     }
+
+    /**
+     * Converts the raw byte data of this frame into a normalized double array.
+     * Assumes 16-bit little-endian signed PCM audio format.
+     *
+     * @return An array of audio samples, normalized to a range of [-1.0, 1.0].
+     */
+    public double[] toNormalizedSamples() {
+        int sampleCount = data.length / 2;
+        double[] samples = new double[sampleCount];
+        for (int i = 0; i < sampleCount; i++) {
+            // Combine two bytes to a 16-bit sample (little-endian)
+            short sample = (short) ((data[i * 2 + 1] << 8) | (data[i * 2] & 0xFF));
+            // Normalize to [-1.0, 1.0]
+            samples[i] = sample / 32768.0;
+        }
+        return samples;
+    }
 }

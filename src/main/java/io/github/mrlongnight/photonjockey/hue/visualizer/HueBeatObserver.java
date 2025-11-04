@@ -107,6 +107,11 @@ public class HueBeatObserver implements BeatObserver {
         lights.forEach(Light::restoreState);
     }
 
+    @Override
+    public void audioReceived(io.github.mrlongnight.photonjockey.audio.AudioFrame audioFrame) {
+        // Not used in this observer
+    }
+
     private void passDataToEffectPipe(BrightnessData data, boolean receivedBeat) {
 
         List<Light> shuffledLights = new ArrayList<>(lights);

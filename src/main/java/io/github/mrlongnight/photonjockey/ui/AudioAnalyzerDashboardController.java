@@ -5,13 +5,17 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import io.github.mrlongnight.photonjockey.audio.AnalysisResult;
 import io.github.mrlongnight.photonjockey.audio.AudioFrame;
+
+import java.util.function.Consumer;
 
 /**
  * Controller for the Audio Analyzer Dashboard UI.
@@ -45,19 +49,37 @@ public class AudioAnalyzerDashboardController {
     private Label beatSensitivityValueLabel;
 
     @FXML
+    private Slider minBpmSlider;
+
+    @FXML
+    private Label minBpmValueLabel;
+
+    @FXML
+    private Slider maxBpmSlider;
+
+    @FXML
+    private Label maxBpmValueLabel;
+
+    @FXML
+    private ProgressBar levelProgressBar;
+
+    @FXML
+    private Slider minBeatIntervalSlider;
+
+    @FXML
+    private Label minBeatIntervalValueLabel;
+
+    @FXML
+    private CheckBox bassOnlyModeCheckbox;
+
+    @FXML
     private ComboBox<String> audioDeviceComboBox;
 
     @FXML
     private Button refreshDevicesButton;
 
     @FXML
-    private Label hueStatusLabel;
-
-    @FXML
-    private Button connectHueButton;
-
-    @FXML
-    private Button disconnectHueButton;
+    private CheckBox visualizationsCheckbox;
 
     @FXML
     private Label statusLabel;
@@ -72,8 +94,9 @@ public class AudioAnalyzerDashboardController {
 
     // Callback handlers for the main application
     private Runnable onRefreshDevicesCallback;
-    private Runnable onConnectHueCallback;
-    private Runnable onDisconnectHueCallback;
+    private Consumer<String> onAudioDeviceSelectedCallback;
+    private Runnable onConfigChangedCallback;
+    private Consumer<Boolean> onVisualizationsToggledCallback;
 
     /**
      * Initializes the controller.
@@ -97,14 +120,56 @@ public class AudioAnalyzerDashboardController {
             gainValueLabel.setText(String.format("%.2f", newVal.doubleValue()));
         });
 
-        // Beat sensitivity slider
+        // Audio device selection
+        audioDeviceComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && onAudioDeviceSelectedCallback != null) {
+                onAudioDeviceSelectedCallback.accept(newVal);
+            }
+        });
+
+        // Min BPM slider
+        minBpmSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            minBpmValueLabel.setText(String.format("%.0f", newVal.doubleValue()));
+        });
+
+        // Max BPM slider
+        maxBpmSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            maxBpmValueLabel.setText(String.format("%.0f", newVal.doubleValue()));
+        });
+
+        // Min Beat Interval slider
+        minBeatIntervalSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            minBeatIntervalValueLabel.setText(String.format("%.0f", newVal.doubleValue()));
+            if (onConfigChangedCallback != null) {
+                onConfigChangedCallback.run();
+            }
+        });
+
         beatSensitivitySlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             beatSensitivityValueLabel.setText(String.format("%.2f", newVal.doubleValue()));
+            if (onConfigChangedCallback != null) {
+                onConfigChangedCallback.run();
+            }
+        });
+
+        bassOnlyModeCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            if (onConfigChangedCallback != null) {
+                onConfigChangedCallback.run();
+            }
+        });
+
+        visualizationsCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            if (onVisualizationsToggledCallback != null) {
+                onVisualizationsToggledCallback.accept(newVal);
+            }
         });
 
         // Set initial label values
         gainValueLabel.setText(String.format("%.2f", gainSlider.getValue()));
         beatSensitivityValueLabel.setText(String.format("%.2f", beatSensitivitySlider.getValue()));
+        minBpmValueLabel.setText(String.format("%.0f", minBpmSlider.getValue()));
+        maxBpmValueLabel.setText(String.format("%.0f", maxBpmSlider.getValue()));
+        minBeatIntervalValueLabel.setText(String.format("%.0f", minBeatIntervalSlider.getValue()));
     }
 
     /**
@@ -290,6 +355,22 @@ public class AudioAnalyzerDashboardController {
         return beatSensitivitySlider.getValue();
     }
 
+    public double getMinBpm() {
+        return minBpmSlider.getValue();
+    }
+
+    public double getMaxBpm() {
+        return maxBpmSlider.getValue();
+    }
+
+    public double getMinBeatInterval() {
+        return minBeatIntervalSlider.getValue();
+    }
+
+    public boolean isBassOnlyModeEnabled() {
+        return bassOnlyModeCheckbox.isSelected();
+    }
+
     /**
      * Sets the beat sensitivity value.
      *
@@ -297,6 +378,14 @@ public class AudioAnalyzerDashboardController {
      */
     public void setBeatSensitivity(double sensitivity) {
         beatSensitivitySlider.setValue(sensitivity);
+    }
+
+    public void setMinBeatInterval(double interval) {
+        minBeatIntervalSlider.setValue(interval);
+    }
+
+    public void setBassOnlyMode(boolean enabled) {
+        bassOnlyModeCheckbox.setSelected(enabled);
     }
 
     /**
@@ -313,10 +402,11 @@ public class AudioAnalyzerDashboardController {
     /**
      * Sets callback handlers for UI actions.
      */
-    public void setCallbacks(Runnable onRefreshDevices, Runnable onConnectHue, Runnable onDisconnectHue) {
+    public void setCallbacks(Runnable onRefreshDevices, Consumer<String> onAudioDeviceSelected, Runnable onConfigChanged, Consumer<Boolean> onVisualizationsToggled) {
         this.onRefreshDevicesCallback = onRefreshDevices;
-        this.onConnectHueCallback = onConnectHue;
-        this.onDisconnectHueCallback = onDisconnectHue;
+        this.onAudioDeviceSelectedCallback = onAudioDeviceSelected;
+        this.onConfigChangedCallback = onConfigChanged;
+        this.onVisualizationsToggledCallback = onVisualizationsToggled;
     }
 
     /**
@@ -326,26 +416,6 @@ public class AudioAnalyzerDashboardController {
     private void onRefreshDevices() {
         if (onRefreshDevicesCallback != null) {
             onRefreshDevicesCallback.run();
-        }
-    }
-
-    /**
-     * Event handler for connect Hue button.
-     */
-    @FXML
-    private void onConnectHue() {
-        if (onConnectHueCallback != null) {
-            onConnectHueCallback.run();
-        }
-    }
-
-    /**
-     * Event handler for disconnect Hue button.
-     */
-    @FXML
-    private void onDisconnectHue() {
-        if (onDisconnectHueCallback != null) {
-            onDisconnectHueCallback.run();
         }
     }
 
@@ -373,23 +443,6 @@ public class AudioAnalyzerDashboardController {
     }
 
     /**
-     * Updates the Hue connection status.
-     */
-    public void updateHueStatus(String status, boolean connected) {
-        Platform.runLater(() -> {
-            hueStatusLabel.setText(status);
-            connectHueButton.setDisable(connected);
-            disconnectHueButton.setDisable(!connected);
-            
-            if (connected) {
-                hueStatusLabel.setStyle("-fx-text-fill: #00ff00; -fx-font-size: 12px;");
-            } else {
-                hueStatusLabel.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 12px;");
-            }
-        });
-    }
-
-    /**
      * Updates the status label.
      */
     public void updateStatus(String status) {
@@ -398,12 +451,22 @@ public class AudioAnalyzerDashboardController {
         });
     }
 
+    public boolean isVisualizationsEnabled() {
+        return visualizationsCheckbox.isSelected();
+    }
+
     /**
      * Updates the info label.
      */
     public void updateInfo(String info) {
         Platform.runLater(() -> {
             infoLabel.setText(info);
+        });
+    }
+
+    public void updateLevel(double level) {
+        Platform.runLater(() -> {
+            levelProgressBar.setProgress(level);
         });
     }
 }

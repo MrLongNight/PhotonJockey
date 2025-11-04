@@ -26,15 +26,11 @@ sourceSets {
             // All packages re-enabled after dependency resolution
             // Only exclude specific entry points that are not needed
             exclude '**/LightBeat.java'
-            exclude '**/PhotonJockey.java'
         }
     }
     test {
         java {
             // Re-enable all tests after dependency resolution
-            exclude '**/SystemAudioSourceTest.java'
-            exclude '**/FFTProcessorTest.java'
-            exclude '**/BeatDetectionIT.java'
         }
     }
 }
@@ -44,8 +40,8 @@ application {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
     maven {
         url 'https://www.jetbrains.com/intellij-repository/releases'
     }
@@ -60,7 +56,7 @@ configurations {
 
 dependencies {
     // Custom fork from github.com/Kakifrucht/yetanotherhueapi with PhotonJockey-specific enhancements
-    implementation 'io.github.zeroone3010:yetanotherhueapi:2.8.0-lb'
+    implementation project(':yetanotherhueapi_repo')
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'org.slf4j:slf4j-simple:2.0.17'
     implementation 'org.slf4j:jul-to-slf4j:2.0.17'

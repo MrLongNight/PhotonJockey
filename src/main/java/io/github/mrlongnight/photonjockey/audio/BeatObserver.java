@@ -5,7 +5,7 @@ package io.github.mrlongnight.photonjockey.audio;
  * Additional methods {@link #noBeatReceived()} and {@link #silenceDetected()} are issued when there
  * was no peak or there was no audible audio data anymore.
  */
-public interface BeatObserver {
+public interface BeatObserver extends AudioObserver {
 
     /**
      * Called when a beat was received.
