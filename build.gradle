@@ -41,6 +41,8 @@ application {
 }
 
 repositories {
+    // mavenLocal() must be first to resolve the yetanotherhueapi dependency
+    // The CI workflow installs this dependency via Maven before running Gradle
     mavenLocal()
     mavenCentral()
     maven {
