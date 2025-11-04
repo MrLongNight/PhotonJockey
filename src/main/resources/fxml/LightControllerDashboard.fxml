@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.Canvas?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.mrlongnight.photonjockey.ui.LightControllerDashboardController"
+            prefHeight="700.0" prefWidth="1000.0" styleClass="dashboard-root">
+
+    <top>
+        <VBox spacing="10">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+            <!-- Audio Source Panel -->
+            <HBox spacing="10" alignment="CENTER_LEFT" styleClass="panel">
+                <Label text="Audio Device:" styleClass="section-title"/>
+                <ComboBox fx:id="audioDeviceComboBox" prefWidth="300"/>
+                <Button fx:id="refreshDevicesButton" text="Refresh"/>
+                <Button fx:id="deviceHelpButton" text="?"/>
+            </HBox>
+
+            <Separator/>
+
+            <!-- Color Selection Panel -->
+            <VBox spacing="10">
+                <Label text="Color Sets" styleClass="section-title"/>
+                <FlowPane fx:id="colorSetPanel" hgap="10" vgap="10"/>
+                <HBox spacing="10">
+                    <Button fx:id="addCustomColorsButton" text="Add Custom Colors"/>
+                    <Button fx:id="deleteCustomColorsButton" text="Delete Selected"/>
+                </HBox>
+                <!-- Color Preview Canvas -->
+                <Canvas fx:id="colorPreviewCanvas" width="980" height="40" styleClass="canvas"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Lights Selection Panel -->
+            <VBox spacing="10">
+                <Label text="Lights" styleClass="section-title"/>
+                <FlowPane fx:id="lightSelectPanel" hgap="10" vgap="10"/>
+                <Button fx:id="restoreLightsButton" text="Restore All Lights"/>
+            </VBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="15" styleClass="panel">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+            <!-- Brightness Panel -->
+            <VBox spacing="10">
+                <Label text="Brightness" styleClass="section-title"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Minimum:" minWidth="100"/>
+                    <Slider fx:id="minBrightnessSlider" min="0" max="254" value="80"/>
+                    <Label fx:id="minBrightnessLabel" text="31%" minWidth="50"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Maximum:" minWidth="100"/>
+                    <Slider fx:id="maxBrightnessSlider" min="0" max="254" value="254"/>
+                    <Label fx:id="maxBrightnessLabel" text="100%" minWidth="50"/>
+                </HBox>
+                <Button fx:id="restoreBrightnessButton" text="Restore Defaults"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Advanced Settings (initially hidden) -->
+            <VBox fx:id="advancedPanel" spacing="10" visible="false" managed="false">
+                <Label text="Advanced Settings" styleClass="section-title"/>
+
+                <!-- Effects -->
+                <HBox spacing="15">
+                    <CheckBox fx:id="strobeCheckBox" text="Strobe Effect"/>
+                    <CheckBox fx:id="colorStrobeCheckbox" text="Color Strobe"/>
+                    <CheckBox fx:id="glowCheckBox" text="Glow Effect"/>
+                    <CheckBox fx:id="bassOnlyModeCheckBox" text="Bass Only Mode"/>
+                </HBox>
+
+                <!-- Sensitivity -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Beat Sensitivity:" minWidth="120"/>
+                    <Slider fx:id="beatSensitivitySlider" min="5" max="20" value="13"/>
+                    <Label fx:id="beatSensitivityLabel" minWidth="50"/>
+                </HBox>
+
+                <!-- More sliders... -->
+
+                <HBox spacing="10">
+                    <Button fx:id="readdColorSetPresetsButton" text="Re-add Presets"/>
+                    <Button fx:id="restoreAdvancedButton" text="Restore Defaults"/>
+                    <Button fx:id="disconnectBridgeButton" text="Disconnect Bridge"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox spacing="10">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+            <!-- Start Button -->
+            <Button fx:id="startButton" text="Start" styleClass="primary"
+                    prefHeight="50" maxWidth="Infinity"/>
+
+            <!-- Settings -->
+            <HBox spacing="20" alignment="CENTER">
+                <CheckBox fx:id="showAdvancedCheckbox" text="Show Advanced Settings"/>
+                <CheckBox fx:id="autoStartCheckBox" text="Auto Start On Launch"/>
+                <CheckBox fx:id="lightThemeCheckbox" text="Light Theme"/>
+            </HBox>
+
+            <!-- Status Bar -->
+            <HBox spacing="10" alignment="CENTER_LEFT" styleClass="panel">
+                <Label fx:id="versionLabel" text="v0.0.2" styleClass="info"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="statusLabel" text="Status: Idle" styleClass="status"/>
+                <Label fx:id="infoLabel" text="" styleClass="info"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>
