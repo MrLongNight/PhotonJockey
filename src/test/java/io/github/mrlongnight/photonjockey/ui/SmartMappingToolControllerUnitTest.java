@@ -27,44 +27,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for SmartMappingToolController without full TestFX framework.
  * Tests basic functionality and controller initialization.
  */
-class SmartMappingToolControllerUnitTest {
+class SmartMappingToolControllerUnitTest extends BaseJavaFXTest {
 
     private SmartMappingToolController controller;
 
     @TempDir
     Path tempDir;
-
-    @BeforeAll
-    static void initJavaFX() throws InterruptedException {
-        // Ensure headless properties are set before JavaFX initialization
-        System.setProperty("testfx.robot", "glass");
-        System.setProperty("testfx.headless", "true");
-        System.setProperty("prism.order", "sw");
-        System.setProperty("prism.text", "t2k");
-        System.setProperty("java.awt.headless", "true");
-        System.setProperty("headless.geometry", "1920x1080-32");
-        
-        // Initialize JavaFX toolkit in headless mode
-        CountDownLatch latch = new CountDownLatch(1);
-        new Thread(() -> {
-            try {
-                // This will initialize JavaFX in headless mode due to system properties
-                new JFXPanel();
-            } catch (Throwable t) {
-                // Log error but count down anyway to prevent timeout
-                System.err.println("Warning: JavaFX initialization had issues: " + t.getMessage());
-            } finally {
-                latch.countDown();
-            }
-        }, "JavaFX-Init-Thread").start();
-        
-        if (!latch.await(5, TimeUnit.SECONDS)) {
-            throw new RuntimeException("JavaFX initialization timed out");
-        }
-        
-        // Wait a bit more to ensure JavaFX thread is fully started
-        Thread.sleep(500);
-    }
 
     @BeforeEach
     void setUp() throws Exception {
