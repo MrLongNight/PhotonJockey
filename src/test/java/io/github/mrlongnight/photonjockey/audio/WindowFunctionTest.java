@@ -182,8 +182,9 @@ class WindowFunctionTest {
         WindowFunction.BLACKMAN.apply(samplesBlackman);
 
         // Different window functions should produce different results
-        assertNotEquals(samplesHamming[0], samplesHann[0], DELTA);
-        assertNotEquals(samplesHamming[0], samplesBlackman[0], DELTA);
-        assertNotEquals(samplesHann[0], samplesBlackman[0], DELTA);
+        // Check index 1 where windows clearly differ (not edges where some may be ~0)
+        assertNotEquals(samplesHamming[1], samplesHann[1], DELTA);
+        assertNotEquals(samplesHamming[1], samplesBlackman[1], DELTA);
+        assertNotEquals(samplesHann[1], samplesBlackman[1], DELTA);
     }
 }
