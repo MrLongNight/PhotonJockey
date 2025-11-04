@@ -1,6 +1,5 @@
 package io.github.mrlongnight.photonjockey.ui;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,21 +28,18 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Main application for AudioAnalyzerDashboard.
+ * Controller for the AudioAnalyzerDashboard.
  * Integrates real audio analysis with Philips Hue light control.
  * Provides comprehensive visualization and control of audio-to-light synchronization.
  */
-public class AudioAnalyzerDashboard extends Application implements BeatObserver {
+public class AudioAnalyzerDashboard implements BeatObserver {
 
     private static final Logger logger = LoggerFactory.getLogger(AudioAnalyzerDashboard.class);
     private static final int FFT_SIZE = 2048;
     private static final int BPM_HISTORY_SIZE = 20;
-
-    private static AppTaskOrchestrator staticTaskOrchestrator;
-    private static Config staticConfig;
-    private static PJAudioReader staticAudioReader;
 
     private AudioAnalyzerDashboardController controller;
     private AppTaskOrchestrator taskOrchestrator;
@@ -51,62 +47,31 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
     private PJAudioReader audioReader;
     private FFTProcessor fftProcessor;
     private BPMDetector bpmDetector;
-    private final java.util.concurrent.atomic.AtomicBoolean visualizationsEnabled = new java.util.concurrent.atomic.AtomicBoolean(true);
+    private final AtomicBoolean visualizationsEnabled = new AtomicBoolean(true);
 
-    public static void init(Config config, AppTaskOrchestrator taskOrchestrator, PJAudioReader audioReader) {
-        staticConfig = config;
-        staticTaskOrchestrator = taskOrchestrator;
-        staticAudioReader = audioReader;
-    }
+    public void initialize(Config config, AppTaskOrchestrator taskOrchestrator, PJAudioReader audioReader, AudioAnalyzerDashboardController controller) {
+        logger.info("Initializing AudioAnalyzerDashboard");
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        logger.info("Starting AudioAnalyzerDashboard application");
+        this.config = config;
+        this.taskOrchestrator = taskOrchestrator;
+        this.audioReader = audioReader;
+        this.controller = controller;
 
-        // Initialize configuration
-        config = staticConfig;
-        
-        // Initialize task orchestrator
-        taskOrchestrator = staticTaskOrchestrator;
-
-        // Initialize audio reader
-        audioReader = staticAudioReader;
-        audioReader.registerBeatObserver(this);
+        this.audioReader.registerBeatObserver(this);
 
         // Initialize FFT processor for spectrum analysis
-        fftProcessor = new FFTProcessor(FFT_SIZE, WindowFunction.HANN, 0.5);
+        this.fftProcessor = new FFTProcessor(FFT_SIZE, WindowFunction.HANN, 0.5);
 
         // Initialize BPM detector
-        bpmDetector = new BPMDetector(BPM_HISTORY_SIZE);
-
-        // Load UI
-        URL fxmlUrl = getClass().getResource("/fxml/AudioAnalyzerDashboard.fxml");
-        if (fxmlUrl == null) {
-            logger.error("Could not find FXML file");
-            showError("Resource Error", "Could not load UI definition file");
-            return;
-        }
-
-        FXMLLoader loader = new FXMLLoader(fxmlUrl);
-        Parent root = loader.load();
-        controller = loader.getController();
+        this.bpmDetector = new BPMDetector(BPM_HISTORY_SIZE);
 
         // Set up callbacks for UI actions
-        controller.setCallbacks(
+        this.controller.setCallbacks(
             this::refreshAudioDevices,
             this::onAudioDeviceSelected,
             this::updateConfigFromUi,
             visualizationsEnabled::set
         );
-
-        Scene scene = new Scene(root, 1000, 700);
-        primaryStage.setTitle("PhotonJockey - Audio Analyzer Dashboard");
-        primaryStage.setScene(scene);
-        primaryStage.setOnCloseRequest(e -> {
-            e.consume();
-            shutdown();
-        });
-        primaryStage.show();
 
         // Initialize UI with available devices
         refreshAudioDevices();
@@ -117,7 +82,7 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
         // Auto-start audio monitoring
         startAudioMonitoring();
 
-        logger.info("AudioAnalyzerDashboard started successfully");
+        logger.info("AudioAnalyzerDashboard initialized successfully");
     }
 
     /**
@@ -303,29 +268,6 @@ public class AudioAnalyzerDashboard extends Application implements BeatObserver 
                 showWarning("Audio Stopped", "Audio monitoring stopped due to an error");
             }
         });
-    }
-
-    /**
-     * Shuts down the application gracefully.
-     */
-    private void shutdown() {
-        logger.info("Shutting down AudioAnalyzerDashboard");
-
-        // Stop audio reader
-        if (audioReader != null && audioReader.isOpen()) {
-            audioReader.stop();
-        }
-
-        // Shutdown task orchestrator
-        if (taskOrchestrator != null) {
-            taskOrchestrator.shutdown();
-        }
-
-        bpmDetector = null;
-        fftProcessor = null;
-
-        // Close application
-        Platform.exit();
     }
 
     private void loadConfigToUi() {

@@ -1,0 +1,100 @@
+package io.github.mrlongnight.photonjockey.ui;
+
+import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
+import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
+import io.github.mrlongnight.photonjockey.config.Config;
+import io.github.mrlongnight.photonjockey.config.ConfigNode;
+import io.github.mrlongnight.photonjockey.hue.bridge.HueManager;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.TabPane;
+import javafx.scene.image.WritableImage;
+import javafx.stage.Stage;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.testfx.api.FxRobot;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Start;
+import org.testfx.matcher.base.NodeMatchers;
+
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import static org.mockito.Mockito.when;
+import static org.testfx.api.FxAssert.verifyThat;
+
+@ExtendWith(ApplicationExtension.class)
+class UnifiedDashboardTest {
+
+    @Mock
+    private Config config;
+    @Mock
+    private AppTaskOrchestrator taskOrchestrator;
+    @Mock
+    private PJAudioReader audioReader;
+    @Mock
+    private HueManager hueManager;
+
+    @Start
+    public void start(Stage stage) throws Exception {
+        // Initialize mocks before starting the application
+        MockitoAnnotations.openMocks(this);
+
+        // Mock behavior to prevent NPEs during UI initialization
+        when(audioReader.getSupportedDevices()).thenReturn(new ArrayList<>());
+        when(config.getStringList(ConfigNode.COLOR_SET_LIST)).thenReturn(new ArrayList<>());
+        when(config.get(ConfigNode.COLOR_SET_SELECTED)).thenReturn("Random");
+        when(hueManager.getLights(false)).thenReturn(new ArrayList<>());
+        when(config.getStringList(ConfigNode.LIGHTS_DISABLED)).thenReturn(new ArrayList<>());
+
+        UnifiedDashboard.init(config, taskOrchestrator, audioReader, hueManager);
+        UnifiedDashboard app = new UnifiedDashboard();
+        app.start(stage);
+    }
+
+    @Test
+    void testAudioAnalyzerTabLoaded(FxRobot robot) {
+        verifyThat("#audioAnalyzerTab", NodeMatchers.isVisible());
+        robot.clickOn("#audioAnalyzerTab");
+        takeScreenshot(robot, "audio_analyzer_tab.png");
+    }
+
+    @Test
+    void testLightControllerTabLoaded(FxRobot robot) {
+        verifyThat("#lightControllerTab", NodeMatchers.isVisible());
+        robot.clickOn("#lightControllerTab");
+        takeScreenshot(robot, "light_controller_tab.png");
+    }
+
+    @Test
+    void testTabSwitching(FxRobot robot) {
+        robot.clickOn("#lightControllerTab");
+        TabPane tabPane = robot.lookup("#mainTabPane").queryAs(TabPane.class);
+        assert(tabPane.getSelectionModel().getSelectedIndex() == 1);
+
+        robot.clickOn("#audioAnalyzerTab");
+        assert(tabPane.getSelectionModel().getSelectedIndex() == 0);
+    }
+
+    private void takeScreenshot(FxRobot robot, String filename) {
+        try {
+            File verificationDir = new File("/home/jules/verification");
+            if (!verificationDir.exists()) {
+                verificationDir.mkdirs();
+            }
+            Node sceneRoot = robot.lookup(".root").query();
+            Scene scene = sceneRoot.getScene();
+            WritableImage image = new WritableImage((int) scene.getWidth(), (int) scene.getHeight());
+            scene.snapshot(image);
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", new File(verificationDir, filename));
+            System.out.println("Screenshot saved to /home/jules/verification/" + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

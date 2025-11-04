@@ -34,7 +34,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Main application frame. UI to set the application settings and start the magic.
+ * @deprecated This class is deprecated and will be removed in a future version.
+ * Use {@link io.github.mrlongnight.photonjockey.ui.UnifiedDashboard} instead.
  */
+@Deprecated
 public class MainFrame extends AbstractFrame implements BeatObserver {
 
     private static final int MINIMUM_BRIGHTNESS_DIFFERENCE = 36;
