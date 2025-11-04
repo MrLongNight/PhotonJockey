@@ -28,7 +28,9 @@ public abstract class BaseJavaFXTest {
         }
 
         // Ensure headless mode properties are set before JavaFX initialization
-        // These should already be set by build.gradle, but we ensure they're present
+        // These are also set in build.gradle test configuration, but we ensure they're
+        // present here as well for robustness. We only set if not already present to
+        // respect any pre-configured values from build.gradle or environment.
         if (System.getProperty("testfx.robot") == null) {
             System.setProperty("testfx.robot", "glass");
         }
@@ -85,8 +87,5 @@ public abstract class BaseJavaFXTest {
         }
 
         initialized.set(true);
-        
-        // Give JavaFX platform a moment to fully start up
-        Thread.sleep(1000);
     }
 }
