@@ -33,7 +33,7 @@ jobs:
         working-directory: yetanotherhueapi_repo
         run: |
           echo "Building and installing dependency to Maven Local..."
-          mvn install -DskipTests
+          mvn install -DskipTests -Dmaven.javadoc.skip=true
           echo "Dependency installed successfully."
 
       - name: Grant execute permission for gradlew
@@ -75,7 +75,7 @@ jobs:
         shell: bash
         run: |
           echo "Building and installing dependency to Maven Local..."
-          mvn install -DskipTests
+          mvn install -DskipTests -Dmaven.javadoc.skip=true
           echo "Dependency installed successfully."
 
       - name: Install WiX Toolset

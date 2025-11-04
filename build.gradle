@@ -16,8 +16,9 @@ version = '0.0.2'
 description = 'PhotonJockey'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 sourceSets {
@@ -40,6 +41,8 @@ application {
 }
 
 repositories {
+    // mavenLocal() must be first to resolve the yetanotherhueapi dependency
+    // The CI workflow installs this dependency via Maven before running Gradle
     mavenLocal()
     mavenCentral()
     maven {
@@ -56,7 +59,6 @@ configurations {
 
 dependencies {
     // Custom fork from github.com/Kakifrucht/yetanotherhueapi with PhotonJockey-specific enhancements
-    // Installed to Maven Local by the GitHub Actions workflow
     implementation 'io.github.zeroone3010:yetanotherhueapi:2.8.0-lb'
     implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'org.slf4j:slf4j-simple:2.0.17'
