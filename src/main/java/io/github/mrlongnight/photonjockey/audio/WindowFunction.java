@@ -35,6 +35,11 @@ public enum WindowFunction {
         if (n == 0) {
             return;
         }
+        
+        // Special case: single sample, no windowing needed
+        if (n == 1) {
+            return;
+        }
 
         switch (this) {
             case NONE:

@@ -18,22 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for AudioAnalyzerDashboardController without full TestFX framework.
  * Tests basic functionality and controller initialization.
  */
-class AudioAnalyzerDashboardControllerUnitTest {
+class AudioAnalyzerDashboardControllerUnitTest extends BaseJavaFXTest {
 
     private AudioAnalyzerDashboardController controller;
-
-    @BeforeAll
-    static void initJavaFX() throws InterruptedException {
-        // Initialize JavaFX toolkit
-        CountDownLatch latch = new CountDownLatch(1);
-        new Thread(() -> {
-            new JFXPanel(); // Initializes JavaFX environment
-            latch.countDown();
-        }).start();
-        if (!latch.await(10, TimeUnit.SECONDS)) {
-            throw new RuntimeException("JavaFX initialization timed out");
-        }
-    }
 
     @BeforeEach
     void setUp() throws Exception {

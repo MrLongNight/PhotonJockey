@@ -117,12 +117,12 @@ class BrightnessCalibrator {
             currentBrightnessPercentage = brightnessPercentage;
         }
 
-        // Calculate brightness values
-        double brightnessPercentageLow = Math.max(brightnessPercentage - brightnessFadeDifference, 0d);
+        // Calculate brightness values using the current (possibly unchanged) brightness percentage
+        double brightnessPercentageLow = Math.max(currentBrightnessPercentage - brightnessFadeDifference, 0d);
         brightnessPercentageLow = Math.min(brightnessPercentageLow, brightnessHighestFade);
         int brightnessFade = (int) Math.round(brightnessRange * brightnessPercentageLow) + brightnessMin;
 
-        double brightnessPercentageHigh = Math.min(brightnessPercentage + brightnessFadeDifference, 1d);
+        double brightnessPercentageHigh = Math.min(currentBrightnessPercentage + brightnessFadeDifference, 1d);
         brightnessPercentageHigh = Math.max(brightnessPercentageHigh, brightnessLowestBeat);
         int brightness = (int) Math.round(brightnessRange * brightnessPercentageHigh) + brightnessMin;
 

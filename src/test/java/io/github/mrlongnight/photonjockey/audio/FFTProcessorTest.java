@@ -106,19 +106,29 @@ class FFTProcessorTest {
     void testComputeSpectrumWithSmoothing() {
         int fftSize = 512;
         double smoothing = 0.8;
-        FFTProcessor processor = new FFTProcessor(fftSize, WindowFunction.NONE, smoothing);
+        FFTProcessor processorWithSmoothing = new FFTProcessor(fftSize, WindowFunction.NONE, smoothing);
+        FFTProcessor processorWithoutSmoothing = new FFTProcessor(fftSize, WindowFunction.NONE, 0.0);
 
         double frequency = 440.0;
-        double[] samples = generateSineWave(frequency, SAMPLE_RATE, fftSize);
+        double[] samples1 = generateSineWave(frequency, SAMPLE_RATE, fftSize);
+        
+        // Create different samples with lower amplitude
+        double[] samples2 = generateSineWave(frequency, SAMPLE_RATE, fftSize);
+        for (int i = 0; i < samples2.length; i++) {
+            samples2[i] *= 0.5;  // Half amplitude
+        }
 
-        // First computation
-        double[] spectrum1 = processor.computeSpectrum(samples);
+        // First computation with full amplitude
+        double[] spectrum1 = processorWithSmoothing.computeSpectrum(samples1);
+        int peakBin = findPeakBin(spectrum1);
 
-        // Second computation with same samples
-        double[] spectrum2 = processor.computeSpectrum(samples);
+        // Second computation with half amplitude - smoothing should keep it higher than raw value
+        double[] spectrum2Smoothed = processorWithSmoothing.computeSpectrum(samples2);
+        double[] spectrum2Raw = processorWithoutSmoothing.computeSpectrum(samples2);
 
-        // With high smoothing, second spectrum should be similar but not identical to first
-        assertNotEquals(spectrum1[findPeakBin(spectrum1)], spectrum2[findPeakBin(spectrum2)]);
+        // With smoothing, the second spectrum should be influenced by the first (higher than raw)
+        assertTrue(spectrum2Smoothed[peakBin] > spectrum2Raw[peakBin],
+                "Smoothed spectrum should be higher due to influence from previous frame");
     }
 
     @Test

@@ -22,22 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for drag-and-drop functionality in SmartMappingToolController.
  */
-class SmartMappingToolDragDropTest {
+class SmartMappingToolDragDropTest extends BaseJavaFXTest {
 
     private SmartMappingToolController controller;
     private Canvas canvas;
-
-    @BeforeAll
-    static void initJavaFX() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
-        new Thread(() -> {
-            new JFXPanel();
-            latch.countDown();
-        }).start();
-        if (!latch.await(10, TimeUnit.SECONDS)) {
-            throw new RuntimeException("JavaFX initialization timed out");
-        }
-    }
 
     @BeforeEach
     void setUp() throws Exception {
