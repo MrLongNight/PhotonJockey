@@ -38,14 +38,14 @@ jobs:
         working-directory: yetanotherhueapi_repo
         run: |
           echo "Building and installing dependency to Maven Local..."
-          mvn install -DskipTests
+          mvn install -DskipTests -Dmaven.javadoc.skip=true
           echo "Dependency installed successfully."
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
       - name: Run tests with Gradle
-        run: ./gradlew test --continue
+        run: ./gradlew test --continue --scan
       
       - name: Generate Test Summary
         if: always()
