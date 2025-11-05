@@ -188,10 +188,16 @@ public class LightControllerDashboardController implements BeatObserver {
         List<String> colorSets = config.getStringList(ConfigNode.COLOR_SET_LIST);
         colorSets.forEach(this::addColorSetRadioButton);
 
-        // Select current color set
+        // Select current color set, defaulting to "Random" if none is selected.
         String selected = config.get(ConfigNode.COLOR_SET_SELECTED);
+        if (selected == null) {
+            selected = "Random";
+            config.put(ConfigNode.COLOR_SET_SELECTED, selected);
+        }
+
+        final String finalSelected = selected;
         colorSetToggleGroup.getToggles().stream()
-            .filter(toggle -> ((RadioButton)toggle).getText().equals(selected))
+            .filter(toggle -> ((RadioButton)toggle).getText().equals(finalSelected))
             .findFirst()
             .ifPresent(toggle -> toggle.setSelected(true));
     }
