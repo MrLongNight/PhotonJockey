@@ -113,11 +113,16 @@ public class PhotonJockeyLauncher {
     }
 
     /**
-     * Write error details to a log file in the current directory.
+     * Write error details to a log file in the application's config directory.
      */
     private static void writeErrorLog(String message, Throwable t) {
         try {
-            Path logPath = Paths.get(ERROR_LOG_FILE);
+            Path logDir = Paths.get(System.getProperty("user.home"), "PhotonJockey");
+            if (!Files.exists(logDir)) {
+                Files.createDirectories(logDir);
+            }
+            Path logPath = logDir.resolve(ERROR_LOG_FILE);
+
             String logEntry = String.format(
                 "\n%s\n%s\n%s\n%s\n",
                 SEPARATOR,
@@ -125,14 +130,14 @@ public class PhotonJockeyLauncher {
                 message,
                 t != null ? getStackTraceAsString(t) : ""
             );
-            
+
             Files.write(
                 logPath,
                 logEntry.getBytes(),
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND
             );
-            
+
             System.err.println("Error log written to: " + logPath.toAbsolutePath());
         } catch (Exception e) {
             System.err.println("Failed to write error log: " + e.getMessage());
@@ -144,7 +149,7 @@ public class PhotonJockeyLauncher {
      * Get the full path to the error log file.
      */
     private static String getErrorLogPath() {
-        return new File(ERROR_LOG_FILE).getAbsolutePath();
+        return Paths.get(System.getProperty("user.home"), "PhotonJockey", ERROR_LOG_FILE).toString();
     }
 
     /**
