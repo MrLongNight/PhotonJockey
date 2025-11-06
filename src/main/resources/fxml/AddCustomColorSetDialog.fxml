@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.canvas.Canvas?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="io.github.mrlongnight.photonjockey.ui.AddCustomColorSetDialogController"
+      spacing="15" styleClass="dialog-root" prefWidth="500">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <Label text="Select Color" styleClass="section-title"/>
+    <Canvas fx:id="colorPickerCanvas" width="470" height="40"/>
+
+    <Label text="Selected Color (click to add)"/>
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Rectangle fx:id="selectedColorView" width="350" height="30" styleClass="color-view"/>
+        <Button fx:id="randomizeColorButton" text="Randomize"/>
+    </HBox>
+
+    <Label text="Colors (click to remove, order not relevant, 3 required)"/>
+    <FlowPane fx:id="chosenColorsPane" hgap="5" vgap="5" prefHeight="40"/>
+
+    <Label text="Color Set Name (required)"/>
+    <TextField fx:id="colorSetNameField"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="addSetButton" text="Add Color Set" styleClass="primary" disable="true"/>
+        <Button fx:id="cancelButton" text="Cancel"/>
+    </HBox>
+
+</VBox>
