@@ -3,7 +3,7 @@ powered by AiLightBot Engine
 
 Eine KI-gestützte Windows App für DJs, VJs und Streamer zur Visualisierung von smarten Lichteffekten synchron zum Beat elektronischer Musik. 
 
-![logo](https://photonjockey.io/images/banner.png)
+![logo](https://github.com/MrLongNight/PhotonJockey/blob/master/src%2Fmain%2Fresources%2Fpng%2Fbanner.png).
 
 Der Musik-Visualizer unterstützt Philips Hue-kompatible Lichter, Multibridge Support und beherrscht sowohl die klassische Kommunikation mit der Bridge per Web requests, als auch die deutlich performantere DTLS/UDP Kommunikation mit der Entertainment API V2 Schnittstelle 
 Dieses Projekt synchronisiert Beleuchtung mit Musik/Audioquellen und bietet Effekte, Mapping-Optionen und Anpassungsmöglichkeiten für Live- und Offline-Nutzung.
