@@ -58,4 +58,4 @@ yetanotherhueapi_repo/
 
 # Runtime configuration files
 config/*
-!config/*.template
+!config/*.template*.backup

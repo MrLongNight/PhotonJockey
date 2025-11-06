@@ -1,5 +1,6 @@
 package io.github.mrlongnight.photonjockey.ui;
 
+import io.github.mrlongnight.photonjockey.ui.util.TabDragHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,13 +27,21 @@ public class UnifiedDashboardController {
     @FXML
     private Tab lightControllerTab;
 
+    @FXML
+    private Tab smartMappingTab;
+
     private AudioAnalyzerDashboardController audioAnalyzerController;
     private LightControllerDashboardController lightControllerController;
+    private SmartMappingToolController smartMappingController;
 
     @FXML
     public void initialize() {
         loadAudioAnalyzerTab();
         loadLightControllerTab();
+        loadSmartMappingTab();
+        
+        // Enable drag-and-drop for tab reordering
+        TabDragHelper.enableTabDragAndDrop(mainTabPane);
     }
 
     private void loadAudioAnalyzerTab() {
@@ -69,5 +78,23 @@ public class UnifiedDashboardController {
 
     public LightControllerDashboardController getLightControllerController() {
         return lightControllerController;
+    }
+
+    private void loadSmartMappingTab() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/SmartMappingTool.fxml")
+            );
+            Parent content = loader.load();
+            smartMappingController = loader.getController();
+            smartMappingTab.setContent(content);
+            logger.info("Smart Mapping Tool tab loaded successfully");
+        } catch (IOException e) {
+            logger.error("Failed to load Smart Mapping Tool tab", e);
+        }
+    }
+
+    public SmartMappingToolController getSmartMappingController() {
+        return smartMappingController;
     }
 }
