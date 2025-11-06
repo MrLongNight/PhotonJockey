@@ -90,11 +90,18 @@ javafx {
     configuration = 'implementation'
 }
 
+configurations {
+    formsClasspath {
+        // Exclude JavaFX from the formsClasspath to avoid platform-specific variant conflicts
+        exclude group: 'org.openjfx'
+    }
+}
+
 tasks.named('instrumentForms') {
     inputs.files(sourceSets.main.allSource.filter { it.name.endsWith('.form') })
     outputs.dir(sourceSets.main.output.classesDirs)
-    // Skip instrumentForms if JavaFX is enabled to avoid classpath issues
-    enabled = false
+    // Enable instrumentForms to properly initialize GUI components from .form files
+    enabled = true
 }
 
 boolean isWindowsBuild = project.hasProperty('windows-msi')
