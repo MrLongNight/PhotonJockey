@@ -86,7 +86,7 @@ Das CHANGELOG.md folgt dem "Keep a Changelog" Format:
 
 **Behoben** (Fixed)
 - Bugfixes
-- Fehlerkorekturen
+- Fehlerkorrekturen
 - Performance-Probleme
 
 **Sicherheit** (Security)

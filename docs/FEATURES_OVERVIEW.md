@@ -32,7 +32,7 @@ Vollständige Übersicht aller implementierten Features in PhotonJockey.
   - Adaptiver Threshold basierend auf Audio-Historie
   - Konfigurierbare Sensitivität
   - BPM-Schätzung (Beats per Minute)
-  - Debouncing für vermeidung von False-Positives
+  - Debouncing für Vermeidung von False-Positives
   - Beat-Event-System mit Listenern
 
 ### Audio-Profile-System
