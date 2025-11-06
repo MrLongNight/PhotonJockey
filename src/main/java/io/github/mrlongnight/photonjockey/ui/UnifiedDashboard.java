@@ -5,7 +5,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
 import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
@@ -13,6 +15,7 @@ import io.github.mrlongnight.photonjockey.hue.bridge.PJHueManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -67,6 +70,20 @@ public class UnifiedDashboard extends Application {
 
         Scene scene = new Scene(root, 1100, 750);
         primaryStage.setTitle("PhotonJockey - Audio & Light Controller");
+        
+        // Set application icon
+        try {
+            InputStream iconStream = getClass().getResourceAsStream("/png/icon_64.png");
+            if (iconStream != null) {
+                primaryStage.getIcons().add(new Image(iconStream));
+                logger.info("Application icon loaded successfully");
+            } else {
+                logger.warn("Could not find application icon at /png/icon_64.png");
+            }
+        } catch (Exception e) {
+            logger.warn("Failed to load application icon", e);
+        }
+        
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
