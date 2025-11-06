@@ -10,6 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class MainFrameFormInstrumentationTest {
 
+    /**
+     * Icon sizes expected to be available, matching those used in AbstractFrame.
+     * These correspond to standard icon sizes for window title bars.
+     */
+    private static final int[] EXPECTED_ICON_SIZES = {16, 32, 48, 64};
+
     @Test
     public void testBannerImageResourceExists() {
         // Verify that the banner image resource can be loaded
@@ -22,8 +28,8 @@ public class MainFrameFormInstrumentationTest {
     @Test
     public void testIconImageResourcesExist() {
         // Verify that all icon image resources can be loaded
-        for (int i = 16; i <= 64; i += 16) {
-            String iconPath = "/png/icon_" + i + ".png";
+        for (int size : EXPECTED_ICON_SIZES) {
+            String iconPath = "/png/icon_" + size + ".png";
             assertNotNull(getClass().getResource(iconPath), 
                 "Icon image resource should exist at " + iconPath);
         }
