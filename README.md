@@ -85,11 +85,19 @@ Falls PhotonJockey nicht startet oder Probleme auftreten, siehe [docs/guides/tro
 - Lösungen für häufige Probleme
 - Anleitung zur Fehlerdiagnose
 
+## Changelog & Releases
+📋 **Changelog:** [CHANGELOG.md](CHANGELOG.md) - Alle Änderungen nach [Keep a Changelog](https://keepachangelog.com/de/) Standard  
+🚀 **Release-Prozess:** [docs/RELEASE_PROCESS.md](docs/RELEASE_PROCESS.md) - Versioning und Release-Dokumentation  
+✨ **Features-Übersicht:** [docs/FEATURES_OVERVIEW.md](docs/FEATURES_OVERVIEW.md) - Vollständige Feature-Liste
+
+**Aktuell:** v0.0.2 | **Nächstes Release:** v1.0.0 (geplant)
+
 ## Mitwirken / Contribution Guidelines (Kurz)
 - Arbeitsablauf: Feature-Branch für jede Task (z. B. feature/3-hue-fast-udp), atomare Commits.
 - PRs gegen main; CI muss grün sein bevor Mergen.
 - Tests sind Pflicht — ohne Tests keine Akzeptanz.
 - Codestil: Google Java Styleguide (Checkstyle erzwingt Regeln).
+- **CHANGELOG.md aktualisieren** bei jedem PR (in `[Unreleased]` Section).
 - Siehe [docs/development/02-CODING_CONVENTIONS.md](docs/development/02-CODING_CONVENTIONS.md) für Details.
 
 ## Lizenz

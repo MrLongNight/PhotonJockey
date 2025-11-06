@@ -3,6 +3,8 @@
 Welcome to the PhotonJockey documentation! This directory contains all project documentation organized by topic.
 
 ## 📄 Root Level Documentation
+- **[FEATURES_OVERVIEW.md](FEATURES_OVERVIEW.md)** - Vollständige Feature-Liste und Technologie-Stack Übersicht
+- **[RELEASE_PROCESS.md](RELEASE_PROCESS.md)** - Release-Prozess, Versioning und CHANGELOG-Pflege
 - **[CODE_ANALYSIS.md](CODE_ANALYSIS.md)** - Comprehensive code analysis and recommendations (latest: 2025-11-06)
 - **[DOCUMENTATION_GUIDELINES.md](DOCUMENTATION_GUIDELINES.md)** - Complete documentation standards and conventions
 - **[DOCUMENTATION_GUIDELINES_COPILOT.md](DOCUMENTATION_GUIDELINES_COPILOT.md)** - Quick reference for AI agents
@@ -15,6 +17,7 @@ Project management, planning, and implementation tracking:
 - **[01-PROJECT_PLAN.md](project/01-PROJECT_PLAN.md)** - Master project plan with all TaskGroups
 - **[02-IMPLEMENTATION_STATUS.md](project/02-IMPLEMENTATION_STATUS.md)** - Current implementation status of all tasks
 - **[03-IMPLEMENTED_TASKS.md](project/03-IMPLEMENTED_TASKS.md)** - Summary of completed tasks
+- **[V1.0.0_RELEASE_PREPARATION.md](project/V1.0.0_RELEASE_PREPARATION.md)** - Checklist and planning for v1.0.0 release
 
 #### Refactoring Documentation
 - **[01-CODEBASE_OVERVIEW.md](project/refactor/01-CODEBASE_OVERVIEW.md)** - Generated codebase analysis
@@ -75,6 +78,8 @@ Change summaries and migration notes:
 
 ### For Users
 - **Getting Started**: See [README.md](../README.md) in the root directory
+- **Features Overview**: [FEATURES_OVERVIEW.md](FEATURES_OVERVIEW.md)
+- **What's New**: [../CHANGELOG.md](../CHANGELOG.md)
 - **Building**: [development/01-BUILD_INSTRUCTIONS.md](development/01-BUILD_INSTRUCTIONS.md)
 - **Testing**: [guides/testing/01-TESTING_QUICKSTART_DE.md](guides/testing/01-TESTING_QUICKSTART_DE.md)
 - **Troubleshooting**: [guides/troubleshooting/01-TROUBLESHOOTING_DE.md](guides/troubleshooting/01-TROUBLESHOOTING_DE.md)
@@ -82,12 +87,14 @@ Change summaries and migration notes:
 ### For Developers
 - **Project Status**: [project/02-IMPLEMENTATION_STATUS.md](project/02-IMPLEMENTATION_STATUS.md)
 - **Coding Standards**: [development/02-CODING_CONVENTIONS.md](development/02-CODING_CONVENTIONS.md)
+- **Release Process**: [RELEASE_PROCESS.md](RELEASE_PROCESS.md)
 - **Project Plan**: [project/01-PROJECT_PLAN.md](project/01-PROJECT_PLAN.md)
 - **Refactoring Plan**: [project/refactor/02-REFACTOR_PLAN.md](project/refactor/02-REFACTOR_PLAN.md)
 
 ### For Contributors
 - **Implementation Status**: [project/02-IMPLEMENTATION_STATUS.md](project/02-IMPLEMENTATION_STATUS.md)
 - **Coding Conventions**: [development/02-CODING_CONVENTIONS.md](development/02-CODING_CONVENTIONS.md)
+- **Release Process**: [RELEASE_PROCESS.md](RELEASE_PROCESS.md) - **Wichtig: CHANGELOG bei jedem PR aktualisieren!**
 - **Build Instructions**: [development/01-BUILD_INSTRUCTIONS.md](development/01-BUILD_INSTRUCTIONS.md)
 
 ## 📝 Documentation Conventions
