@@ -12,6 +12,7 @@ import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
 import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
 import io.github.mrlongnight.photonjockey.hue.bridge.PJHueManager;
+import io.github.mrlongnight.photonjockey.util.WindowsThemeDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,11 @@ public class UnifiedDashboard extends Application {
         taskOrchestrator = staticTaskOrchestrator;
         audioReader = staticAudioReader;
         hueManager = staticHueManager;
+
+        // Detect Windows theme preference
+        String themePreference = WindowsThemeDetector.getThemeDescription();
+        logger.info("Windows theme preference: {}", themePreference);
+        logger.info("Note: JavaFX does not support Windows dark mode title bars natively");
 
         // Load main UI
         URL fxmlUrl = getClass().getResource("/fxml/UnifiedDashboard.fxml");
