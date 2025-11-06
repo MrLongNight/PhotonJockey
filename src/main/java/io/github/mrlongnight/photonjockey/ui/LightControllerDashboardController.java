@@ -1,61 +1,57 @@
 package io.github.mrlongnight.photonjockey.ui;
 
+import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
+import io.github.mrlongnight.photonjockey.audio.AudioFrame;
+import io.github.mrlongnight.photonjockey.audio.AudioReader;
+import io.github.mrlongnight.photonjockey.audio.BeatEvent;
+import io.github.mrlongnight.photonjockey.audio.BeatObserver;
+import io.github.mrlongnight.photonjockey.config.Config;
+import io.github.mrlongnight.photonjockey.config.ConfigNode;
+import io.github.mrlongnight.photonjockey.hue.bridge.AccessPoint;
+import io.github.mrlongnight.photonjockey.hue.bridge.BridgeConnection;
+import io.github.mrlongnight.photonjockey.hue.bridge.HueStateObserver;
+import io.github.mrlongnight.photonjockey.hue.bridge.PJHueManager;
+import io.github.mrlongnight.photonjockey.hue.bridge.color.ColorSet;
+import io.github.mrlongnight.photonjockey.hue.bridge.color.CustomColorSet;
+import io.github.mrlongnight.photonjockey.hue.bridge.color.RandomColorSet;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
-import io.github.mrlongnight.photonjockey.audio.AudioReader;
-import io.github.mrlongnight.photonjockey.audio.BeatEvent;
-import io.github.mrlongnight.photonjockey.audio.BeatObserver;
-import io.github.mrlongnight.photonjockey.config.Config;
-import io.github.mrlongnight.photonjockey.config.ConfigNode;
-import io.github.mrlongnight.photonjockey.hue.bridge.HueManager;
-import io.github.mrlongnight.photonjockey.hue.bridge.color.ColorSet;
-import io.github.mrlongnight.photonjockey.hue.bridge.color.CustomColorSet;
-import io.github.mrlongnight.photonjockey.audio.BeatObserver.StopStatus;
-import io.github.mrlongnight.photonjockey.hue.bridge.color.RandomColorSet;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- * Controller for the Light Controller Dashboard (formerly MainFrame).
- * Manages Philips Hue light control and synchronization with audio.
- */
-public class LightControllerDashboardController implements BeatObserver {
+public class LightControllerDashboardController implements BeatObserver, HueStateObserver {
 
     private static final Logger logger = LoggerFactory.getLogger(LightControllerDashboardController.class);
 
-    // Audio Source Panel
-    @FXML private ComboBox<String> audioDeviceComboBox;
-    @FXML private Button refreshDevicesButton;
-    @FXML private Button deviceHelpButton;
-
-    // Color Selection Panel
+    @FXML private VBox topVBox;
     @FXML private FlowPane colorSetPanel;
     @FXML private Button addCustomColorsButton;
     @FXML private Button deleteCustomColorsButton;
     @FXML private Canvas colorPreviewCanvas;
-
-    // Lights Selection Panel
     @FXML private FlowPane lightSelectPanel;
     @FXML private Button restoreLightsButton;
-
-    // Brightness Panel
     @FXML private Slider minBrightnessSlider;
     @FXML private Label minBrightnessLabel;
     @FXML private Slider maxBrightnessSlider;
     @FXML private Label maxBrightnessLabel;
     @FXML private Button restoreBrightnessButton;
-
-    // Advanced Settings Panel
     @FXML private VBox advancedPanel;
     @FXML private CheckBox strobeCheckBox;
     @FXML private CheckBox colorStrobeCheckbox;
@@ -63,27 +59,37 @@ public class LightControllerDashboardController implements BeatObserver {
     @FXML private CheckBox bassOnlyModeCheckBox;
     @FXML private Slider beatSensitivitySlider;
     @FXML private Label beatSensitivityLabel;
+    @FXML private Slider beatDelaySlider;
+    @FXML private Label beatDelayLabel;
+    @FXML private Slider lightsPerBeatSlider;
+    @FXML private Label lightsPerBeatLabel;
+    @FXML private Slider maxFadeTimeSlider;
+    @FXML private Label maxFadeTimeLabel;
     @FXML private Button readdColorSetPresetsButton;
     @FXML private Button restoreAdvancedButton;
-    @FXML private Button disconnectBridgeButton;
-
-    // Action Panel
     @FXML private Button startButton;
     @FXML private CheckBox showAdvancedCheckbox;
     @FXML private CheckBox autoStartCheckBox;
     @FXML private CheckBox lightThemeCheckbox;
-
-    // Status Bar
     @FXML private Label versionLabel;
     @FXML private Label statusLabel;
     @FXML private Label infoLabel;
+    @FXML private VBox bridgeManagementPanel;
+    @FXML private VBox bridgeDisconnectedPane;
+    @FXML private Button findBridgesButton;
+    @FXML private ProgressIndicator bridgeSearchIndicator;
+    @FXML private ListView<AccessPoint> bridgeListView;
+    @FXML private Button connectBridgeButton;
+    @FXML private Label pushlinkInstructionLabel;
+    @FXML private VBox bridgeConnectedPane;
+    @FXML private Label bridgeStatusLabel;
+    @FXML private ComboBox<String> entertainmentGroupComboBox;
+    @FXML private Button disconnectBridgeButton;
 
-    // Dependencies
     private Config config;
     private AppTaskOrchestrator taskOrchestrator;
     private AudioReader audioReader;
-    private HueManager hueManager;
-
+    private PJHueManager hueManager;
     private ToggleGroup colorSetToggleGroup;
     private List<CheckBox> lightCheckBoxes;
 
@@ -92,65 +98,79 @@ public class LightControllerDashboardController implements BeatObserver {
         colorSetToggleGroup = new ToggleGroup();
         lightCheckBoxes = new ArrayList<>();
         setupListeners();
+        colorPreviewCanvas.widthProperty().bind(topVBox.widthProperty().subtract(20));
+        colorPreviewCanvas.widthProperty().addListener((obs, old, val) -> updateColorPreview());
     }
 
-    public void initialize(Config config, AppTaskOrchestrator taskOrchestrator,
-                          AudioReader audioReader, HueManager hueManager) {
+    public void initialize(Config config, AppTaskOrchestrator taskOrchestrator, AudioReader audioReader, PJHueManager hueManager) {
         this.config = config;
         this.taskOrchestrator = taskOrchestrator;
         this.audioReader = audioReader;
         this.hueManager = hueManager;
+        this.hueManager.setStateObserver(this);
 
         loadConfiguration();
-        refreshAudioDevices();
         refreshColorSets();
-        refreshLights();
         updateColorPreview();
+        updateBridgeConnectionState(!hueManager.getBridges().isEmpty());
     }
 
     private void setupListeners() {
-        // Brightness sliders
-        minBrightnessSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            minBrightnessLabel.setText(String.format("%d%%", (int)(newVal.doubleValue() / 254 * 100)));
-            if (config != null) {
-                config.putInt(ConfigNode.BRIGHTNESS_MIN, newVal.intValue());
-            }
+        minBrightnessSlider.valueProperty().addListener((obs, o, n) -> {
+            minBrightnessLabel.setText(String.format("%d%%", (int) (n.doubleValue() / 254 * 100)));
+            if (config != null) config.putInt(ConfigNode.BRIGHTNESS_MIN, n.intValue());
         });
-
-        maxBrightnessSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            maxBrightnessLabel.setText(String.format("%d%%", (int)(newVal.doubleValue() / 254 * 100)));
-            if (config != null) {
-                config.putInt(ConfigNode.BRIGHTNESS_MAX, newVal.intValue());
-            }
+        maxBrightnessSlider.valueProperty().addListener((obs, o, n) -> {
+            maxBrightnessLabel.setText(String.format("%d%%", (int) (n.doubleValue() / 254 * 100)));
+            if (config != null) config.putInt(ConfigNode.BRIGHTNESS_MAX, n.intValue());
         });
-
-        // Advanced panel toggle
-        showAdvancedCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> {
-            advancedPanel.setVisible(newVal);
-            advancedPanel.setManaged(newVal);
-            if (config != null) {
-                config.putBoolean(ConfigNode.SHOW_ADVANCED_SETTINGS, newVal);
-            }
+        showAdvancedCheckbox.selectedProperty().addListener((obs, o, n) -> {
+            advancedPanel.setVisible(n);
+            advancedPanel.setManaged(n);
+            if (config != null) config.putBoolean(ConfigNode.SHOW_ADVANCED_SETTINGS, n);
         });
-
-        // Beat sensitivity
-        beatSensitivitySlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            beatSensitivityLabel.setText(String.format("%d%%", newVal.intValue() * 10));
-            if (config != null) {
-                config.putInt(ConfigNode.BEAT_SENSITIVITY, newVal.intValue());
-            }
+        beatSensitivitySlider.valueProperty().addListener((obs, o, n) -> {
+            beatSensitivityLabel.setText(String.format("%d%%", n.intValue() * 10));
+            if (config != null) config.putInt(ConfigNode.BEAT_SENSITIVITY, n.intValue());
         });
-
-        // Start button
+        beatDelaySlider.valueProperty().addListener((obs, o, n) -> {
+            beatDelayLabel.setText(String.format("%d", n.intValue()));
+            if (config != null) config.putInt(ConfigNode.BEAT_DELAY, n.intValue());
+        });
+        lightsPerBeatSlider.valueProperty().addListener((obs, o, n) -> {
+            lightsPerBeatLabel.setText(String.format("%d", n.intValue()));
+            if (config != null) config.putInt(ConfigNode.LIGHTS_PER_BEAT, n.intValue());
+        });
+        maxFadeTimeSlider.valueProperty().addListener((obs, o, n) -> {
+            maxFadeTimeLabel.setText(String.format("%d", n.intValue()));
+            if (config != null) config.putInt(ConfigNode.HUE_MAX_FADE_TIME, n.intValue());
+        });
         startButton.setOnAction(e -> onStartStopClicked());
-
-        // Other buttons
-        refreshDevicesButton.setOnAction(e -> refreshAudioDevices());
         addCustomColorsButton.setOnAction(e -> onAddCustomColors());
         deleteCustomColorsButton.setOnAction(e -> onDeleteCustomColors());
         restoreLightsButton.setOnAction(e -> onRestoreLights());
         restoreBrightnessButton.setOnAction(e -> onRestoreBrightness());
+        restoreAdvancedButton.setOnAction(e -> onRestoreAdvanced());
+        findBridgesButton.setOnAction(e -> onFindBridges());
+        connectBridgeButton.setOnAction(e -> onConnectBridge());
         disconnectBridgeButton.setOnAction(e -> onDisconnectBridge());
+        bridgeListView.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> connectBridgeButton.setDisable(n == null));
+        lightThemeCheckbox.selectedProperty().addListener((obs, o, n) -> {
+            if (n) startButton.getScene().getRoot().getStyleClass().add("light-theme");
+            else startButton.getScene().getRoot().getStyleClass().remove("light-theme");
+            if (config != null) config.putBoolean(ConfigNode.LIGHT_THEME_ENABLED, n);
+        });
+    }
+
+    private void onRestoreAdvanced() {
+        beatSensitivitySlider.setValue(config.getDefaultInt(ConfigNode.BEAT_SENSITIVITY));
+        beatDelaySlider.setValue(config.getDefaultInt(ConfigNode.BEAT_DELAY));
+        lightsPerBeatSlider.setValue(config.getDefaultInt(ConfigNode.LIGHTS_PER_BEAT));
+        maxFadeTimeSlider.setValue(config.getDefaultInt(ConfigNode.HUE_MAX_FADE_TIME));
+        strobeCheckBox.setSelected(config.getDefaultBoolean(ConfigNode.EFFECT_STROBE));
+        colorStrobeCheckbox.setSelected(config.getDefaultBoolean(ConfigNode.EFFECT_COLOR_STROBE));
+        glowCheckBox.setSelected(config.getDefaultBoolean(ConfigNode.EFFECT_ALERT));
+        bassOnlyModeCheckBox.setSelected(config.getDefaultBoolean(ConfigNode.BEAT_BASS_ONLY_MODE));
     }
 
     private void loadConfiguration() {
@@ -160,124 +180,151 @@ public class LightControllerDashboardController implements BeatObserver {
         autoStartCheckBox.setSelected(config.getBoolean(ConfigNode.AUTOSTART));
         bassOnlyModeCheckBox.setSelected(config.getBoolean(ConfigNode.BEAT_BASS_ONLY_MODE));
         beatSensitivitySlider.setValue(config.getInt(ConfigNode.BEAT_SENSITIVITY));
+        beatDelaySlider.setValue(config.getInt(ConfigNode.BEAT_DELAY));
+        lightsPerBeatSlider.setValue(config.getInt(ConfigNode.LIGHTS_PER_BEAT));
+        maxFadeTimeSlider.setValue(config.getInt(ConfigNode.HUE_MAX_FADE_TIME));
         strobeCheckBox.setSelected(config.getBoolean(ConfigNode.EFFECT_STROBE));
         colorStrobeCheckbox.setSelected(config.getBoolean(ConfigNode.EFFECT_COLOR_STROBE));
         glowCheckBox.setSelected(config.getBoolean(ConfigNode.EFFECT_ALERT));
+        lightThemeCheckbox.setSelected(config.getBoolean(ConfigNode.LIGHT_THEME_ENABLED));
     }
 
-    private void refreshAudioDevices() {
-        // Implementation: Load audio devices from audioReader
-        audioDeviceComboBox.getItems().clear();
-        audioReader.getSupportedDevices().forEach(device ->
-            audioDeviceComboBox.getItems().add(device.getName())
-        );
+    private void updateBridgeConnectionState(boolean isConnected) {
+        Platform.runLater(() -> {
+            bridgeConnectedPane.setVisible(isConnected);
+            bridgeConnectedPane.setManaged(isConnected);
+            bridgeDisconnectedPane.setVisible(!isConnected);
+            bridgeDisconnectedPane.setManaged(!isConnected);
+            pushlinkInstructionLabel.setVisible(false);
+            if (isConnected) {
+                bridgeStatusLabel.setText("Status: Connected to " + hueManager.getBridges().get(0).getAccessPoint().ip());
+                // refreshEntertainmentGroups(); // Temporarily disabled
+                refreshLights();
+            } else {
+                bridgeStatusLabel.setText("Status: Disconnected");
+                lightSelectPanel.getChildren().clear();
+                entertainmentGroupComboBox.getItems().clear();
+            }
+        });
+    }
 
-        String lastSource = config.get(ConfigNode.LAST_AUDIO_SOURCE);
-        if (lastSource != null && audioDeviceComboBox.getItems().contains(lastSource)) {
-            audioDeviceComboBox.setValue(lastSource);
+    private void onFindBridges() {
+        hueManager.doBridgesScan();
+    }
+
+    private void onConnectBridge() {
+        AccessPoint selectedBridge = bridgeListView.getSelectionModel().getSelectedItem();
+        if (selectedBridge != null) {
+            hueManager.setAttemptConnection(selectedBridge);
         }
+    }
+
+    private void onDisconnectBridge() {
+        taskOrchestrator.dispatch(hueManager::disconnectAll);
+    }
+
+    // private void refreshEntertainmentGroups() { ... } // Temporarily disabled
+
+    // HueStateObserver implementation
+    @Override public void displayFoundBridges(List<AccessPoint> accessPoints) {
+        Platform.runLater(() -> {
+            bridgeListView.setItems(FXCollections.observableArrayList(accessPoints));
+            bridgeSearchIndicator.setVisible(false);
+            findBridgesButton.setDisable(false);
+            updateStatus(accessPoints.isEmpty() ? "No Hue Bridges found." : "Found " + accessPoints.size() + " Hue Bridge(s).");
+        });
+    }
+    @Override public void isScanningForBridges() {
+        Platform.runLater(() -> {
+            bridgeSearchIndicator.setVisible(true);
+            findBridgesButton.setDisable(true);
+        });
+    }
+    @Override public void isAttemptingConnection() {
+        Platform.runLater(() -> connectBridgeButton.setDisable(true));
+    }
+    @Override public void hasConnected() {
+        updateBridgeConnectionState(true);
+        updateStatus("Successfully connected to Hue Bridge!");
+    }
+    @Override public void requestPushlink() {
+        Platform.runLater(() -> pushlinkInstructionLabel.setVisible(true));
+    }
+    @Override public void pushlinkHasFailed() {
+        Platform.runLater(() -> {
+            pushlinkInstructionLabel.setVisible(false);
+            connectBridgeButton.setDisable(false);
+            new Alert(Alert.AlertType.ERROR, "Pushlink button was not pressed in time.", ButtonType.OK).showAndWait();
+        });
+    }
+    @Override public void connectionWasLost(AccessPoint ap, BridgeConnection.ConnectionListener.Error error) {
+        updateBridgeConnectionState(false);
+        updateStatus("Connection to Hue Bridge lost.");
+    }
+    @Override public void disconnected() {
+        updateBridgeConnectionState(false);
+        updateStatus("Disconnected from Hue Bridge.");
     }
 
     private void refreshColorSets() {
         colorSetPanel.getChildren().clear();
-
-        // Add "Random" color set
         addColorSetRadioButton("Random");
-
-        // Add custom color sets
-        List<String> colorSets = config.getStringList(ConfigNode.COLOR_SET_LIST);
-        colorSets.forEach(this::addColorSetRadioButton);
-
-        // Select current color set, defaulting to "Random" if none is selected.
+        config.getStringList(ConfigNode.COLOR_SET_LIST).forEach(this::addColorSetRadioButton);
         String selected = config.get(ConfigNode.COLOR_SET_SELECTED);
-        if (selected == null) {
-            selected = "Random";
-            config.put(ConfigNode.COLOR_SET_SELECTED, selected);
-        }
-
+        if (selected == null) selected = "Random";
+        config.put(ConfigNode.COLOR_SET_SELECTED, selected);
         final String finalSelected = selected;
         colorSetToggleGroup.getToggles().stream()
-            .filter(toggle -> ((RadioButton)toggle).getText().equals(finalSelected))
-            .findFirst()
-            .ifPresent(toggle -> toggle.setSelected(true));
+            .filter(t -> ((RadioButton)t).getText().equals(finalSelected))
+            .findFirst().ifPresent(t -> t.setSelected(true));
     }
 
     private void addColorSetRadioButton(String name) {
-        RadioButton radioButton = new RadioButton(name);
-        radioButton.setToggleGroup(colorSetToggleGroup);
-        radioButton.setOnAction(e -> onColorSetSelected(name));
-        colorSetPanel.getChildren().add(radioButton);
+        RadioButton rb = new RadioButton(name);
+        rb.setToggleGroup(colorSetToggleGroup);
+        rb.setOnAction(e -> onColorSetSelected(name));
+        colorSetPanel.getChildren().add(rb);
     }
 
     private void refreshLights() {
         lightSelectPanel.getChildren().clear();
         lightCheckBoxes.clear();
-
+        if (hueManager.getBridges().isEmpty()) return;
         List<String> disabledLights = config.getStringList(ConfigNode.LIGHTS_DISABLED);
-
         hueManager.getLights(false).forEach(light -> {
-            CheckBox checkBox = new CheckBox(light.getName());
-            checkBox.setSelected(!disabledLights.contains(light.getId()));
-            checkBox.setOnAction(e -> onLightSelectionChanged(light.getId(), checkBox.isSelected()));
-
-            lightSelectPanel.getChildren().add(checkBox);
-            lightCheckBoxes.add(checkBox);
+            CheckBox cb = new CheckBox(light.getName());
+            cb.setSelected(!disabledLights.contains(light.getId()));
+            cb.setOnAction(e -> onLightSelectionChanged(light.getId(), cb.isSelected()));
+            lightSelectPanel.getChildren().add(cb);
+            lightCheckBoxes.add(cb);
         });
     }
 
     private void updateColorPreview() {
-        String colorSetName = config.get(ConfigNode.COLOR_SET_SELECTED);
-        ColorSet colorSet = colorSetName.equals("Random") ?
-            new RandomColorSet() :
-            new CustomColorSet(config, colorSetName);
-
-        drawColorPreview(colorSet);
+        String name = config.get(ConfigNode.COLOR_SET_SELECTED);
+        if (name == null) name = "Random";
+        ColorSet cs = "Random".equals(name) ? new RandomColorSet() : new CustomColorSet(config, name);
+        drawColorPreview(cs);
     }
 
-    private void drawColorPreview(ColorSet colorSet) {
+    private void drawColorPreview(ColorSet cs) {
         GraphicsContext gc = colorPreviewCanvas.getGraphicsContext2D();
-        double width = colorPreviewCanvas.getWidth();
-        double height = colorPreviewCanvas.getHeight();
-
-        // Clear canvas
+        double w = colorPreviewCanvas.getWidth(), h = colorPreviewCanvas.getHeight();
         gc.setFill(Color.web("#2b2b2b"));
-        gc.fillRect(0, 0, width, height);
-
-        List<io.github.mrlongnight.photonjockey.hue.bridge.color.Color> colors = colorSet.getColors();
-        if (colors == null || colors.isEmpty()) {
-            return;
-        }
-
-        // Draw color bars
-        int colorCount = Math.min(colors.size(), 20);
-        double barWidth = width / colorCount;
-
-        for (int i = 0; i < colorCount; i++) {
+        gc.fillRect(0, 0, w, h);
+        List<io.github.mrlongnight.photonjockey.hue.bridge.color.Color> colors = cs.getColors();
+        if (colors == null || colors.isEmpty()) return;
+        int count = Math.min(colors.size(), 20);
+        double barW = w / count;
+        for (int i = 0; i < count; i++) {
             int rgb = colors.get(i).getRGB();
-            int red = (rgb >> 16) & 0xFF;
-            int green = (rgb >> 8) & 0xFF;
-            int blue = rgb & 0xFF;
-            gc.setFill(Color.rgb(red, green, blue));
-            gc.fillRect(i * barWidth, 0, barWidth, height);
+            gc.setFill(Color.rgb((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF));
+            gc.fillRect(i * barW, 0, barW, h);
         }
     }
 
-    // Event handlers
     private void onStartStopClicked() {
-        if (audioReader.isOpen()) {
-            audioReader.stop();
-            startButton.setText("Start");
-            updateStatus("Stopped");
-        } else {
-            String deviceName = audioDeviceComboBox.getValue();
-            if (deviceName != null) {
-                var device = audioReader.getDeviceByName(deviceName);
-                if (device != null && audioReader.start(device)) {
-                    startButton.setText("Stop");
-                    updateStatus("Running");
-                }
-            }
-        }
+        if (audioReader.isOpen()) audioReader.stop();
     }
 
     private void onColorSetSelected(String name) {
@@ -285,26 +332,43 @@ public class LightControllerDashboardController implements BeatObserver {
         updateColorPreview();
     }
 
-    private void onLightSelectionChanged(String lightId, boolean selected) {
-        List<String> disabledLights = new ArrayList<>(config.getStringList(ConfigNode.LIGHTS_DISABLED));
-        if (selected) {
-            disabledLights.remove(lightId);
-        } else {
-            if (!disabledLights.contains(lightId)) {
-                disabledLights.add(lightId);
-            }
-        }
-        config.putList(ConfigNode.LIGHTS_DISABLED, disabledLights);
+    private void onLightSelectionChanged(String id, boolean selected) {
+        List<String> disabled = new ArrayList<>(config.getStringList(ConfigNode.LIGHTS_DISABLED));
+        if (selected) disabled.remove(id);
+        else if (!disabled.contains(id)) disabled.add(id);
+        config.putList(ConfigNode.LIGHTS_DISABLED, disabled);
     }
 
     private void onAddCustomColors() {
-        // Open color selection dialog
-        logger.info("Add custom colors clicked");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddCustomColorSetDialog.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("New Color Set");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(root);
+            ((AddCustomColorSetDialogController) loader.getController()).initialize(config, stage);
+            stage.setScene(scene);
+            stage.showAndWait();
+            refreshColorSets();
+            updateColorPreview();
+        } catch (IOException e) {
+            logger.error("Failed to open dialog.", e);
+        }
     }
 
     private void onDeleteCustomColors() {
-        // Delete selected color set
-        logger.info("Delete custom colors clicked");
+        RadioButton selected = (RadioButton) colorSetToggleGroup.getSelectedToggle();
+        if (selected == null) return;
+        String name = selected.getText();
+        if ("Random".equals(name)) return;
+        config.remove(ConfigNode.getCustomNode(ConfigNode.CUSTOM_COLOR_SET_PREFIX.getKey() + name));
+        List<String> sets = new ArrayList<>(config.getStringList(ConfigNode.COLOR_SET_LIST));
+        sets.remove(name);
+        config.putList(ConfigNode.COLOR_SET_LIST, sets);
+        config.put(ConfigNode.COLOR_SET_SELECTED, "Random");
+        refreshColorSets();
+        updateColorPreview();
     }
 
     private void onRestoreLights() {
@@ -317,33 +381,14 @@ public class LightControllerDashboardController implements BeatObserver {
         maxBrightnessSlider.setValue(config.getDefaultInt(ConfigNode.BRIGHTNESS_MAX));
     }
 
-    private void onDisconnectBridge() {
-        hueManager.disconnectAll();
-        refreshLights();
-        updateStatus("Bridge disconnected");
+    private void updateStatus(String msg) {
+        Platform.runLater(() -> statusLabel.setText("Status: " + msg));
     }
 
-    private void updateStatus(String message) {
-        Platform.runLater(() -> statusLabel.setText("Status: " + message));
-    }
-
-    // BeatObserver implementation
-    @Override
-    public void beatReceived(BeatEvent event) {
-        Platform.runLater(() -> {
-            // Visual feedback on beat
-            updateColorPreview();
-        });
-    }
-
-    @Override
-    public void noBeatReceived() {}
-
-    @Override
-    public void silenceDetected() {}
-
-    @Override
-    public void audioReceived(io.github.mrlongnight.photonjockey.audio.AudioFrame audioFrame) {}
+    @Override public void beatReceived(BeatEvent e) { Platform.runLater(this::updateColorPreview); }
+    @Override public void noBeatReceived() {}
+    @Override public void silenceDetected() {}
+    @Override public void audioReceived(AudioFrame f) {}
 
     @Override
     public void audioReaderStopped(StopStatus status) {

@@ -273,13 +273,14 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
         // Dispatch the final notification to observers to ensure thread safety
         taskOrchestrator.dispatch(() -> {
             beatEventObservers.forEach(beatObserver -> beatObserver.audioReaderStopped(status));
-            beatEventObservers.clear();
         });
         logger.info("No longer listening to audio input");
     }
 
     @Override
     public void registerBeatObserver(BeatObserver beatObserver) {
-        beatEventObservers.add(beatObserver);
+        if (!beatEventObservers.contains(beatObserver)) {
+            beatEventObservers.add(beatObserver);
+        }
     }
 }

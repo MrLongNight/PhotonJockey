@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
 import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
-import io.github.mrlongnight.photonjockey.hue.bridge.HueManager;
+import io.github.mrlongnight.photonjockey.hue.bridge.PJHueManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,16 +25,16 @@ public class UnifiedDashboard extends Application {
     private static Config staticConfig;
     private static AppTaskOrchestrator staticTaskOrchestrator;
     private static PJAudioReader staticAudioReader;
-    private static HueManager staticHueManager;
+    private static PJHueManager staticHueManager;
 
     private UnifiedDashboardController controller;
     private AppTaskOrchestrator taskOrchestrator;
     private Config config;
     private PJAudioReader audioReader;
-    private HueManager hueManager;
+    private PJHueManager hueManager;
 
     public static void init(Config config, AppTaskOrchestrator taskOrchestrator,
-                           PJAudioReader audioReader, HueManager hueManager) {
+                           PJAudioReader audioReader, PJHueManager hueManager) {
         staticConfig = config;
         staticTaskOrchestrator = taskOrchestrator;
         staticAudioReader = audioReader;

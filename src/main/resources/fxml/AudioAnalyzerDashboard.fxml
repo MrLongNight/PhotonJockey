@@ -19,7 +19,7 @@
             prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #1e1e1e;">
     
     <top>
-        <VBox spacing="10">
+        <VBox fx:id="topVBox" spacing="10">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
@@ -45,13 +45,32 @@
             
             <!-- Waveform View -->
             <Label text="Waveform" style="-fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold;"/>
-            <Canvas fx:id="waveformCanvas" width="980" height="120" 
+            <Canvas fx:id="waveformCanvas" height="120"
                     style="-fx-border-color: #444444; -fx-border-width: 1;"/>
             
             <!-- Frequency Spectrum -->
             <Label text="Frequency Spectrum" style="-fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold;"/>
-            <Canvas fx:id="spectrumCanvas" width="980" height="120" 
+            <Canvas fx:id="spectrumCanvas" height="120"
                     style="-fx-border-color: #444444; -fx-border-width: 1;"/>
+
+            <Separator/>
+
+            <!-- Analytics Display -->
+            <HBox spacing="10" alignment="TOP_LEFT">
+                <!-- New Beat Indicator -->
+                <VBox spacing="5" styleClass="analytic-pane" alignment="CENTER" prefWidth="150">
+                    <Label text="BEAT INDICATOR" styleClass="analytic-title"/>
+                    <StackPane fx:id="beatIndicatorPane" prefHeight="50" styleClass="beat-indicator-pane">
+                         <Label text="--" styleClass="analytic-value-small"/>
+                    </StackPane>
+                </VBox>
+
+                <!-- New BPM Display -->
+                <VBox spacing="5" styleClass="analytic-pane" alignment="CENTER" prefWidth="150">
+                    <Label text="BPM" styleClass="analytic-title"/>
+                    <Label fx:id="bpmLabel" text="0.0" styleClass="analytic-value"/>
+                </VBox>
+            </HBox>
         </VBox>
     </top>
     
@@ -60,15 +79,7 @@
             <padding>
                 <Insets top="20" right="10" bottom="20" left="10"/>
             </padding>
-            
-            <!-- Beat Indicator -->
-            <VBox alignment="CENTER" spacing="10">
-                <Label text="Beat Indicator" style="-fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold;"/>
-                <Circle fx:id="beatIndicator" radius="40" fill="#2b2b2b" 
-                        stroke="#555555" strokeWidth="2"/>
-                <Label fx:id="bpmLabel" text="BPM: 0.0" style="-fx-text-fill: #ffffff; -fx-font-size: 12px;"/>
-            </VBox>
-            
+
             <!-- Status Information -->
             <VBox alignment="CENTER" spacing="5">
                 <Label fx:id="statusLabel" text="Status: Idle" 
