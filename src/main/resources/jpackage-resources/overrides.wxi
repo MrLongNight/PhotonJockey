@@ -15,7 +15,7 @@
   <?define Keywords = "PhotonJockey;Music;Visualization;Philips Hue;DJ;VJ" ?>
   
   <!-- Allow major upgrades (installation over existing version) -->
-  <!-- The UpgradeCode is set via --win-upgrade-uuid in build.gradle -->
+  <!-- The UpgradeCode is set via win-upgrade-uuid in build.gradle -->
   
   <!-- UI Level: 5 = Full UI, 3 = Basic UI, 2 = No UI -->
   <!-- We use Full UI to show directory chooser and progress -->
