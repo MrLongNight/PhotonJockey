@@ -1,5 +1,6 @@
 package io.github.mrlongnight.photonjockey.ui;
 
+import io.github.mrlongnight.photonjockey.ui.util.TabDragHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,6 +39,9 @@ public class UnifiedDashboardController {
         loadAudioAnalyzerTab();
         loadLightControllerTab();
         loadSmartMappingTab();
+        
+        // Enable drag-and-drop for tab reordering
+        TabDragHelper.enableTabDragAndDrop(mainTabPane);
     }
 
     private void loadAudioAnalyzerTab() {

@@ -31,6 +31,7 @@
     -fx-text-fill: -fx-text-secondary; /* Hellere Schrift */
     -fx-font-size: 14px;
     -fx-padding: 10px 20px;
+    -fx-cursor: hand;
 }
 
 .tab-pane .tab:selected {
@@ -42,6 +43,14 @@
 
 .tab-pane .tab:hover {
     -fx-background-color: derive(#3c1361, 15%);
+}
+
+.tab-pane .tab.dragging {
+    -fx-opacity: 0.5;
+}
+
+.tab-pane .tab.drag-over {
+    -fx-background-color: derive(-fx-accent-purple, 50%);
 }
 
 /* Panel Styling */
