@@ -73,3 +73,65 @@ Ziel: Stabiler, getesteter und wartbarer Code mit klaren Abläufen zwischen alle
 - Nur @MrLongNight darf PRs mergen oder schließen.  
 - Bei Konflikten zwischen Agents: @copilot hat Vorrang, da er direkt auf das Repo zugreifen kann.  
 - Kommunikation erfolgt über PR-Kommentare mit klarer Rollenansprache (`@copilot`, `@google-labs-jules`, `@MrLongNight`).
+
+---
+
+## 📝 Dokumentations-Richtlinien
+
+### Kritische Regel: Root-Verzeichnis
+**NUR diese Markdown-Dateien sind im Repository-Root erlaubt:**
+- `README.md` - Projekt-Übersicht
+- `Agents.md` - Agent-Definitionen (diese Datei)
+
+**ALLE anderen Markdown-Dateien MÜSSEN im `docs/` Verzeichnis sein.**
+
+### Verzeichnisstruktur
+```
+docs/
+├── project/          # Projektpläne, Status, Refactoring
+├── completion/       # TaskGroup-Abschlussberichte
+├── guides/           # Anleitungen (testing, troubleshooting, ui)
+├── features/         # Feature-Dokumentation
+├── development/      # Build, Coding Standards, Architektur
+├── legal/            # Lizenz, Sicherheit, Drittanbieter
+├── archive/          # Historische/veraltete Dokumentation
+└── changelog/        # Änderungszusammenfassungen
+```
+
+### Benennungskonventionen
+
+**Dateinamen:**
+- **Nummeriertes Präfix**: `01-`, `02-`, `03-` für Sortierung
+- **GROSSBUCHSTABEN**: Haupttitel in Großbuchstaben
+- **Unterstriche**: Wörter mit Unterstrichen trennen
+- **Sprach-Suffix**: `_DE` für deutsche Dokumente
+
+**Beispiele**: 
+- `01-BUILD_INSTRUCTIONS.md`
+- `02-TESTING_GUIDE_DE.md`
+- `03-AUDIO_PROFILES.md`
+
+### Schnellentscheidung: Wo platzieren?
+
+| Inhaltstyp | Speicherort | Beispiel |
+|------------|-------------|----------|
+| Projektpläne/Status | `docs/project/` | `01-PROJECT_PLAN.md` |
+| Abschlussberichte | `docs/completion/` | `01-TG1.1_COMPLETION.md` |
+| Anleitungen | `docs/guides/[kategorie]/` | `guides/testing/01-QUICKSTART_DE.md` |
+| Feature-Docs | `docs/features/` | `01-AUDIO_PROFILES.md` |
+| Build/Standards | `docs/development/` | `01-BUILD_INSTRUCTIONS.md` |
+| Lizenz/Sicherheit | `docs/legal/` | `01-LICENSE.md` |
+| Historische Docs | `docs/archive/` | `01-OLD_ANALYSIS.md` |
+| Änderungen | `docs/changelog/` | `01-WORKFLOW_CLEANUP.md` |
+
+### Workflow für neue Dokumentation
+
+1. **Kategorie wählen**: Passendes `docs/` Unterverzeichnis bestimmen
+2. **Nummer finden**: Nächste verfügbare Präfix-Nummer ermitteln
+3. **Datei erstellen**: Format `0X-NAME.md` oder `0X-NAME_DE.md` verwenden
+4. **Index aktualisieren**: Eintrag in `docs/README.md` hinzufügen
+5. **Links aktualisieren**: Cross-References korrigieren falls Dateien verschoben werden
+
+### Vollständige Richtlinien
+Detaillierte Dokumentations-Richtlinien: [docs/DOCUMENTATION_GUIDELINES.md](docs/DOCUMENTATION_GUIDELINES.md)  
+Kurzfassung für Agents: [docs/DOCUMENTATION_GUIDELINES_COPILOT.md](docs/DOCUMENTATION_GUIDELINES_COPILOT.md)
