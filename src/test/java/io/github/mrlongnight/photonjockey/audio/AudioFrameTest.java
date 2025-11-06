@@ -14,7 +14,7 @@ class AudioFrameTest {
     @Test
     void testConstructorAndGetters() {
         byte[] data = {1, 2, 3, 4, 5};
-        AudioFrame frame = new AudioFrame(data, SAMPLE_RATE, CHANNELS, TIMESTAMP);
+        AudioFrame frame = new AudioFrame(data, SAMPLE_RATE, CHANNELS, TIMESTAMP, 0.0, new double[0], new double[0], new double[0]);
 
         assertArrayEquals(data, frame.getData());
         assertEquals(SAMPLE_RATE, frame.getSampleRate());
@@ -25,7 +25,7 @@ class AudioFrameTest {
     @Test
     void testEmptyData() {
         byte[] data = {};
-        AudioFrame frame = new AudioFrame(data, SAMPLE_RATE, CHANNELS, TIMESTAMP);
+        AudioFrame frame = new AudioFrame(data, SAMPLE_RATE, CHANNELS, TIMESTAMP, 0.0, new double[0], new double[0], new double[0]);
 
         assertArrayEquals(data, frame.getData());
         assertEquals(0, frame.getData().length);

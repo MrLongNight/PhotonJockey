@@ -56,6 +56,7 @@ public class AudioAnalyzerDashboard implements BeatObserver {
         this.taskOrchestrator = taskOrchestrator;
         this.audioReader = audioReader;
         this.controller = controller;
+        this.controller.setConfig(config);
 
         this.audioReader.registerBeatObserver(this);
 
@@ -210,20 +211,20 @@ public class AudioAnalyzerDashboard implements BeatObserver {
     @Override
     public void audioReceived(AudioFrame audioFrame) {
         if (controller != null) {
-            double[] samples = audioFrame.toNormalizedSamples();
-            double rms = 0.0;
-            for (double sample : samples) {
-                rms += sample * sample;
-            }
-            rms = Math.sqrt(rms / samples.length);
-            controller.updateLevel(rms);
+            // The range is -80dB to 0dB. Normalize this to 0.0 to 1.0 for the progress bar.
+            double normalizedLevel = (audioFrame.getLevelDB() + 80.0) / 80.0;
+            controller.updateLevel(Math.max(0.0, normalizedLevel));
 
             if (visualizationsEnabled.get()) {
                 controller.updateWaveform(audioFrame);
 
                 // Perform FFT for spectrum analysis
+                double[] samples = audioFrame.toNormalizedSamples();
                 double[] spectrum = fftProcessor.computeSpectrum(samples);
                 controller.updateSpectrum(spectrum);
+                controller.updateLowFreqSpectrum(audioFrame.getLowFreqData());
+                controller.updateMidFreqSpectrum(audioFrame.getMidFreqData());
+                controller.updateHighFreqSpectrum(audioFrame.getHighFreqData());
             }
         }
     }
@@ -278,6 +279,9 @@ public class AudioAnalyzerDashboard implements BeatObserver {
         controller.setBeatSensitivity((double) config.getInt(ConfigNode.BEAT_SENSITIVITY));
         controller.setMinBeatInterval((double) config.getInt(ConfigNode.BEAT_MIN_TIME_BETWEEN));
         controller.setBassOnlyMode(config.getBoolean(ConfigNode.BEAT_BASS_ONLY_MODE));
+        controller.setLowFreq(config.getInt(ConfigNode.LOW_FREQ));
+        controller.setMidFreq(config.getInt(ConfigNode.MID_FREQ));
+        controller.setHighFreq(config.getInt(ConfigNode.HIGH_FREQ));
     }
 
     private void updateConfigFromUi() {
@@ -288,6 +292,9 @@ public class AudioAnalyzerDashboard implements BeatObserver {
         config.putInt(ConfigNode.BEAT_SENSITIVITY, (int) controller.getBeatSensitivity());
         config.putInt(ConfigNode.BEAT_MIN_TIME_BETWEEN, (int) controller.getMinBeatInterval());
         config.putBoolean(ConfigNode.BEAT_BASS_ONLY_MODE, controller.isBassOnlyModeEnabled());
+        config.putInt(ConfigNode.LOW_FREQ, (int) controller.getLowFreq());
+        config.putInt(ConfigNode.MID_FREQ, (int) controller.getMidFreq());
+        config.putInt(ConfigNode.HIGH_FREQ, (int) controller.getHighFreq());
     }
 
     /**

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="io.github.mrlongnight.photonjockey.ui.SettingsController"
+      spacing="10" prefWidth="500" style="-fx-background-color: #1e1e1e; -fx-padding: 10;">
+
+    <Label text="Settings" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <padding>
+            <Insets top="10" bottom="10"/>
+        </padding>
+
+        <!-- Log Path -->
+        <Label text="Log File Path:" style="-fx-text-fill: #ffffff;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="logPathTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Button fx:id="browseLogPathButton" text="Browse..." GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+
+        <!-- Log Level -->
+        <Label text="Log Level:" style="-fx-text-fill: #ffffff;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ChoiceBox fx:id="logLevelChoiceBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    </GridPane>
+
+    <!-- Status Information -->
+    <VBox fx:id="statusVBox" spacing="5">
+        <padding>
+            <Insets top="10"/>
+        </padding>
+        <Label fx:id="statusLabel" text="Status: Idle"
+               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+        <Label fx:id="infoLabel" text=""
+               style="-fx-text-fill: #888888; -fx-font-size: 10px;"/>
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="saveButton" text="Save"/>
+        <Button fx:id="cancelButton" text="Cancel"/>
+    </HBox>
+
+</VBox>
