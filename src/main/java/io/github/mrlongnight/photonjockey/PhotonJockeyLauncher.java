@@ -29,6 +29,22 @@ import java.time.format.DateTimeFormatter;
  */
 public class PhotonJockeyLauncher {
 
+    // Static initializer block to create logging directory before SLF4J initializes.
+    static {
+        try {
+            Path logDir = Paths.get(System.getProperty("user.home"), "PhotonJockey");
+            if (!Files.exists(logDir)) {
+                Files.createDirectories(logDir);
+                System.out.println("PhotonJockey log directory created at: " + logDir);
+            }
+        } catch (Exception e) {
+            // If directory creation fails, log to standard error.
+            // This is a fallback as the logger is not yet initialized.
+            System.err.println("FATAL: Could not create log directory for PhotonJockey.");
+            e.printStackTrace();
+        }
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(PhotonJockeyLauncher.class);
     private static final String ERROR_LOG_FILE = "photonjockey_error.log";
     private static final String SEPARATOR = "================================================================================";

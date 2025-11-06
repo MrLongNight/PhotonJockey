@@ -30,7 +30,15 @@ public enum ConfigNode {
     SHOW_ADVANCED_SETTINGS("frame.showadvanced"),
     UPDATE_DISABLE_NOTIFICATION("frame.updatedisablenotification"),
     WINDOW_LOCATION("window.location"),
-    WINDOW_LIGHT_THEME("window.lighttheme");
+    WINDOW_LIGHT_THEME("window.lighttheme"),
+
+    // Added Nodes
+    BEAT_DELAY("beat.delay"),
+    LIGHTS_PER_BEAT("lights.perbeat"),
+    HUE_MAX_FADE_TIME("hue.maxfadetime"),
+    LIGHT_THEME_ENABLED("window.lighttheme.enabled"),
+    HUE_ENTERTAINMENT_GROUP("hue.entertainmentgroup"),
+    CUSTOM_COLOR_SET_PREFIX("color.set.custom.");
 
 
     private String key;

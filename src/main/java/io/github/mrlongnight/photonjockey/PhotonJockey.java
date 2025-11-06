@@ -20,7 +20,7 @@ public class PhotonJockey {
         AppTaskOrchestrator taskOrchestrator = new AppTaskOrchestrator();
         PJAudioReader audioReader = new PJAudioReader(config, taskOrchestrator);
         BeatEventManager beatEventManager = audioReader;
-        HueManager hueManager = new PJHueManager(config, taskOrchestrator);
+        PJHueManager hueManager = new PJHueManager(config, taskOrchestrator);
 
         // REMOVED: Old Swing UI
         // new MainFrame(config, taskOrchestrator, audioReader, beatEventManager, hueManager, 100, 100);
