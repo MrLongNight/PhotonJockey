@@ -78,13 +78,13 @@ public class TabDragHelper {
 
             tabNode.setOnDragEntered(event -> {
                 if (event.getGestureSource() != tabNode && event.getDragboard().hasContent(TAB_FORMAT)) {
-                    tabNode.setStyle("-fx-background-color: derive(-fx-accent-purple, 50%);");
+                    tabNode.getStyleClass().add("drag-over");
                 }
                 event.consume();
             });
 
             tabNode.setOnDragExited(event -> {
-                tabNode.setStyle("");
+                tabNode.getStyleClass().remove("drag-over");
                 event.consume();
             });
 
@@ -115,7 +115,7 @@ public class TabDragHelper {
             });
 
             tabNode.setOnDragDone(event -> {
-                tabNode.setStyle("");
+                tabNode.getStyleClass().remove("drag-over");
                 event.consume();
             });
         });
@@ -123,21 +123,16 @@ public class TabDragHelper {
 
     private static Pane findTabNode(TabPane tabPane, Tab tab) {
         // Try to find the tab header node in the scene graph
-        // This is a bit hacky but necessary since JavaFX doesn't provide direct access
-        return tabPane.lookupAll(".tab").stream()
+        // Cache the lookup result to avoid redundant scene graph traversal
+        var allTabNodes = tabPane.lookupAll(".tab").stream()
             .filter(node -> node instanceof Pane)
-            .map(node -> (Pane) node)
-            .filter(pane -> {
-                // Check if this pane corresponds to our tab
-                // We'll use the tab's position as a heuristic
-                int index = tabPane.getTabs().indexOf(tab);
-                var tabs = tabPane.lookupAll(".tab").stream()
-                        .filter(n -> n instanceof Pane)
-                        .collect(Collectors.toList());
-                return tabs.indexOf(pane) == index;
-            })
-            .findFirst()
-            .orElse(null);
+            .collect(Collectors.toList());
+        
+        int index = tabPane.getTabs().indexOf(tab);
+        if (index >= 0 && index < allTabNodes.size()) {
+            return (Pane) allTabNodes.get(index);
+        }
+        return null;
     }
 
     private static Tab findTabByText(TabPane tabPane, String text) {
