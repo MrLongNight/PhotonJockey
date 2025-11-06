@@ -224,7 +224,7 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
     }
 
     public void createUIComponents() {
-        bannerLabel = new JIconLabel("/png/banner.png", "/png/bannerflash.png", 482, 100);
+        bannerLabel = new JIconLabel("/png/banner.png", "/png/bannerflash.png", 800, 101);
 
         colorSelectPanel = new JPanel(new WrapLayout(FlowLayout.CENTER));
         lightSelectPanel = new JPanel(new WrapLayout(FlowLayout.CENTER));
