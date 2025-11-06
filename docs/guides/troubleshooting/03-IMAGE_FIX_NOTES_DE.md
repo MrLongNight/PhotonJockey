@@ -92,4 +92,4 @@ Nach dem Build sollten folgende Punkte überprüft werden:
 - ✓ Umfassende Dokumentation hinzugefügt
 
 ## Weitere Informationen
-Siehe `IMAGE_FIX_NOTES.md` (Englisch) für detaillierte technische Informationen.
+Siehe [02-IMAGE_FIX_NOTES.md](02-IMAGE_FIX_NOTES.md) (Englisch) für detaillierte technische Informationen.

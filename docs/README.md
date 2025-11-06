@@ -2,6 +2,12 @@
 
 Welcome to the PhotonJockey documentation! This directory contains all project documentation organized by topic.
 
+## 📄 Root Level Documentation
+- **[CODE_ANALYSIS.md](CODE_ANALYSIS.md)** - Comprehensive code analysis and recommendations (latest: 2025-11-06)
+- **[DOCUMENTATION_GUIDELINES.md](DOCUMENTATION_GUIDELINES.md)** - Complete documentation standards and conventions
+- **[DOCUMENTATION_GUIDELINES_COPILOT.md](DOCUMENTATION_GUIDELINES_COPILOT.md)** - Quick reference for AI agents
+- **[COPILOT_CUSTOM_INSTRUCTIONS.md](COPILOT_CUSTOM_INSTRUCTIONS.md)** - Complete instructions for Copilot Custom Instructions
+
 ## 📚 Documentation Structure
 
 ### 📋 [Project Planning & Status](project/)
@@ -29,6 +35,8 @@ Detailed completion reports for each TaskGroup:
 
 #### Troubleshooting
 - **[01-TROUBLESHOOTING_DE.md](guides/troubleshooting/01-TROUBLESHOOTING_DE.md)** - Problem solving and diagnostics (German)
+- **[02-IMAGE_FIX_NOTES.md](guides/troubleshooting/02-IMAGE_FIX_NOTES.md)** - Image display issue fix documentation
+- **[03-IMAGE_FIX_NOTES_DE.md](guides/troubleshooting/03-IMAGE_FIX_NOTES_DE.md)** - Bildanzeige-Problem Lösung (German)
 
 #### User Interface
 - **[01-UI_OVERVIEW_DE.md](guides/ui/01-UI_OVERVIEW_DE.md)** - UI layout and components overview (German)
@@ -43,6 +51,9 @@ Detailed documentation for specific features:
 Information for developers:
 - **[01-BUILD_INSTRUCTIONS.md](development/01-BUILD_INSTRUCTIONS.md)** - How to build and run PhotonJockey
 - **[02-CODING_CONVENTIONS.md](development/02-CODING_CONVENTIONS.md)** - Code style, branching, and commit conventions
+- **[ARBEITSANWEISUNG_JULES_UI_INTEGRATION.md](development/ARBEITSANWEISUNG_JULES_UI_INTEGRATION.md)** - UI integration work instructions for Jules agent
+- **[UI_INTEGRATION_SUMMARY.md](development/UI_INTEGRATION_SUMMARY.md)** - Executive summary of UI integration project
+- **[UI_INTEGRATION_README.md](development/UI_INTEGRATION_README.md)** - Quick start guide for UI integration
 - **[diagrams/](development/diagrams/)** - Architecture and dependency diagrams
 
 ### ⚖️ [Legal Documentation](legal/)
@@ -50,6 +61,15 @@ License and security information:
 - **[01-LICENSE.md](legal/01-LICENSE.md)** - Project license
 - **[02-SECURITY.md](legal/02-SECURITY.md)** - Security policy and vulnerability reporting
 - **[03-THIRD_PARTY_LICENSES.md](legal/03-THIRD_PARTY_LICENSES.md)** - Third-party dependency licenses
+
+### 📦 [Archive](archive/)
+Historical documentation for reference:
+- **[01-DOCUMENTATION_REORGANIZATION_SUMMARY.md](archive/01-DOCUMENTATION_REORGANIZATION_SUMMARY.md)** - Previous documentation reorganization (2025-11-01)
+- **[02-UI_MODERNIZATION_ANALYSIS_COMPLETE.md](archive/02-UI_MODERNIZATION_ANALYSIS_COMPLETE.md)** - UI modernization analysis (2025-11-04)
+
+### 📝 [Changelog](changelog/)
+Change summaries and migration notes:
+- **[01-WORKFLOW_CLEANUP_SUMMARY.md](changelog/01-WORKFLOW_CLEANUP_SUMMARY.md)** - Workflow cleanup and consolidation
 
 ## 🚀 Quick Links
 
@@ -85,6 +105,8 @@ License and security information:
 - **features/** - Feature-specific technical documentation
 - **development/** - Development setup and standards
 - **legal/** - Legal and security documentation
+- **archive/** - Historical documentation for reference
+- **changelog/** - Change summaries and migration notes
 
 ## 🔄 Updating Documentation
 
@@ -102,4 +124,4 @@ When updating documentation:
 
 ---
 
-*Last Updated: 2025-11-01*
+*Last Updated: 2025-11-06*
