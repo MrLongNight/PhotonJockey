@@ -74,6 +74,26 @@ Once the dependency is installed:
 java -jar build/libs/PhotonJockey-<version>.jar
 ```
 
+## Creating MSI Installer (Windows)
+
+To create a Windows MSI installer with customized branding:
+
+```bash
+# Create MSI installer on Windows
+./gradlew jpackage -Pwindows-msi
+```
+
+The MSI installer includes:
+- **Application Icon**: Custom icon from `src/main/resources/jpackage/icon.ico`
+- **Description**: AI-powered music visualizer for Philips Hue lights
+- **Copyright**: GNU GPL v3 license information
+- **User Features**:
+  - Directory chooser (allows users to select installation location)
+  - Per-user installation (no admin privileges required)
+  - Start Menu integration
+  - Desktop shortcut
+  - Upgrade support (installs over existing versions)
+
 ## Troubleshooting
 
 ### "Could not find io.github.zeroone3010:yetanotherhueapi:2.8.0-lb"

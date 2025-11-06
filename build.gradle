@@ -184,6 +184,10 @@ runtime {
 
         // Windows MSI
         if (isWindowsBuild) {
+            def appDescription = 'AI-powered music visualizer for Philips Hue lights. ' +
+                                 'Synchronizes smart lighting effects with electronic music beats in real-time.'
+            def appCopyright = 'Copyright (C) 2025 Ai-LightBotEngine. Licensed under GNU GPL v3.'
+            
             installerType = 'msi'
             imageOptions = [
                     '--icon', 'src/main/resources/jpackage/icon.ico',
@@ -191,9 +195,13 @@ runtime {
             ]
             installerOptions = [
                     '--vendor', 'Ai-LightBotEngine',
+                    '--description', appDescription,
+                    '--copyright', appCopyright,
                     '--win-menu',
                     '--win-menu-group', project.name,
                     '--win-shortcut',
+                    '--win-dir-chooser',
+                    '--win-per-user-install',
                     '--win-upgrade-uuid', '3646e8cc-645a-441b-9c4f-e119d90f8657',
             ]
         }
