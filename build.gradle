@@ -191,6 +191,7 @@ runtime {
             installerType = 'msi'
             imageOptions = [
                     '--icon', 'src/main/resources/jpackage/icon.ico',
+                    '--resource-dir', 'src/main/resources/jpackage',
                     '--add-launcher', "${project.name}-console=src/main/resources/jpackage/debug_build.properties",
             ]
             installerOptions = [
