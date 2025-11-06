@@ -188,12 +188,17 @@ runtime {
             imageOptions = [
                     '--icon', 'src/main/resources/jpackage/icon.ico',
                     '--add-launcher', "${project.name}-console=src/main/resources/jpackage/debug_build.properties",
+                    '--resource-dir', 'src/main/resources/jpackage-resources',
             ]
             installerOptions = [
                     '--vendor', 'Ai-LightBotEngine',
+                    '--app-version', project.version,
+                    '--copyright', 'Copyright © 2024 Ai-LightBotEngine',
+                    '--description', 'AI-powered music visualization for smart lights - synchronize Philips Hue lights with music in real-time',
                     '--win-menu',
                     '--win-menu-group', project.name,
                     '--win-shortcut',
+                    '--win-dir-chooser',
                     '--win-upgrade-uuid', '3646e8cc-645a-441b-9c4f-e119d90f8657',
             ]
         }

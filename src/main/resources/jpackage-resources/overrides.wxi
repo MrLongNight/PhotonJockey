@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
+  <!-- Application Properties -->
+  <?define ProductName = "PhotonJockey" ?>
+  <?define Manufacturer = "Ai-LightBotEngine" ?>
+  <?define ProductVersion = "!(bind.FileVersion.PhotonJockey.exe)" ?>
+  
+  <!-- UI Customization -->
+  <!-- The banner images (WixUIBannerBmp.bmp and WixUIDialogBmp.bmp) will be -->
+  <!-- automatically picked up by jpackage from the resource directory -->
+  
+  <!-- MSI Properties for better user experience -->
+  <?define Comments = "AI-powered music visualization for smart lights" ?>
+  <?define Keywords = "PhotonJockey;Music;Visualization;Philips Hue;DJ;VJ" ?>
+  
+  <!-- Allow major upgrades (installation over existing version) -->
+  <!-- The UpgradeCode is set via --win-upgrade-uuid in build.gradle -->
+  
+  <!-- UI Level: 5 = Full UI, 3 = Basic UI, 2 = No UI -->
+  <!-- We use Full UI to show directory chooser and progress -->
+  
+</Include>
