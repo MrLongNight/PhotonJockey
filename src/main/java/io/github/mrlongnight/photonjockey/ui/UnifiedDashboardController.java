@@ -1,11 +1,15 @@
 package io.github.mrlongnight.photonjockey.ui;
 
+import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.ui.util.TabDragHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +37,7 @@ public class UnifiedDashboardController {
     private AudioAnalyzerDashboardController audioAnalyzerController;
     private LightControllerDashboardController lightControllerController;
     private SmartMappingToolController smartMappingController;
+    private Config config;
 
     @FXML
     public void initialize() {
@@ -42,6 +47,10 @@ public class UnifiedDashboardController {
         
         // Enable drag-and-drop for tab reordering
         TabDragHelper.enableTabDragAndDrop(mainTabPane);
+    }
+
+    public void initData(Config config) {
+        this.config = config;
     }
 
     private void loadAudioAnalyzerTab() {
@@ -96,5 +105,32 @@ public class UnifiedDashboardController {
 
     public SmartMappingToolController getSmartMappingController() {
         return smartMappingController;
+    }
+
+    @FXML
+    private void handleShowSettings() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Settings.fxml"));
+            Parent page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Settings");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainTabPane.getScene().getWindow());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            SettingsController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.initData(config);
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            logger.error("Failed to open settings dialog", e);
+        }
+    }
+
+    @FXML
+    private void handleExit() {
+        javafx.application.Platform.exit();
     }
 }

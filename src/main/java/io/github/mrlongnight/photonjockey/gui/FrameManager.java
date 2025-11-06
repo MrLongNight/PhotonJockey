@@ -55,7 +55,7 @@ public class FrameManager implements HueStateObserver {
 
         this.hueManager.setStateObserver(this);
 
-        boolean lightTheme = this.config.getBoolean(ConfigNode.WINDOW_LIGHT_THEME);
+        boolean lightTheme = "Light".equals(this.config.get(ConfigNode.THEME));
         LafManager.installTheme(lightTheme ? new IntelliJTheme() : new OneDarkTheme());
 
         // show connect frame with delay, prevents "flashing" the frame when it connects quickly on launch.

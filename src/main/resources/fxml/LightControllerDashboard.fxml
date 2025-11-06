@@ -10,9 +10,10 @@
             prefHeight="700.0" prefWidth="1000.0" styleClass="dashboard-root">
 
     <top>
-        <Accordion>
-            <!-- Color Selection Panel -->
-            <TitledPane text="Color Sets" expanded="true" animated="true">
+        <VBox>
+            <Accordion>
+                <!-- Color Selection Panel -->
+                <TitledPane text="Color Sets" expanded="true" animated="true">
                 <content>
                     <VBox spacing="10">
                         <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
@@ -81,12 +82,14 @@
                 </content>
             </TitledPane>
         </Accordion>
+        </VBox>
     </top>
 
     <center>
-        <Accordion>
-            <!-- Brightness Panel -->
-            <TitledPane text="Brightness" expanded="true" animated="true">
+        <VBox>
+            <Accordion>
+                <!-- Brightness Panel -->
+                <TitledPane text="Brightness" expanded="true" animated="true">
                 <content>
                     <VBox spacing="10">
                         <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
@@ -155,6 +158,7 @@
                 </content>
             </TitledPane>
         </Accordion>
+        </VBox>
     </center>
 
     <bottom>

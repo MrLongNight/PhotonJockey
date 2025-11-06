@@ -87,7 +87,7 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
     private JButton startButton;
     private JConfigCheckBox showAdvancedCheckbox;
     private JConfigCheckBox autoStartCheckBox;
-    private JConfigCheckBox lightThemeCheckbox;
+    private JCheckBox lightThemeCheckbox;
 
     private JLabel urlLabel;
     private JLabel infoLabel;
@@ -193,7 +193,10 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
             }
         });
 
-        lightThemeCheckbox.setToRunOnChange(() -> {
+        lightThemeCheckbox.setSelected("Light".equals(config.get(ConfigNode.THEME)));
+        lightThemeCheckbox.addActionListener(e -> {
+            config.put(ConfigNode.THEME, lightThemeCheckbox.isSelected() ? "Light" : "Dark");
+
             boolean isDarkCurrently = LafManager.getInstalledTheme().getThemeClass().equals(OneDarkTheme.class);
             boolean setToDark = !lightThemeCheckbox.isSelected();
             if (isDarkCurrently == setToDark) {
@@ -246,7 +249,7 @@ public class MainFrame extends AbstractFrame implements BeatObserver {
 
         showAdvancedCheckbox = new JConfigCheckBox(config, ConfigNode.SHOW_ADVANCED_SETTINGS);
         autoStartCheckBox = new JConfigCheckBox(config, ConfigNode.AUTOSTART);
-        lightThemeCheckbox = new JConfigCheckBox(config, ConfigNode.WINDOW_LIGHT_THEME);
+        lightThemeCheckbox = new JCheckBox("Light Theme");
     }
 
     @Override

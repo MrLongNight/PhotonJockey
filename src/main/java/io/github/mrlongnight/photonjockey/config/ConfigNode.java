@@ -31,11 +31,12 @@ public enum ConfigNode {
     LIGHT_AMOUNT_PROBABILITY("lights.amountprobability"),
     LIGHTS_DISABLED("lights.disabled"),
     LOG_PATH("log.path"),
-    LOG_LEVEL("log.level"),
+    CONSOLE_LOG_LEVEL("log.level.console"),
+    FILE_LOG_LEVEL("log.level.file"),
     SHOW_ADVANCED_SETTINGS("frame.showadvanced"),
     UPDATE_DISABLE_NOTIFICATION("frame.updatedisablenotification"),
     WINDOW_LOCATION("window.location"),
-    WINDOW_LIGHT_THEME("window.lighttheme"),
+    THEME("window.theme"),
 
     // Added Nodes
     BEAT_DELAY("beat.delay"),

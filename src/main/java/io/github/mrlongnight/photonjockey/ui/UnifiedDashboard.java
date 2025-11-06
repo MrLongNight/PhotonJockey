@@ -1,5 +1,11 @@
 package io.github.mrlongnight.photonjockey.ui;
 
+import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
+import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
+import io.github.mrlongnight.photonjockey.config.Config;
+import io.github.mrlongnight.photonjockey.config.ConfigNode;
+import io.github.mrlongnight.photonjockey.hue.bridge.PJHueManager;
+import io.github.mrlongnight.photonjockey.util.WindowsThemeDetector;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -7,11 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
-import io.github.mrlongnight.photonjockey.config.Config;
-import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
-import io.github.mrlongnight.photonjockey.hue.bridge.PJHueManager;
-import io.github.mrlongnight.photonjockey.util.WindowsThemeDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +70,7 @@ public class UnifiedDashboard extends Application {
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
         controller = loader.getController();
+        controller.initData(config);
 
         // Initialize controllers with dependencies
         initializeControllers();
@@ -94,9 +96,26 @@ public class UnifiedDashboard extends Application {
             e.consume();
             shutdown();
         });
+
+        applyTheme(scene);
         primaryStage.show();
 
         logger.info("Unified Dashboard started successfully");
+    }
+
+    private void applyTheme(Scene scene) {
+        String theme = config.get(ConfigNode.THEME);
+        logger.info("Applying theme: {}", theme);
+
+        scene.getRoot().getStyleClass().remove("light-theme");
+
+        if ("Light".equals(theme)) {
+            scene.getRoot().getStyleClass().add("light-theme");
+        } else if ("Automatic".equals(theme)) {
+            if (!WindowsThemeDetector.isDarkModeEnabled()) {
+                scene.getRoot().getStyleClass().add("light-theme");
+            }
+        }
     }
 
     private void initializeControllers() {
