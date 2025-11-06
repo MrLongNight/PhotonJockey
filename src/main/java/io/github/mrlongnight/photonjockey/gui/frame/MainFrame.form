@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="pw.wunderlich.lightbeat.gui.frame.MainFrame">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="io.github.mrlongnight.photonjockey.gui.frame.MainFrame">
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="5" bottom="2" right="5"/>
     <constraints>
@@ -58,7 +58,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="bf7bd" class="pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox" binding="showAdvancedCheckbox" custom-create="true">
+              <component id="bf7bd" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigCheckBox" binding="showAdvancedCheckbox" custom-create="true">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -67,7 +67,7 @@
                   <verticalAlignment value="1"/>
                 </properties>
               </component>
-              <component id="c0777" class="pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox" binding="autoStartCheckBox" custom-create="true" default-binding="true">
+              <component id="c0777" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigCheckBox" binding="autoStartCheckBox" custom-create="true" default-binding="true">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -76,7 +76,7 @@
                   <toolTipText value="Automatically start music detection when application is started."/>
                 </properties>
               </component>
-              <component id="a975e" class="pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox" binding="lightThemeCheckbox" custom-create="true" default-binding="true">
+              <component id="a975e" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigCheckBox" binding="lightThemeCheckbox" custom-create="true" default-binding="true">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -98,7 +98,7 @@
           </grid>
         </children>
       </grid>
-      <component id="b1dbc" class="pw.wunderlich.lightbeat.gui.swing.JIconLabel" binding="bannerLabel" custom-create="true">
+      <component id="b1dbc" class="io.github.mrlongnight.photonjockey.gui.swing.JIconLabel" binding="bannerLabel" custom-create="true">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -166,7 +166,7 @@
                           <useColoredIcon value="true"/>
                         </properties>
                       </component>
-                      <component id="a54fc" class="pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox" binding="bassOnlyModeCheckBox" custom-create="true">
+                      <component id="a54fc" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigCheckBox" binding="bassOnlyModeCheckBox" custom-create="true">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -215,7 +215,7 @@
                       </component>
                     </children>
                   </grid>
-                  <component id="ac1d3" class="pw.wunderlich.lightbeat.gui.swing.JColorPanel" binding="colorsPreviewPanel">
+                  <component id="ac1d3" class="io.github.mrlongnight.photonjockey.gui.swing.JColorPanel" binding="colorsPreviewPanel">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -241,7 +241,7 @@
                     <border type="none"/>
                     <children/>
                   </grid>
-                  <component id="8ad10" class="pw.wunderlich.lightbeat.gui.swing.JConfigSlider" binding="colorRandomizationSlider" custom-create="true">
+                  <component id="8ad10" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider" binding="colorRandomizationSlider" custom-create="true">
                     <constraints>
                       <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -251,7 +251,7 @@
                       <toolTipText value="Colors are always randomized in the given range to allow for small color sets without breaking color effects.&lt;br&gt;The higher you set this value the more difference will be in the actual colors from the ones you selected.&lt;br&gt;This feature can be disabled by setting it to 0% (not recommended for small color sets)."/>
                     </properties>
                   </component>
-                  <component id="4ef72" class="pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox" binding="colorStrobeCheckbox" custom-create="true">
+                  <component id="4ef72" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigCheckBox" binding="colorStrobeCheckbox" custom-create="true">
                     <constraints>
                       <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -302,7 +302,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="e96dd" class="pw.wunderlich.lightbeat.gui.swing.JConfigSlider" binding="beatTimeBetweenSlider" custom-create="true">
+                      <component id="e96dd" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider" binding="beatTimeBetweenSlider" custom-create="true">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -320,7 +320,7 @@
                           <text value="Beat Delay"/>
                         </properties>
                       </component>
-                      <component id="728f2" class="pw.wunderlich.lightbeat.gui.swing.JConfigSlider" binding="lightAmountProbabilitySlider" custom-create="true">
+                      <component id="728f2" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider" binding="lightAmountProbabilitySlider" custom-create="true">
                         <constraints>
                           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -370,7 +370,7 @@
                   <font size="16"/>
                 </border>
                 <children>
-                  <component id="b960d" class="pw.wunderlich.lightbeat.gui.swing.JConfigSlider" binding="minBrightnessSlider" custom-create="true">
+                  <component id="b960d" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider" binding="minBrightnessSlider" custom-create="true">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -396,7 +396,7 @@
                       <text value="Maximum"/>
                     </properties>
                   </component>
-                  <component id="d47ba" class="pw.wunderlich.lightbeat.gui.swing.JConfigSlider" binding="maxBrightnessSlider" custom-create="true">
+                  <component id="d47ba" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider" binding="maxBrightnessSlider" custom-create="true">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -423,7 +423,7 @@
                       <text value="Fade Brightness"/>
                     </properties>
                   </component>
-                  <component id="d6514" class="pw.wunderlich.lightbeat.gui.swing.JConfigSlider" binding="fadeBrightnessSlider" custom-create="true">
+                  <component id="d6514" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider" binding="fadeBrightnessSlider" custom-create="true">
                     <constraints>
                       <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -433,7 +433,7 @@
                       <toolTipText value="Maximum brightness difference between a beat and its associated fade to a lower brightness."/>
                     </properties>
                   </component>
-                  <component id="36d5e" class="pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox" binding="glowCheckBox" custom-create="true" default-binding="true">
+                  <component id="36d5e" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigCheckBox" binding="glowCheckBox" custom-create="true" default-binding="true">
                     <constraints>
                       <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -442,7 +442,7 @@
                       <toolTipText value="&lt;html&gt;Toggle all glowing effects that override your max brightness.&lt;br&gt;&#10;This does not toggle any fading effects.&lt;/html&gt;"/>
                     </properties>
                   </component>
-                  <component id="aa401" class="pw.wunderlich.lightbeat.gui.swing.JConfigCheckBox" binding="strobeCheckBox" custom-create="true" default-binding="true">
+                  <component id="aa401" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigCheckBox" binding="strobeCheckBox" custom-create="true" default-binding="true">
                     <constraints>
                       <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -485,7 +485,7 @@
               <text value="Beat Detection Sensitivity"/>
             </properties>
           </component>
-          <component id="5e13b" class="pw.wunderlich.lightbeat.gui.swing.JConfigSlider" binding="beatSensitivitySlider" custom-create="true">
+          <component id="5e13b" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider" binding="beatSensitivitySlider" custom-create="true">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -540,7 +540,7 @@
               <text value="Maximum Fade Transition Time"/>
             </properties>
           </component>
-          <component id="6dbf3" class="pw.wunderlich.lightbeat.gui.swing.JConfigSlider" binding="maxTransitionTimeSlider" custom-create="true">
+          <component id="6dbf3" class="io.github.mrlongnight.photonjockey.gui.swing.JConfigSlider" binding="maxTransitionTimeSlider" custom-create="true">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
