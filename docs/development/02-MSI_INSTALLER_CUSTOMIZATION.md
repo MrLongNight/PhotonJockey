@@ -73,8 +73,8 @@ This creates a secondary launcher with console output enabled for troubleshootin
 
 The jpackage tool uses the WiX Toolset to create MSI packages. The command-line options translate to Windows Installer Property Tables:
 
-| jpackage Option | MSI Property/Feature | Description |
-|-----------------|---------------------|-------------|
+| jpackage Option | MSI Property | Description |
+|-----------------|--------------|-------------|
 | `--name` | ProductName | Application name |
 | `--vendor` | Manufacturer | Vendor/company name |
 | `--description` | Description | Application description |
