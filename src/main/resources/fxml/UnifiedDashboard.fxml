@@ -18,6 +18,9 @@
             <Tab text="Light Controller" fx:id="lightControllerTab">
                 <!-- Content wird dynamisch geladen -->
             </Tab>
+            <Tab text="2D Mapping Tool" fx:id="smartMappingTab">
+                <!-- Content wird dynamisch geladen -->
+            </Tab>
         </TabPane>
     </center>
 

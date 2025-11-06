@@ -225,6 +225,44 @@
    -fx-background-color: transparent;
 }
 
+/* TitledPane and Accordion Styling */
+.accordion {
+    -fx-background-color: -fx-background-primary;
+}
+
+.titled-pane {
+    -fx-background-color: -fx-background-secondary;
+    -fx-border-color: -fx-border;
+    -fx-border-width: 1;
+}
+
+.titled-pane > .title {
+    -fx-background-color: derive(-fx-background-secondary, 10%);
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 10px;
+}
+
+.titled-pane:expanded > .title {
+    -fx-background-color: -fx-accent-purple;
+    -fx-text-fill: white;
+}
+
+.titled-pane > .title:hover {
+    -fx-background-color: derive(-fx-background-secondary, 20%);
+}
+
+.titled-pane:expanded > .title:hover {
+    -fx-background-color: derive(-fx-accent-purple, 15%);
+}
+
+.titled-pane > .content {
+    -fx-background-color: -fx-background-primary;
+    -fx-border-color: -fx-border;
+    -fx-border-width: 0 1 1 1;
+}
+
 
 /* ==========================================================================
    Light Theme

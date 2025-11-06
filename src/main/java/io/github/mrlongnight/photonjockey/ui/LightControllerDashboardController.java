@@ -52,6 +52,7 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
     @FXML private Slider maxBrightnessSlider;
     @FXML private Label maxBrightnessLabel;
     @FXML private Button restoreBrightnessButton;
+    @FXML private TitledPane advancedPane;
     @FXML private VBox advancedPanel;
     @FXML private CheckBox strobeCheckBox;
     @FXML private CheckBox colorStrobeCheckbox;
@@ -125,8 +126,7 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
             if (config != null) config.putInt(ConfigNode.BRIGHTNESS_MAX, n.intValue());
         });
         showAdvancedCheckbox.selectedProperty().addListener((obs, o, n) -> {
-            advancedPanel.setVisible(n);
-            advancedPanel.setManaged(n);
+            advancedPane.setExpanded(n);
             if (config != null) config.putBoolean(ConfigNode.SHOW_ADVANCED_SETTINGS, n);
         });
         beatSensitivitySlider.valueProperty().addListener((obs, o, n) -> {
@@ -177,6 +177,7 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
         minBrightnessSlider.setValue(config.getInt(ConfigNode.BRIGHTNESS_MIN));
         maxBrightnessSlider.setValue(config.getInt(ConfigNode.BRIGHTNESS_MAX));
         showAdvancedCheckbox.setSelected(config.getBoolean(ConfigNode.SHOW_ADVANCED_SETTINGS));
+        advancedPane.setExpanded(config.getBoolean(ConfigNode.SHOW_ADVANCED_SETTINGS));
         autoStartCheckBox.setSelected(config.getBoolean(ConfigNode.AUTOSTART));
         bassOnlyModeCheckBox.setSelected(config.getBoolean(ConfigNode.BEAT_BASS_ONLY_MODE));
         beatSensitivitySlider.setValue(config.getInt(ConfigNode.BEAT_SENSITIVITY));
