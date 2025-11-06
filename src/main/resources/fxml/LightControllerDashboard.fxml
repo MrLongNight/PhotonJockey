@@ -13,72 +13,66 @@
         <Accordion>
             <!-- Color Selection Panel -->
             <TitledPane text="Color Sets" expanded="true" animated="true">
-                <content>
-                    <VBox spacing="10">
-                        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-                        <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
-                            <content>
-                                <FlowPane fx:id="colorSetPanel" hgap="10" vgap="10"/>
-                            </content>
-                        </ScrollPane>
-                        <HBox spacing="10">
-                            <Button fx:id="addCustomColorsButton" text="Add Custom Colors"/>
-                            <Button fx:id="deleteCustomColorsButton" text="Delete Selected"/>
-                        </HBox>
-                        <!-- Color Preview Canvas -->
-                        <Canvas fx:id="colorPreviewCanvas" height="40" styleClass="canvas"/>
-                    </VBox>
-                </content>
+                <VBox spacing="10">
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                    <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
+                        <content>
+                            <FlowPane fx:id="colorSetPanel" hgap="10" vgap="10"/>
+                        </content>
+                    </ScrollPane>
+                    <HBox spacing="10">
+                        <Button fx:id="addCustomColorsButton" text="Add Custom Colors"/>
+                        <Button fx:id="deleteCustomColorsButton" text="Delete Selected"/>
+                    </HBox>
+                    <!-- Color Preview Canvas -->
+                    <Canvas fx:id="colorPreviewCanvas" height="40" styleClass="canvas"/>
+                </VBox>
             </TitledPane>
 
             <!-- Lights Selection Panel -->
             <TitledPane text="Lights" expanded="true" animated="true">
-                <content>
-                    <VBox spacing="10">
-                        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-                        <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
-                            <content>
-                                <FlowPane fx:id="lightSelectPanel" hgap="10" vgap="10"/>
-                            </content>
-                        </ScrollPane>
-                        <Button fx:id="restoreLightsButton" text="Restore All Lights"/>
-                    </VBox>
-                </content>
+                <VBox spacing="10">
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                    <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
+                        <content>
+                            <FlowPane fx:id="lightSelectPanel" hgap="10" vgap="10"/>
+                        </content>
+                    </ScrollPane>
+                    <Button fx:id="restoreLightsButton" text="Restore All Lights"/>
+                </VBox>
             </TitledPane>
 
             <!-- Hue Bridge Management Panel -->
             <TitledPane text="Hue Bridge" expanded="true" animated="true">
-                <content>
-                    <VBox fx:id="bridgeManagementPanel" spacing="10">
-                        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                <VBox fx:id="bridgeManagementPanel" spacing="10">
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
 
-                        <!-- Pane shown when NOT connected to a bridge -->
-                        <VBox fx:id="bridgeDisconnectedPane" spacing="10" managed="true" visible="true">
-                            <children>
-                                <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <Button fx:id="findBridgesButton" text="Find Bridges"/>
-                                    <ProgressIndicator fx:id="bridgeSearchIndicator" visible="false" prefHeight="25" prefWidth="25"/>
-                                </HBox>
-                                <ListView fx:id="bridgeListView" prefHeight="75"/>
-                                <Label text="Select a bridge from the list and click Connect."/>
-                                <Button fx:id="connectBridgeButton" text="Connect" disable="true"/>
-                                <Label fx:id="pushlinkInstructionLabel" text="Now press the button on your Hue Bridge..." styleClass="warning" visible="false"/>
-                            </children>
-                        </VBox>
-
-                        <!-- Pane shown when connected to a bridge -->
-                        <VBox fx:id="bridgeConnectedPane" spacing="10" managed="false" visible="false">
-                            <children>
-                                <Label fx:id="bridgeStatusLabel" text="Status: Connected to..."/>
-                                <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <Label text="Entertainment Group:"/>
-                                    <ComboBox fx:id="entertainmentGroupComboBox" prefWidth="250"/>
-                                </HBox>
-                                <Button fx:id="disconnectBridgeButton" text="Disconnect Bridge"/>
-                            </children>
-                        </VBox>
+                    <!-- Pane shown when NOT connected to a bridge -->
+                    <VBox fx:id="bridgeDisconnectedPane" spacing="10" managed="true" visible="true">
+                        <children>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Button fx:id="findBridgesButton" text="Find Bridges"/>
+                                <ProgressIndicator fx:id="bridgeSearchIndicator" visible="false" prefHeight="25" prefWidth="25"/>
+                            </HBox>
+                            <ListView fx:id="bridgeListView" prefHeight="75"/>
+                            <Label text="Select a bridge from the list and click Connect."/>
+                            <Button fx:id="connectBridgeButton" text="Connect" disable="true"/>
+                            <Label fx:id="pushlinkInstructionLabel" text="Now press the button on your Hue Bridge..." styleClass="warning" visible="false"/>
+                        </children>
                     </VBox>
-                </content>
+
+                    <!-- Pane shown when connected to a bridge -->
+                    <VBox fx:id="bridgeConnectedPane" spacing="10" managed="false" visible="false">
+                        <children>
+                            <Label fx:id="bridgeStatusLabel" text="Status: Connected to..."/>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Entertainment Group:"/>
+                                <ComboBox fx:id="entertainmentGroupComboBox" prefWidth="250"/>
+                            </HBox>
+                            <Button fx:id="disconnectBridgeButton" text="Disconnect Bridge"/>
+                        </children>
+                    </VBox>
+                </VBox>
             </TitledPane>
         </Accordion>
     </top>
@@ -87,72 +81,68 @@
         <Accordion>
             <!-- Brightness Panel -->
             <TitledPane text="Brightness" expanded="true" animated="true">
-                <content>
-                    <VBox spacing="10">
-                        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Label text="Minimum:" minWidth="100"/>
-                            <Slider fx:id="minBrightnessSlider" min="0" max="254" value="80"/>
-                            <Label fx:id="minBrightnessLabel" text="31%" minWidth="50"/>
-                        </HBox>
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Label text="Maximum:" minWidth="100"/>
-                            <Slider fx:id="maxBrightnessSlider" min="0" max="254" value="254"/>
-                            <Label fx:id="maxBrightnessLabel" text="100%" minWidth="50"/>
-                        </HBox>
-                        <Button fx:id="restoreBrightnessButton" text="Restore Defaults"/>
-                    </VBox>
-                </content>
+                <VBox spacing="10">
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Minimum:" minWidth="100"/>
+                        <Slider fx:id="minBrightnessSlider" min="0" max="254" value="80"/>
+                        <Label fx:id="minBrightnessLabel" text="31%" minWidth="50"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Maximum:" minWidth="100"/>
+                        <Slider fx:id="maxBrightnessSlider" min="0" max="254" value="254"/>
+                        <Label fx:id="maxBrightnessLabel" text="100%" minWidth="50"/>
+                    </HBox>
+                    <Button fx:id="restoreBrightnessButton" text="Restore Defaults"/>
+                </VBox>
             </TitledPane>
 
             <!-- Advanced Settings -->
             <TitledPane fx:id="advancedPane" text="Advanced Settings" expanded="false" animated="true">
-                <content>
-                    <VBox fx:id="advancedPanel" spacing="10">
-                        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                <VBox fx:id="advancedPanel" spacing="10">
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
 
-                        <!-- Effects -->
-                        <HBox spacing="15">
-                            <CheckBox fx:id="strobeCheckBox" text="Strobe Effect"/>
-                            <CheckBox fx:id="colorStrobeCheckbox" text="Color Strobe"/>
-                            <CheckBox fx:id="glowCheckBox" text="Glow Effect"/>
-                            <CheckBox fx:id="bassOnlyModeCheckBox" text="Bass Only Mode"/>
-                        </HBox>
+                    <!-- Effects -->
+                    <HBox spacing="15">
+                        <CheckBox fx:id="strobeCheckBox" text="Strobe Effect"/>
+                        <CheckBox fx:id="colorStrobeCheckbox" text="Color Strobe"/>
+                        <CheckBox fx:id="glowCheckBox" text="Glow Effect"/>
+                        <CheckBox fx:id="bassOnlyModeCheckBox" text="Bass Only Mode"/>
+                    </HBox>
 
-                        <!-- Sensitivity -->
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Label text="Beat Sensitivity:" minWidth="120"/>
-                            <Slider fx:id="beatSensitivitySlider" min="5" max="20" value="13"/>
-                            <Label fx:id="beatSensitivityLabel" minWidth="50"/>
-                        </HBox>
+                    <!-- Sensitivity -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Beat Sensitivity:" minWidth="120"/>
+                        <Slider fx:id="beatSensitivitySlider" min="5" max="20" value="13"/>
+                        <Label fx:id="beatSensitivityLabel" minWidth="50"/>
+                    </HBox>
 
-                        <!-- Beat Delay -->
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Label text="Beat Delay (ms):" minWidth="120"/>
-                            <Slider fx:id="beatDelaySlider" min="0" max="500" value="0"/>
-                            <Label fx:id="beatDelayLabel" minWidth="50"/>
-                        </HBox>
+                    <!-- Beat Delay -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Beat Delay (ms):" minWidth="120"/>
+                        <Slider fx:id="beatDelaySlider" min="0" max="500" value="0"/>
+                        <Label fx:id="beatDelayLabel" minWidth="50"/>
+                    </HBox>
 
-                        <!-- Lights per Beat -->
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Label text="Lights per Beat:" minWidth="120"/>
-                            <Slider fx:id="lightsPerBeatSlider" min="1" max="10" value="1"/>
-                            <Label fx:id="lightsPerBeatLabel" minWidth="50"/>
-                        </HBox>
+                    <!-- Lights per Beat -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lights per Beat:" minWidth="120"/>
+                        <Slider fx:id="lightsPerBeatSlider" min="1" max="10" value="1"/>
+                        <Label fx:id="lightsPerBeatLabel" minWidth="50"/>
+                    </HBox>
 
-                        <!-- Max Fade Transition Time -->
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Label text="Max Fade Time (ms):" minWidth="120"/>
-                            <Slider fx:id="maxFadeTimeSlider" min="100" max="5000" value="400"/>
-                            <Label fx:id="maxFadeTimeLabel" minWidth="50"/>
-                        </HBox>
+                    <!-- Max Fade Transition Time -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Max Fade Time (ms):" minWidth="120"/>
+                        <Slider fx:id="maxFadeTimeSlider" min="100" max="5000" value="400"/>
+                        <Label fx:id="maxFadeTimeLabel" minWidth="50"/>
+                    </HBox>
 
-                        <HBox spacing="10">
-                            <Button fx:id="readdColorSetPresetsButton" text="Re-add Presets"/>
-                            <Button fx:id="restoreAdvancedButton" text="Restore Defaults"/>
-                        </HBox>
-                    </VBox>
-                </content>
+                    <HBox spacing="10">
+                        <Button fx:id="readdColorSetPresetsButton" text="Re-add Presets"/>
+                        <Button fx:id="restoreAdvancedButton" text="Restore Defaults"/>
+                    </HBox>
+                </VBox>
             </TitledPane>
         </Accordion>
     </center>
