@@ -41,23 +41,28 @@ public final class WindowsThemeDetector {
                 "/v", "AppsUseLightTheme"
             );
             Process process = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("AppsUseLightTheme")) {
-                    // Extract the value (0x0 = dark, 0x1 = light)
-                    if (line.contains("0x0")) {
-                        logger.info("Windows dark mode detected");
-                        return true;
-                    } else if (line.contains("0x1")) {
-                        logger.info("Windows light mode detected");
-                        return false;
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream(), "UTF-8"))) {
+                
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains("AppsUseLightTheme")) {
+                        // Extract the value (0x0 = dark, 0x1 = light)
+                        if (line.contains("0x0")) {
+                            logger.info("Windows dark mode detected");
+                            return true;
+                        } else if (line.contains("0x1")) {
+                            logger.info("Windows light mode detected");
+                            return false;
+                        }
                     }
                 }
+                
+                process.waitFor();
+            } finally {
+                process.destroy();
             }
-            
-            process.waitFor();
         } catch (Exception e) {
             logger.warn("Failed to detect Windows theme preference", e);
         }

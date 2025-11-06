@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
 import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.audio.PJAudioReader;

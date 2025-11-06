@@ -11,10 +11,9 @@ class WindowsThemeDetectorTest {
     @Test
     @EnabledOnOs(OS.WINDOWS)
     void testIsDarkModeEnabledOnWindows() {
-        // Just verify the method doesn't throw an exception
-        boolean result = WindowsThemeDetector.isDarkModeEnabled();
-        // Result can be either true or false depending on system settings
-        assertTrue(result || !result);
+        // Verify the method executes without throwing an exception
+        // The actual value depends on the system's current theme setting
+        assertDoesNotThrow(() -> WindowsThemeDetector.isDarkModeEnabled());
     }
 
     @Test
