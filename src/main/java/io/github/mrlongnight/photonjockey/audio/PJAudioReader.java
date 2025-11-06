@@ -184,8 +184,22 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
                 beatEvent = beatEventInner;
             }
 
+            // Convert RMS to dB
+            double db = 20 * Math.log10(rms);
+            if (Double.isInfinite(db) || Double.isNaN(db)) {
+                db = -80.0; // Minimum dB value
+            }
+
+            double lowFreqCutoff = config.getInt(ConfigNode.LOW_FREQ);
+            double midFreqCutoff = config.getInt(ConfigNode.MID_FREQ);
+            double highFreqCutoff = config.getInt(ConfigNode.HIGH_FREQ);
+
+            double[] lowFreqData = getLowFreq(normalizedAudioBuffer, audioFormat, lowFreqCutoff);
+            double[] midFreqData = getMidFreq(normalizedAudioBuffer, audioFormat, lowFreqCutoff, midFreqCutoff);
+            double[] highFreqData = getHighFreq(normalizedAudioBuffer, audioFormat, highFreqCutoff);
+
             // Notify observers about the raw audio frame for visualization
-            notifyAudioFrame(new AudioFrame(chunkData, (int) audioFormat.sampleRate(), audioFormat.channels(), System.currentTimeMillis()));
+            notifyAudioFrame(new AudioFrame(chunkData, (int) audioFormat.sampleRate(), audioFormat.channels(), System.currentTimeMillis(), db, lowFreqData, midFreqData, highFreqData));
         }
 
         if (newData.hasRemaining()) {
@@ -245,6 +259,70 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
         }
 
         fft.realInverse(normalizedSampleArray, true);
+    }
+
+    private double[] getLowFreq(double[] normalizedSampleArray, PJAudioFormat format, double cutoff) {
+        int sampleCount = normalizedSampleArray.length;
+        if (sampleCount == 0) return new double[0];
+
+        DoubleFFT_1D fft = new DoubleFFT_1D(sampleCount);
+        double[] fftData = Arrays.copyOf(normalizedSampleArray, sampleCount);
+        fft.realForward(fftData);
+
+        double freqPerBin = format.sampleRate() / sampleCount;
+        int cutoffBin = (int) (cutoff / freqPerBin);
+
+        // Zero out high-frequency components
+        for (int i = cutoffBin * 2; i < sampleCount; i++) {
+            fftData[i] = 0d;
+        }
+
+        fft.realInverse(fftData, true);
+        return fftData;
+    }
+
+    private double[] getMidFreq(double[] normalizedSampleArray, PJAudioFormat format, double lowCutoff, double highCutoff) {
+        int sampleCount = normalizedSampleArray.length;
+        if (sampleCount == 0) return new double[0];
+
+        DoubleFFT_1D fft = new DoubleFFT_1D(sampleCount);
+        double[] fftData = Arrays.copyOf(normalizedSampleArray, sampleCount);
+        fft.realForward(fftData);
+
+        double freqPerBin = format.sampleRate() / sampleCount;
+        int lowCutoffBin = (int) (lowCutoff / freqPerBin);
+        int highCutoffBin = (int) (highCutoff / freqPerBin);
+
+        // Zero out low and high frequency components
+        for (int i = 0; i < lowCutoffBin * 2; i++) {
+            fftData[i] = 0d;
+        }
+        for (int i = highCutoffBin * 2; i < sampleCount; i++) {
+            fftData[i] = 0d;
+        }
+
+        fft.realInverse(fftData, true);
+        return fftData;
+    }
+
+    private double[] getHighFreq(double[] normalizedSampleArray, PJAudioFormat format, double cutoff) {
+        int sampleCount = normalizedSampleArray.length;
+        if (sampleCount == 0) return new double[0];
+
+        DoubleFFT_1D fft = new DoubleFFT_1D(sampleCount);
+        double[] fftData = Arrays.copyOf(normalizedSampleArray, sampleCount);
+        fft.realForward(fftData);
+
+        double freqPerBin = format.sampleRate() / sampleCount;
+        int cutoffBin = (int) (cutoff / freqPerBin);
+
+        // Zero out low-frequency components
+        for (int i = 0; i < cutoffBin * 2; i++) {
+            fftData[i] = 0d;
+        }
+
+        fft.realInverse(fftData, true);
+        return fftData;
     }
 
     @Override

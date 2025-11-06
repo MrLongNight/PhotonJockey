@@ -72,7 +72,11 @@ public class FileAudioSource implements IAudioSource {
                     frameData,
                     (int) audioFormat.getSampleRate(),
                     channels,
-                    System.currentTimeMillis()
+                    System.currentTimeMillis(),
+                    0.0,
+                    new double[0],
+                    new double[0],
+                    new double[0]
             );
 
             frameCount++;

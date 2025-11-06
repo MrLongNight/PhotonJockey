@@ -9,20 +9,32 @@ public class AudioFrame {
     private final int sampleRate;
     private final int channels;
     private final long timestamp;
+    private final double levelDB;
+    private final double[] lowFreqData;
+    private final double[] midFreqData;
+    private final double[] highFreqData;
 
     /**
      * Creates a new AudioFrame.
      *
-     * @param data       the audio data
-     * @param sampleRate the sample rate in Hz
-     * @param channels   the number of audio channels
-     * @param timestamp  the timestamp of this frame in milliseconds
+     * @param data         the audio data
+     * @param sampleRate   the sample rate in Hz
+     * @param channels     the number of audio channels
+     * @param timestamp    the timestamp of this frame in milliseconds
+     * @param levelDB      the audio level in decibels
+     * @param lowFreqData  the low frequency audio data
+     * @param midFreqData  the mid frequency audio data
+     * @param highFreqData the high frequency audio data
      */
-    public AudioFrame(byte[] data, int sampleRate, int channels, long timestamp) {
+    public AudioFrame(byte[] data, int sampleRate, int channels, long timestamp, double levelDB, double[] lowFreqData, double[] midFreqData, double[] highFreqData) {
         this.data = data.clone();
         this.sampleRate = sampleRate;
         this.channels = channels;
         this.timestamp = timestamp;
+        this.levelDB = levelDB;
+        this.lowFreqData = lowFreqData;
+        this.midFreqData = midFreqData;
+        this.highFreqData = highFreqData;
     }
 
     /**
@@ -59,6 +71,27 @@ public class AudioFrame {
      */
     public long getTimestamp() {
         return timestamp;
+    }
+
+    /**
+     * Gets the audio level in decibels.
+     *
+     * @return the audio level in dB
+     */
+    public double getLevelDB() {
+        return levelDB;
+    }
+
+    public double[] getLowFreqData() {
+        return lowFreqData;
+    }
+
+    public double[] getMidFreqData() {
+        return midFreqData;
+    }
+
+    public double[] getHighFreqData() {
+        return highFreqData;
     }
 
     /**

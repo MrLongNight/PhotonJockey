@@ -36,6 +36,8 @@ public class BPMDetector {
     private final int maxTimestamps;
     private double minBpm;
     private double maxBpm;
+    private double currentBpm = 0.0;
+    private double smoothingFactor = 0.1;
 
     public BPMDetector(int maxTimestamps) {
         this.maxTimestamps = maxTimestamps;
@@ -81,9 +83,15 @@ public class BPMDetector {
 
         double averageDelta = deltas.stream().mapToLong(Long::longValue).average().orElse(0.0);
         if (averageDelta == 0.0) {
-            return 0.0;
+            return currentBpm;
         }
 
-        return 60000.0 / averageDelta;
+        double newBpm = 60000.0 / averageDelta;
+        if (currentBpm == 0.0) {
+            currentBpm = newBpm;
+        } else {
+            currentBpm = (smoothingFactor * newBpm) + ((1 - smoothingFactor) * currentBpm);
+        }
+        return currentBpm;
     }
 }

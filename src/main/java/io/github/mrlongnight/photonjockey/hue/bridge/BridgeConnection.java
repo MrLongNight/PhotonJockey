@@ -143,6 +143,10 @@ public class BridgeConnection {
         return lastLatencyMs;
     }
 
+    public Hue getHue() {
+        return hue;
+    }
+
     /**
      * @return list containing all valid lights with brightness controls.
      */

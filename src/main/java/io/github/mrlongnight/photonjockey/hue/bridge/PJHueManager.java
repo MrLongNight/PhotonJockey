@@ -1,6 +1,8 @@
 package io.github.mrlongnight.photonjockey.hue.bridge;
 
+import io.github.zeroone3010.yahueapi.GroupType;
 import io.github.zeroone3010.yahueapi.HueBridge;
+import io.github.zeroone3010.yahueapi.Room;
 import io.github.zeroone3010.yahueapi.discovery.HueBridgeDiscoveryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,22 @@ public class PJHueManager implements HueManager {
     public PJHueManager(Config config, AppTaskOrchestrator taskOrchestrator) {
         this.config = config;
         this.taskOrchestrator = taskOrchestrator;
+    }
+
+    public void attemptAutoConnect() {
+        List<AccessPoint> previousBridges = getPreviousBridges();
+        if (!previousBridges.isEmpty()) {
+            AccessPoint lastUsedBridge = previousBridges.get(0);
+            logger.info("Attempting to auto-connect to last used bridge: {}", lastUsedBridge.ip());
+            setAttemptConnection(lastUsedBridge);
+        }
+    }
+
+    @Override
+    public List<Room> getEntertainmentGroups() {
+        return bridgeConnections.values().stream()
+                .flatMap(bridge -> bridge.getHue().getGroupsOfType(GroupType.ENTERTAINMENT).stream())
+                .collect(Collectors.toList());
     }
 
     @Override
