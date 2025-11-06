@@ -124,10 +124,14 @@ public class PJHueManager implements HueManager {
             List<AccessPoint> accessPoints = bridgesFound.stream()
                     .map(bridge -> new AccessPoint(bridge.getIp(), null, bridge.getName()))
                     .collect(Collectors.toList());
-            stateObserver.displayFoundBridges(accessPoints);
+            if (stateObserver != null) {
+                stateObserver.displayFoundBridges(accessPoints);
+            }
         });
 
-        stateObserver.isScanningForBridges();
+        if (stateObserver != null) {
+            stateObserver.isScanningForBridges();
+        }
         currentState = ManagerState.SCANNING_FOR_BRIDGES;
     }
 
@@ -135,7 +139,9 @@ public class PJHueManager implements HueManager {
     public void setAttemptConnection(AccessPoint accessPoint) {
         String bridgeIp = accessPoint.ip();
         currentState = ManagerState.ATTEMPTING_CONNECTION;
-        stateObserver.isAttemptingConnection();
+        if (stateObserver != null) {
+            stateObserver.isAttemptingConnection();
+        }
         BridgeConnection.ConnectionListener listener = new BridgeConnection.ConnectionListener() {
             @Override
             public void connectionSuccess(BridgeConnection connection, String key, String name, String certificateHash) {
@@ -154,7 +160,9 @@ public class PJHueManager implements HueManager {
                 config.putList(ConfigNode.getCustomNode(CONFIG_BRIDGE_PREFIX + bridgeIp), bridgeData);
 
                 currentState = ManagerState.CONNECTED;
-                stateObserver.hasConnected();
+                if (stateObserver != null) {
+                    stateObserver.hasConnected();
+                }
             }
 
             @Override
@@ -169,7 +177,9 @@ public class PJHueManager implements HueManager {
                 if (bridgeConnections.isEmpty()) {
                     currentState = ManagerState.CONNECTION_LOST;
                 }
-                stateObserver.connectionWasLost(ap, error);
+                if (stateObserver != null) {
+                    stateObserver.connectionWasLost(ap, error);
+                }
             }
 
             @Override
@@ -177,13 +187,17 @@ public class PJHueManager implements HueManager {
                 logger.info("Authentication to connect to bridge at {} is required", bridgeIp);
 
                 currentState = ManagerState.AWAITING_PUSHLINK;
-                stateObserver.requestPushlink();
+                if (stateObserver != null) {
+                    stateObserver.requestPushlink();
+                }
             }
 
             @Override
             public void pushlinkFailed() {
                 currentState = ManagerState.NOT_CONNECTED;
-                stateObserver.pushlinkHasFailed();
+                if (stateObserver != null) {
+                    stateObserver.pushlinkHasFailed();
+                }
             }
         };
         createBridgeConnection(accessPoint, taskOrchestrator, listener);
@@ -204,7 +218,9 @@ public class PJHueManager implements HueManager {
 
         if (bridgeConnections.isEmpty()) {
             currentState = ManagerState.NOT_CONNECTED;
-            stateObserver.disconnected();
+            if (stateObserver != null) {
+                stateObserver.disconnected();
+            }
         }
     }
 
@@ -214,7 +230,9 @@ public class PJHueManager implements HueManager {
         bridgeConnections.clear();
         logger.info("Disconnected from all bridges");
         currentState = ManagerState.NOT_CONNECTED;
-        stateObserver.disconnected();
+        if (stateObserver != null) {
+            stateObserver.disconnected();
+        }
     }
 
     private enum ManagerState {
