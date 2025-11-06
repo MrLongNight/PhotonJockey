@@ -17,6 +17,7 @@ Project management, planning, and implementation tracking:
 - **[01-PROJECT_PLAN.md](project/01-PROJECT_PLAN.md)** - Master project plan with all TaskGroups
 - **[02-IMPLEMENTATION_STATUS.md](project/02-IMPLEMENTATION_STATUS.md)** - Current implementation status of all tasks
 - **[03-IMPLEMENTED_TASKS.md](project/03-IMPLEMENTED_TASKS.md)** - Summary of completed tasks
+- **[V1.0.0_RELEASE_PREPARATION.md](project/V1.0.0_RELEASE_PREPARATION.md)** - Checklist and planning for v1.0.0 release
 
 #### Refactoring Documentation
 - **[01-CODEBASE_OVERVIEW.md](project/refactor/01-CODEBASE_OVERVIEW.md)** - Generated codebase analysis
