@@ -6,6 +6,7 @@ Welcome to the PhotonJockey documentation! This directory contains all project d
 - **[CODE_ANALYSIS.md](CODE_ANALYSIS.md)** - Comprehensive code analysis and recommendations (latest: 2025-11-06)
 - **[DOCUMENTATION_GUIDELINES.md](DOCUMENTATION_GUIDELINES.md)** - Complete documentation standards and conventions
 - **[DOCUMENTATION_GUIDELINES_COPILOT.md](DOCUMENTATION_GUIDELINES_COPILOT.md)** - Quick reference for AI agents
+- **[COPILOT_CUSTOM_INSTRUCTIONS.md](COPILOT_CUSTOM_INSTRUCTIONS.md)** - Complete instructions for Copilot Custom Instructions
 
 ## 📚 Documentation Structure
 
