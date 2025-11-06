@@ -4,64 +4,87 @@ import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.config.ConfigNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class SettingsController {
 
-    @FXML private TextField logPathTextField;
-    @FXML private Button browseLogPathButton;
-    @FXML private ChoiceBox<String> logLevelChoiceBox;
-    @FXML private Label statusLabel;
-    @FXML private Label infoLabel;
-    @FXML private Button saveButton;
-    @FXML private Button cancelButton;
+    private static final Logger logger = LoggerFactory.getLogger(SettingsController.class);
 
+    @FXML
+    private ComboBox<String> themeComboBox;
+    @FXML
+    private TextField logPathTextField;
+    @FXML
+    private Button browseButton;
+    @FXML
+    private ComboBox<String> consoleLogLevelComboBox;
+    @FXML
+    private ComboBox<String> fileLogLevelComboBox;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
+
+    private Stage dialogStage;
     private Config config;
-    private Stage stage;
 
-    public void initialize(Config config, Stage stage) {
+    @FXML
+    public void initialize() {
+        // Populate combo boxes
+        themeComboBox.getItems().addAll("Automatic", "Dark", "Light");
+        consoleLogLevelComboBox.getItems().addAll("INFO", "ERROR", "DEBUG");
+        fileLogLevelComboBox.getItems().addAll("INFO", "ERROR", "DEBUG");
+
+        // Add listeners
+        browseButton.setOnAction(event -> handleBrowse());
+    }
+
+    public void initData(Config config) {
         this.config = config;
-        this.stage = stage;
-
-        logLevelChoiceBox.getItems().addAll("INFO", "DEBUG", "ERROR");
-
         loadSettings();
+    }
 
-        browseLogPathButton.setOnAction(event -> browseForLogPath());
-        saveButton.setOnAction(event -> saveSettings());
-        cancelButton.setOnAction(event -> stage.close());
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
     }
 
     private void loadSettings() {
+        themeComboBox.setValue(config.get(ConfigNode.THEME));
         logPathTextField.setText(config.get(ConfigNode.LOG_PATH));
-        logLevelChoiceBox.setValue(config.get(ConfigNode.LOG_LEVEL));
+        consoleLogLevelComboBox.setValue(config.get(ConfigNode.CONSOLE_LOG_LEVEL));
+        fileLogLevelComboBox.setValue(config.get(ConfigNode.FILE_LOG_LEVEL));
     }
 
-    private void saveSettings() {
+    @FXML
+    private void handleSave() {
+        config.put(ConfigNode.THEME, themeComboBox.getValue());
         config.put(ConfigNode.LOG_PATH, logPathTextField.getText());
-        config.put(ConfigNode.LOG_LEVEL, logLevelChoiceBox.getValue());
-        stage.close();
+        config.put(ConfigNode.CONSOLE_LOG_LEVEL, consoleLogLevelComboBox.getValue());
+        config.put(ConfigNode.FILE_LOG_LEVEL, fileLogLevelComboBox.getValue());
+
+        logger.info("Settings saved.");
+        dialogStage.close();
     }
 
-    private void browseForLogPath() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File selectedDirectory = directoryChooser.showDialog(stage);
-        if (selectedDirectory != null) {
-            logPathTextField.setText(selectedDirectory.getAbsolutePath());
+    @FXML
+    private void handleCancel() {
+        dialogStage.close();
+    }
+
+    private void handleBrowse() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Log File Path");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        File file = fileChooser.showSaveDialog(dialogStage);
+        if (file != null) {
+            logPathTextField.setText(file.getAbsolutePath());
         }
-    }
-
-    public void updateStatus(String status) {
-        statusLabel.setText("Status: " + status);
-    }
-
-    public void updateInfo(String info) {
-        infoLabel.setText(info);
     }
 }

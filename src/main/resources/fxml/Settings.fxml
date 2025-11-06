@@ -2,49 +2,53 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="io.github.mrlongnight.photonjockey.ui.SettingsController"
-      spacing="10" prefWidth="500" style="-fx-background-color: #1e1e1e; -fx-padding: 10;">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.mrlongnight.photonjockey.ui.SettingsController"
+            prefWidth="500.0" styleClass="dashboard-root" stylesheets="@../css/dashboard.css">
 
-    <Label text="Settings" style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <center>
+        <GridPane hgap="10" vgap="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-    <GridPane hgap="10" vgap="10">
-        <padding>
-            <Insets top="10" bottom="10"/>
-        </padding>
+            <!-- Theme -->
+            <Label text="Theme:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="themeComboBox" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <!-- Log Path -->
-        <Label text="Log File Path:" style="-fx-text-fill: #ffffff;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="logPathTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-        <Button fx:id="browseLogPathButton" text="Browse..." GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+            <!-- Log File Path -->
+            <Label text="Log File Path:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <HBox spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                <TextField fx:id="logPathTextField" prefWidth="200" HBox.hgrow="ALWAYS"/>
+                <Button fx:id="browseButton" text="Browse..."/>
+            </HBox>
 
-        <!-- Log Level -->
-        <Label text="Log Level:" style="-fx-text-fill: #ffffff;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <ChoiceBox fx:id="logLevelChoiceBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <!-- Console Log Level -->
+            <Label text="Console Log Level:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="consoleLogLevelComboBox" prefWidth="250" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-    </GridPane>
+            <!-- File Log Level -->
+            <Label text="File Log Level:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="fileLogLevelComboBox" prefWidth="250" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-    <!-- Status Information -->
-    <VBox fx:id="statusVBox" spacing="5">
-        <padding>
-            <Insets top="10"/>
-        </padding>
-        <Label fx:id="statusLabel" text="Status: Idle"
-               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
-        <Label fx:id="infoLabel" text=""
-               style="-fx-text-fill: #888888; -fx-font-size: 10px;"/>
-    </VBox>
+        </GridPane>
+    </center>
 
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button fx:id="saveButton" text="Save"/>
-        <Button fx:id="cancelButton" text="Cancel"/>
-    </HBox>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+            <Button fx:id="saveButton" text="Save" onAction="#handleSave" styleClass="primary"/>
+            <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel"/>
+        </HBox>
+    </bottom>
 
-</VBox>
+</BorderPane>

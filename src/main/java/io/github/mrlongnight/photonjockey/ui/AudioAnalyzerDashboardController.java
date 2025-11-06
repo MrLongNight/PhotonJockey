@@ -156,7 +156,8 @@ public class AudioAnalyzerDashboardController {
 
             SettingsController settingsController = loader.getController();
             Stage settingsStage = new Stage();
-            settingsController.initialize(config, settingsStage);
+            settingsController.setDialogStage(settingsStage);
+            settingsController.initData(config);
 
             settingsStage.setTitle("Settings");
             settingsStage.setScene(new Scene(root));

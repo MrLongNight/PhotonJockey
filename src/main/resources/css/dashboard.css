@@ -28,7 +28,7 @@
 
 .tab-pane .tab {
     -fx-background-color: #3c1361;
-    -fx-text-fill: -fx-text-secondary; /* Hellere Schrift */
+    -fx-text-fill: #cccccc; /* Explizit auf Hellgrau gesetzt */
     -fx-font-size: 14px;
     -fx-padding: 10px 20px;
     -fx-cursor: hand;
@@ -287,16 +287,22 @@
     -fx-separator: #dddddd;
 }
 
+.light-theme .dashboard-root {
+    -fx-background-color: -fx-background-primary;
+}
+
 .light-theme .tab-pane .tab-header-area {
     -fx-background-color: #e0e0e0;
 }
 
 .light-theme .tab-pane .tab {
     -fx-background-color: #e0e0e0;
+    -fx-text-fill: -fx-text-secondary;
 }
 
 .light-theme .tab-pane .tab:selected {
     -fx-background-color: -fx-background-primary;
+    -fx-text-fill: -fx-text-primary;
 }
 
 .light-theme .tab-pane .tab:hover {
@@ -311,6 +317,8 @@
 
 .light-theme .button {
     -fx-background-color: #e8e8e8;
+    -fx-text-fill: -fx-text-primary;
+    -fx-border-color: -fx-border;
 }
 
 .light-theme .button:hover {
@@ -321,6 +329,49 @@
     -fx-background-color: #d8d8d8;
 }
 
+.light-theme .label {
+    -fx-text-fill: -fx-text-primary;
+}
+
+.light-theme .combo-box {
+    -fx-background-color: #e8e8e8;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.light-theme .combo-box .list-cell {
+    -fx-background-color: #e8e8e8;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.light-theme .check-box {
+    -fx-text-fill: -fx-text-primary;
+}
+
 .light-theme .check-box .box {
     -fx-background-color: #f0f0f0;
+    -fx-border-color: -fx-border;
+}
+
+.light-theme .titled-pane {
+    -fx-background-color: -fx-background-secondary;
+    -fx-border-color: -fx-border;
+}
+
+.light-theme .titled-pane > .title {
+    -fx-background-color: #e8e8e8;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.light-theme .titled-pane:expanded > .title {
+    -fx-background-color: -fx-accent-purple;
+    -fx-text-fill: white;
+}
+
+.light-theme .titled-pane > .content {
+    -fx-background-color: -fx-background-primary;
+    -fx-border-color: -fx-border;
+}
+
+.light-theme .slider .track {
+    -fx-background-color: -fx-border;
 }
