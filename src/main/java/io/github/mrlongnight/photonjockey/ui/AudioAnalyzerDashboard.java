@@ -105,8 +105,10 @@ public class AudioAnalyzerDashboard implements BeatObserver {
     /**
      * Updates the UI with the current list of available audio devices.
      * This method should be called from a background thread.
+     * 
+     * @return the list of available audio devices
      */
-    private void updateDeviceListInUI() {
+    private List<AudioDevice> updateDeviceListInUI() {
         List<AudioDevice> devices = audioReader.getSupportedDevices();
         List<String> deviceNames = devices.stream()
             .map(AudioDevice::getName)
@@ -127,6 +129,8 @@ public class AudioAnalyzerDashboard implements BeatObserver {
                 showWarning("No Audio Devices", "No audio capture devices found on this system")
             );
         }
+        
+        return devices;
     }
 
     private void onAudioDeviceSelected(String deviceName) {
@@ -165,9 +169,7 @@ public class AudioAnalyzerDashboard implements BeatObserver {
     private void startAudioMonitoring() {
         taskOrchestrator.dispatch(() -> {
             try {
-                updateDeviceListInUI();
-                
-                List<AudioDevice> devices = audioReader.getSupportedDevices();
+                List<AudioDevice> devices = updateDeviceListInUI();
                 if (devices.isEmpty()) {
                     return; // Already showed warning in updateDeviceListInUI()
                 }
