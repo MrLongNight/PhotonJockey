@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.jetbrains.intellij.java:java-gui-forms-rt:252.26199.158'
     implementation 'org.jitsi:libjitsi:1.1-34-gb93ce2ee'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+    implementation 'com.pixelduke:fxthemes:1.5.1'
 
     testImplementation platform('org.junit:junit-bom:5.13.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'

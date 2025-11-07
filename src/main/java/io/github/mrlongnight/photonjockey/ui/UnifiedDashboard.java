@@ -1,5 +1,7 @@
 package io.github.mrlongnight.photonjockey.ui;
 
+import com.pixelduke.window.ThemeWindowManager;
+import com.pixelduke.window.ThemeWindowManagerFactory;
 import io.github.mrlongnight.photonjockey.AppTaskOrchestrator;
 import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
 import io.github.mrlongnight.photonjockey.config.Config;
@@ -36,6 +38,7 @@ public class UnifiedDashboard extends Application {
     private Config config;
     private PJAudioReader audioReader;
     private PJHueManager hueManager;
+    private ThemeWindowManager themeWindowManager;
 
     public static void init(Config config, AppTaskOrchestrator taskOrchestrator,
                            PJAudioReader audioReader, PJHueManager hueManager) {
@@ -60,11 +63,14 @@ public class UnifiedDashboard extends Application {
             taskOrchestrator = staticTaskOrchestrator;
             audioReader = staticAudioReader;
             hueManager = staticHueManager;
+            
+            // Initialize FXThemes window manager for dark mode title bar support
+            themeWindowManager = ThemeWindowManagerFactory.create();
+            logger.info("ThemeWindowManager initialized");
 
             // Detect Windows theme preference
             String themePreference = WindowsThemeDetector.getThemeDescription();
             logger.info("Windows theme preference: {}", themePreference);
-            logger.info("Note: JavaFX does not support Windows dark mode title bars natively");
 
             // Load main UI
             logger.info("Loading FXML...");
@@ -125,7 +131,7 @@ public class UnifiedDashboard extends Application {
             logger.info("Stage configured");
 
             logger.info("Applying theme...");
-            applyTheme(scene);
+            applyTheme(scene, primaryStage);
             logger.info("Theme applied");
             
             logger.info("Showing stage...");
@@ -151,18 +157,31 @@ public class UnifiedDashboard extends Application {
         }
     }
 
-    private void applyTheme(Scene scene) {
+    private void applyTheme(Scene scene, Stage stage) {
         String theme = config.get(ConfigNode.THEME);
         logger.info("Applying theme: {}", theme);
 
         scene.getRoot().getStyleClass().remove("light-theme");
+        
+        boolean isDarkMode = false;
 
         if ("Light".equals(theme)) {
             scene.getRoot().getStyleClass().add("light-theme");
+            isDarkMode = false;
+        } else if ("Dark".equals(theme)) {
+            isDarkMode = true;
         } else if ("Automatic".equals(theme)) {
-            if (!WindowsThemeDetector.isDarkModeEnabled()) {
+            boolean systemDarkMode = WindowsThemeDetector.isDarkModeEnabled();
+            if (!systemDarkMode) {
                 scene.getRoot().getStyleClass().add("light-theme");
             }
+            isDarkMode = systemDarkMode;
+        }
+        
+        // Apply dark/light mode to window frame using FXThemes
+        if (themeWindowManager != null) {
+            themeWindowManager.setDarkModeForWindowFrame(stage, isDarkMode);
+            logger.info("Window frame theme set to: {}", isDarkMode ? "Dark" : "Light");
         }
     }
 
