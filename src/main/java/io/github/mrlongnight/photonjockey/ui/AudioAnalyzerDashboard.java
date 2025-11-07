@@ -171,7 +171,7 @@ public class AudioAnalyzerDashboard implements BeatObserver {
             try {
                 List<AudioDevice> devices = updateDeviceListInUI();
                 if (devices.isEmpty()) {
-                    return; // Already showed warning in updateDeviceListInUI()
+                    return;
                 }
 
                 // Use the first available device
