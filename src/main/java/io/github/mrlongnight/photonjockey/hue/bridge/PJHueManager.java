@@ -72,6 +72,9 @@ public class PJHueManager implements HueManager {
 
     @Override
     public List<EntertainmentGroupInfo> getEntertainmentGroupsWithDetails() {
+        // Default position when actual position data is not available from the API
+        final double[] DEFAULT_LIGHT_POSITION = new double[]{0.0, 0.0, 0.0};
+        
         List<EntertainmentGroupInfo> result = new ArrayList<>();
         
         for (BridgeConnection bridge : bridgeConnections.values()) {
@@ -84,12 +87,15 @@ public class PJHueManager implements HueManager {
                                 light.getId(),
                                 light.getName(),
                                 light.getType().name(),
-                                new double[]{0.0, 0.0, 0.0} // Position data not available in current API
+                                DEFAULT_LIGHT_POSITION
                         ))
                         .collect(Collectors.toList());
                 
+                // Use composite ID to ensure uniqueness across bridges
+                String groupId = bridgeIp + ":" + room.getName();
+                
                 result.add(new EntertainmentGroupInfo(
-                        room.getName(), // Using name as ID since Room doesn't expose group ID directly
+                        groupId,
                         room.getName(),
                         lightInfos,
                         bridgeIp

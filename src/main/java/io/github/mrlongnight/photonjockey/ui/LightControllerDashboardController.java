@@ -96,6 +96,7 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
     private ToggleGroup colorSetToggleGroup;
     private List<CheckBox> lightCheckBoxes;
     private io.github.mrlongnight.photonjockey.hue.engine.EntertainmentController entertainmentController;
+    private java.util.Map<String, io.github.mrlongnight.photonjockey.hue.dto.EntertainmentGroupInfo> groupsByName = new java.util.HashMap<>();
 
     @FXML
     public void initialize() {
@@ -161,7 +162,11 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
         bridgeListView.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> connectBridgeButton.setDisable(n == null));
         entertainmentGroupComboBox.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> {
             if (n != null && config != null) {
-                config.put(ConfigNode.HUE_ENTERTAINMENT_GROUP, n);
+                // Store the group ID instead of name
+                var group = groupsByName.get(n);
+                if (group != null) {
+                    config.put(ConfigNode.HUE_ENTERTAINMENT_GROUP, group.getId());
+                }
             }
         });
         lightThemeCheckbox.selectedProperty().addListener((obs, o, n) -> {
@@ -238,12 +243,22 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
             var groups = hueManager.getEntertainmentGroupsWithDetails();
             Platform.runLater(() -> {
                 entertainmentGroupComboBox.getItems().clear();
-                groups.forEach(group -> entertainmentGroupComboBox.getItems().add(group.getName()));
+                groupsByName.clear();
+                
+                groups.forEach(group -> {
+                    String displayName = group.getName();
+                    groupsByName.put(displayName, group);
+                    entertainmentGroupComboBox.getItems().add(displayName);
+                });
                 
                 // Select previously selected group if available
-                String savedGroup = config.get(ConfigNode.HUE_ENTERTAINMENT_GROUP);
-                if (savedGroup != null && entertainmentGroupComboBox.getItems().contains(savedGroup)) {
-                    entertainmentGroupComboBox.getSelectionModel().select(savedGroup);
+                String savedGroupId = config.get(ConfigNode.HUE_ENTERTAINMENT_GROUP);
+                if (savedGroupId != null) {
+                    // Find the group with matching ID
+                    groupsByName.values().stream()
+                            .filter(g -> g.getId().equals(savedGroupId))
+                            .findFirst()
+                            .ifPresent(g -> entertainmentGroupComboBox.getSelectionModel().select(g.getName()));
                 } else if (!groups.isEmpty()) {
                     entertainmentGroupComboBox.getSelectionModel().selectFirst();
                 }
@@ -261,18 +276,15 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
     }
 
     private void activateEntertainmentMode() {
-        String selectedGroupName = entertainmentGroupComboBox.getSelectionModel().getSelectedItem();
-        if (selectedGroupName == null) {
+        String selectedGroupNameRef = entertainmentGroupComboBox.getSelectionModel().getSelectedItem();
+        if (selectedGroupNameRef == null) {
             updateStatus("Please select an entertainment group first.");
             return;
         }
 
         taskOrchestrator.dispatch(() -> {
-            var groups = hueManager.getEntertainmentGroupsWithDetails();
-            var selectedGroup = groups.stream()
-                    .filter(g -> g.getName().equals(selectedGroupName))
-                    .findFirst()
-                    .orElse(null);
+            String selectedGroupName = selectedGroupNameRef;
+            var selectedGroup = groupsByName.get(selectedGroupName);
 
             if (selectedGroup == null) {
                 Platform.runLater(() -> updateStatus("Entertainment group not found."));
@@ -284,19 +296,30 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
                 String bridgeIp = selectedGroup.getBridgeIp();
                 int port = config.getInt(ConfigNode.HUE_FAST_EFFECT_PORT, 2100); // Default entertainment port
                 
-                var fastController = new io.github.mrlongnight.photonjockey.hue.engine.FastEffectController(
-                        bridgeIp, port);
+                io.github.mrlongnight.photonjockey.hue.engine.FastEffectController fastController;
+                try {
+                    fastController = new io.github.mrlongnight.photonjockey.hue.engine.FastEffectController(
+                            bridgeIp, port);
+                } catch (IllegalArgumentException e) {
+                    Platform.runLater(() -> {
+                        updateStatus("Invalid configuration: " + e.getMessage());
+                        new Alert(Alert.AlertType.ERROR, 
+                                "Failed to configure entertainment controller: " + e.getMessage(), 
+                                ButtonType.OK).showAndWait();
+                    });
+                    return;
+                }
                 
                 entertainmentController.activateEntertainmentMode(selectedGroup, fastController);
                 
                 config.putBoolean(ConfigNode.HUE_ENTERTAINMENT_MODE_ENABLED, true);
                 
                 Platform.runLater(() -> {
-                    updateStatus("Entertainment mode activated for " + selectedGroupName);
+                    updateStatus("Entertainment mode activated for " + selectedGroupNameRef);
                     updateEntertainmentModeUI(true);
                     refreshLights(); // Update light selection to disable entertainment lights
                 });
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 Platform.runLater(() -> {
                     updateStatus("Failed to activate entertainment mode: " + e.getMessage());
                     new Alert(Alert.AlertType.ERROR, 
