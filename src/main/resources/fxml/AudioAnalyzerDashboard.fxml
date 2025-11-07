@@ -52,6 +52,7 @@
     
     <center>
         <Accordion>
+            <panes>
             <!-- Waveform Visualization -->
             <TitledPane text="Waveform" expanded="true" animated="true">
                 <content>
@@ -128,6 +129,7 @@
                     </HBox>
                 </content>
             </TitledPane>
+            </panes>
         </Accordion>
     </center>
     
