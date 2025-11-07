@@ -3,6 +3,7 @@ package io.github.mrlongnight.photonjockey.ui;
 import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.config.ConfigNode;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Objects;
 
 public class SettingsController {
 
@@ -79,9 +81,9 @@ public class SettingsController {
         String newFileLevel = fileLogLevelComboBox.getValue();
         String newLogPath = logPathTextField.getText();
         
-        boolean loggingChanged = !java.util.Objects.equals(newConsoleLevel, oldConsoleLevel) ||
-                                 !java.util.Objects.equals(newFileLevel, oldFileLevel) ||
-                                 !java.util.Objects.equals(newLogPath, oldLogPath);
+        boolean loggingChanged = !Objects.equals(newConsoleLevel, oldConsoleLevel) ||
+                                 !Objects.equals(newFileLevel, oldFileLevel) ||
+                                 !Objects.equals(newLogPath, oldLogPath);
         
         if (loggingChanged) {
             logger.info("Logging settings changed. Application restart required for changes to take effect.");
@@ -93,7 +95,7 @@ public class SettingsController {
     }
     
     private void showRestartWarning() {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Restart Required");
         alert.setHeaderText("Log settings changed");
         alert.setContentText("Please restart PhotonJockey for the new log settings to take effect.");
