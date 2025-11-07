@@ -47,6 +47,11 @@ public class UnifiedDashboard extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Set up uncaught exception handler for JavaFX thread
+        Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+            logger.error("UNCAUGHT EXCEPTION on JavaFX Application Thread", throwable);
+        });
+        
         try {
             logger.info("Starting Unified Dashboard application");
 
