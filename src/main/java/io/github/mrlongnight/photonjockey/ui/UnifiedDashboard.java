@@ -113,7 +113,7 @@ public class UnifiedDashboard extends Application {
             primaryStage.setMinWidth(900);
             primaryStage.setMinHeight(600);
             
-            // Ensure window is visible and not minimized
+            // Ensure window is visible, not minimized, and has normal z-order
             primaryStage.setIconified(false);
             primaryStage.setAlwaysOnTop(false);
             
@@ -140,8 +140,7 @@ public class UnifiedDashboard extends Application {
             primaryStage.requestFocus();
             
             // Log window state for debugging
-            logger.info("Window showing: {}, iconified: {}, focused: {}", 
-                       primaryStage.isShowing(), primaryStage.isIconified(), primaryStage.isFocused());
+            logger.info("Window state - showing: {}, iconified: {}, focused: {}", primaryStage.isShowing(), primaryStage.isIconified(), primaryStage.isFocused());
             logger.info("Window size: {}x{}", primaryStage.getWidth(), primaryStage.getHeight());
             logger.info("Window position: ({}, {})", primaryStage.getX(), primaryStage.getY());
 
