@@ -86,9 +86,7 @@ public class UnifiedDashboard extends Application {
             
             // Configure primary stage
             primaryStage.setTitle("PhotonJockey - Audio & Light Controller");
-            primaryStage.setMinWidth(900);
-            primaryStage.setMinHeight(600);
-            logger.info("Stage title and minimum size set");
+            logger.info("Stage title set");
             
             // Set application icon
             try {
@@ -104,32 +102,40 @@ public class UnifiedDashboard extends Application {
                 logger.warn("Failed to load application icon", e);
             }
             
-            logger.info("Setting scene on stage...");
+            logger.info("Configuring stage for display...");
+            // Configure primary stage for proper display
             primaryStage.setScene(scene);
+            primaryStage.setMinWidth(900);
+            primaryStage.setMinHeight(600);
+            
+            // Ensure window is visible and not minimized
+            primaryStage.setIconified(false);
+            primaryStage.setAlwaysOnTop(false);
+            
+            // Set up close request handler
             primaryStage.setOnCloseRequest(e -> {
                 e.consume();
                 shutdown();
             });
-            logger.info("Scene set on stage");
+            logger.info("Stage configured");
 
             logger.info("Applying theme...");
             applyTheme(scene);
             logger.info("Theme applied");
             
-            logger.info("Configuring stage for display...");
-            // Ensure window is not minimized or hidden
-            primaryStage.setIconified(false);
-            // Request focus when shown
-            primaryStage.setAlwaysOnTop(false);
-            
             logger.info("Showing stage...");
             primaryStage.show();
-            logger.info("Stage.show() called");
+            logger.info("Stage.show() completed");
             
-            // Request focus to ensure window is visible
+            // Ensure window is visible and has focus
             primaryStage.toFront();
             primaryStage.requestFocus();
-            logger.info("Stage focus requested");
+            
+            // Log window state for debugging
+            logger.info("Window visible: {}, showing: {}, iconified: {}", 
+                       primaryStage.isShowing(), primaryStage.isShowing(), primaryStage.isIconified());
+            logger.info("Window size: {}x{}", primaryStage.getWidth(), primaryStage.getHeight());
+            logger.info("Window position: ({}, {})", primaryStage.getX(), primaryStage.getY());
 
             logger.info("Unified Dashboard started successfully");
         } catch (Exception e) {
