@@ -161,27 +161,45 @@ public class UnifiedDashboard extends Application {
         String theme = config.get(ConfigNode.THEME);
         logger.info("Applying theme: {}", theme);
 
-        scene.getRoot().getStyleClass().remove("light-theme");
+        // Determine if dark mode should be enabled
+        boolean isDarkMode = shouldUseDarkMode(theme);
         
-        boolean isDarkMode = false;
-
+        // Apply theme to scene
+        applySceneTheme(scene, isDarkMode);
+        
+        // Apply theme to window frame using FXThemes
+        applyWindowFrameTheme(stage, isDarkMode);
+    }
+    
+    private boolean shouldUseDarkMode(String theme) {
         if ("Light".equals(theme)) {
-            scene.getRoot().getStyleClass().add("light-theme");
-            isDarkMode = false;
+            return false;
         } else if ("Dark".equals(theme)) {
-            isDarkMode = true;
+            return true;
         } else if ("Automatic".equals(theme)) {
-            boolean systemDarkMode = WindowsThemeDetector.isDarkModeEnabled();
-            if (!systemDarkMode) {
-                scene.getRoot().getStyleClass().add("light-theme");
-            }
-            isDarkMode = systemDarkMode;
+            return WindowsThemeDetector.isDarkModeEnabled();
         }
-        
-        // Apply dark/light mode to window frame using FXThemes
+        // Default to dark mode for unknown themes
+        return true;
+    }
+    
+    private void applySceneTheme(Scene scene, boolean isDarkMode) {
+        scene.getRoot().getStyleClass().remove("light-theme");
+        if (!isDarkMode) {
+            scene.getRoot().getStyleClass().add("light-theme");
+        }
+    }
+    
+    private void applyWindowFrameTheme(Stage stage, boolean isDarkMode) {
         if (themeWindowManager != null) {
-            themeWindowManager.setDarkModeForWindowFrame(stage, isDarkMode);
-            logger.info("Window frame theme set to: {}", isDarkMode ? "Dark" : "Light");
+            try {
+                themeWindowManager.setDarkModeForWindowFrame(stage, isDarkMode);
+                logger.info("Window frame theme set to: {}", isDarkMode ? "Dark" : "Light");
+            } catch (Exception e) {
+                logger.warn("Failed to set window frame theme", e);
+            }
+        } else {
+            logger.warn("ThemeWindowManager is not available - window frame theme cannot be set");
         }
     }
 
