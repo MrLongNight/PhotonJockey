@@ -40,6 +40,7 @@ public class AudioAnalyzerDashboard implements BeatObserver {
     private static final Logger logger = LoggerFactory.getLogger(AudioAnalyzerDashboard.class);
     private static final int FFT_SIZE = 2048;
     private static final int BPM_HISTORY_SIZE = 20;
+    private static final long UI_UPDATE_THROTTLE_MS = 33; // ~30 FPS to avoid overwhelming UI
 
     private AudioAnalyzerDashboardController controller;
     private AppTaskOrchestrator taskOrchestrator;
@@ -48,6 +49,7 @@ public class AudioAnalyzerDashboard implements BeatObserver {
     private FFTProcessor fftProcessor;
     private BPMDetector bpmDetector;
     private final AtomicBoolean visualizationsEnabled = new AtomicBoolean(true);
+    private volatile long lastUiUpdateTime = 0;
 
     public void initialize(Config config, AppTaskOrchestrator taskOrchestrator, PJAudioReader audioReader, AudioAnalyzerDashboardController controller) {
         logger.info("Initializing AudioAnalyzerDashboard");
@@ -210,22 +212,46 @@ public class AudioAnalyzerDashboard implements BeatObserver {
 
     @Override
     public void audioReceived(AudioFrame audioFrame) {
-        if (controller != null) {
-            // The range is -80dB to 0dB. Normalize this to 0.0 to 1.0 for the progress bar.
-            double normalizedLevel = (audioFrame.getLevelDB() + 80.0) / 80.0;
-            controller.updateLevel(Math.max(0.0, normalizedLevel));
+        if (controller == null) {
+            return;
+        }
+        
+        // Throttle UI updates to avoid overwhelming the JavaFX thread
+        long currentTime = System.currentTimeMillis();
+        long timeSinceLastUpdate = currentTime - lastUiUpdateTime;
+        
+        if (timeSinceLastUpdate < UI_UPDATE_THROTTLE_MS) {
+            // Skip this update if too soon since last update
+            return;
+        }
+        
+        lastUiUpdateTime = currentTime;
+        
+        // Update level indicator (lightweight, always update)
+        double normalizedLevel = (audioFrame.getLevelDB() + 80.0) / 80.0;
+        controller.updateLevel(Math.max(0.0, normalizedLevel));
 
-            if (visualizationsEnabled.get()) {
-                controller.updateWaveform(audioFrame);
+        // Only perform heavy visualizations if enabled
+        if (visualizationsEnabled.get()) {
+            // Process FFT on background thread to avoid blocking
+            taskOrchestrator.dispatch(() -> {
+                try {
+                    // Update waveform
+                    controller.updateWaveform(audioFrame);
 
-                // Perform FFT for spectrum analysis
-                double[] samples = audioFrame.toNormalizedSamples();
-                double[] spectrum = fftProcessor.computeSpectrum(samples);
-                controller.updateSpectrum(spectrum);
-                controller.updateLowFreqSpectrum(audioFrame.getLowFreqData());
-                controller.updateMidFreqSpectrum(audioFrame.getMidFreqData());
-                controller.updateHighFreqSpectrum(audioFrame.getHighFreqData());
-            }
+                    // Perform FFT for spectrum analysis (CPU intensive)
+                    double[] samples = audioFrame.toNormalizedSamples();
+                    double[] spectrum = fftProcessor.computeSpectrum(samples);
+                    
+                    // Update all spectrum visualizations
+                    controller.updateSpectrum(spectrum);
+                    controller.updateLowFreqSpectrum(audioFrame.getLowFreqData());
+                    controller.updateMidFreqSpectrum(audioFrame.getMidFreqData());
+                    controller.updateHighFreqSpectrum(audioFrame.getHighFreqData());
+                } catch (Exception e) {
+                    logger.error("Error processing audio visualization", e);
+                }
+            });
         }
     }
 

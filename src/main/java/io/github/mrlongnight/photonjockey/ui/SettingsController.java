@@ -64,13 +64,36 @@ public class SettingsController {
 
     @FXML
     private void handleSave() {
+        // Save current values
+        String oldConsoleLevel = config.get(ConfigNode.CONSOLE_LOG_LEVEL);
+        String oldFileLevel = config.get(ConfigNode.FILE_LOG_LEVEL);
+        String oldLogPath = config.get(ConfigNode.LOG_PATH);
+        
         config.put(ConfigNode.THEME, themeComboBox.getValue());
         config.put(ConfigNode.LOG_PATH, logPathTextField.getText());
         config.put(ConfigNode.CONSOLE_LOG_LEVEL, consoleLogLevelComboBox.getValue());
         config.put(ConfigNode.FILE_LOG_LEVEL, fileLogLevelComboBox.getValue());
 
+        // Check if logging settings changed
+        boolean loggingChanged = !consoleLogLevelComboBox.getValue().equals(oldConsoleLevel) ||
+                                 !fileLogLevelComboBox.getValue().equals(oldFileLevel) ||
+                                 !logPathTextField.getText().equals(oldLogPath);
+        
+        if (loggingChanged) {
+            logger.info("Logging settings changed. Application restart required for changes to take effect.");
+            showRestartWarning();
+        }
+
         logger.info("Settings saved.");
         dialogStage.close();
+    }
+    
+    private void showRestartWarning() {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        alert.setTitle("Restart Required");
+        alert.setHeaderText("Log settings changed");
+        alert.setContentText("Please restart PhotonJockey for the new log settings to take effect.");
+        alert.showAndWait();
     }
 
     @FXML
