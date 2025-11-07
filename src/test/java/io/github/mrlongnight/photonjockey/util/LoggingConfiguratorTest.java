@@ -77,11 +77,13 @@ class LoggingConfiguratorTest {
         // Configure logging
         LoggingConfigurator.configure(config);
         
-        // Give it a moment to create the file
-        Thread.sleep(100);
-        
-        // Verify log file was created
+        // Verify log file was created - it should be created immediately
+        // File creation is synchronous in the configure method
         assertTrue(Files.exists(logFile), "Log file should be created at configured path");
+        
+        // Verify the file is writable by checking it has content (header)
+        long fileSize = Files.size(logFile);
+        assertTrue(fileSize > 0, "Log file should have header content");
         
         // Clean up
         LoggingConfigurator.closeFileLogging();

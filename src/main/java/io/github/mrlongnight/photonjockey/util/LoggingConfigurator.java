@@ -69,8 +69,6 @@ public class LoggingConfigurator {
         
         // Configure file logging
         configureFileLogging(logPath);
-        
-        System.err.println("Logging configured - Console: " + consoleLevel + ", File: " + fileLevel + ", Path: " + logPath);
     }
     
     /**

@@ -74,10 +74,14 @@ public class SettingsController {
         config.put(ConfigNode.CONSOLE_LOG_LEVEL, consoleLogLevelComboBox.getValue());
         config.put(ConfigNode.FILE_LOG_LEVEL, fileLogLevelComboBox.getValue());
 
-        // Check if logging settings changed
-        boolean loggingChanged = !consoleLogLevelComboBox.getValue().equals(oldConsoleLevel) ||
-                                 !fileLogLevelComboBox.getValue().equals(oldFileLevel) ||
-                                 !logPathTextField.getText().equals(oldLogPath);
+        // Check if logging settings changed using null-safe comparisons
+        String newConsoleLevel = consoleLogLevelComboBox.getValue();
+        String newFileLevel = fileLogLevelComboBox.getValue();
+        String newLogPath = logPathTextField.getText();
+        
+        boolean loggingChanged = !java.util.Objects.equals(newConsoleLevel, oldConsoleLevel) ||
+                                 !java.util.Objects.equals(newFileLevel, oldFileLevel) ||
+                                 !java.util.Objects.equals(newLogPath, oldLogPath);
         
         if (loggingChanged) {
             logger.info("Logging settings changed. Application restart required for changes to take effect.");
