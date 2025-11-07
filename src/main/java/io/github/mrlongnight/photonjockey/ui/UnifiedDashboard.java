@@ -140,8 +140,8 @@ public class UnifiedDashboard extends Application {
             primaryStage.requestFocus();
             
             // Log window state for debugging
-            logger.info("Window visible: {}, showing: {}, iconified: {}", 
-                       primaryStage.isShowing(), primaryStage.isShowing(), primaryStage.isIconified());
+            logger.info("Window showing: {}, iconified: {}, focused: {}", 
+                       primaryStage.isShowing(), primaryStage.isIconified(), primaryStage.isFocused());
             logger.info("Window size: {}x{}", primaryStage.getWidth(), primaryStage.getHeight());
             logger.info("Window position: ({}, {})", primaryStage.getX(), primaryStage.getY());
 
