@@ -127,6 +127,9 @@ public class UnifiedDashboard extends Application {
             primaryStage.show();
             logger.info("Stage.show() completed");
             
+            // Center window on screen to ensure it's visible
+            primaryStage.centerOnScreen();
+            
             // Ensure window is visible and has focus
             primaryStage.toFront();
             primaryStage.requestFocus();
