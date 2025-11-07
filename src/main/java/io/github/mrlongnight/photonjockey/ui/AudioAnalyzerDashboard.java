@@ -92,26 +92,7 @@ public class AudioAnalyzerDashboard implements BeatObserver {
     private void refreshAudioDevices() {
         taskOrchestrator.dispatch(() -> {
             try {
-                List<AudioDevice> devices = audioReader.getSupportedDevices();
-                List<String> deviceNames = devices.stream()
-                    .map(AudioDevice::getName)
-                    .collect(java.util.stream.Collectors.toList());
-                
-                String currentDevice = audioReader.isOpen() ? 
-                    devices.stream()
-                        .filter(d -> d.isOpen())
-                        .map(AudioDevice::getName)
-                        .findFirst().orElse(null) : null;
-                
-                controller.updateAudioDevices(deviceNames, currentDevice);
-                controller.updateInfo("Found " + deviceNames.size() + " audio device(s)");
-                
-                if (deviceNames.isEmpty()) {
-                    logger.warn("No audio devices found");
-                    Platform.runLater(() -> 
-                        showWarning("No Audio Devices", "No audio capture devices found on this system")
-                    );
-                }
+                updateDeviceListInUI();
             } catch (Exception e) {
                 logger.error("Error refreshing audio devices", e);
                 Platform.runLater(() -> 
@@ -119,6 +100,33 @@ public class AudioAnalyzerDashboard implements BeatObserver {
                 );
             }
         });
+    }
+    
+    /**
+     * Updates the UI with the current list of available audio devices.
+     * This method should be called from a background thread.
+     */
+    private void updateDeviceListInUI() {
+        List<AudioDevice> devices = audioReader.getSupportedDevices();
+        List<String> deviceNames = devices.stream()
+            .map(AudioDevice::getName)
+            .collect(java.util.stream.Collectors.toList());
+        
+        String currentDevice = audioReader.isOpen() ? 
+            devices.stream()
+                .filter(d -> d.isOpen())
+                .map(AudioDevice::getName)
+                .findFirst().orElse(null) : null;
+        
+        controller.updateAudioDevices(deviceNames, currentDevice);
+        controller.updateInfo("Found " + deviceNames.size() + " audio device(s)");
+        
+        if (deviceNames.isEmpty()) {
+            logger.warn("No audio devices found");
+            Platform.runLater(() -> 
+                showWarning("No Audio Devices", "No audio capture devices found on this system")
+            );
+        }
     }
 
     private void onAudioDeviceSelected(String deviceName) {
@@ -157,21 +165,11 @@ public class AudioAnalyzerDashboard implements BeatObserver {
     private void startAudioMonitoring() {
         taskOrchestrator.dispatch(() -> {
             try {
+                updateDeviceListInUI();
+                
                 List<AudioDevice> devices = audioReader.getSupportedDevices();
-                
-                // Update UI with available devices
-                List<String> deviceNames = devices.stream()
-                    .map(AudioDevice::getName)
-                    .collect(java.util.stream.Collectors.toList());
-                controller.updateAudioDevices(deviceNames, null);
-                controller.updateInfo("Found " + deviceNames.size() + " audio device(s)");
-                
                 if (devices.isEmpty()) {
-                    logger.warn("No audio devices found");
-                    Platform.runLater(() -> 
-                        showWarning("No Audio Devices", "No audio capture devices found on this system")
-                    );
-                    return;
+                    return; // Already showed warning in updateDeviceListInUI()
                 }
 
                 // Use the first available device
