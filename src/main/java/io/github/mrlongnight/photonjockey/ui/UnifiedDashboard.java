@@ -47,60 +47,108 @@ public class UnifiedDashboard extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        logger.info("Starting Unified Dashboard application");
-
-        // Initialize from static variables
-        config = staticConfig;
-        taskOrchestrator = staticTaskOrchestrator;
-        audioReader = staticAudioReader;
-        hueManager = staticHueManager;
-
-        // Detect Windows theme preference
-        String themePreference = WindowsThemeDetector.getThemeDescription();
-        logger.info("Windows theme preference: {}", themePreference);
-        logger.info("Note: JavaFX does not support Windows dark mode title bars natively");
-
-        // Load main UI
-        URL fxmlUrl = getClass().getResource("/fxml/UnifiedDashboard.fxml");
-        if (fxmlUrl == null) {
-            logger.error("Could not find UnifiedDashboard.fxml");
-            return;
-        }
-
-        FXMLLoader loader = new FXMLLoader(fxmlUrl);
-        Parent root = loader.load();
-        controller = loader.getController();
-        controller.initData(config);
-
-        // Initialize controllers with dependencies
-        initializeControllers();
-
-        Scene scene = new Scene(root, 1100, 750);
-        primaryStage.setTitle("PhotonJockey - Audio & Light Controller");
-        
-        // Set application icon
-        try {
-            InputStream iconStream = getClass().getResourceAsStream("/png/icon_64.png");
-            if (iconStream != null) {
-                primaryStage.getIcons().add(new Image(iconStream));
-                logger.info("Application icon loaded successfully");
-            } else {
-                logger.warn("Could not find application icon at /png/icon_64.png");
-            }
-        } catch (Exception e) {
-            logger.warn("Failed to load application icon", e);
-        }
-        
-        primaryStage.setScene(scene);
-        primaryStage.setOnCloseRequest(e -> {
-            e.consume();
-            shutdown();
+        // Set up uncaught exception handler for JavaFX thread
+        Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+            logger.error("UNCAUGHT EXCEPTION on JavaFX Application Thread", throwable);
         });
+        
+        try {
+            logger.info("Starting Unified Dashboard application");
 
-        applyTheme(scene);
-        primaryStage.show();
+            // Initialize from static variables
+            config = staticConfig;
+            taskOrchestrator = staticTaskOrchestrator;
+            audioReader = staticAudioReader;
+            hueManager = staticHueManager;
 
-        logger.info("Unified Dashboard started successfully");
+            // Detect Windows theme preference
+            String themePreference = WindowsThemeDetector.getThemeDescription();
+            logger.info("Windows theme preference: {}", themePreference);
+            logger.info("Note: JavaFX does not support Windows dark mode title bars natively");
+
+            // Load main UI
+            logger.info("Loading FXML...");
+            URL fxmlUrl = getClass().getResource("/fxml/UnifiedDashboard.fxml");
+            if (fxmlUrl == null) {
+                logger.error("Could not find UnifiedDashboard.fxml");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlUrl);
+            Parent root = loader.load();
+            controller = loader.getController();
+            controller.initData(config);
+            logger.info("FXML loaded and controller initialized");
+
+            // Initialize controllers with dependencies
+            logger.info("Initializing controllers...");
+            initializeControllers();
+            logger.info("Controllers initialized");
+
+            logger.info("Creating scene...");
+            Scene scene = new Scene(root, 1100, 750);
+            logger.info("Scene created with size: 1100x750");
+            
+            // Configure primary stage
+            primaryStage.setTitle("PhotonJockey - Audio & Light Controller");
+            logger.info("Stage title set");
+            
+            // Set application icon
+            try {
+                logger.info("Loading application icon...");
+                InputStream iconStream = getClass().getResourceAsStream("/png/icon_64.png");
+                if (iconStream != null) {
+                    primaryStage.getIcons().add(new Image(iconStream));
+                    logger.info("Application icon loaded successfully");
+                } else {
+                    logger.warn("Could not find application icon at /png/icon_64.png");
+                }
+            } catch (Exception e) {
+                logger.warn("Failed to load application icon", e);
+            }
+            
+            logger.info("Configuring stage for display...");
+            // Configure primary stage for proper display
+            primaryStage.setScene(scene);
+            primaryStage.setMinWidth(900);
+            primaryStage.setMinHeight(600);
+            
+            // Ensure window is visible, not minimized, and has normal z-order
+            primaryStage.setIconified(false);
+            primaryStage.setAlwaysOnTop(false);
+            
+            // Set up close request handler
+            primaryStage.setOnCloseRequest(e -> {
+                e.consume();
+                shutdown();
+            });
+            logger.info("Stage configured");
+
+            logger.info("Applying theme...");
+            applyTheme(scene);
+            logger.info("Theme applied");
+            
+            logger.info("Showing stage...");
+            primaryStage.show();
+            logger.info("Stage.show() completed");
+            
+            // Center window on screen to ensure it's visible
+            primaryStage.centerOnScreen();
+            
+            // Ensure window is visible and has focus
+            primaryStage.toFront();
+            primaryStage.requestFocus();
+            
+            // Log window state for debugging
+            logger.info("Window state - showing: {}, iconified: {}, focused: {}", primaryStage.isShowing(), primaryStage.isIconified(), primaryStage.isFocused());
+            logger.info("Window size: {}x{}", primaryStage.getWidth(), primaryStage.getHeight());
+            logger.info("Window position: ({}, {})", primaryStage.getX(), primaryStage.getY());
+
+            logger.info("Unified Dashboard started successfully");
+        } catch (Exception e) {
+            logger.error("FATAL: Failed to start Unified Dashboard", e);
+            throw e;
+        }
     }
 
     private void applyTheme(Scene scene) {
@@ -147,6 +195,13 @@ public class UnifiedDashboard extends Application {
         }
 
         Platform.exit();
+    }
+    
+    @Override
+    public void stop() throws Exception {
+        logger.info("Application stop() called");
+        shutdown();
+        super.stop();
     }
 
     // Callback methods for audio analyzer
