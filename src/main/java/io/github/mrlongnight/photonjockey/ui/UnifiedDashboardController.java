@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Modality;
@@ -33,11 +34,16 @@ public class UnifiedDashboardController {
 
     @FXML
     private Tab smartMappingTab;
+    
+    @FXML
+    private MenuItem layoutCustomizationMenuItem;
 
     private AudioAnalyzerDashboardController audioAnalyzerController;
     private LightControllerDashboardController lightControllerController;
     private SmartMappingToolController smartMappingController;
     private Config config;
+    
+    private boolean layoutCustomizationEnabled = false;
 
     @FXML
     public void initialize() {
@@ -126,6 +132,41 @@ public class UnifiedDashboardController {
             dialogStage.showAndWait();
         } catch (IOException e) {
             logger.error("Failed to open settings dialog", e);
+        }
+    }
+    
+    @FXML
+    private void handleToggleLayoutCustomization() {
+        layoutCustomizationEnabled = !layoutCustomizationEnabled;
+        
+        // Update menu item text
+        if (layoutCustomizationEnabled) {
+            layoutCustomizationMenuItem.setText("Disable Layout Customization");
+            logger.info("Layout customization enabled");
+        } else {
+            layoutCustomizationMenuItem.setText("Enable Layout Customization");
+            logger.info("Layout customization disabled");
+        }
+        
+        // Notify controllers about layout customization state
+        if (lightControllerController != null) {
+            lightControllerController.setLayoutCustomizationEnabled(layoutCustomizationEnabled);
+        }
+        if (audioAnalyzerController != null) {
+            audioAnalyzerController.setLayoutCustomizationEnabled(layoutCustomizationEnabled);
+        }
+    }
+    
+    @FXML
+    private void handleResetLayout() {
+        logger.info("Resetting layout to default");
+        
+        // Notify controllers to reset layout
+        if (lightControllerController != null) {
+            lightControllerController.resetLayout();
+        }
+        if (audioAnalyzerController != null) {
+            audioAnalyzerController.resetLayout();
         }
     }
 

@@ -10,7 +10,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="io.github.mrlongnight.photonjockey.ui.UnifiedDashboardController"
             prefHeight="750.0" prefWidth="1100.0" styleClass="dashboard-root"
-            stylesheets="@../css/dashboard.css">
+            stylesheets="@../css/dashboard.css" minHeight="600.0" minWidth="900.0">
 
     <top>
         <MenuBar>
@@ -19,6 +19,13 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleShowSettings" text="Settings" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="View">
+                    <items>
+                        <MenuItem fx:id="layoutCustomizationMenuItem" mnemonicParsing="false" 
+                                  onAction="#handleToggleLayoutCustomization" text="Enable Layout Customization" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleResetLayout" text="Reset Layout to Default" />
                     </items>
                 </Menu>
             </menus>

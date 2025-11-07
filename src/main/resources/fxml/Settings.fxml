@@ -23,20 +23,24 @@
             <Label text="Theme:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
             <ComboBox fx:id="themeComboBox" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
+            <!-- Control Style -->
+            <Label text="Control Style:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="controlStyleComboBox" prefWidth="250" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
             <!-- Log File Path -->
-            <Label text="Log File Path:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <HBox spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="1">
+            <Label text="Log File Path:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1">
                 <TextField fx:id="logPathTextField" prefWidth="200" HBox.hgrow="ALWAYS"/>
                 <Button fx:id="browseButton" text="Browse..."/>
             </HBox>
 
             <!-- Console Log Level -->
-            <Label text="Console Log Level:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="consoleLogLevelComboBox" prefWidth="250" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="Console Log Level:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="consoleLogLevelComboBox" prefWidth="250" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
             <!-- File Log Level -->
-            <Label text="File Log Level:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="fileLogLevelComboBox" prefWidth="250" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label text="File Log Level:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="fileLogLevelComboBox" prefWidth="250" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
         </GridPane>
     </center>

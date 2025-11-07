@@ -398,4 +398,22 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
             updateStatus("Stopped");
         });
     }
+    
+    /**
+     * Sets whether layout customization is enabled.
+     */
+    public void setLayoutCustomizationEnabled(boolean enabled) {
+        logger.info("Layout customization {}", enabled ? "enabled" : "disabled");
+        // This would be used to enable/disable drag-and-drop on panels
+        // For now, just log the state change
+    }
+    
+    /**
+     * Resets the layout to default.
+     */
+    public void resetLayout() {
+        logger.info("Resetting layout to default");
+        // This would restore panel visibility and positions to defaults
+        // For now, just log the reset
+    }
 }
