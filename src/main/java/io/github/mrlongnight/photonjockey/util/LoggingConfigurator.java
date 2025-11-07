@@ -163,34 +163,106 @@ public class LoggingConfigurator {
         
         @Override
         public void write(int b) throws IOException {
-            out1.write(b);
-            out2.write(b);
+            IOException exception = null;
+            try {
+                out1.write(b);
+            } catch (IOException e) {
+                exception = e;
+            }
+            try {
+                out2.write(b);
+            } catch (IOException e) {
+                if (exception != null) {
+                    e.addSuppressed(exception);
+                }
+                throw e;
+            }
+            if (exception != null) {
+                throw exception;
+            }
         }
         
         @Override
         public void write(byte[] b) throws IOException {
-            out1.write(b);
-            out2.write(b);
+            IOException exception = null;
+            try {
+                out1.write(b);
+            } catch (IOException e) {
+                exception = e;
+            }
+            try {
+                out2.write(b);
+            } catch (IOException e) {
+                if (exception != null) {
+                    e.addSuppressed(exception);
+                }
+                throw e;
+            }
+            if (exception != null) {
+                throw exception;
+            }
         }
         
         @Override
         public void write(byte[] b, int off, int len) throws IOException {
-            out1.write(b, off, len);
-            out2.write(b, off, len);
+            IOException exception = null;
+            try {
+                out1.write(b, off, len);
+            } catch (IOException e) {
+                exception = e;
+            }
+            try {
+                out2.write(b, off, len);
+            } catch (IOException e) {
+                if (exception != null) {
+                    e.addSuppressed(exception);
+                }
+                throw e;
+            }
+            if (exception != null) {
+                throw exception;
+            }
         }
         
         @Override
         public void flush() throws IOException {
-            out1.flush();
-            out2.flush();
+            IOException exception = null;
+            try {
+                out1.flush();
+            } catch (IOException e) {
+                exception = e;
+            }
+            try {
+                out2.flush();
+            } catch (IOException e) {
+                if (exception != null) {
+                    e.addSuppressed(exception);
+                }
+                throw e;
+            }
+            if (exception != null) {
+                throw exception;
+            }
         }
         
         @Override
         public void close() throws IOException {
+            IOException exception = null;
             try {
                 out1.close();
-            } finally {
+            } catch (IOException e) {
+                exception = e;
+            }
+            try {
                 out2.close();
+            } catch (IOException e) {
+                if (exception != null) {
+                    e.addSuppressed(exception);
+                }
+                throw e;
+            }
+            if (exception != null) {
+                throw exception;
             }
         }
     }

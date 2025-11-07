@@ -1,13 +1,9 @@
 package io.github.mrlongnight.photonjockey;
 
-import io.github.mrlongnight.photonjockey.audio.AudioReader;
-import io.github.mrlongnight.photonjockey.audio.BeatEventManager;
-import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
 import io.github.mrlongnight.photonjockey.audio.BeatEventManager;
 import io.github.mrlongnight.photonjockey.audio.PJAudioReader;
 import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.config.PJConfig;
-import io.github.mrlongnight.photonjockey.hue.bridge.HueManager;
 import io.github.mrlongnight.photonjockey.hue.bridge.PJHueManager;
 import io.github.mrlongnight.photonjockey.ui.UnifiedDashboard;
 import io.github.mrlongnight.photonjockey.util.LoggingConfigurator;
