@@ -74,6 +74,10 @@
                                     <Label text="Entertainment Group:"/>
                                     <ComboBox fx:id="entertainmentGroupComboBox" prefWidth="250"/>
                                 </HBox>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <CheckBox fx:id="entertainmentModeCheckBox" text="Entertainment Mode Active" disable="true"/>
+                                    <Button fx:id="toggleEntertainmentModeButton" text="Activate Entertainment Mode" onAction="#toggleEntertainmentMode"/>
+                                </HBox>
                                 <Button fx:id="disconnectBridgeButton" text="Disconnect Bridge"/>
                             </children>
                         </VBox>

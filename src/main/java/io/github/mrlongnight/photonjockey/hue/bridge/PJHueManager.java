@@ -11,6 +11,8 @@ import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.config.ConfigNode;
 import io.github.mrlongnight.photonjockey.hue.bridge.light.PJLight;
 import io.github.mrlongnight.photonjockey.hue.bridge.light.Light;
+import io.github.mrlongnight.photonjockey.hue.dto.EntertainmentGroupInfo;
+import io.github.mrlongnight.photonjockey.hue.dto.EntertainmentLightInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +68,36 @@ public class PJHueManager implements HueManager {
         return bridgeConnections.values().stream()
                 .flatMap(bridge -> bridge.getHue().getGroupsOfType(GroupType.ENTERTAINMENT).stream())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EntertainmentGroupInfo> getEntertainmentGroupsWithDetails() {
+        List<EntertainmentGroupInfo> result = new ArrayList<>();
+        
+        for (BridgeConnection bridge : bridgeConnections.values()) {
+            String bridgeIp = bridge.getAccessPoint().ip();
+            List<Room> entertainmentGroups = new ArrayList<>(bridge.getHue().getGroupsOfType(GroupType.ENTERTAINMENT));
+            
+            for (Room room : entertainmentGroups) {
+                List<EntertainmentLightInfo> lightInfos = room.getLights().stream()
+                        .map(light -> new EntertainmentLightInfo(
+                                light.getId(),
+                                light.getName(),
+                                light.getType().name(),
+                                new double[]{0.0, 0.0, 0.0} // Position data not available in current API
+                        ))
+                        .collect(Collectors.toList());
+                
+                result.add(new EntertainmentGroupInfo(
+                        room.getName(), // Using name as ID since Room doesn't expose group ID directly
+                        room.getName(),
+                        lightInfos,
+                        bridgeIp
+                ));
+            }
+        }
+        
+        return result;
     }
 
     @Override

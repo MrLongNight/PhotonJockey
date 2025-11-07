@@ -86,6 +86,8 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
     @FXML private Label bridgeStatusLabel;
     @FXML private ComboBox<String> entertainmentGroupComboBox;
     @FXML private Button disconnectBridgeButton;
+    @FXML private CheckBox entertainmentModeCheckBox;
+    @FXML private Button toggleEntertainmentModeButton;
 
     private Config config;
     private AppTaskOrchestrator taskOrchestrator;
@@ -93,6 +95,7 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
     private PJHueManager hueManager;
     private ToggleGroup colorSetToggleGroup;
     private List<CheckBox> lightCheckBoxes;
+    private io.github.mrlongnight.photonjockey.hue.engine.EntertainmentController entertainmentController;
 
     @FXML
     public void initialize() {
@@ -109,6 +112,7 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
         this.audioReader = audioReader;
         this.hueManager = hueManager;
         this.hueManager.setStateObserver(this);
+        this.entertainmentController = new io.github.mrlongnight.photonjockey.hue.engine.EntertainmentController();
 
         loadConfiguration();
         refreshColorSets();
@@ -155,6 +159,11 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
         connectBridgeButton.setOnAction(e -> onConnectBridge());
         disconnectBridgeButton.setOnAction(e -> onDisconnectBridge());
         bridgeListView.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> connectBridgeButton.setDisable(n == null));
+        entertainmentGroupComboBox.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> {
+            if (n != null && config != null) {
+                config.put(ConfigNode.HUE_ENTERTAINMENT_GROUP, n);
+            }
+        });
         lightThemeCheckbox.selectedProperty().addListener((obs, o, n) -> {
             if (n) startButton.getScene().getRoot().getStyleClass().add("light-theme");
             else startButton.getScene().getRoot().getStyleClass().remove("light-theme");
@@ -199,7 +208,7 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
             pushlinkInstructionLabel.setVisible(false);
             if (isConnected) {
                 bridgeStatusLabel.setText("Status: Connected to " + hueManager.getBridges().get(0).getAccessPoint().ip());
-                // refreshEntertainmentGroups(); // Temporarily disabled
+                refreshEntertainmentGroups();
                 refreshLights();
             } else {
                 bridgeStatusLabel.setText("Status: Disconnected");
@@ -224,7 +233,108 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
         taskOrchestrator.dispatch(hueManager::disconnectAll);
     }
 
-    // private void refreshEntertainmentGroups() { ... } // Temporarily disabled
+    private void refreshEntertainmentGroups() {
+        taskOrchestrator.dispatch(() -> {
+            var groups = hueManager.getEntertainmentGroupsWithDetails();
+            Platform.runLater(() -> {
+                entertainmentGroupComboBox.getItems().clear();
+                groups.forEach(group -> entertainmentGroupComboBox.getItems().add(group.getName()));
+                
+                // Select previously selected group if available
+                String savedGroup = config.get(ConfigNode.HUE_ENTERTAINMENT_GROUP);
+                if (savedGroup != null && entertainmentGroupComboBox.getItems().contains(savedGroup)) {
+                    entertainmentGroupComboBox.getSelectionModel().select(savedGroup);
+                } else if (!groups.isEmpty()) {
+                    entertainmentGroupComboBox.getSelectionModel().selectFirst();
+                }
+            });
+        });
+    }
+
+    @FXML
+    private void toggleEntertainmentMode() {
+        if (entertainmentController.isEntertainmentModeActive()) {
+            deactivateEntertainmentMode();
+        } else {
+            activateEntertainmentMode();
+        }
+    }
+
+    private void activateEntertainmentMode() {
+        String selectedGroupName = entertainmentGroupComboBox.getSelectionModel().getSelectedItem();
+        if (selectedGroupName == null) {
+            updateStatus("Please select an entertainment group first.");
+            return;
+        }
+
+        taskOrchestrator.dispatch(() -> {
+            var groups = hueManager.getEntertainmentGroupsWithDetails();
+            var selectedGroup = groups.stream()
+                    .filter(g -> g.getName().equals(selectedGroupName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (selectedGroup == null) {
+                Platform.runLater(() -> updateStatus("Entertainment group not found."));
+                return;
+            }
+
+            try {
+                // Get bridge IP and create fast effect controller
+                String bridgeIp = selectedGroup.getBridgeIp();
+                int port = config.getInt(ConfigNode.HUE_FAST_EFFECT_PORT, 2100); // Default entertainment port
+                
+                var fastController = new io.github.mrlongnight.photonjockey.hue.engine.FastEffectController(
+                        bridgeIp, port);
+                
+                entertainmentController.activateEntertainmentMode(selectedGroup, fastController);
+                
+                config.putBoolean(ConfigNode.HUE_ENTERTAINMENT_MODE_ENABLED, true);
+                
+                Platform.runLater(() -> {
+                    updateStatus("Entertainment mode activated for " + selectedGroupName);
+                    updateEntertainmentModeUI(true);
+                    refreshLights(); // Update light selection to disable entertainment lights
+                });
+            } catch (Exception e) {
+                Platform.runLater(() -> {
+                    updateStatus("Failed to activate entertainment mode: " + e.getMessage());
+                    new Alert(Alert.AlertType.ERROR, 
+                            "Failed to activate entertainment mode: " + e.getMessage(), 
+                            ButtonType.OK).showAndWait();
+                });
+            }
+        });
+    }
+
+    private void deactivateEntertainmentMode() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                entertainmentController.deactivateEntertainmentMode();
+                config.putBoolean(ConfigNode.HUE_ENTERTAINMENT_MODE_ENABLED, false);
+                
+                Platform.runLater(() -> {
+                    updateStatus("Entertainment mode deactivated.");
+                    updateEntertainmentModeUI(false);
+                    refreshLights(); // Update light selection to enable all lights
+                });
+            } catch (Exception e) {
+                Platform.runLater(() -> {
+                    updateStatus("Error deactivating entertainment mode: " + e.getMessage());
+                });
+            }
+        });
+    }
+
+    private void updateEntertainmentModeUI(boolean active) {
+        if (entertainmentModeCheckBox != null) {
+            entertainmentModeCheckBox.setSelected(active);
+        }
+        if (toggleEntertainmentModeButton != null) {
+            toggleEntertainmentModeButton.setText(active ? "Deactivate Entertainment Mode" : "Activate Entertainment Mode");
+        }
+        entertainmentGroupComboBox.setDisable(active);
+    }
 
     // HueStateObserver implementation
     @Override public void displayFoundBridges(List<AccessPoint> accessPoints) {
@@ -294,7 +404,17 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
         List<String> disabledLights = config.getStringList(ConfigNode.LIGHTS_DISABLED);
         hueManager.getLights(false).forEach(light -> {
             CheckBox cb = new CheckBox(light.getName());
-            cb.setSelected(!disabledLights.contains(light.getId()));
+            boolean isInEntertainmentMode = entertainmentController.isLightInEntertainmentMode(light.getId());
+            boolean isDisabled = disabledLights.contains(light.getId());
+            
+            cb.setSelected(!isDisabled && !isInEntertainmentMode);
+            cb.setDisable(isInEntertainmentMode);
+            
+            if (isInEntertainmentMode) {
+                cb.setText(light.getName() + " (Entertainment Mode)");
+                cb.setStyle("-fx-text-fill: #888888;");
+            }
+            
             cb.setOnAction(e -> onLightSelectionChanged(light.getId(), cb.isSelected()));
             lightSelectPanel.getChildren().add(cb);
             lightCheckBoxes.add(cb);

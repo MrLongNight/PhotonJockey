@@ -13,6 +13,8 @@ public interface Config {
 
     int getInt(ConfigNode node);
 
+    int getInt(ConfigNode node, int defaultValue);
+
     int getDefaultInt(ConfigNode node);
 
     void putInt(ConfigNode node, int value);
