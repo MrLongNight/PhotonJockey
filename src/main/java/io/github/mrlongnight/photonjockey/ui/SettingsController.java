@@ -3,6 +3,7 @@ package io.github.mrlongnight.photonjockey.ui;
 import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.config.ConfigNode;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Objects;
 
 public class SettingsController {
 
@@ -64,13 +66,40 @@ public class SettingsController {
 
     @FXML
     private void handleSave() {
+        // Save current values
+        String oldConsoleLevel = config.get(ConfigNode.CONSOLE_LOG_LEVEL);
+        String oldFileLevel = config.get(ConfigNode.FILE_LOG_LEVEL);
+        String oldLogPath = config.get(ConfigNode.LOG_PATH);
+        
         config.put(ConfigNode.THEME, themeComboBox.getValue());
         config.put(ConfigNode.LOG_PATH, logPathTextField.getText());
         config.put(ConfigNode.CONSOLE_LOG_LEVEL, consoleLogLevelComboBox.getValue());
         config.put(ConfigNode.FILE_LOG_LEVEL, fileLogLevelComboBox.getValue());
 
+        // Check if logging settings changed using null-safe comparisons
+        String newConsoleLevel = consoleLogLevelComboBox.getValue();
+        String newFileLevel = fileLogLevelComboBox.getValue();
+        String newLogPath = logPathTextField.getText();
+        
+        boolean loggingChanged = !Objects.equals(newConsoleLevel, oldConsoleLevel) ||
+                                 !Objects.equals(newFileLevel, oldFileLevel) ||
+                                 !Objects.equals(newLogPath, oldLogPath);
+        
+        if (loggingChanged) {
+            logger.info("Logging settings changed. Application restart required for changes to take effect.");
+            showRestartWarning();
+        }
+
         logger.info("Settings saved.");
         dialogStage.close();
+    }
+    
+    private void showRestartWarning() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Restart Required");
+        alert.setHeaderText("Log settings changed");
+        alert.setContentText("Please restart PhotonJockey for the new log settings to take effect.");
+        alert.showAndWait();
     }
 
     @FXML
