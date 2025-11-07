@@ -15,11 +15,15 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import io.github.mrlongnight.photonjockey.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.function.Consumer;
 
 public class AudioAnalyzerDashboardController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AudioAnalyzerDashboardController.class);
 
     @FXML private VBox topVBox; // Parent container for canvases
     @FXML private Canvas waveformCanvas;
@@ -390,4 +394,22 @@ public class AudioAnalyzerDashboardController {
     public boolean isVisualizationsEnabled() { return visualizationsCheckbox.isSelected(); }
     public void updateInfo(String info) { Platform.runLater(() -> infoLabel.setText(info)); }
     public void updateLevel(double level) { Platform.runLater(() -> levelProgressBar.setProgress(level)); }
+    
+    /**
+     * Sets whether layout customization is enabled.
+     */
+    public void setLayoutCustomizationEnabled(boolean enabled) {
+        logger.info("Layout customization {}", enabled ? "enabled" : "disabled");
+        // This would be used to enable/disable drag-and-drop on panels
+        // For now, just log the state change
+    }
+    
+    /**
+     * Resets the layout to default.
+     */
+    public void resetLayout() {
+        logger.info("Resetting layout to default");
+        // This would restore panel visibility and positions to defaults
+        // For now, just log the reset
+    }
 }

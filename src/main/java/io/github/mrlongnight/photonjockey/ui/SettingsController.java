@@ -2,6 +2,7 @@ package io.github.mrlongnight.photonjockey.ui;
 
 import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.config.ConfigNode;
+import io.github.mrlongnight.photonjockey.ui.controls.ControlStyle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -22,6 +23,8 @@ public class SettingsController {
     @FXML
     private ComboBox<String> themeComboBox;
     @FXML
+    private ComboBox<String> controlStyleComboBox;
+    @FXML
     private TextField logPathTextField;
     @FXML
     private Button browseButton;
@@ -41,6 +44,7 @@ public class SettingsController {
     public void initialize() {
         // Populate combo boxes
         themeComboBox.getItems().addAll("Automatic", "Dark", "Light");
+        controlStyleComboBox.getItems().addAll("Slider", "Knob", "Display");
         consoleLogLevelComboBox.getItems().addAll("INFO", "ERROR", "DEBUG");
         fileLogLevelComboBox.getItems().addAll("INFO", "ERROR", "DEBUG");
 
@@ -59,6 +63,14 @@ public class SettingsController {
 
     private void loadSettings() {
         themeComboBox.setValue(config.get(ConfigNode.THEME));
+        
+        // Load control style
+        String controlStyle = config.get(ConfigNode.UI_CONTROL_STYLE);
+        if (controlStyle == null || controlStyle.isEmpty()) {
+            controlStyle = "Slider";
+        }
+        controlStyleComboBox.setValue(controlStyle);
+        
         logPathTextField.setText(config.get(ConfigNode.LOG_PATH));
         consoleLogLevelComboBox.setValue(config.get(ConfigNode.CONSOLE_LOG_LEVEL));
         fileLogLevelComboBox.setValue(config.get(ConfigNode.FILE_LOG_LEVEL));
@@ -72,6 +84,7 @@ public class SettingsController {
         String oldLogPath = config.get(ConfigNode.LOG_PATH);
         
         config.put(ConfigNode.THEME, themeComboBox.getValue());
+        config.put(ConfigNode.UI_CONTROL_STYLE, controlStyleComboBox.getValue());
         config.put(ConfigNode.LOG_PATH, logPathTextField.getText());
         config.put(ConfigNode.CONSOLE_LOG_LEVEL, consoleLogLevelComboBox.getValue());
         config.put(ConfigNode.FILE_LOG_LEVEL, fileLogLevelComboBox.getValue());

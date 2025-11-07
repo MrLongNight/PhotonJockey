@@ -44,7 +44,12 @@ public enum ConfigNode {
     HUE_MAX_FADE_TIME("hue.maxfadetime"),
     LIGHT_THEME_ENABLED("window.lighttheme.enabled"),
     HUE_ENTERTAINMENT_GROUP("hue.entertainmentgroup"),
-    CUSTOM_COLOR_SET_PREFIX("color.set.custom.");
+    CUSTOM_COLOR_SET_PREFIX("color.set.custom."),
+    
+    // UI Layout and Control Style
+    UI_CONTROL_STYLE("ui.control.style"),
+    UI_LAYOUT_CUSTOMIZATION("ui.layout.customization"),
+    UI_PANEL_VISIBILITY("ui.panel.visibility");
 
 
     private String key;

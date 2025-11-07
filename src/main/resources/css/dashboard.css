@@ -375,3 +375,82 @@
 .light-theme .slider .track {
     -fx-background-color: -fx-border;
 }
+
+/* ==========================================================================
+   Value Display Controls
+   ========================================================================== */
+
+.value-display-name {
+    -fx-text-fill: -fx-text-secondary;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.value-display-box {
+    -fx-background-color: #000000;
+    -fx-border-color: -fx-border;
+    -fx-border-width: 2;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.value-display-value {
+    -fx-text-fill: #00ff00;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Monospace", "Courier New";
+}
+
+.light-theme .value-display-name {
+    -fx-text-fill: -fx-text-primary;
+}
+
+.light-theme .value-display-box {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: -fx-border;
+}
+
+.light-theme .value-display-value {
+    -fx-text-fill: #00cc00;
+}
+
+/* ==========================================================================
+   Draggable Panel Styles
+   ========================================================================== */
+
+.draggable-panel {
+    -fx-cursor: move;
+}
+
+.draggable-panel.dragging {
+    -fx-opacity: 0.6;
+}
+
+.drag-target {
+    -fx-border-color: -fx-accent-green;
+    -fx-border-width: 2;
+    -fx-border-style: dashed;
+}
+
+.panel-header {
+    -fx-background-color: derive(-fx-background-secondary, 10%);
+    -fx-padding: 5px 10px;
+}
+
+.panel-header-label {
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+.panel-control-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-padding: 2px 6px;
+    -fx-background-radius: 3;
+}
+
+.panel-control-button:hover {
+    -fx-background-color: derive(-fx-background-secondary, 20%);
+    -fx-text-fill: -fx-text-primary;
+}
