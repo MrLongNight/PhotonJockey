@@ -11,6 +11,8 @@ import io.github.mrlongnight.photonjockey.config.Config;
 import io.github.mrlongnight.photonjockey.config.ConfigNode;
 import io.github.mrlongnight.photonjockey.hue.bridge.light.PJLight;
 import io.github.mrlongnight.photonjockey.hue.bridge.light.Light;
+import io.github.mrlongnight.photonjockey.hue.dto.EntertainmentGroupInfo;
+import io.github.mrlongnight.photonjockey.hue.dto.EntertainmentLightInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +68,42 @@ public class PJHueManager implements HueManager {
         return bridgeConnections.values().stream()
                 .flatMap(bridge -> bridge.getHue().getGroupsOfType(GroupType.ENTERTAINMENT).stream())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EntertainmentGroupInfo> getEntertainmentGroupsWithDetails() {
+        // Default position when actual position data is not available from the API
+        final double[] DEFAULT_LIGHT_POSITION = new double[]{0.0, 0.0, 0.0};
+        
+        List<EntertainmentGroupInfo> result = new ArrayList<>();
+        
+        for (BridgeConnection bridge : bridgeConnections.values()) {
+            String bridgeIp = bridge.getAccessPoint().ip();
+            List<Room> entertainmentGroups = new ArrayList<>(bridge.getHue().getGroupsOfType(GroupType.ENTERTAINMENT));
+            
+            for (Room room : entertainmentGroups) {
+                List<EntertainmentLightInfo> lightInfos = room.getLights().stream()
+                        .map(light -> new EntertainmentLightInfo(
+                                light.getId(),
+                                light.getName(),
+                                light.getType().name(),
+                                DEFAULT_LIGHT_POSITION
+                        ))
+                        .collect(Collectors.toList());
+                
+                // Use composite ID to ensure uniqueness across bridges
+                String groupId = bridgeIp + ":" + room.getName();
+                
+                result.add(new EntertainmentGroupInfo(
+                        groupId,
+                        room.getName(),
+                        lightInfos,
+                        bridgeIp
+                ));
+            }
+        }
+        
+        return result;
     }
 
     @Override

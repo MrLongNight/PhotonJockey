@@ -95,6 +95,11 @@ public class PJConfig implements Config {
     }
 
     @Override
+    public int getInt(ConfigNode node, int defaultValue) {
+        return preferences.getInt(node.getKey(), defaultValue);
+    }
+
+    @Override
     public int getDefaultInt(ConfigNode node) {
         return defaultInts.getOrDefault(node.getKey(), 0);
     }

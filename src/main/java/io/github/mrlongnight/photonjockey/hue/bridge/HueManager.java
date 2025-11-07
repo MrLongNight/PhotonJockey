@@ -1,6 +1,7 @@
 package io.github.mrlongnight.photonjockey.hue.bridge;
 
 import io.github.mrlongnight.photonjockey.hue.bridge.light.Light;
+import io.github.mrlongnight.photonjockey.hue.dto.EntertainmentGroupInfo;
 import io.github.zeroone3010.yahueapi.Room;
 
 import java.util.List;
@@ -26,6 +27,13 @@ public interface HueManager {
      * @return a list of all entertainment groups on all connected bridges
      */
     List<Room> getEntertainmentGroups();
+
+    /**
+     * Get detailed information about all entertainment groups including light details.
+     *
+     * @return list of entertainment group info objects
+     */
+    List<EntertainmentGroupInfo> getEntertainmentGroupsWithDetails();
 
     /**
      * Sets the given parameter as the state observer to receive api callbacks.

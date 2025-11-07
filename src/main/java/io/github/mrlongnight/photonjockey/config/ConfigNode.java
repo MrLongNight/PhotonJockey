@@ -44,6 +44,11 @@ public enum ConfigNode {
     HUE_MAX_FADE_TIME("hue.maxfadetime"),
     LIGHT_THEME_ENABLED("window.lighttheme.enabled"),
     HUE_ENTERTAINMENT_GROUP("hue.entertainmentgroup"),
+    HUE_ENTERTAINMENT_MODE_ENABLED("hue.entertainment.enabled"),
+    HUE_FAST_EFFECT_PORT("hue.fasteffect.port"),
+    HUE_FAST_EFFECT_BRIGHTNESS_MIN("hue.fasteffect.brightness.min"),
+    HUE_FAST_EFFECT_BRIGHTNESS_MAX("hue.fasteffect.brightness.max"),
+    HUE_FAST_EFFECT_TRANSITION_TIME("hue.fasteffect.transitiontime"),
     CUSTOM_COLOR_SET_PREFIX("color.set.custom."),
     
     // UI Layout and Control Style
