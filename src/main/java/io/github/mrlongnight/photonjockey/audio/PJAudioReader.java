@@ -40,7 +40,7 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
     private final Config config;
     private final AppTaskOrchestrator taskOrchestrator;
 
-    private List<DeviceProvider> deviceProviders;
+    private volatile List<DeviceProvider> deviceProviders;
 
     private final List<BeatObserver> beatEventObservers = new ArrayList<>();
 
