@@ -76,13 +76,11 @@ public class AudioAnalyzerDashboard implements BeatObserver {
             visualizationsEnabled::set
         );
 
-        // Initialize UI with available devices
-        refreshAudioDevices();
-
         // Load config and set UI elements
         loadConfigToUi();
 
         // Auto-start audio monitoring
+        // Note: This will also populate the device list in the UI when devices are scanned
         startAudioMonitoring();
 
         logger.info("AudioAnalyzerDashboard initialized successfully");
@@ -160,6 +158,14 @@ public class AudioAnalyzerDashboard implements BeatObserver {
         taskOrchestrator.dispatch(() -> {
             try {
                 List<AudioDevice> devices = audioReader.getSupportedDevices();
+                
+                // Update UI with available devices
+                List<String> deviceNames = devices.stream()
+                    .map(AudioDevice::getName)
+                    .collect(java.util.stream.Collectors.toList());
+                controller.updateAudioDevices(deviceNames, null);
+                controller.updateInfo("Found " + deviceNames.size() + " audio device(s)");
+                
                 if (devices.isEmpty()) {
                     logger.warn("No audio devices found");
                     Platform.runLater(() -> 

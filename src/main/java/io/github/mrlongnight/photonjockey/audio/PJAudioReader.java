@@ -40,7 +40,7 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
     private final Config config;
     private final AppTaskOrchestrator taskOrchestrator;
 
-    private final List<DeviceProvider> deviceProviders;
+    private List<DeviceProvider> deviceProviders;
 
     private final List<BeatObserver> beatEventObservers = new ArrayList<>();
 
@@ -58,18 +58,31 @@ public class PJAudioReader implements BeatEventManager, AudioReader {
     public PJAudioReader(Config config, AppTaskOrchestrator taskOrchestrator) {
         this.config = config;
         this.taskOrchestrator = taskOrchestrator;
-
-        this.deviceProviders = new ArrayList<>();
-        if (PlatformDetector.isWindows()) {
-            deviceProviders.add(new WASAPIDeviceProvider(taskOrchestrator));
+        // Defer device provider initialization until first use to avoid blocking startup
+        this.deviceProviders = null;
+    }
+    
+    /**
+     * Lazy initialization of device providers to avoid blocking UI startup.
+     * This method is synchronized to ensure device providers are only initialized once.
+     */
+    private synchronized void ensureDeviceProvidersInitialized() {
+        if (deviceProviders == null) {
+            logger.info("Initializing audio device providers");
+            deviceProviders = new ArrayList<>();
+            if (PlatformDetector.isWindows()) {
+                deviceProviders.add(new WASAPIDeviceProvider(taskOrchestrator));
+            }
+            // fallbacks, first port audio (also libjitsi wrapped), then java audio
+            deviceProviders.add(new PortAudioDeviceProvider(taskOrchestrator));
+            deviceProviders.add(new JavaAudioDeviceProvider(taskOrchestrator));
+            logger.info("Audio device providers initialized successfully");
         }
-        // fallbacks, first port audio (also libjitsi wrapped), then java audio
-        deviceProviders.add(new PortAudioDeviceProvider(taskOrchestrator));
-        deviceProviders.add(new JavaAudioDeviceProvider(taskOrchestrator));
     }
 
     @Override
     public List<AudioDevice> getSupportedDevices() {
+        ensureDeviceProvidersInitialized();
         List<AudioDevice> devices = new ArrayList<>();
         for (DeviceProvider deviceProvider : deviceProviders) {
             devices.addAll(deviceProvider.getAudioDevices());
