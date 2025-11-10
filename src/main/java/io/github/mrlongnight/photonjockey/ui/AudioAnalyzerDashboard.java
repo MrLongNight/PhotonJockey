@@ -73,15 +73,17 @@ public class AudioAnalyzerDashboard implements BeatObserver {
             this::refreshAudioDevices,
             this::onAudioDeviceSelected,
             this::updateConfigFromUi,
-            visualizationsEnabled::set
+            visualizationsEnabled::set,
+            this::startAudioMonitoringFromUI,  // Add start audio callback
+            this::stopAudioMonitoring          // Add stop audio callback
         );
 
         // Load config and set UI elements
         loadConfigToUi();
 
-        // Auto-start audio monitoring
-        // Note: This will also populate the device list in the UI when devices are scanned
-        startAudioMonitoring();
+        // DO NOT auto-start audio monitoring - user must click "Start Audio Analysis" button
+        // Only refresh device list for display
+        refreshAudioDevices();
 
         logger.info("AudioAnalyzerDashboard initialized successfully");
     }
@@ -184,6 +186,82 @@ public class AudioAnalyzerDashboard implements BeatObserver {
             }
         });
     }
+    
+    /**
+     * Starts audio monitoring from the UI (called when user clicks "Start Audio Analysis" button).
+     */
+    private void startAudioMonitoringFromUI() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                // If audio is already running, stop it first
+                if (audioReader.isOpen()) {
+                    audioReader.stop();
+                }
+                
+                // Get the selected device from UI or use the first available
+                List<AudioDevice> devices = audioReader.getSupportedDevices();
+                if (devices.isEmpty()) {
+                    Platform.runLater(() -> 
+                        showWarning("No Audio Devices", "No audio capture devices found on this system")
+                    );
+                    return;
+                }
+                
+                // Try to use the selected device from the controller
+                String selectedDeviceName = controller.getSelectedAudioDevice();
+                AudioDevice selectedDevice = null;
+                
+                if (selectedDeviceName != null) {
+                    selectedDevice = devices.stream()
+                        .filter(d -> d.getName().equals(selectedDeviceName))
+                        .findFirst()
+                        .orElse(null);
+                }
+                
+                // If no device is selected or found, use the first one
+                if (selectedDevice == null) {
+                    selectedDevice = devices.get(0);
+                }
+                
+                startAudioMonitoring(selectedDevice);
+                
+                // Update controller to reflect audio is running
+                Platform.runLater(() -> {
+                    controller.setAudioRunning(true);
+                });
+            } catch (Exception e) {
+                logger.error("Error starting audio monitoring from UI", e);
+                Platform.runLater(() -> {
+                    showError("Audio Error", "Error starting audio monitoring: " + e.getMessage());
+                    controller.setAudioRunning(false);
+                });
+            }
+        });
+    }
+    
+    /**
+     * Stops audio monitoring (called when user clicks "Stop Audio Analysis" button).
+     */
+    private void stopAudioMonitoring() {
+        taskOrchestrator.dispatch(() -> {
+            try {
+                if (audioReader.isOpen()) {
+                    logger.info("Stopping audio monitoring from UI");
+                    audioReader.stop();
+                    Platform.runLater(() -> {
+                        controller.updateStatus("Stopped");
+                        controller.setAudioRunning(false);
+                        controller.clear();
+                    });
+                }
+            } catch (Exception e) {
+                logger.error("Error stopping audio monitoring", e);
+                Platform.runLater(() -> 
+                    showError("Audio Error", "Error stopping audio monitoring: " + e.getMessage())
+                );
+            }
+        });
+    }
 
     private void startAudioMonitoring(AudioDevice device) {
         if (device == null) {
@@ -197,19 +275,24 @@ public class AudioAnalyzerDashboard implements BeatObserver {
                 
                 boolean started = audioReader.start(device);
                 if (started) {
-                    controller.updateStatus("Monitoring: " + device.getName());
-                    controller.updateInfo("Audio capture active");
+                    Platform.runLater(() -> {
+                        controller.updateStatus("Monitoring: " + device.getName());
+                        controller.updateInfo("Audio capture active");
+                        controller.setAudioRunning(true);
+                    });
                 } else {
                     logger.error("Failed to start audio device: {}", device.getName());
-                    Platform.runLater(() ->
-                        showError("Audio Error", "Failed to start audio capture on " + device.getName())
-                    );
+                    Platform.runLater(() -> {
+                        showError("Audio Error", "Failed to start audio capture on " + device.getName());
+                        controller.setAudioRunning(false);
+                    });
                 }
             } catch (Exception e) {
                 logger.error("Error starting audio monitoring on device: {}", device.getName(), e);
-                Platform.runLater(() -> 
-                    showError("Audio Error", "Error starting audio monitoring: " + e.getMessage())
-                );
+                Platform.runLater(() -> {
+                    showError("Audio Error", "Error starting audio monitoring: " + e.getMessage());
+                    controller.setAudioRunning(false);
+                });
             }
         });
     }
@@ -296,6 +379,7 @@ public class AudioAnalyzerDashboard implements BeatObserver {
         Platform.runLater(() -> {
             if (controller != null) {
                 controller.clear();
+                controller.setAudioRunning(false);
             }
             if (status == StopStatus.ERROR) {
                 showWarning("Audio Stopped", "Audio monitoring stopped due to an error");

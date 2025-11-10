@@ -126,7 +126,17 @@ public class UnifiedDashboard extends Application {
             logger.info("Stage configured");
 
             logger.info("Applying scene theme...");
+            // Ensure config is properly initialized before accessing theme
+            if (config == null) {
+                logger.error("Config is null, cannot apply theme");
+                throw new IllegalStateException("Configuration not initialized");
+            }
             String theme = config.get(ConfigNode.THEME);
+            // If theme is still null despite default, fall back to "Automatic"
+            if (theme == null) {
+                logger.warn("Theme config returned null, defaulting to 'Automatic'");
+                theme = "Automatic";
+            }
             boolean isDarkMode = shouldUseDarkMode(theme);
             applySceneTheme(scene, isDarkMode);
             logger.info("Scene theme applied");
@@ -190,6 +200,12 @@ public class UnifiedDashboard extends Application {
     }
     
     private boolean shouldUseDarkMode(String theme) {
+        // Handle null theme
+        if (theme == null) {
+            logger.warn("Theme is null in shouldUseDarkMode, defaulting to dark mode");
+            return true;
+        }
+        
         if ("Light".equals(theme)) {
             return false;
         } else if ("Dark".equals(theme)) {
@@ -198,6 +214,7 @@ public class UnifiedDashboard extends Application {
             return WindowsThemeDetector.isDarkModeEnabled();
         }
         // Default to dark mode for unknown themes
+        logger.warn("Unknown theme '{}', defaulting to dark mode", theme);
         return true;
     }
     

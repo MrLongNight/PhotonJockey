@@ -47,6 +47,8 @@ public class AudioAnalyzerDashboardController {
     @FXML private CheckBox bassOnlyModeCheckbox;
     @FXML private ComboBox<String> audioDeviceComboBox;
     @FXML private Button refreshDevicesButton;
+    @FXML private Button startAudioButton;  // New button to start audio analysis
+    @FXML private Button stopAudioButton;   // New button to stop audio analysis
     @FXML private CheckBox visualizationsCheckbox;
     @FXML private Button settingsButton;
     @FXML private Label statusLabel;
@@ -71,6 +73,8 @@ public class AudioAnalyzerDashboardController {
     private Consumer<String> onAudioDeviceSelectedCallback;
     private Runnable onConfigChangedCallback;
     private Consumer<Boolean> onVisualizationsToggledCallback;
+    private Runnable onStartAudioCallback;  // New callback for starting audio
+    private Runnable onStopAudioCallback;   // New callback for stopping audio
     private Config config;
 
     public void setConfig(Config config) {
@@ -86,6 +90,9 @@ public class AudioAnalyzerDashboardController {
         beatActive = false;
 
         settingsButton.setOnAction(event -> openSettingsWindow());
+        
+        // Initially, audio is not running, so enable start button and disable stop button
+        setAudioRunning(false);
 
         // Bind canvas width to parent width for responsiveness
         waveformCanvas.widthProperty().bind(topVBox.widthProperty().subtract(20)); // Subtract padding
@@ -366,15 +373,42 @@ public class AudioAnalyzerDashboardController {
         });
     }
 
-    public void setCallbacks(Runnable onRefreshDevices, Consumer<String> onAudioDeviceSelected, Runnable onConfigChanged, Consumer<Boolean> onVisualizationsToggled) {
+    public void setCallbacks(Runnable onRefreshDevices, Consumer<String> onAudioDeviceSelected, 
+                             Runnable onConfigChanged, Consumer<Boolean> onVisualizationsToggled,
+                             Runnable onStartAudio, Runnable onStopAudio) {
         this.onRefreshDevicesCallback = onRefreshDevices;
         this.onAudioDeviceSelectedCallback = onAudioDeviceSelected;
         this.onConfigChangedCallback = onConfigChanged;
         this.onVisualizationsToggledCallback = onVisualizationsToggled;
+        this.onStartAudioCallback = onStartAudio;
+        this.onStopAudioCallback = onStopAudio;
     }
 
-    @FXML private void onRefreshDevices() {
+    @FXML 
+    private void onRefreshDevices() {
         if (onRefreshDevicesCallback != null) onRefreshDevicesCallback.run();
+    }
+    
+    @FXML
+    private void onStartAudio() {
+        if (onStartAudioCallback != null) onStartAudioCallback.run();
+    }
+    
+    @FXML
+    private void onStopAudio() {
+        if (onStopAudioCallback != null) onStopAudioCallback.run();
+    }
+    
+    /**
+     * Sets the audio running state and updates button states accordingly.
+     */
+    public void setAudioRunning(boolean running) {
+        Platform.runLater(() -> {
+            if (startAudioButton != null && stopAudioButton != null) {
+                startAudioButton.setDisable(running);
+                stopAudioButton.setDisable(!running);
+            }
+        });
     }
 
     public void updateAudioDevices(java.util.List<String> deviceNames, String selectedDevice) {

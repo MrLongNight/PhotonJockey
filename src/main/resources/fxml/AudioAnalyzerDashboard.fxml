@@ -35,6 +35,14 @@
                 <Button fx:id="refreshDevicesButton" text="Refresh" onAction="#onRefreshDevices"/>
 
                 <Separator orientation="VERTICAL"/>
+                
+                <!-- Audio Control Buttons -->
+                <Button fx:id="startAudioButton" text="Start Audio Analysis" onAction="#onStartAudio" 
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button fx:id="stopAudioButton" text="Stop Audio Analysis" onAction="#onStopAudio"
+                        style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;" disable="true"/>
+
+                <Separator orientation="VERTICAL"/>
 
                 <Label text="Level:" style="-fx-text-fill: #ffffff;"/>
                 <ProgressBar fx:id="levelProgressBar" prefWidth="200" progress="0.0"/>
