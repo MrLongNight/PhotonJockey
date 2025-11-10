@@ -195,6 +195,7 @@ runtime {
                     '--add-launcher', "${project.name}-console=src/main/resources/jpackage/debug_build.properties",
             ]
             installerOptions = [
+                    '--resource-dir', 'src/main/resources/jpackage',
                     '--vendor', 'Ai-LightBotEngine',
                     '--description', appDescription,
                     '--copyright', appCopyright,
