@@ -125,13 +125,21 @@ public class UnifiedDashboard extends Application {
             });
             logger.info("Stage configured");
 
-            logger.info("Applying theme...");
-            applyTheme(scene, primaryStage);
-            logger.info("Theme applied");
+            logger.info("Applying scene theme...");
+            String theme = config.get(ConfigNode.THEME);
+            boolean isDarkMode = shouldUseDarkMode(theme);
+            applySceneTheme(scene, isDarkMode);
+            logger.info("Scene theme applied");
             
             logger.info("Showing stage...");
             primaryStage.show();
             logger.info("Stage.show() completed");
+            
+            // Apply window frame theme AFTER stage.show() to avoid NullPointerException
+            // The native window handle is only available after the stage is shown
+            logger.info("Applying window frame theme...");
+            applyWindowFrameTheme(primaryStage, isDarkMode);
+            logger.info("Window frame theme applied");
             
             // Center window on screen to ensure it's visible
             primaryStage.centerOnScreen();

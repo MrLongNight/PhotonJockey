@@ -445,6 +445,11 @@ public class LightControllerDashboardController implements BeatObserver, HueStat
     }
 
     private void updateColorPreview() {
+        // Guard against null config during initialization
+        // The config is set via initialize(Config, ...) which may be called after FXML loading
+        if (config == null) {
+            return;
+        }
         String name = config.get(ConfigNode.COLOR_SET_SELECTED);
         if (name == null) name = "Random";
         ColorSet cs = "Random".equals(name) ? new RandomColorSet() : new CustomColorSet(config, name);
