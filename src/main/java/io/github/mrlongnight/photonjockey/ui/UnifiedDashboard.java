@@ -86,11 +86,6 @@ public class UnifiedDashboard extends Application {
             controller.initData(config);
             logger.info("FXML loaded and controller initialized");
 
-            // Initialize controllers with dependencies
-            logger.info("Initializing controllers...");
-            initializeControllers();
-            logger.info("Controllers initialized");
-
             logger.info("Creating scene...");
             Scene scene = new Scene(root, 1100, 750);
             logger.info("Scene created with size: 1100x750");
@@ -149,6 +144,21 @@ public class UnifiedDashboard extends Application {
             logger.info("Window state - showing: {}, iconified: {}, focused: {}", primaryStage.isShowing(), primaryStage.isIconified(), primaryStage.isFocused());
             logger.info("Window size: {}x{}", primaryStage.getWidth(), primaryStage.getHeight());
             logger.info("Window position: ({}, {})", primaryStage.getX(), primaryStage.getY());
+
+            logger.info("Unified Dashboard window displayed successfully");
+            
+            // Initialize controllers AFTER the window is shown to avoid blocking the UI thread
+            // This prevents heavy initialization (audio devices, network I/O) from blocking the window display
+            logger.info("Initializing controllers in background...");
+            Platform.runLater(() -> {
+                try {
+                    logger.info("Starting controller initialization...");
+                    initializeControllers();
+                    logger.info("Controllers initialized successfully");
+                } catch (Exception e) {
+                    logger.error("Failed to initialize controllers", e);
+                }
+            });
 
             logger.info("Unified Dashboard started successfully");
         } catch (Exception e) {
