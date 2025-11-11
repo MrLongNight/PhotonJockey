@@ -173,6 +173,13 @@ public class UnifiedDashboard extends Application {
                     logger.info("Starting controller initialization...");
                     initializeControllers();
                     logger.info("Controllers initialized successfully");
+                    
+                    // Attempt auto-connect to Hue bridge after controllers are initialized
+                    // This runs asynchronously to avoid blocking the UI
+                    logger.info("Attempting Hue bridge auto-connect in background...");
+                    if (hueManager != null) {
+                        hueManager.attemptAutoConnect();
+                    }
                 } catch (Exception e) {
                     logger.error("Failed to initialize controllers", e);
                 }
