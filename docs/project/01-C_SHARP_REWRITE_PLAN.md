@@ -2,128 +2,130 @@
 
 **Dokument-ID:** `01-C_SHARP_REWRITE_PLAN.md`
 **Datum:** 2025-11-10
-**Status:** Überarbeitet nach Review
+**Status:** Finalisiert nach Experten-Review
 
 ---
 
 ## 1. Übersicht und Ziele
 
-Dieses Dokument beschreibt den detaillierten Plan für die Neuentwicklung der PhotonJockey-Anwendung in C#. Die Umsetzung soll in einem **neuen, leeren GitHub Repository** erfolgen und ausschließlich durch KI-Coding-Tools gesteuert werden.
+Dieses Dokument beschreibt den detaillierten Plan für die Neuentwicklung der PhotonJockey-Anwendung in C#. Die Umsetzung soll in einem **neuen, leeren GitHub Repository** erfolgen und ausschließlich durch KI-Coding-Tools gesteuert werden. Der Plan wurde nach einem detaillierten Review überarbeitet, um Risiken zu minimieren und bewährte Praktiken aus der bestehenden Java-Anwendung zu übernehmen.
 
 **Leitprinzipien:**
-- **Modulare Architektur:** Klare Trennung von UI, Geschäftslogik und Services.
-- **Testbarkeit & Qualität:** Von Anfang an auf Unit-, Integrations- und Systemtests auslegen.
-- **Moderne UI/UX:** Eine performante, ansprechende und intuitive Benutzeroberfläche.
-- **KI-gesteuerte Entwicklung:** Der gesamte Prozess wird durch detaillierte Prompts für KI-Agenten gesteuert.
+- **Robuste Architektur:** Eine modulare, testbare und erweiterbare Codebasis von Anfang an. Multi-Bridge-Fähigkeit wird architektonisch berücksichtigt.
+- **Performance:** Die Anwendung muss Echtzeit-Audio-Analyse und Licht-Synchronisation mit geringer Latenz (< 50ms) gewährleisten.
+- **Qualität:** Testbarkeit, Logging, Fehlerbehandlung und Code-Metriken sind integraler Bestandteil jeder Phase.
+- **KI-gesteuerte Entwicklung:** Der Prozess wird durch präzise, risiko-minimierte Prompts für KI-Agenten gesteuert.
 
 ---
 
-## 2. Technologie-Stack
+## 2. Technologie-Stack (Finalisiert)
 
 - **Programmiersprache:** C#
-- **UI-Framework:** **Wird in Task 1.0 evaluiert (WPF, WinUI 3, .NET MAUI)**
-- **Audio-Analyse-Bibliothek:** **Wird in Task 1.3 evaluiert (NAudio, CSCore)**
+- **UI-Framework:** **WPF (Windows Presentation Foundation)** - Ausgewählt aufgrund von Reife, Performance und exzellenter Eignung für Echtzeit-Visualisierungen.
+- **Audio-Analyse-Bibliothek:** **Wird in Task 1.0 evaluiert (NAudio als primärer Kandidat)**
 - **Hue-Kommunikations-Bibliothek:** HueApi.Net
-- **Build-System:** .NET CLI / MSBuild
+- **DI-Container:** Microsoft.Extensions.DependencyInjection (mit Option auf Autofac/DryIoc)
 - **CI/CD:** GitHub Actions
 
 ---
 
 ## 3. Übergreifende Qualitätsanforderungen
 
-Diese Anforderungen sind in allen Phasen und Tasks zu berücksichtigen.
-
-### 3.1. Security
-- **App-Keys/Secrets:** Müssen sicher gespeichert werden (z.B. mittels .NET Data Protection API).
-- **Netzwerkkommunikation:** HTTPS-Zertifikate der Bridge müssen validiert werden.
-
-### 3.2. Code-Qualität
-- **Coding Standards:** Ein `.editorconfig` zur Durchsetzung von C#-Coding-Standards wird in Task 1.1 eingerichtet.
-- **Code-Analyse:** Statische Code-Analyse-Tools (z.B. Roslynator, StyleCop) werden integriert.
-
-### 3.3. Dokumentation
-- **API-Dokumentation:** Alle öffentlichen Methoden und Klassen werden mit XML-Kommentaren dokumentiert.
-- **Architektur-Entscheidungen:** Wichtige Entscheidungen (z.B. die Wahl des UI-Frameworks) werden als Architecture Decision Records (ADRs) im `docs/` Verzeichnis festgehalten.
+- **Security:** App-Keys werden über den Windows Credential Manager gespeichert. Die Kommunikation zur Bridge wird durch Certificate Pinning abgesichert.
+- **Code-Qualität:** `.editorconfig`, Roslyn-Analyzer und StyleCop werden zur Sicherstellung eines einheitlichen Code-Stils verwendet.
+- **Dokumentation:** Öffentliche APIs werden mit XML-Kommentaren dokumentiert. Wichtige Entscheidungen werden in Architecture Decision Records (ADRs) festgehalten.
 
 ---
 
 ## 4. Entwicklungsphasen
 
-### Phase 1 (MVP): Fundament und Kernfunktionalität
+### Phase 1: MVP - Stabiles Fundament
 
-**Ziel:** Ein stabiler, testbarer Prototyp mit robuster Audio-Analyse und Hue-Entertainment-Synchronisation.
+**Ziel:** Ein testbarer Prototyp mit einer robusten Architektur, der die Kernfunktionalität (Audio -> Licht) zuverlässig abbildet.
 
 ---
 
-**Task 1.0: Technologie-Evaluierung (UI & Audio)**
-- **Beschreibung:** Evaluierung der UI- und Audio-Bibliotheken, um eine fundierte technologische Entscheidung zu treffen.
-- **Agent-Prompt:** "Erstelle ein Dokument `docs/project/02-TECHNOLOGY_EVALUATION.md`. Analysiere und vergleiche darin die folgenden Technologien:
-  1.  **UI-Frameworks:** WPF, WinUI 3 und .NET MAUI. Bewerte sie nach: Rendering-Performance für Echtzeit-Visualisierungen, Reifegrad, Community-Support und Eignung für Drag & Drop-Layouts. Gib eine klare Empfehlung ab.
-  2.  **Audio-Bibliotheken:** NAudio und CSCore. Bewerte sie nach: FFT-Funktionalität, Wartungsstatus, Performance und .NET 8 Kompatibilität. Gib eine klare Empfehlung ab."
+**Task 1.0: Technologie-Evaluierung & Proof-of-Concept (PoC)**
+- **Beschreibung:** Praktische Validierung der Kerntechnologien (UI und Audio), um technische Risiken frühzeitig auszuschließen.
+- **Agent-Prompt:** "Erstelle ein Dokument `docs/project/02-TECHNOLOGY_EVALUATION.md` und implementiere Proof-of-Concepts:
+  1.  **UI-Framework (WPF):** Erstelle ein PoC-Projekt. Implementiere ein Fenster mit einem Canvas-Element, das 64 animierte Balken (Spektrum-Simulation) bei stabilen 60 FPS rendert. Messe die CPU-Last und Framerate, um die Performance zu validieren.
+  2.  **Audio-Bibliothek (NAudio vs. CSCore):** Erstelle für jede Bibliothek ein PoC (NAudio ist der Favorit). Implementiere Loopback-Aufnahme, eine FFT (4096 Samples, Hann Window) und extrahiere 64 Frequenzbänder. Messe Latenz und CPU-Last.
+  3.  **Dokumentiere** die Ergebnisse und gib eine finale, begründete Empfehlung für die Audio-Bibliothek ab."
 
-**Task 1.1: Projekt-Grundgerüst & Dependency Injection**
-- **Beschreibung:** Erstellen des Projekts basierend auf Task 1.0. Einrichten von Dependency Injection (DI) und Code-Qualitäts-Tools.
-- **Agent-Prompt:** "Erstelle ein neues Projekt basierend auf der in Task 1.0 empfohlenen UI-Technologie. Konfiguriere das Projekt für `net8.0-windows10.0.19041.0`. Richte Ordner für 'Core', 'Services', 'UI', 'ViewModels' ein. Konfiguriere `Microsoft.Extensions.DependencyInjection` und registriere Platzhalter-Services als Singletons. Integriere Serilog. Erstelle eine `.editorconfig`-Datei mit C#-Coding-Standards. Richte einen CI-Workflow auf GitHub Actions mit `runs-on: windows-latest` ein."
+**Task 1.1: Projekt-Grundgerüst & CI/CD**
+- **Beschreibung:** Aufsetzen des finalen WPF-Projekts, Konfiguration von DI, Logging, Code-Qualitäts-Tools und einer robusten CI-Pipeline.
+- **Agent-Prompt:** "Erstelle ein neues WPF-Projekt für `.net8.0-windows`. Richte Ordner für 'Core', 'Services', 'UI', 'ViewModels' ein. Konfiguriere `Microsoft.Extensions.DependencyInjection`, Serilog und `.editorconfig`. Richte einen GitHub Actions CI-Workflow mit `runs-on: ${{ matrix.os }}` und einer Matrix für `windows-2019` und `windows-2022` ein."
 
-**Task 1.2: Hue Bridge Kommunikation**
-- **Beschreibung:** Integration von `HueApi.Net` zur Bridge-Suche, Kopplung und zum Abruf von Gruppen.
-- **Agent-Prompt:** "Integriere das NuGet-Paket 'HueApi.Net'. Erstelle einen 'HueService'. Implementiere Methoden für Bridge-Suche (`FindBridgesAsync`), App-Registrierung (`RegisterAppAsync`) und das Abrufen von Entertainment-Gruppen (`GetEntertainmentGroupsAsync`)."
+**Task 1.2: Hue Bridge Kommunikation & Sicherheit**
+- **Beschreibung:** Integration von `HueApi.Net` inklusive sicherem App-Key-Handling und Certificate Pinning. Die Architektur muss von Anfang an für Multi-Bridge ausgelegt sein.
+- **Agent-Prompt:** "Integriere 'HueApi.Net' und 'CredentialManagement'. Erstelle einen 'HueService', der intern mit einem `Dictionary<string, BridgeClient>` arbeitet, um Multi-Bridge zu ermöglichen. Implementiere:
+  1. Bridge-Suche.
+  2. App-Registrierung mit Speicherung des App-Keys im Windows Credential Manager.
+  3. Abruf von Entertainment-Gruppen.
+  4. Certificate Pinning: Speichere den Zertifikats-Fingerprint bei der ersten Verbindung und validiere ihn bei nachfolgenden."
 
-**Task 1.3: Audio-Verarbeitung (Basis)**
-- **Beschreibung:** Integration der in Task 1.0 gewählten Audio-Bibliothek zur Erfassung von Live-Audio.
-- **Agent-Prompt:** "Integriere die in Task 1.0 gewählte Audio-Bibliothek (NAudio/CSCore). Erstelle einen 'AudioService'. Implementiere die Auflistung von Audio-Geräten und das Starten/Stoppen der Aufnahme von einem Loopback-Gerät."
+**Task 1.3: Audio-Verarbeitung mit Reactive Extensions**
+- **Beschreibung:** Integration der in Task 1.0 gewählten Audio-Bibliothek mittels `System.Reactive` für einen robusten und testbaren Audio-Stream.
+- **Agent-Prompt:** "Integriere die gewählte Audio-Bibliothek. Erstelle einen 'AudioService'. Implementiere die Auflistung von Audio-Geräten. Erstelle einen `IObservable<AudioFrame>`-Stream, der die Audio-Daten vom Loopback-Gerät als reaktiven Stream zur Verfügung stellt."
 
-**Task 1.4: Audio-Analyse-Engine**
-- **Beschreibung:** Implementierung der detaillierten Audio-Analyse-Pipeline.
-- **Agent-Prompt:** "Erweitere den 'AudioService' und die 'EffectEngine':
-  - **1.4a (FFT):** Implementiere eine FFT-Transformation der rohen Audiodaten.
-  - **1.4b (Spektralanalyse):** Extrahiere die Energie für Bass-, Mid- und High-Frequenzbänder.
-  - **1.4c (Beat-Detektor):** Implementiere einen Beat-Detektor mit konfigurierbaren Parametern (Sensitivität, Threshold).
-  - **1.4d (Audio-Profile):** Erstelle eine Struktur für Audio-Profile (z.B. 'Techno', 'House'), die die Beat-Detektor-Parameter kapseln und aus JSON geladen werden können."
+**Task 1.4: Audio-Analyse-Engine (inkl. Profile)**
+- **Beschreibung:** Implementierung der vollständigen Audio-Analyse-Pipeline, inklusive eines erweiterbaren Profil-Systems.
+- **Agent-Prompt:** "Erstelle eine 'AudioAnalysisEngine', die den reaktiven Audio-Stream abonniert.
+  - **1.4a (FFT & Pooling):** Implementiere eine FFT. Nutze `System.Buffers.ArrayPool` für die FFT-Buffer, um die GC-Last zu minimieren.
+  - **1.4b (Spektralanalyse):** Extrahiere Bass-, Mid- und High-Frequenzbänder.
+  - **1.4c (Beat-Detektor):** Implementiere einen Beat-Detektor mit konfigurierbaren Parametern.
+  - **1.4d (Audio-Profile):** Implementiere ein vollständiges Audio-Profil-System (wie in Java), das Konfigurationen aus JSON-Dateien laden und verwalten kann."
 
-**Task 1.5: Entertainment API Integration & Performance-Monitoring**
-- **Beschreibung:** Verbindung der Analyse-Engine mit der Hue Entertainment API, inklusive Fehlerbehandlung und Performance-Metriken.
-- **Agent-Prompt:** "Implementiere die Hue Entertainment API V2-Kommunikation in der 'EffectEngine':
-  - Stelle sicher, dass die Verbindung korrekt mit DTLS verschlüsselt wird.
-  - Implementiere einen Wiederverbindungs-Mechanismus bei Timeouts.
-  - Logge alle Fehler beim Session-Aufbau detailliert.
-  - Füge Performance-Counter hinzu: Messe die Latenz (Audio-Eingang bis Licht-Befehl) und die FPS der Licht-Updates. Zeige diese Werte in der UI an."
+**Task 1.5: Entertainment API V2 Integration (Aufgeteilt)**
+- **Beschreibung:** Implementierung der komplexen Entertainment API V2 Kommunikation in mehreren Schritten.
+- **Agent-Prompt:** "Implementiere die Entertainment API V2-Kommunikation in einer 'EntertainmentStreamer'-Klasse:
+  - **1.5a (Grundlagen):** Implementiere das DTLS-Setup und das Connection-Handling.
+  - **1.5b (Message Encoding):** Implementiere die binäre Serialisierung der Licht-Kommandos.
+  - **1.5c (Light Streaming):** Sende die serialisierten Kommandos als UDP-Stream mit FPS-Kontrolle.
+  - **1.5d (Fehlerbehandlung):** Implementiere eine robuste Reconnection-Logik.
+  - **1.5e (Performance-Monitoring):** Integriere Latenz- und FPS-Messungen."
 
-**Task 1.6: UI des Prototyps verbinden**
-- **Beschreibung:** Verknüpfung aller Komponenten mit einer einfachen Benutzeroberfläche.
-- **Agent-Prompt:** "Erstelle ein 'MainViewModel' und eine einfache `MainPage`-UI. Binde die Auswahl für Audio-Geräte und Entertainment-Gruppen, einen Start/Stopp-Button sowie die Anzeige für Latenz und FPS an das ViewModel."
+**Task 1.6: Konfigurations-Management**
+- **Beschreibung:** Speichern und Laden von Benutzerkonfigurationen mit einer robusten Migrationsstrategie.
+- **Agent-Prompt:** "Erstelle einen 'ConfigurationService' mit `Microsoft.Extensions.Configuration`. Lade `appsettings.json`. Implementiere eine Konfigurationsklasse mit einer `ConfigVersion`-Eigenschaft, um zukünftige Migrationen zu ermöglichen."
 
-**Task 1.7: Konfigurationspersistierung**
-- **Beschreibung:** Speichern und Laden der Benutzerkonfiguration.
-- **Agent-Prompt:** "Erstelle einen 'ConfigurationService'. Speichere und lade mittels `System.Text.Json` eine `appsettings.json`-Datei im lokalen AppData-Verzeichnis. Die Konfiguration soll Bridge-IP, App-Key, gewähltes Audio-Gerät und Entertainment-Gruppe enthalten. Lade die Konfiguration beim Start und speichere sie bei Änderungen."
+**Task 1.7: Light Mapping Grundlagen**
+- **Beschreibung:** Implementierung eines einfachen Systems zur Zuordnung von Lichtern zu logischen Positionen.
+- **Agent-Prompt:** "Erstelle eine 'LightMappingService'-Klasse. Implementiere das Laden und Speichern einer JSON-Datei, die Hue-Light-IDs auf 2D-Koordinaten (X/Y) mappt. Diese grundlegende Zuordnung ist für gezielte Effekte in späteren Phasen erforderlich."
 
-**Task 1.8: Logging und Fehlerbehandlung**
-- **Beschreibung:** Einrichtung eines robusten Logging- und Fehlerbehandlungssystems.
-- **Agent-Prompt:** "Konfiguriere Serilog für File-Logging (`logs/photonjockey-.log`) und Console-Logging. Implementiere einen globalen Exception-Handler, der unbehandelte Ausnahmen fängt, loggt und dem Benutzer einen Fehlerdialog anzeigt."
+**Task 1.8: UI des Prototyps verbinden**
+- **Beschreibung:** Verknüpfung aller Komponenten mit einer einfachen, funktionalen WPF-Benutzeroberfläche.
+- **Agent-Prompt:** "Erstelle die `MainView.xaml` und das zugehörige `MainViewModel`. Binde alle notwendigen Funktionen (Geräteauswahl, Gruppenauswahl, Start/Stop, Performance-Metriken) an das ViewModel."
 
-**Task 1.9: Unit-Tests**
-- **Beschreibung:** Erstellung von Unit-Tests für die Kern-Services.
-- **Agent-Prompt:** "Erstelle ein Test-Projekt mit xUnit und Moq. Schreibe Unit-Tests für den 'HueService' (mit Mock-HTTP-Responses) und den 'AudioService' (mit Mock-Audiodaten)."
+**Task 1.9: Tests (Unit & Integration)**
+- **Beschreibung:** Erstellung von Tests für die Kernlogik und die gesamte Verarbeitungskette.
+- **Agent-Prompt:** "Erstelle ein Test-Projekt mit xUnit und Moq.
+  - **1.9a (Unit-Tests):** Teste `HueService` und `AudioService` isoliert.
+  - **1.9b (Integration-Tests):** Erstelle einen Test, der die gesamte Kette von einem Mock-Audiosignal bis zum (gemockten) Licht-Kommando validiert und die End-to-End-Latenz misst."
+
+**Task 1.10: Performance-Benchmarks**
+- **Beschreibung:** Erstellung von Performance-Benchmarks für die kritischen Pfade.
+- **Agent-Prompt:** "Erstelle ein Benchmark-Projekt mit `BenchmarkDotNet`. Implementiere Benchmarks für die FFT-Berechnung und die Light-Update-Serialisierung, um Performance-Ziele zu validieren."
+
+**Task 1.11: Release-Pipeline**
+- **Beschreibung:** Automatisierung der Erstellung von Releases.
+- **Agent-Prompt:** "Erstelle eine `.github/workflows/release.yml`-Datei. Konfiguriere sie so, dass bei einem Git-Tag automatisch ein Build erstellt, mit dem WiX Toolset ein MSI-Installer paketiert und ein GitHub Release erzeugt wird."
 
 ---
 
 ### Phase 2: Erweiterte Features & UI/UX
 
-**Ziel:** Implementierung der vollen visuellen Funktionalität und Verbesserung der Benutzererfahrung.
-
-- **Task 2.1:** **Visualizer Dashboard:** UI-Elemente zur Anzeige der Waveform und des Frequenz-Spektrums.
-- **Task 2.2:** **Anpassbare UI:** Implementierung des per Drag & Drop anpassbaren Layouts.
-- **Task 2.3:** **Design & Theming:** Umsetzung von Farb-Themes und Anpassung an den Windows Dark-Mode.
-- **Task 2.4:** **Light Mapping:** UI zur Konfiguration und Zuordnung von Lichtern zu Positionen.
-- **Task 2.5:** **Erweiterte Effekte:** Implementierung von Strobe-Effekten und benutzerdefinierten Farbpaletten.
+- **Task 2.1:** **Visualizer Dashboard:** UI für Waveform und Frequenz-Spektrum.
+- **Task 2.2:** **Anpassbare UI:** Drag & Drop-Layout-System.
+- **Task 2.3:** **Kalibrierung:** UI für Helligkeits- und Übergangszeit-Kalibrierung.
+- **Task 2.4:** **UI-Tests:** Erstellung von UI-Tests mit FlaUI für kritische Workflows.
+- **Task 2.5:** **Auto-Update & Crash-Reporting:** Integration von Squirrel.Windows und Sentry.io.
+- **Task 2.6:** **Migrations-Guide:** Erstellung einer Anleitung zum Umstieg von der Java-Version.
 
 ---
 
 ### Phase 3: Skalierung und Optimierung
 
-**Ziel:** Hinzufügen von fortgeschrittenen Funktionen und Vorbereitung für eine breite Nutzung.
-
-- **Task 3.1:** **Multi-Bridge-Support:** Gleichzeitige Steuerung mehrerer Hue Bridges.
-- **Task 3.2:** **Plugin-Architektur:** Design und Implementierung einer API für benutzerdefinierte Effekte.
-- **Task 3.3:** **Kalibrierung:** Funktionen zur Helligkeits- und Übergangszeit-Kalibrierung.
-- **Task 3.4:** **Performance-Optimierung:** Tiefgehende Analyse und Optimierung der gesamten Pipeline.
+- **Task 3.1:** **Plugin-Architektur:** Design und Implementierung einer API für benutzerdefinierte Effekte.
+- **Task 3.2:** **Accessibility:** Sicherstellung der Barrierefreiheit (Screen-Reader, Keyboard-Navigation).
+- **Task 3.3:** **Performance-Optimierung:** Tiefgehende Analyse und Optimierung der gesamten Pipeline.
