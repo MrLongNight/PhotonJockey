@@ -65,6 +65,9 @@ public class PJConfig implements Config {
         defaultBools.put(ConfigNode.EFFECT_COLOR_STROBE.getKey(), true);
         defaultBools.put(ConfigNode.EFFECT_STROBE.getKey(), true);
 
+        // UI theme default - set to "Automatic" to detect Windows theme
+        defaults.put(ConfigNode.THEME.getKey(), "Automatic");
+
         // hardcoded color presets
         defaults.put(ConfigNode.COLOR_SET_PRESET_LIST.getKey(), "Rainbow■Club■Saturation Gradient■Flashing■Light Colors■Very Light");
         defaults.put("color.sets.Rainbow", "-65536■-63776■-30976■-13824■-2359552■-9568512■-16711882■-16711750■-16721153■-16760321■-5897985");
