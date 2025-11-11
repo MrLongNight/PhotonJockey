@@ -167,15 +167,18 @@ public class UnifiedDashboard extends Application {
             
             // Initialize controllers AFTER the window is shown to avoid blocking the UI thread
             // This prevents heavy initialization (audio devices, network I/O) from blocking the window display
+            // CRITICAL: Use taskOrchestrator.dispatch() instead of Platform.runLater() because
+            // Platform.runLater() runs on the JavaFX Application Thread which will freeze the UI
+            // during heavy operations like audio device enumeration and network I/O
             logger.info("Initializing controllers in background...");
-            Platform.runLater(() -> {
+            taskOrchestrator.dispatch(() -> {
                 try {
                     logger.info("Starting controller initialization...");
                     initializeControllers();
                     logger.info("Controllers initialized successfully");
                     
                     // Attempt auto-connect to Hue bridge after controllers are initialized
-                    // This runs asynchronously to avoid blocking the UI
+                    // This runs in a background thread to avoid blocking the UI
                     logger.info("Attempting Hue bridge auto-connect in background...");
                     if (hueManager != null) {
                         hueManager.attemptAutoConnect();
