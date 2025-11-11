@@ -1,8 +1,11 @@
 # Projektplan: PhotonJockey C# Neuentwicklung
 
-**Dokument-ID:** `01-C_SHARP_REWRITE_PLAN.md`
-**Datum:** 2025-11-10
-**Status:** Überarbeitet nach Review
+**Dokument-ID:** `01-C_SHARP_REWRITE_PLAN.md`  
+**Datum:** 2025-11-10  
+**Status:** Überarbeitet nach Review  
+**Review-Dokument:** ⚠️ [Analyse und Optimierungsvorschläge](C_SHARP_REWRITE_PLAN_REVIEW.md)
+
+> **Hinweis:** Es existiert ein detailliertes Review-Dokument mit kritischen Problemen, Risiken und Optimierungsvorschlägen. Bitte vor Beginn der Implementierung durchlesen!
 
 ---
 
